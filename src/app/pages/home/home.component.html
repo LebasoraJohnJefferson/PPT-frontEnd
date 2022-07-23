@@ -12,7 +12,7 @@
     </div>
 
     <!-- login -->
-    <div *ngIf="!isJoin && isLogin" class="grid fixed grid-cols-1 grid-rows-1 md:grid-cols-3 md:grid-rows-7 bg-transparent-black w-full h-full place-content-center">
+    <div *ngIf="isJoin && isLogin" class="grid fixed grid-cols-1 grid-rows-1 md:grid-cols-3 md:grid-rows-7 bg-transparent-black w-full h-full place-content-center">
         <div class="grid grid-cols-1 bg-white rounded md:col-start-2 md:row-start-1 row-span-5 md:my-10 h-100 md:w-100 place-content-center">
             <div id="x" class="flex justify-end">
                 <span class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5" (click)="openLogin()">X</span>
@@ -30,7 +30,7 @@
 
 
     <!-- register -->
-    <div *ngIf="!isJoin && !isLogin" class="grid fixed grid-cols-1 grid-rows-1 md:grid-cols-3 md:grid-rows-7 bg-transparent-black w-full h-full place-content-center">
+    <div *ngIf="isJoin && !isLogin" class="grid fixed grid-cols-1 grid-rows-1 md:grid-cols-3 md:grid-rows-7 bg-transparent-black w-full h-full place-content-center">
         <div class="grid grid-cols-1 bg-white rounded md:col-start-2 md:row-start-1 row-span-5 md:my-10 h-100 md:w-100 place-content-center">
             <div id="x" class="flex justify-end">
                 <span class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5" (click)="openLogin()">X</span>
