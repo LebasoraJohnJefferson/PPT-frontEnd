@@ -20,12 +20,15 @@
                 <span class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5" (click)="openLogin()"><i class="fa-regular fa-x"></i></span>
             </div>
             <h3 class="flex justify-center item-center font-bold text-2xl mb-3">LOGIN</h3>
-            <form class="grid mx-4 gap-4 w-100">
+            <form class="grid mx-4 gap-4 w-100" [formGroup]="formLogin" (ngSubmit)="onSubmitLogin()">
                 <label class="text-sm">Email:</label>
-                <input class="shadow-md py-2 rounded" placeholder="Enter Your Email" type="text">
+                <small *ngIf="formLogin.get('email')?.invalid && formLogin.get('email')?.value" class="text-red-600">
+                    Invalid Email
+                </small>
+                <input class="shadow-md py-2 rounded" formControlName="email" placeholder="Enter Your Email" type="email" required />
                 <label class="text-sm">Password:</label>
-                <input class="shadow-md py-2 rounded" placeholder="Enter Your Password" type="password">
-                <button class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500">LOGIN</button>
+                <input class="shadow-md py-2 rounded" formControlName="password" placeholder="Enter Your Password" type="password" required>
+                <button class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500" type="submit">LOGIN</button>
             </form>
             <p (click)="openRegister()" class="mt-5 flex cursor-pointer hover:text-blue-700 justify-end mr-5 text-blue-500">No account yet?</p>
         </div>
@@ -39,13 +42,19 @@
                 <span class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5" (click)="openLogin()"><i class="fa-regular fa-x"></i></span>
             </div>
             <h3 class="flex justify-center item-center font-bold text-2xl mb-3">SIGN UP</h3>
-            <form class="grid mx-4 gap-4 w-100">
+            <form class="grid mx-4 gap-4 w-100" [formGroup]="formRegister" (ngSubmit)="onSubmitRegister()">
                 <label class="text-sm">Email:</label>
-                <input class="shadow-md py-2 rounded" placeholder="Enter Your Email" type="text">
+                <small *ngIf="formRegister.get('email')?.invalid && formRegister.get('email')?.value" class="text-red-600">
+                    Invalid Email
+                </small>
+                <input class="shadow-md py-2 rounded" formControlName="email" placeholder="Enter Your Email" type="email" required />
                 <label class="text-sm">Password:</label>
-                <input class="shadow-md py-2 rounded" placeholder="Enter Your Password" type="password">
+                <input class="shadow-md py-2 rounded" formControlName="password" placeholder="Enter Your Password" type="password" required />
                 <label class="text-sm">Confirm Password:</label>
-                <input class="shadow-md py-2 rounded" placeholder="Enter Your Password" type="password">
+                <small *ngIf="!isPasswordMatch && formRegister.value.confirmPassword" class="text-red-600">
+                    Password & Confirm Password does not match
+                </small>
+                <input class="shadow-md py-2 rounded" (input)="passwordMatch()" formControlName="confirmPassword" placeholder="Confirm Password" type="password" required />
                 <button class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500">REGISTER</button>
             </form>
             <p (click)="openRegister()" class="mt-5 flex cursor-pointer hover:text-blue-700 justify-end mr-5 text-blue-500">Already Have An Account?</p>

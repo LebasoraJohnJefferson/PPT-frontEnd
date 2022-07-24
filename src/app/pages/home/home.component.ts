@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-home',
@@ -8,19 +10,56 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   isJoin:boolean = false
   isLogin:boolean = true
+  isPasswordMatch:boolean = false
+
+  // validator of login 
+  formLogin = this.fb.group({
+    email:[null,[
+      Validators.required,
+      Validators.email]],
+      password:[null,Validators.required]
+    })
+    
+  // validator of register
+  formRegister = this.fb.group({
+    email:[null,
+      [Validators.required,Validators.email]
+    ],
+    password:[null,Validators.required],
+    confirmPassword:[null,Validators.required]
+  })
+
+
   
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
   }
 
+  // open the login form
   openLogin(){
     this.isJoin = !this.isJoin
     this.isLogin = true
   }
 
+  // login shift into register form
   openRegister(){
     this.isLogin = !this.isLogin
+  }
+  
+  // get the data in login area
+  onSubmitLogin(){
+    console.log(this.formLogin.valid)
+    this.formLogin.reset()
+  }
+  
+  // get the data in register area
+  onSubmitRegister(){
+    console.log(this.formRegister.valid)
+  }
+
+  passwordMatch(){
+    this.isPasswordMatch =  this.formRegister.get('password')?.value == this.formRegister.get('confirmPassword')?.value ? true : false
   }
 
 }
