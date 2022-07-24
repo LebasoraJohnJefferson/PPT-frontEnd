@@ -1,5 +1,5 @@
 <main class="grid w-100 bg-red-300 overflow-hidden">
-    <h1 class="w-100 flex justify-center text-white items-center text-4xl font-bold bg-red-700">E-MANAGE</h1>
+    <h1 class="w-100 flex justify-center text-center text-white items-center text-2xl font-bold bg-red-700">PROJECT PROGRESS TRACKER</h1>
     <div class="grid md:grid-cols-2 grid-cols-1  w-full gap-2 place-content-center">
         <div class="grid w-full">
             <div class="flex justify-center items-center flex-col w-full h-full px-3">
@@ -13,9 +13,9 @@
 
     <!-- login -->
     <div *ngIf="isJoin && isLogin" class="grid fixed grid-cols-1 grid-rows-1 md:grid-cols-3 md:grid-rows-7 bg-transparent-black w-full h-full place-content-center">
-        <div class="grid grid-cols-1 bg-white rounded md:col-start-2 md:row-start-1 row-span-5 md:my-10 h-100 md:w-100 place-content-center">
+        <div class="grid grid-cols-1 bg-white md:rounded md:col-start-2 md:row-start-1 row-span-5 md:my-10 h-100 md:w-100 place-content-center">
             <div id="x" class="flex justify-end">
-                <span class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5" (click)="openLogin()">X</span>
+                <span class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5" (click)="openLogin()"><i class="fa-regular fa-x"></i></span>
             </div>
             <h3 class="flex justify-center item-center font-bold text-2xl mb-3">LOGIN</h3>
             <form class="grid mx-4 gap-4 w-100">
@@ -32,10 +32,11 @@
 
     <!-- register -->
     <div *ngIf="isJoin && !isLogin" class="grid fixed grid-cols-1 grid-rows-1 md:grid-cols-3 md:grid-rows-7 bg-transparent-black w-full h-full place-content-center">
-        <div class="grid grid-cols-1 bg-white rounded md:col-start-2 md:row-start-1 row-span-5 md:my-10 h-100 md:w-100 place-content-center">
+        <div class="grid grid-cols-1 bg-white md:rounded md:col-start-2 md:row-start-1 row-span-5 md:my-10 h-100 md:w-100 place-content-center">
             <div id="x" class="flex justify-end">
-                <span class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5" (click)="openLogin()">X</span>
+                <span class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5" (click)="openLogin()"><i class="fa-regular fa-x"></i></span>
             </div>
+            <h3 class="flex justify-center item-center font-bold text-2xl mb-3">SIGN UP</h3>
             <form class="grid mx-4 gap-4 w-100">
                 <label class="text-sm">Email:</label>
                 <input class="shadow-md py-2 rounded" placeholder="Enter Your Email" type="text">
