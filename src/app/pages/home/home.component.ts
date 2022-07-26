@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AuthUser as AuthBD } from 'src/app/service/auth-user.service';
 
 
 @Component({
@@ -31,7 +32,10 @@ export class HomeComponent implements OnInit {
 
 
   
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private authDB:AuthBD
+    ) { }
 
   ngOnInit(): void {
   }
@@ -55,7 +59,18 @@ export class HomeComponent implements OnInit {
   
   // get the data in register area
   onSubmitRegister(){
-    console.log(this.formRegister.valid)
+    if(this.formRegister.valid){
+      this.authDB.RegisterUser(
+        this.formRegister.value
+      ).subscribe((res)=>{
+        if(res === null){
+          alert('successfully created')
+        }
+      },(error)=>{
+        console.log(error)
+      })
+    }
+
   }
 
   passwordMatch(){
