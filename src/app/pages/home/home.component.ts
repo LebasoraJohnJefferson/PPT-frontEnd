@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthUser as AuthBD } from 'src/app/service/auth-user.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -34,7 +35,8 @@ export class HomeComponent implements OnInit {
   
   constructor(
     private fb: FormBuilder,
-    private authDB:AuthBD
+    private authDB:AuthBD,
+    private toastr:ToastrService
     ) { }
 
   ngOnInit(): void {
@@ -44,6 +46,7 @@ export class HomeComponent implements OnInit {
   openLogin(){
     this.isJoin = !this.isJoin
     this.isLogin = true
+    
   }
 
   // login shift into register form
@@ -60,17 +63,22 @@ export class HomeComponent implements OnInit {
   // get the data in register area
   onSubmitRegister(){
     if(this.formRegister.valid){
-      this.authDB.RegisterUser(
-        this.formRegister.value
-      ).subscribe((res)=>{
-        if(res === null){
-          alert('successfully created')
-        }
-      },(error)=>{
-        console.log(error)
-      })
+      if(this.formRegister.get('password')?.value == this.formRegister.get('confirmPassword')?.value){
+        this.authDB.RegisterUser(
+          this.formRegister.value
+        ).subscribe(()=>{
+            this.toastr.success('Successfully Register')
+            this.isLogin = !this.isLogin
+          },(err)=>{
+            if(err.status == 0) this.toastr.error('SERVER ERROR','MAKE SURE YOUR SERVER IS UP!!')
+            else if (err.status == 409) this.toastr.warning(err.error.detail)
+            else this.toastr.error('Unknown Error')
+          })
+      }
+    }else{
+      this.toastr.warning('Invalid Information')
     }
-
+    this.formRegister.reset()
   }
 
   passwordMatch(){
