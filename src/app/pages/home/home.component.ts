@@ -66,12 +66,12 @@ export class HomeComponent implements OnInit {
         localStorage.setItem('token',res.access_token)
         this.router.navigate(['/dashboard'])
       },(err)=>{
-        if(err.status == 0) this.toastr.error('SERVER ERROR','MAKE SURE YOUR SERVER IS UP!!')
+        if(err.status == 0) this.toastr.error('MAKE SURE YOUR SERVER IS UP!!','SERVER ERROR')
         else if (err.status == 403) this.toastr.warning(err.error.detail)
         else this.toastr.error('Unknown Error')
       })
     }else{
-      this.toastr.warning('Invalid Information')
+      this.toastr.warning('Incorrect Email or Password')
     }
     this.formLogin.reset()
   }
@@ -86,13 +86,15 @@ export class HomeComponent implements OnInit {
             this.toastr.success('Successfully Register')
             this.isLogin = !this.isLogin
           },(err)=>{
-            if(err.status == 0) this.toastr.error('SERVER ERROR','MAKE SURE YOUR SERVER IS UP!!')
+            if(err.status == 0) this.toastr.error('MAKE SURE YOUR SERVER IS UP!!','SERVER ERROR')
             else if (err.status == 409) this.toastr.warning(err.error.detail)
             else this.toastr.error('Unknown Error')
           })
+      }else{
+        this.toastr.warning("Password and confirm password not matched")
       }
     }else{
-      this.toastr.warning('Invalid Information')
+      this.toastr.warning('Incorrect Email or Password')
     }
     this.formRegister.reset()
   }

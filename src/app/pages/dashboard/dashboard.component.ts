@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from 'src/app/service/dashboard.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,11 +9,15 @@ import { DashboardService } from 'src/app/service/dashboard.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor(private dashboardService:DashboardService) {
+  email:string = ''
+  constructor(
+    private dashboardService:DashboardService,
+    private router:Router,
+    private toastr:ToastrService
+  ){
     this.dashboardService.getCurrentUser()
       .subscribe((res)=>{
-        console.log(res)
+        this.email = res.email
       },
       (err)=>{
         console.log(err)
@@ -19,6 +25,12 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  logout(){
+    localStorage.removeItem('token')
+    this.router.navigate(['/'])
+    this.toastr.success("Logout Successfully")
   }
 
 }
