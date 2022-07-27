@@ -8,7 +8,7 @@ export interface Auth2{
     password:string
 }
 
-export interface Token{
-    token:string
-    [key:string]:string
+export interface ResponseToken{
+    token_type:string,
+    access_token:string
 }

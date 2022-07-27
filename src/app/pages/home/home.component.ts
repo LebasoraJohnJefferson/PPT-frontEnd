@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthUser as AuthBD } from 'src/app/service/auth-user.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
 
   // validator of login 
   formLogin = this.fb.group({
-    email:[null,[
+    username:[null,[
       Validators.required,
       Validators.email]],
       password:[null,Validators.required]
@@ -36,10 +37,12 @@ export class HomeComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authDB:AuthBD,
-    private toastr:ToastrService
+    private toastr:ToastrService,
+    private router:Router
     ) { }
 
   ngOnInit(): void {
+    
   }
 
   // open the login form
@@ -56,7 +59,20 @@ export class HomeComponent implements OnInit {
   
   // get the data in login area
   onSubmitLogin(){
-    console.log(this.formLogin.valid)
+    if(this.formLogin.valid){
+      this.authDB.LoginUser(this.formLogin.value)
+      .subscribe((res)=>{
+        this.toastr.success("Successfully Login")
+        localStorage.setItem('token',res.access_token)
+        this.router.navigate(['/dashboard'])
+      },(err)=>{
+        if(err.status == 0) this.toastr.error('SERVER ERROR','MAKE SURE YOUR SERVER IS UP!!')
+        else if (err.status == 403) this.toastr.warning(err.error.detail)
+        else this.toastr.error('Unknown Error')
+      })
+    }else{
+      this.toastr.warning('Invalid Information')
+    }
     this.formLogin.reset()
   }
   
