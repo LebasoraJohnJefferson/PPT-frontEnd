@@ -27,7 +27,13 @@
                 </small>
                 <input class="shadow-md py-2 rounded" formControlName="username" placeholder="Enter Your Email" type="email" required />
                 <label class="text-sm">Password:</label>
-                <input class="shadow-md py-2 rounded" formControlName="password" placeholder="Enter Your Password" type="password" required>
+                <input class="shadow-md py-2 rounded" formControlName="password" placeholder="Enter Your Password" [type]="isShow ? 'text' : 'password'" required>
+                <div class="flex font-bold align-center">
+                    <input type="checkbox" class="mx-2" (click)="showPassword()">
+                    <label class="flex align-center"><small>
+                        Show Password
+                    </small></label>
+                </div>
                 <button class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500" type="submit">LOGIN</button>
             </form>
             <p (click)="openRegister()" class="mt-5 flex cursor-pointer hover:text-blue-700 justify-end mr-5 text-blue-500">No account yet?</p>

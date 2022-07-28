@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   isJoin:boolean = false
   isLogin:boolean = true
   isPasswordMatch:boolean = false
+  isShow:boolean =false
 
   // validator of login 
   formLogin = this.fb.group({
@@ -101,6 +102,10 @@ export class HomeComponent implements OnInit {
 
   passwordMatch(){
     this.isPasswordMatch =  this.formRegister.get('password')?.value == this.formRegister.get('confirmPassword')?.value ? true : false
+  }
+
+  showPassword(){
+    this.isShow = !this.isShow
   }
 
 }
