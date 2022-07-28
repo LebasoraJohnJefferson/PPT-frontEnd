@@ -34,7 +34,12 @@
                         Show Password
                     </small></label>
                 </div>
-                <button class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500" type="submit">LOGIN</button>
+                <button *ngIf="!isSubmit" class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500" type="submit">LOGIN</button>
+                <button *ngIf="isSubmit" class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500" type="submit" disabled>
+                    <mat-spinner
+                    [diameter]="25"
+                    ></mat-spinner>
+                </button>
             </form>
             <p (click)="openRegister()" class="mt-5 flex cursor-pointer hover:text-blue-700 justify-end mr-5 text-blue-500">No account yet?</p>
         </div>
@@ -61,7 +66,12 @@
                     Password & Confirm Password does not match
                 </small>
                 <input class="shadow-md py-2 rounded" (input)="passwordMatch()" formControlName="confirmPassword" placeholder="Confirm Password" type="password" required />
-                <button class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500">REGISTER</button>
+                <button *ngIf="!isSubmitRegister" class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500">REGISTER</button>
+                <button *ngIf="isSubmitRegister" class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500">
+                    <mat-spinner
+                    [diameter]="25"
+                    ></mat-spinner>
+                </button>
             </form>
             <p (click)="openRegister()" class="mt-5 flex cursor-pointer hover:text-blue-700 justify-end mr-5 text-blue-500">Already Have An Account?</p>
         </div>

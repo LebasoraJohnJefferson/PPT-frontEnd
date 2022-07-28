@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
   isLogin:boolean = true
   isPasswordMatch:boolean = false
   isShow:boolean =false
+  isSubmitRegister:boolean =false
+  isSubmit:boolean = false
 
   // validator of login 
   formLogin = this.fb.group({
@@ -61,15 +63,18 @@ export class HomeComponent implements OnInit {
   // get the data in login area
   onSubmitLogin(){
     if(this.formLogin.valid){
+      this.isSubmit = true
       this.authDB.LoginUser(this.formLogin.value)
       .subscribe((res)=>{
         this.toastr.success("Successfully Login")
         localStorage.setItem('token',res.access_token)
         this.router.navigate(['/dashboard'])
+        this.isSubmit = false
       },(err)=>{
         if(err.status == 0) this.toastr.error('MAKE SURE YOUR SERVER IS UP!!','SERVER ERROR')
         else if (err.status == 403) this.toastr.warning(err.error.detail)
         else this.toastr.error('Unknown Error')
+        this.isSubmit = false
       })
     }else{
       this.toastr.warning('Incorrect Email or Password')
@@ -81,15 +86,18 @@ export class HomeComponent implements OnInit {
   onSubmitRegister(){
     if(this.formRegister.valid){
       if(this.formRegister.get('password')?.value == this.formRegister.get('confirmPassword')?.value){
+        this.isSubmitRegister = true
         this.authDB.RegisterUser(
           this.formRegister.value
         ).subscribe(()=>{
             this.toastr.success('Successfully Register')
             this.isLogin = !this.isLogin
+            this.isSubmitRegister=false
           },(err)=>{
             if(err.status == 0) this.toastr.error('MAKE SURE YOUR SERVER IS UP!!','SERVER ERROR')
             else if (err.status == 409) this.toastr.warning(err.error.detail)
             else this.toastr.error('Unknown Error')
+            this.isSubmitRegister=false
           })
       }else{
         this.toastr.warning("Password and confirm password not matched")

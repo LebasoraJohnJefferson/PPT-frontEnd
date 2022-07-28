@@ -11,6 +11,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { JwtInterceptor } from './interceptor/jwt.interceptor';
+import { MaterialModule } from './shared/material.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { JwtInterceptor } from './interceptor/jwt.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MaterialModule,
     ToastrModule.forRoot()
   ],
   providers: [
