@@ -12,12 +12,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { JwtInterceptor } from './interceptor/jwt.interceptor';
 import { MaterialModule } from './shared/material.module';
+import { HeaderComponent } from './components/header/header.component';
+import { AsideComponent } from './components/aside/aside.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     DashboardComponent,
+    HeaderComponent,
+    AsideComponent,
   ],
   imports: [
     BrowserModule,

@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
         this.router.navigate(['/dashboard'])
         this.isSubmit = false
       },(err)=>{
-        if(err.status == 0) this.toastr.error('MAKE SURE YOUR SERVER IS UP!!','SERVER ERROR')
+        if(err.status == 0) this.toastr.error('SERVER ERROR')
         else if (err.status == 403) this.toastr.warning(err.error.detail)
         else this.toastr.error('Unknown Error')
         this.isSubmit = false
@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit {
             this.isLogin = !this.isLogin
             this.isSubmitRegister=false
           },(err)=>{
-            if(err.status == 0) this.toastr.error('MAKE SURE YOUR SERVER IS UP!!','SERVER ERROR')
+            if(err.status == 0) this.toastr.error('SERVER ERROR')
             else if (err.status == 409) this.toastr.warning(err.error.detail)
             else this.toastr.error('Unknown Error')
             this.isSubmitRegister=false

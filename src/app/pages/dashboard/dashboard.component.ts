@@ -20,7 +20,14 @@ export class DashboardComponent implements OnInit {
         this.email = res.email
       },
       (err)=>{
-        console.log(err)
+        let message = ''
+        if(err.error.details == "user does not exist"){
+          localStorage.removeItem('token')
+          message = err.error.detail
+        }else{
+          message = "An Error Ocurred!"
+        }
+        this.toastr.warning(message)
       })
   }
 
