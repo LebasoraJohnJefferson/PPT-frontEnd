@@ -1,4 +1,6 @@
 import { Component, OnInit,Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -8,13 +10,23 @@ import { Component, OnInit,Input } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Input() email:String =''
   isOptionOpen:boolean = false
-  constructor() { }
+  constructor(
+    private router:Router,
+    private toastr:ToastrService
+  ) { }
 
   ngOnInit(): void {
   }
 
   ToggleOptions(){
     this.isOptionOpen = !this.isOptionOpen
+  }
+
+  
+  logout(){
+    localStorage.removeItem('token')
+    this.router.navigate(['/'])
+    this.toastr.success("Logout Successfully")
   }
 
 }
