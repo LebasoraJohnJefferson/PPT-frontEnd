@@ -14,6 +14,7 @@ import { JwtInterceptor } from './interceptor/jwt.interceptor';
 import { MaterialModule } from './shared/material.module';
 import { HeaderComponent } from './components/header/header.component';
 import { AsideComponent } from './components/aside/aside.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { AsideComponent } from './components/aside/aside.component';
     DashboardComponent,
     HeaderComponent,
     AsideComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
