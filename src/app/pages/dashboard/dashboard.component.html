@@ -1,4 +1,51 @@
-<div class="w-full h-full">
+<div class="w-full h-screen flex flex-col">
     <app-header [email]="email"></app-header>
-    <app-aside></app-aside>
+    <div class="flex h-full">
+        <app-aside [isProject]="true" [content]="content" class="mx-3"></app-aside>
+        <main class="grid  mx-1 mt-2" >
+            <div class="flex flex-col overflow-x-scroll">
+                <h2 class="font-bold ">
+                    My Projects:
+                </h2>
+                <div class="flex overflow-x-scroll overflow-y-hidden h-full w-full ">
+                    <div class="py-5 h-full w-full mt-2" >
+                        <div class="h-full flex  items-center w-20 -my-3">
+                            <mat-icon class="text-5xl text-red-500">add_circle</mat-icon>
+                        </div>
+                    </div>
+                    <div class="py-5 h-full w-full mt-2" *ngFor="let _ of fakeArray">
+                        <div class="h-full  w-48 p-2 border rounded m-1 shadow-md" id="dashboard-outline">
+                            <h2>Lorem, ipsum dolor.</h2>
+                            <ol>
+                                <li><small>budget: 2000</small></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+
+            <div class="flex flex-col overflow-x-scroll">
+                <h2 class="font-bold">
+                    Project Joined:
+                </h2>
+                <div class="flex overflow-x-scroll overflow-y-hidden h-full w-full ">
+                    <div class="py-5 h-full w-full mt-2" >
+                        <div class="h-full flex pl-3 items-center w-20 -my-3">
+                            <mat-icon class="text-5xl text-red-500">group_add</mat-icon>
+                        </div>
+                    </div>
+                    <div class="py-5 h-full w-full mt-2" *ngFor="let _ of fakeArray">
+                        <div class="h-full  w-48 p-2 border rounded m-1 shadow-md" id="dashboard-outline">
+                            <h2>Lorem, ipsum dolor.</h2>
+                            <ol>
+                                <li><small>budget: 2000</small></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 </div>

@@ -9,6 +9,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  content:String = 'Friends'
+  fakeArray = new Array(10)
   email:string = ''
   constructor(
     private dashboardService:DashboardService,

@@ -1,11 +1,23 @@
-<div>
-    <div>list</div>
-    <div>list</div>
-    <div>list</div>
-    <div>list</div>
-    <div>list</div>
-    <div>list</div>
-    <div>list</div>
-    <div>list</div>
-    <div>list</div>
+<div [class]="isProject ? 'grid grid-rows-1 h-full' : 'grid grid-rows-2 h-full'" id="aside-container">
+    <div *ngIf="!isProject"  class="slice-1 mt-1 gap-1 border rounded shadow-md p-3" id="aside-outline">
+        <small>Projects:</small>
+        <ol *ngFor="let _ of fakeArray">
+            <li class="shadow-md border truncate rounded cursor-pointer w-full my-2 text-gray-500 p-2" id="card-online">Project 1</li>
+        </ol>
+    </div>
+    <div [class]="isProject ? 'slice-2 border my-1 gap-1 rounded shadow-md p-3' : 'slice-1 border my-1 gap-1 rounded shadow-md p-3'" id="aside-outline">
+        <small>{{content}}:</small>
+        <div *ngFor="let _ of fakeArray" class="flex border cursor-pointer my-2 h-12 shadow-md rounded w-full" id="card-online">
+            <div class="grid justify-center content-center px-2">
+                <img class="rounded-full" src="https://pbs.twimg.com/profile_images/1525302889606160384/xFfuzcJL_400x400.jpg" width="24" height="24" alt="profile">
+            </div>
+            <div class="grid justify-center content-center ">
+                <h5 class="text-sm truncate">ashley gosiengfiao</h5>
+                <div class="text-xs flex">
+                    <span class="flex my-1 w-2 h-2 mr-1 rounded-full bg-green-500 border border-gray-700"></span>
+                    <span>online</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

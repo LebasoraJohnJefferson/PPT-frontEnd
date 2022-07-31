@@ -15,6 +15,7 @@ import { MaterialModule } from './shared/material.module';
 import { HeaderComponent } from './components/header/header.component';
 import { AsideComponent } from './components/aside/aside.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ProjectComponent } from './pages/project/project.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { FooterComponent } from './components/footer/footer.component';
     HeaderComponent,
     AsideComponent,
     FooterComponent,
+    ProjectComponent,
   ],
   imports: [
     BrowserModule,
