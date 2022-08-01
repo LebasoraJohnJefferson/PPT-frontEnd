@@ -4,7 +4,6 @@ import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { ToastrModule } from 'ngx-toastr';
-import { HighchartsChartModule } from 'highcharts-angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './router/app-routing.module';
@@ -35,8 +34,7 @@ import { ProjectComponent } from './pages/project/project.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ToastrModule.forRoot(),
-    HighchartsChartModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true},
