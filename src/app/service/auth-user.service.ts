@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams , HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/env';
 import { Auth2 as AuthInterface2 , Auth as AuthInterface,ResponseToken } from '../interface/auth';
+import { UserUpdate } from "../interface/user"
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -25,5 +26,9 @@ export class AuthUser {
         headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
       }
     )
+  }
+
+  UpdateUser(details:UserUpdate):Observable<any>{
+    return this.http.put(`${this.baseURL}/users`,details)
   }
 }

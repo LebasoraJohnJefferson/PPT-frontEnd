@@ -11,6 +11,7 @@ export class AsideComponent implements OnInit {
   fakeArray = new Array(3)
   constructor() { }
 
+
   ngOnInit(): void {
   }
 

@@ -16,9 +16,9 @@
                 </div>
                 <div *ngIf="isOptionOpen" class="text-white origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none text-left border borde-red-300" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <div class="py-1" role="none">
-                    <a href="#" class="text-gray-700 block text-center py-2" role="menuitem" tabindex="-1" id="menu-item-0">hello{{email}}</a>
+                    <a href="#" class="text-gray-700 block text-center py-2" role="menuitem" tabindex="-1" id="menu-item-0">{{email}}</a>
                     <hr />
-                    <a href="#" class="flex align-center py-3 px-2 text-gray-700 block px-4 text-sm" role="menuitem" tabindex="-1" id="menu-item-1"><mat-icon>perm_identity</mat-icon><p class="flex justify-center py-1 px-2"> Account Settings</p></a>
+                    <div (click)="OpenAccountForm()" class="flex cursor-pointer align-center py-3 px-2 text-gray-700 block px-4 text-sm" role="menuitem" tabindex="-1" id="menu-item-1"><mat-icon>perm_identity</mat-icon><p class="flex justify-center py-1 ,px-2"> Account Settings</p></div>
                     <div (click)="logout()" class="flex align-center cursor-pointer text-gray-700 px-4 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">
                         <mat-icon>exit_to_app</mat-icon>
                         <span class="py-1 px-2">Sign out</span>
@@ -29,3 +29,22 @@
         </div>
     </div>
 </header>
+<div *ngIf="isAccountOpen" class="flex items-center justify-center  fixed top-0 left-0 w-full h-full z-2 bg-transparent-black">
+    <div class="bg-white w-full h-full md:h-4/5 p-3 md:w-1/2 rounded">
+        <form class="grid mx-4 gap-2 w-100" [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
+            <div (click)="OpenAccountForm()" class="flex justify-end items-center text-2xl font-bold text-red-700 cursor-pointer">x</div>
+            <h3 class="flex items-center justify-center font-bold text-xl">Edit Account</h3>
+           <label for="name"><small>Full Name:</small></label>
+           <input formControlName="full_name" class="rounded shadow-md py-1" id="formAccount-outline"/>
+           <label for="name"><small>Email:</small></label>
+           <input formControlName="email" class="rounded shadow-md py-1" id="formAccount-outline" />
+           <label for="name"><small>Address:</small></label>
+           <input formControlName="address" class="rounded shadow-md py-1" id="formAccount-outline" />
+           <label for="name"><small>Password:</small></label>
+           <input formControlName="password" class="rounded shadow-md py-1" id="formAccount-outline" />
+           <label for="name"><small>Confirm Password:</small></label>
+           <input formControlName="confirmPassword" class="rounded shadow-md py-1" id="formAccount-outline" />
+           <button class="flex justify-self-center justify-center align-center bg-green-700 hover:bg-green-500 text-white font-bold py-2 rounded w-1/2">Submit</button>
+        </form>
+    </div>
+</div>

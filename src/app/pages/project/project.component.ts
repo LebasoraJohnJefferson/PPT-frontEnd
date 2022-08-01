@@ -9,8 +9,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
-  email:String = ''
   @Input() content:String = "Contributors"
+  email:String = ''
   constructor(
     private toastr:ToastrService,
     private dashboardService:DashboardService

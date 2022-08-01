@@ -18,8 +18,8 @@ export class DashboardComponent implements OnInit {
     private toastr:ToastrService
   ){
     this.dashboardService.getCurrentUser()
-      .subscribe((res)=>{
-        this.email = res.email
+      .subscribe((res)=>{      
+          this.email = res.full_name ? res.full_name : res.email 
       },
       (err)=>{
         let message = ''
