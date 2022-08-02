@@ -16,6 +16,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { AsideComponent } from './components/aside/aside.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ProjectComponent } from './pages/project/project.component';
+import { CanvasComponent } from './components/canvas/canvas.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ProjectComponent } from './pages/project/project.component';
     AsideComponent,
     FooterComponent,
     ProjectComponent,
+    CanvasComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,8 @@
 <div class="w-full h-screen flex flex-col">
-    <app-header [email]="email"></app-header>
-    <div class="flex h-full">
-        <app-aside [isProject]="true" [content]="content" class="mx-3"></app-aside>
-        <main class="grid  mx-1 mt-2" >
+    <app-header class="sticky z-10 top-0 left-0" [email]="email"></app-header>
+    <div class="flex">
+        <app-aside class="mx-3 bg-white" [isProject]="true" [content]="content"></app-aside>
+        <main class="grid  mx-1 mt-2 mb-5 ">
             <div class="flex flex-col overflow-x-scroll">
                 <h2 class="font-bold ">
                     My Projects:
@@ -14,14 +14,12 @@
                         </div>
                     </div>
                     <div class="py-5 h-full w-full mt-2" *ngFor="let _ of fakeArray">
-                        <div class="h-full  w-48 p-2 border rounded m-1 shadow-md" id="dashboard-outline">
+                        <div class="flex flex-col  w-48 p-2 border rounded m-1 shadow-md" id="dashboard-outline">
                             <h2>Lorem, ipsum dolor.</h2>
-                            <ol>
-                                <li><small>budget: 2000</small></li>
-                                <li>
-                                    
-                                </li>
-                            </ol>
+                            <div class="h-full">
+                                <app-canvas></app-canvas>
+                            </div>
+                            <button class="py-2 m-1 bg-green-500 hover:bg-green-400 rounded">VISIT</button>
                         </div>
                     </div>
                 </div>
@@ -40,11 +38,13 @@
                         </div>
                     </div>
                     <div class="py-5 h-full w-full mt-2" *ngFor="let _ of fakeArray">
-                        <div class="h-full  w-48 p-2 border rounded m-1 shadow-md" id="dashboard-outline">
+                        <div class="flex flex-col  w-48 p-2 border rounded m-1 shadow-md" id="dashboard-outline">
                             <h2>Lorem, ipsum dolor.</h2>
-                            <ol>
-                                <li><small>budget: 2000</small></li>
-                            </ol>
+                            <div class="h-full">
+                                <app-canvas></app-canvas>
+                            </div>
+                            <button class="py-2 m-1 bg-green-500 hover:bg-green-400 rounded">VISIT</button>
+
                         </div>
                     </div>
                 </div>

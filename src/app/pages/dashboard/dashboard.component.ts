@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild  } from '@angular/core';
 import { DashboardService } from 'src/app/service/dashboard.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -12,11 +12,16 @@ export class DashboardComponent implements OnInit {
   content:String = 'Friends'
   fakeArray = new Array(10)
   email:string = ''
+ 
+
+
   constructor(
     private dashboardService:DashboardService,
     private router:Router,
     private toastr:ToastrService
   ){
+
+
     this.dashboardService.getCurrentUser()
       .subscribe((res)=>{      
           this.email = res.full_name ? res.full_name : res.email 
