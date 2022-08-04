@@ -1,8 +1,8 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AuthUser } from 'src/app/service/auth-user.service';
+import { GetUser } from 'src/app/service/header.service';
+
 
 
 @Component({
@@ -13,23 +13,30 @@ import { AuthUser } from 'src/app/service/auth-user.service';
 export class HeaderComponent implements OnInit {
   @Input() email:String =''
   isOptionOpen:boolean = false
-  isAccountOpen:boolean = false
   constructor(
     private router:Router,
     private toastr:ToastrService,
-    private fb:FormBuilder,
-    private authUser:AuthUser
-  ) { }
+    private getUser:GetUser,
+  ) { 
 
-
-  updateUserForm = this.fb.group({
-    email:[null,[Validators.required,Validators.email]],
-    password:[null,Validators.required],
-    confirmPassword:[null,Validators.required],
-    full_name:[null,Validators.required],
-    address:[null,Validators.required]
-
+    this.getUser.getCurrentUser()
+  .subscribe((res)=>{      
+      this.email = res.full_name ? res.full_name : res.email 
+  },
+  (err)=>{
+    if(err.status == 0){
+      this.toastr.error("SERVER ERROR")
+    }else if(err.status == 401){
+      localStorage.removeItem('token')
+      // this.router.navigate(['/']) //redirect any activities of user if the credential is not valid 
+      this.toastr.warning(err.error.detail)
+    }else{
+      this.toastr.warning("An Error Ocurred!")
+    }
   })
+
+  }
+
 
   ngOnInit(): void {
   }
@@ -44,24 +51,5 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/'])
     this.toastr.success("Logout Successfully")
   }
-
-  OpenAccountForm(){
-    this.isAccountOpen = !this.isAccountOpen
-  }
-
-  onSubmit(){
-    if(this.updateUserForm.valid){
-      this.authUser.UpdateUser(this.updateUserForm.value).subscribe(
-        (res)=>{
-            this.toastr.success("Successfully Updated!")
-        },
-        (err)=>{
-          if(err.status == 0) this.toastr.error('SERVER ERROR')
-          else if (err.status == 401) this.toastr.warning(err.error.detail)
-          else this.toastr.error('Unknown Error')
-        })
-        this.updateUserForm.reset()
-    }
-  }
-
+  
 }

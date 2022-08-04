@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardService {
+export class GetUser {
   baseURL:string = environment.baseURL
   constructor(
     private http:HttpClient

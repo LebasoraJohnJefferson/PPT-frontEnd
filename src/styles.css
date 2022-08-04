@@ -24,4 +24,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #aa1016;
+}
+
+  
+@media only screen and (max-width: 600px){
+  ::-webkit-scrollbar-track {
+    /* Track */
+    background-color: transparent;
   }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #aa1016;
+  }
+}

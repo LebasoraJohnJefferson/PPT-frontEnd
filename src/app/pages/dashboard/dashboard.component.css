@@ -1,5 +1,6 @@
 #dashboard-outline{
     outline: 1px solid rgba(0,0,0,.1);
+    width:230px;
 }
 
 #add-project{
@@ -9,5 +10,10 @@
 #card-container{
     width:75vw
 }
+
+#card-container{
+    width:250px;
+}
+
 
 
