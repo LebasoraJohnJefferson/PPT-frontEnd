@@ -8,11 +8,15 @@ import { Component, OnInit, Input } from '@angular/core';
 export class AsideComponent implements OnInit {
   @Input() content:String = ''
   @Input() isProject:boolean=true
-  fakeArray = new Array(3)
+  fakeArray = new Array(5)
+  isAsideOpen:boolean=true
   constructor() { }
 
 
   ngOnInit(): void {
   }
 
+  openAside(){
+    this.isAsideOpen = !this.isAsideOpen
+  }
 }

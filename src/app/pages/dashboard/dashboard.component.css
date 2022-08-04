@@ -1,3 +1,13 @@
 #dashboard-outline{
     outline: 1px solid rgba(0,0,0,.1);
 }
+
+#add-project{
+    width: 150px;
+}
+
+#card-container{
+    width:75vw
+}
+
+

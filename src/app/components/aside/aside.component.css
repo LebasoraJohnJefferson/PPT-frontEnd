@@ -18,3 +18,9 @@
 #aside-container{
     min-width:230px;
 }
+
+@media only screen and (max-width: 600px){
+    #aside-container{
+        width: 100vw;
+    }
+}
