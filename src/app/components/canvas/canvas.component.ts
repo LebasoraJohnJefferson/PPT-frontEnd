@@ -37,6 +37,9 @@ export class CanvasComponent implements OnInit {
         }],
           labels: ['2019', '2020', '2021', '2022']
       },
+      options: {
+        maintainAspectRatio: false,
+      }
 
   });
   }
