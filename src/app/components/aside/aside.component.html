@@ -7,13 +7,13 @@
             alt="profile" 
             class="rounded-full"/>
           </div>
-        <div class="font-bold text-white"><small>alodia</small></div>
+        <div class="font-bold text-white"><small>{{email}}</small></div>
       </div>
       <ol class="grid items-center gap-1 pt-2">
-        <li routerLink="/dashboard" class="cursor-pointer hover:bg-gray-200 py-1 flex items-center">
-          <mat-icon class="mx-3">dashboard</mat-icon><small>dashboard</small></li>
         <li routerLink="/dashboard/account"class="cursor-pointer hover:bg-gray-200 py-1 flex items-center">
           <mat-icon class="mx-3">settings</mat-icon><small>Account Settings</small></li>
+        <li routerLink="/dashboard" class="cursor-pointer hover:bg-gray-200 py-1 flex items-center">
+          <mat-icon class="mx-3">dashboard</mat-icon><small>dashboard</small></li>
         <li (click)="logout()" class="cursor-pointer py-1 hover:bg-gray-200 flex items-center">
           <mat-icon class="mx-3">exit_to_app</mat-icon><small>Log out</small></li>
       </ol>

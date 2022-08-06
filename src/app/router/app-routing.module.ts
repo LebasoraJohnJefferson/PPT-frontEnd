@@ -14,9 +14,10 @@ const routes:Routes = [
     children:[
       {path:"",component:OverviewComponent},
       {path:'account',component:AccountComponent}
-    ]
-  },  //canActivate: [AuthGuard]
-  {path:'dashboard/:project',component:ProjectComponent},
+    ],
+    // canActivate: [AuthGuard]
+  },  
+  {path:'dashboard',component:DashboardComponent},
   {path:'**',redirectTo:''}
 ]
 

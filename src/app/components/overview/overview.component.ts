@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./overview.component.css']
 })
 export class OverviewComponent implements OnInit {
-  fakeArray = new Array(5)
-  fakeArray2 = new Array(2)
+  fakeArray = new Array(4)
+  fakeArray2 = new Array(10)
   constructor() { }
 
   ngOnInit(): void {

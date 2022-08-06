@@ -1,13 +1,13 @@
 <header class="grid grid-rows-1 grid-cols-2 sticky top-0 left-0 w-full bg-red-400 grid-flow-col shadow-lg">
     <div class="flex items-end md:h-16 h-full ">
-        <img src="./assets/images/title.png" class='md:h-full h-2/3 pt-1 pl-3' alt="logo">
+        <img src="./assets/images/title.png" id="logo" class='md:h-full h-2/3 pt-1 pl-3' alt="logo">
     </div>
     <div class="grid grid-cols-4 py-2 grid-flow-row-dense w-full">
         <div class="flex col-span-3 justify-end align-items-center my-2 text-gray-700 grid-flow-col">
         <div class="flex justify-start items-center ml-3">
-            <mat-icon class="text-black text-2xl mx-3 "> chat_bubble_outline</mat-icon>
-            <mat-icon class="text-black text-2xl">notifications_none</mat-icon>
             <mat-icon class="text-black text-2xl mx-3"> people_outline</mat-icon>
+            <mat-icon class="text-black text-2xl">notifications_none</mat-icon>
+            <mat-icon class="text-black text-2xl mx-3 "> chat_bubble_outline</mat-icon>
             <mat-icon *ngIf="isNavBarOpen" class="text-black text-2xl" (click)="onClickAside()">menu</mat-icon>
             <mat-icon *ngIf="!isNavBarOpen" class="text-black text-2xl" (click)="onClickAside()">close</mat-icon>
         </div>

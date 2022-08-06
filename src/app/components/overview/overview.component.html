@@ -9,27 +9,27 @@
       </div>
     </div>
     <div
-      class="grid grid-flow-col gap-4 justify-center h-full overflow-x-scroll overflow-y-hidden"
+      class="flex h-full overflow-x-scroll overflow-y-hidden"
     >
-      <div class="grid gap-2 py-5 mt-2" *ngFor="let _ of fakeArray">
-        <div
-          class="flex flex-col w-48 p-2 border rounded m-1 shadow-md"
-          id="dashboard-outline"
-        >
-          <h2 class="font-bold mb-2 text-center truncate">
-            Lorem, ipsum dolor.
-          </h2>
-          <div class="h-full">
-            <app-canvas></app-canvas>
-          </div>
-          <button
-            class="font-bold py-2 m-1 bg-green-500 hover:bg-green-400 rounded"
-          >
-            VISIT
-          </button>
+    <div class="flex justify-center  gap-2 py-5 mt-2" *ngFor="let _ of fakeArray2">
+      <div
+        class="flex flex-col w-48 p-2 rounded m-1 shadow-md"
+        id="card-outline" 
+      >
+        <h2 class="font-bold mb-2 text-center truncate">
+          Lorem, ipsum dolor.
+        </h2>
+        <div class="h-full">
+          <app-canvas></app-canvas>
         </div>
+        <button
+          class="font-bold py-2 m-1 bg-green-500 hover:bg-green-400 rounded"
+        >
+          VISIT
+        </button>
       </div>
     </div>
+  </div>
     <div *ngIf="!fakeArray.length" id="Empty" class="flex font-bold text-2xl items-center w-100 justify-center pt-4">
       <div>NO PROJECT CREATED</div>
     </div>
@@ -46,12 +46,12 @@
           </div>
         </div>
         <div
-          class="grid grid-flow-col justify-center gap-4 h-full overflow-x-scroll overflow-y-hidden"
+          class="flex h-full overflow-x-scroll overflow-y-hidden"
         >
-          <div class="grid gap-2 py-5 mt-2" *ngFor="let _ of fakeArray2">
+          <div class="flex justify-center  gap-2 py-5 mt-2" *ngFor="let _ of fakeArray2">
             <div
-              class="flex flex-col w-48 p-2 border rounded m-1 shadow-md"
-              id="dashboard-outline"
+              class="flex flex-col w-48 p-2 rounded m-1 shadow-md"
+              id="card-outline" 
             >
               <h2 class="font-bold mb-2 text-center truncate">
                 Lorem, ipsum dolor.
