@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-aside',
@@ -6,17 +8,21 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./aside.component.css']
 })
 export class AsideComponent implements OnInit {
-  @Input() content:String = ''
-  @Input() isProject:boolean=true
   fakeArray = new Array(5)
-  isAsideOpen:boolean=true
-  constructor() { }
+  @Input() email:String = ''
+  constructor(
+    private toastr:ToastrService,
+    private router:Router
+  ) { }
 
 
   ngOnInit(): void {
   }
 
-  openAside(){
-    this.isAsideOpen = !this.isAsideOpen
+  
+  logout(){
+    localStorage.removeItem('token')
+    this.router.navigate(['/'])
+    this.toastr.success("Logout Successfully")
   }
 }

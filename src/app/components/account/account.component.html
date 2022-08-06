@@ -1,11 +1,6 @@
-<div class="w-screen overflow-hidden h-screen flex flex-col">
-    <app-header class="sticky z-10 top-0 left-0"></app-header>
-</div>
-
-<div *ngIf="isAccountOpen" class="flex items-center justify-center  fixed top-0 left-0 w-full h-full z-2 bg-transparent-black">
-    <div class="bg-white w-full h-full md:h-4/5 p-3 md:w-1/2 rounded">
+<div class="flex items-center p-1 justify-center w-full h-full z-2">
+    <div class="bg-white w-full h-full p-3 md:w-1/2 rounded shadow-md" id="form-layout">
         <form class="grid mx-4 gap-2 w-100" [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
-            <div (click)="OpenAccountForm()" class="flex justify-end items-center text-2xl font-bold text-red-700 cursor-pointer">x</div>
             <h3 class="flex items-center justify-center font-bold text-xl">Edit Account</h3>
            <label for="name"><small>Full Name:</small></label>
            <input formControlName="full_name" class="rounded shadow-md py-1" id="formAccount-outline"/>

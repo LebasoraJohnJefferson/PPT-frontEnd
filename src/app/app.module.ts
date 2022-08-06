@@ -17,7 +17,9 @@ import { AsideComponent } from './components/aside/aside.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { ProjectComponent } from './pages/project/project.component';
 import { CanvasComponent } from './components/canvas/canvas.component';
-import { AccountComponent } from './pages/account/account.component';
+import { OverviewComponent } from './components/overview/overview.component';
+import { AccountComponent } from './components/account/account.component';
+
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { AccountComponent } from './pages/account/account.component';
     ProjectComponent,
     CanvasComponent,
     AccountComponent,
+    OverviewComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,35 +4,13 @@
     </div>
     <div class="grid grid-cols-4 py-2 grid-flow-row-dense w-full">
         <div class="flex col-span-3 justify-end align-items-center my-2 text-gray-700 grid-flow-col">
-            <mat-icon> mail_outline</mat-icon>
-            <mat-icon class="mx-2">notifications_none</mat-icon>
+        <div class="flex justify-start items-center ml-3">
+            <mat-icon class="text-black text-2xl mx-3 "> chat_bubble_outline</mat-icon>
+            <mat-icon class="text-black text-2xl">notifications_none</mat-icon>
+            <mat-icon class="text-black text-2xl mx-3"> people_outline</mat-icon>
+            <mat-icon *ngIf="isNavBarOpen" class="text-black text-2xl" (click)="onClickAside()">menu</mat-icon>
+            <mat-icon *ngIf="!isNavBarOpen" class="text-black text-2xl" (click)="onClickAside()">close</mat-icon>
         </div>
-        <div class="flex justify-start">
-            <div  class="relative inline-block">
-                <div >
-                    <div class="h-10 w-10 rounded-full truncate border border-gray-700" id="menu-button" aria-expanded="true" aria-haspopup="true" (click)="ToggleOptions()">
-                    <img src="https://m.media-amazon.com/images/M/MV5BMDA0ZTgxM2MtMmRkNC00YWI0LWI2MzAtZDU5NTg5NWZiNjYxXkEyXkFqcGdeQXVyNTI5NjIyMw@@._V1_.jpg" alt="profile" class="rounded-full"/>
-                    </div>
-                </div>
-                <div *ngIf="isOptionOpen" class="text-white origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none text-left border borde-red-300" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-                    <div class="py-1" role="none">
-                    <a href="#" class="text-gray-700 block text-center py-2" role="menuitem" tabindex="-1" id="menu-item-0">{{email}}</a>
-                    <hr />
-                    <div routerLink="/dashboard" class="flex cursor-pointer hover:bg-gray-100 align-center py-2 px-2 text-gray-700 block px-4 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">
-                        <mat-icon>dashboard</mat-icon>
-                        <p class="flex justify-center py-1 px-2"> Dashboard</p>
-                    </div>
-                    <div routerLink="/account" class="flex cursor-pointer hover:bg-gray-100 align-center py-2 px-2 text-gray-700 block px-4 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">
-                        <mat-icon>perm_identity</mat-icon>
-                        <p class="flex justify-center py-1 px-2"> Account Settings</p>
-                    </div>
-                    <div (click)="logout()" class="flex align-center cursor-pointer hover:bg-gray-100 text-gray-700 py-2 px-4 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">
-                        <mat-icon>exit_to_app</mat-icon>
-                        <span class="py-1 px-2">Sign out</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </header>

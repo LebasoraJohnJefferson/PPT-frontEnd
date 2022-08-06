@@ -10,8 +10,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
-  email = 'example@gmail.com'
-  isAccountOpen:boolean = true
   updateUserForm = this.fb.group({
     email:[null,[Validators.required,Validators.email]],
     password:[null,Validators.required],
@@ -44,11 +42,6 @@ export class AccountComponent implements OnInit {
         })
         this.updateUserForm.reset()
     }
-  }
-
-  
-  OpenAccountForm(){
-    
   }
 
 

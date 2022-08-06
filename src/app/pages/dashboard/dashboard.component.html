@@ -1,80 +1,15 @@
 <div class="w-screen overflow-hidden h-screen flex flex-col">
-  <app-header class="sticky z-10 top-0 left-0"></app-header>
+  <app-header (OpenAside)="OpeningAside()" class="sticky z-10 top-0 left-0"></app-header>
   <div class="flex h-full w-full">
-    <app-aside
-      class="border border-l-0 border-t-0 shadow-md mr-3 bg-white"
-      [isProject]="true"
-      [content]="content"
-    ></app-aside>
     <main
       class="h-5/6 w-full grid mx-1 mt-2 overflow-y-scroll overflow-x-hidden"
     >
-      <!-- Projects Created -->
-      <div class="grid w-full">
-        <div class="flex items-center">
-          <div class="flex font-bold">
-            <h2 class="bg-purple-900 text-white rounded py-1 px-3 shadow-lg">
-              My Projects :
-            </h2>
-          </div>
-        </div>
-        <div
-          class="grid grid-flow-col gap-4 h-full overflow-x-scroll overflow-y-hidden"
-        >
-          <div class="grid gap-2 py-5 mt-2" *ngFor="let _ of fakeArray" id="card-container">
-            <div
-              class="flex flex-col p-2 border rounded m-1 shadow-md"
-              id="dashboard-outline"
-            >
-              <h2 class="font-bold mb-2 text-center truncate">
-                Lorem, ipsum dolor.
-              </h2>
-              <div class="h-full">
-                <app-canvas></app-canvas>
-              </div>
-              <button
-                class="font-bold py-2 m-1 bg-green-500 hover:bg-green-400 rounded"
-              >
-                VISIT
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- project joined -->
-
-      <div class="grid w-full">
-        <div class="flex items-center pt-4">
-          <div class="flex font-bold">
-            <h2 class="bg-purple-900 text-white rounded py-1 px-3 shadow-lg">
-              Projects Joined:
-            </h2>
-          </div>
-        </div>
-        <div
-          class="grid grid-flow-col gap-4 h-full overflow-x-scroll overflow-y-hidden"
-        >
-          <div class="grid gap-2 py-5 mt-2" *ngFor="let _ of fakeArray">
-            <div
-              class="flex flex-col w-48 p-2 border rounded m-1 shadow-md"
-              id="dashboard-outline"
-            >
-              <h2 class="font-bold mb-2 text-center truncate">
-                Lorem, ipsum dolor.
-              </h2>
-              <div class="h-full">
-                <app-canvas></app-canvas>
-              </div>
-              <button
-                class="font-bold py-2 m-1 bg-green-500 hover:bg-green-400 rounded"
-              >
-                VISIT
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <router-outlet></router-outlet>
     </main>
+    <app-aside
+      [email]="email"
+      class="shadow-md bg-white"
+      *ngIf="isAsideOpen"
+    ></app-aside>
   </div>
 </div>

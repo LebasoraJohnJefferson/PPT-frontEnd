@@ -1,56 +1,42 @@
-<div class="flex  justify-end items-center p-1 pt-3 bg-red-300">
-  <mat-icon class="text-black" (click)="openAside()">exit_to_app</mat-icon>
-</div>
-<div
-    *ngIf="isAsideOpen"
-  [class]="
-    isProject ? 'grid grid-rows-1 h-full over' : 'grid grid-rows-2 h-full'
-  "
-  id="aside-container"
->
-  <div *ngIf="!isProject" class="slice-1 mt-1 gap-1 p-3">
-    <div><small>Projects:</small></div>
-    <ol *ngFor="let _ of fakeArray">
-      <li
-        class="shadow-md border truncate rounded cursor-pointer w-full my-2 text-gray-500 p-2"
+<div class="grid w-full" id="aside-container">
+  <div class="grid">
+    <div class="grid">
+        <div class="flex flex-col items-center justify-center py-2 bg-gray-600">
+          <div id="profile" class="overflow-hidden rounded-full border-2 border-blue-300">
+            <img src="https://m.media-amazon.com/images/M/MV5BMDA0ZTgxM2MtMmRkNC00YWI0LWI2MzAtZDU5NTg5NWZiNjYxXkEyXkFqcGdeQXVyNTI5NjIyMw@@._V1_.jpg" 
+            alt="profile" 
+            class="rounded-full"/>
+          </div>
+        <div class="font-bold text-white"><small>alodia</small></div>
+      </div>
+      <ol class="grid items-center gap-1 pt-2">
+        <li routerLink="/dashboard" class="cursor-pointer hover:bg-gray-200 py-1 flex items-center">
+          <mat-icon class="mx-3">dashboard</mat-icon><small>dashboard</small></li>
+        <li routerLink="/dashboard/account"class="cursor-pointer hover:bg-gray-200 py-1 flex items-center">
+          <mat-icon class="mx-3">settings</mat-icon><small>Account Settings</small></li>
+        <li (click)="logout()" class="cursor-pointer py-1 hover:bg-gray-200 flex items-center">
+          <mat-icon class="mx-3">exit_to_app</mat-icon><small>Log out</small></li>
+      </ol>
+    </div>
+  </div>
+  <hr class="my-3"/>
+  <div class="grid px-3">
+    <small class="mx-3 my-1">Friends :</small>
+    <div
+        *ngFor="let _ of fakeArray"
+        class="flex border cursor-pointer my-1 h-12 shadow-md rounded w-full"
         id="card-online"
       >
-        Project 1
-      </li>
-    </ol>
-  </div>
-
-  <!-- friends -->
-  <div
-    [class]="
-      isProject ? 'slice-2 my-1 gap-1 p-3 overflow-y-scroll' : 'slice-1  my-1 gap-1 rounded  p-3 overflow-y-scroll'
-    "
-  >
-    <small>{{ content }}:</small>
-    <div
-      *ngFor="let _ of fakeArray"
-      class="flex border cursor-pointer my-2 h-12 shadow-md rounded w-full"
-      id="card-online"
-    >
-      <div class="grid justify-center content-center px-2">
-        <img
-          class="rounded-full"
-          src="https://pbs.twimg.com/profile_images/1525302889606160384/xFfuzcJL_400x400.jpg"
-          width="24"
-          height="24"
-          alt="profile"
-        />
-      </div>
-      <div class="grid justify-center content-center">
-        <h5 class="text-sm truncate">ashley gosiengfiao</h5>
-        <div class="text-xs flex">
-          <span
-            class="flex my-1 w-2 h-2 mr-1 rounded-full bg-green-500 border border-gray-700"
-          ></span>
-          <span>online</span>
+        <div class="grid justify-center content-center px-2">
+          <div class="grid">
+            <div class="flex relative border-2 border-green-500 bg-gray-800 rounded-full overflow-hidden" id="friend-profile">
+              <img  class="bg-gray-500  shadow-sm" src="https://pbs.twimg.com/profile_images/1525302889606160384/xFfuzcJL_400x400.jpg" alt="user image"/>
+            </div>
+          </div>
+        </div>
+        <div class="grid justify-center content-center">
+          <h5 class="text-sm truncate">ashley gosiengfiao</h5>
         </div>
       </div>
-    </div>
-    <div class="py-3"></div>
   </div>
 </div>
