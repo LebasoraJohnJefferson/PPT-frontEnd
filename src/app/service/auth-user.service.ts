@@ -19,7 +19,6 @@ export class AuthUser {
   }
   
   LoginUser(details:AuthInterface2):Observable<ResponseToken>{
-    console.log(details)
     const body = new HttpParams().set("username",details.username).set("password",details.password)
     return this.http.post<ResponseToken>(`${this.baseURL}/login`,body.toString(),
       {
@@ -28,7 +27,18 @@ export class AuthUser {
     )
   }
 
-  UpdateUser(details:UserUpdate):Observable<any>{
+  UpdateUser(details:UserUpdate,res:any):Observable<any>{
+    details.image = res
     return this.http.put(`${this.baseURL}/users`,details)
+  }
+
+  getCurrentUser():Observable<any>{
+    return this.http.get<any>(`${this.baseURL}/users`)
+  }
+
+  uploadImage(file:File):Observable<string>{
+    const formData = new FormData()
+    formData.append("file", file, file.name);
+    return this.http.post<string>(`${this.baseURL}/upload`,formData)
   }
 }

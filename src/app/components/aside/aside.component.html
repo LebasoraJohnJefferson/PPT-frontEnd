@@ -2,18 +2,19 @@
   <div class="grid">
     <div class="grid">
         <div class="flex flex-col items-center justify-center py-2 bg-gray-600">
-          <div id="profile" class="overflow-hidden rounded-full border-2 border-blue-300">
-            <img src="https://m.media-amazon.com/images/M/MV5BMDA0ZTgxM2MtMmRkNC00YWI0LWI2MzAtZDU5NTg5NWZiNjYxXkEyXkFqcGdeQXVyNTI5NjIyMw@@._V1_.jpg" 
+          <div id="profile" class="overflow-hidden bg-white rounded-full border-2 border-blue-300">
+            <img src="{{imgSrc ? 'https://m.media-amazon.com/images/M/MV5BMDA0ZTgxM2MtMmRkNC00YWI0LWI2MzAtZDU5NTg5NWZiNjYxXkEyXkFqcGdeQXVyNTI5NjIyMw@@._V1_.jpg' : './assets/images/profile_thumb.png'}}" 
             alt="profile" 
             class="rounded-full"/>
+            class="rounded-full"/>
           </div>
-        <div class="font-bold text-white"><small>{{email}}</small></div>
+        <div class="font-bold text-white truncate"><small>{{email}}</small></div>
       </div>
       <ol class="grid items-center gap-1 pt-2">
-        <li routerLink="/dashboard/account"class="cursor-pointer hover:bg-gray-200 py-1 flex items-center">
-          <mat-icon class="mx-3">settings</mat-icon><small>Account Settings</small></li>
         <li routerLink="/dashboard" class="cursor-pointer hover:bg-gray-200 py-1 flex items-center">
           <mat-icon class="mx-3">dashboard</mat-icon><small>dashboard</small></li>
+        <li routerLink="/dashboard/account"class="cursor-pointer hover:bg-gray-200 py-1 flex items-center">
+          <mat-icon class="mx-3">settings</mat-icon><small>Account Settings</small></li>
         <li (click)="logout()" class="cursor-pointer py-1 hover:bg-gray-200 flex items-center">
           <mat-icon class="mx-3">exit_to_app</mat-icon><small>Log out</small></li>
       </ol>
