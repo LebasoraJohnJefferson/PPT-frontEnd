@@ -11,6 +11,7 @@ import { AuthUser } from 'src/app/service/auth-user.service';
 })
 export class DashboardComponent implements OnInit {
   isAsideOpen:boolean = false
+  path:string = ''
   email:string = ''
   
  
@@ -20,7 +21,8 @@ export class DashboardComponent implements OnInit {
   ){
     this.getUser.getCurrentUser()
   .subscribe((res)=>{      
-      // this.email = res.full_name ? res.full_name : res.email 
+      this.email = res.full_name ? res.full_name : res.email 
+      this.path = res.path ? res.path : "./assets/images/profile_thumb.png" 
       console.log(res)
   },
   (err)=>{

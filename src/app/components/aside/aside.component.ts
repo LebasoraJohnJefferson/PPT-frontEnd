@@ -10,6 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AsideComponent implements OnInit {
   fakeArray = new Array(5)
   @Input() email:String = ''
+  @Input() path:String = ''
   imgSrc:String = ''
   constructor(
     private toastr:ToastrService,
