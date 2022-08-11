@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams , HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/env';
 import { Auth2 as AuthInterface2 , Auth as AuthInterface,ResponseToken } from '../interface/auth';
-import { UserUpdate } from "../interface/user"
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -27,18 +26,14 @@ export class AuthUser {
     )
   }
 
-  UpdateUser(details:UserUpdate,res:any):Observable<any>{
-    details.image = res
-    return this.http.put(`${this.baseURL}/users`,details)
-  }
-
   getCurrentUser():Observable<any>{
     return this.http.get<any>(`${this.baseURL}/users`)
   }
 
-  uploadImage(file:File):Observable<string>{
+  UpdateUser(file:File,form:any):Observable<string>{
     const formData = new FormData()
-    formData.append("file", file, file.name);
-    return this.http.post<string>(`${this.baseURL}/upload`,formData)
+    if(file) formData.append("file", file, file.name);
+    formData.append("form",JSON.stringify(form))
+    return this.http.put<string>(`${this.baseURL}/users`,formData)
   }
 }

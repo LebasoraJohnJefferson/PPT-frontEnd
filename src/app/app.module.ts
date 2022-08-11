@@ -32,7 +32,7 @@ import { AccountComponent } from './components/account/account.component';
     ProjectComponent,
     CanvasComponent,
     AccountComponent,
-    OverviewComponent,
+    OverviewComponent
   ],
   imports: [
     BrowserModule,

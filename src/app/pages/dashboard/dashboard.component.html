@@ -4,7 +4,9 @@
     <main
       class="h-full w-full"
     >
-      <router-outlet></router-outlet>
+      <router-outlet 
+      (activate)="subscribeToEmitter($event)" 
+      (deactivate)="unsubscribe($event)"></router-outlet>
     </main>
     <app-aside
       [email]="email"
