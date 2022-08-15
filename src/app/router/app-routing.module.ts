@@ -7,13 +7,15 @@ import { AuthGuardService as AuthGuard } from '../auth/auth-guard.service';
 import { ProjectComponent } from '../pages/project/project.component';
 import { AccountComponent } from '../components/account/account.component';
 import { OverviewComponent } from '../components/overview/overview.component';
+import { MessagesComponent } from '../components/messages/messages.component';
 
 const routes:Routes = [
   {path:'',component:HomeComponent},
   {path:'dashboard',component:DashboardComponent,
     children:[
       {path:"",component:OverviewComponent},
-      {path:'account',component:AccountComponent}
+      {path:'account',component:AccountComponent},
+      {path:"messages/:friend_id",component:MessagesComponent}
     ],
     // canActivate: [AuthGuard]
   },  

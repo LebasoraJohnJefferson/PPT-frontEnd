@@ -19,6 +19,7 @@ import { ProjectComponent } from './pages/project/project.component';
 import { CanvasComponent } from './components/canvas/canvas.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { AccountComponent } from './components/account/account.component';
+import { MessagesComponent } from './components/messages/messages.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { AccountComponent } from './components/account/account.component';
     ProjectComponent,
     CanvasComponent,
     AccountComponent,
-    OverviewComponent
+    OverviewComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
