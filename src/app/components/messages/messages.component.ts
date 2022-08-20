@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
-
+  fakeArray = new Array(5)
   constructor() { }
 
   ngOnInit(): void {
