@@ -15,10 +15,16 @@
 }
 
 #message-container{
-    height: 64vh;
+    height: 65vh;
 }
 
 #message-input{
     outline: 0.5px solid rgba(0,0,0,.3);
     text-indent:10px;
+}
+
+@media only screen and (max-width: 600px){
+    #message-container{
+        height: 70vh;
+    }
 }
