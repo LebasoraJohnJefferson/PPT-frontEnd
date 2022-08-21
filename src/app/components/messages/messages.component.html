@@ -1,77 +1,43 @@
-<main class="grid auto-rows-max h-full w-full">
+<main class="grid auto-rows-max h-full w-full" *ngIf="!isNotConversion">
     <!-- header -->
     <div class="grid w-full overflow-x-hidden">
         <div class="flex items-center w-full bg-gray-600 h-24 py-1 text-white p-3">
-            <div class="flex relative border-2 border-green-500 bg-gray-800 rounded-full overflow-hidden" id="friend-profile">
-                <img  class="bg-gray-500  shadow-sm" src="https://pbs.twimg.com/profile_images/1525302889606160384/xFfuzcJL_400x400.jpg" alt="user image"/>
+            <div class="flex border-2 border-green-500 bg-gray-800 rounded-full overflow-hidden" id="friend-profile">
+                <img  class="w-full h-full bg-gray-500 shadow-sm" [src]="profileImageOfUserGoingToMessage" alt="user_profile"/>
             </div>
             <div class="px-3 w-56">
-                <div>ashley </div>
+                <div class="w-full">{{nameOfUserGoingToMessage}}</div>
                 <small class="text-green-300">online 1min ago</small>
             </div>
         </div>
     </div>
-    <div class="grid w-full overflow-y-scroll" id="message-container">
-        <div class="" *ngFor="let _ of fakeArray">
-            <div class="flex items-center p-2">
-                    <img class="rounded-full" src="https://m.media-amazon.com/images/M/MV5BMDA0ZTgxM2MtMmRkNC00YWI0LWI2MzAtZDU5NTg5NWZiNjYxXkEyXkFqcGdeQXVyNTI5NjIyMw@@._V1_.jpg" alt="profile" id="friend-profile-ms"/>
-                    <p class="ml-3">alodia</p>
-                    <p class="px-3">|</p>
-                    <small> Sent: Sun 8:00 pm</small>
+    <div class="flex flex-col-reverse w-full overflow-y-scroll" id="message-container">
+        <div *ngFor="let message of messages">
+            <div [class]="message.sender.email != EmailOfUserGoingToMessage ?  'flex justify-end' : 'flex'">
+                <div class="w-full md:w-1/2 mx-3">
+                    <div class="flex items-center p-2">
+                            <img class="rounded-full" [src]="message.sender.image ? domain+'/users/profiles/'+message.sender.image : image_default" alt="profile" id="friend-profile-ms"/>
+                            <p class="ml-3 w-40 truncate">{{message.sender.full_name ? message.sender.full_name : message.sender.email}}</p>
+                            <p class="px-3">|</p>
+                            <small> {{message.sent | date:'medium'}}</small>
+                    </div>
+                    <p [class]="message.sender.email != EmailOfUserGoingToMessage ? 'rounded shadow-md ml-2 mb-2 p-3 bg-blue-400' : 'rounded shadow-md ml-2 mb-2 p-3 bg-gray-200'">
+                        {{message.message}}
+                    </p>
+                </div>
             </div>
-            <p class="rounded shadow-md ml-2 mb-2 p-3 w-full md:w-1/2 bg-gray-200">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore incidunt pariatur vitae libero eius delectus natus beatae sapiente iusto,</p>
         </div>  
+        <div class="flex w-full h-full justify-center items-center" *ngIf="!messages.length">
+            <p class="text-xl font-extrabold drop-shadow-md shadow-blue-600/50">No Conversion!</p>
+        </div>
     </div>
-    <form class="grid gap-3 mx-2 grid-cols-5 fixed bottom-2 w-full h-12">
-        <input class="col-span-4 h-full w-full rounded shadow-md bg-red-200" id="message-input"/>
+    <form class="grid gap-3 mx-2 grid-cols-5 fixed bottom-2 w-full h-12" (ngSubmit)="onSubmit()" [formGroup]="sendMessage">
+        <input formControlName="message" class="col-span-4 h-full w-full rounded shadow-md bg-red-200" id="message-input"/>
         <button class="bg-black mr-5 rounded text-white hover:bg-white hover:text-black border border-black">
             <mat-icon class="text-xl md:text-3xl">send</mat-icon>
         </button>
     </form>
 </main>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!--
-        <div class="flex flex-col w-full h-96 overflow-y-scroll">
-            <div class="w-full">
-                <div class="ml-3 py-2 rounded  w-4/5 md:w-1/2">
-                    <div class="flex item-center pl-3">
-                        <div class="flex items-center">
-                            <div class="px-2">alodia</div>
-                        </div>
-                    </div>
-                    <div class="pl-3 ml-4 mt-1 rounded  py-2  bg-gray-300">
-                        <p>
-                            message here
-                        </p>
-                        <small class="text-green-300 bg-gray-500 px-2 rounded">sent: 1min</small>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <form class="flex w-full">
-            <textarea class="rounded mb-1 ml-1" id="message-area"></textarea>
-            <button class="flex justify-center hover:bg-red-300 hover:text-black pt-2 w-24 border-2 bg-black text-white rounded mb-1 ml-1">
-                <mat-icon class="text-4xl">send</mat-icon>
-            </button> 
-        </form> -->
+<main class="flex w-full h-full justify-center items-center" *ngIf="isNotConversion">
+    <p class="text-xl font-extrabold drop-shadow-md shadow-blue-600/50">No Conversion For Yourself!!</p>
+</main>

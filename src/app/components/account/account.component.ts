@@ -2,6 +2,7 @@ import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthUser } from 'src/app/service/auth-user.service';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/env';
 
 
 @Component({
@@ -10,10 +11,10 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./account.component.css']
 })
 export class AccountComponent implements OnInit {
+  path:string = environment.default_profile
   uploadFile:any;
-  @Output() updateInfo =  new EventEmitter()
   isSubmitRegister=false;
-  path:string = "./assets/images/profile_thumb.png"
+  @Output() updateInfo =  new EventEmitter()
   updateUserForm = this.fb.group({
     email:[null,[Validators.required,Validators.email]],
     newPassword:[null,Validators.required],
