@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private toastr:ToastrService,
     private getUser:AuthUser,
+    private router:Router
   ){
     this.getUserData()
   }
@@ -42,7 +43,7 @@ export class DashboardComponent implements OnInit {
         this.toastr.error("SERVER ERROR")
       }else if(err.status == 401){
         localStorage.removeItem('token')
-        // this.router.navigate(['/']) //redirect any activities of user if the credential is not valid 
+        this.router.navigate(['/']) //redirect any activities of user if the credential is not valid 
         this.toastr.warning(err.error.detail)
       }else{
         this.toastr.warning("An Error Ocurred!")

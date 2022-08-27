@@ -17,7 +17,7 @@ const routes:Routes = [
       {path:'account',component:AccountComponent},
       {path:"messages/:friend_id",component:MessagesComponent}
     ],
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },  
   {path:'dashboard',component:DashboardComponent},
   {path:'**',redirectTo:''}

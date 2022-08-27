@@ -4,6 +4,11 @@ import { MessagesService } from 'src/app/service/messages.service';
 import { environment } from 'src/env';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { SocketService } from 'src/app/service/socket.service';
+import { AuthUser } from 'src/app/service/auth-user.service';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+
 
 
 @Component({
@@ -19,7 +24,8 @@ export class MessagesComponent implements OnInit {
   nameOfUserGoingToMessage:string =''
   profileImageOfUserGoingToMessage:string =''
   EmailOfUserGoingToMessage:string =''
-  isNotConversion:boolean = false
+  getUser: Subscription = new Subscription()
+  msg: Subscription = new Subscription()
   sendMessage = this.fb.group({
     message:[null,Validators.required]
   })
@@ -28,21 +34,35 @@ export class MessagesComponent implements OnInit {
     private route:ActivatedRoute,
     private messageService:MessagesService,
     private fb:FormBuilder,
-    private toastr:ToastrService
-  ) { 
-    this.getMessageDetails()
+    private toastr:ToastrService,
+    private sockets:SocketService,
+    private authUser:AuthUser,
+    private router:Router
+  ) {
+    this.getUser = this.authUser.getCurrentUser().subscribe(res=>{
+      this.sockets.join('join',res.email)
+    })
+    this.msg = this.sockets.messageNotify().subscribe(()=>{
+      this.getMessageDetails()
+    })
   }    
 
   ngOnInit(): void {
+    
+  }
+
+  
+  ngOnDestroy() {
+    this.getUser.unsubscribe();
+    this.msg.unsubscribe();
   }
 
 
   onSubmit(){
     if(this.sendMessage.valid && this.sendMessage.get('message')?.value.trim()){
-      console.log(this.sendMessage.value)
       this.messageService.sendMessages(this.route.snapshot.params.friend_id,this.sendMessage.value)
       .subscribe((res)=>{
-        this.getMessageDetails()
+        this.sockets.join('join',this.EmailOfUserGoingToMessage)
         this.sendMessage.reset()
       },(err)=>{
         this.toastr.error(err.error.detail)
@@ -54,15 +74,17 @@ export class MessagesComponent implements OnInit {
 
 
 
+
   getMessageDetails(){
-    this.messageService.getMessages(this.route.snapshot.params.friend_id).subscribe((res)=>{
+    this.messageService.getMessages(this.route.snapshot.params.friend_id)
+    .subscribe((res)=>{
       this.messages = res.conversion
       this.nameOfUserGoingToMessage = res.friend.full_name ? res.friend.full_name : res.friend.email 
       this.profileImageOfUserGoingToMessage = res.friend.image ? `${this.domain}/users/profiles/${res.friend.image}` : this.image_default
       this.EmailOfUserGoingToMessage = res.friend.email
     },(err)=>{
-      this.isNotConversion = true
       this.toastr.error(err.error.detail)
+      this.router.navigate(['/'])
     })
   }
 }

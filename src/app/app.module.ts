@@ -4,6 +4,8 @@ import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { ToastrModule } from 'ngx-toastr';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from 'src/env';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './router/app-routing.module';
@@ -21,6 +23,13 @@ import { OverviewComponent } from './components/overview/overview.component';
 import { AccountComponent } from './components/account/account.component';
 import { MessagesComponent } from './components/messages/messages.component';
 
+const token = localStorage.getItem('token') || ''
+const config: SocketIoConfig = { url: environment.baseURL,
+    options: {
+      // Socket.IO client options
+      transports:["websocket","polling"],
+      path:'/subapi/socket.io/'
+    }};
 
 @NgModule({
   declarations: [
@@ -43,7 +52,8 @@ import { MessagesComponent } from './components/messages/messages.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true},

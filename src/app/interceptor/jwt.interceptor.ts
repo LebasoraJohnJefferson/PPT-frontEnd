@@ -17,7 +17,7 @@ export class JwtInterceptor implements HttpInterceptor {
     let authServe = this.inject.get(AuthService)
     let jwtToken = request.clone({
       setHeaders:{
-        Authorization: 'bearer '+authServe.getToken()
+        Authorization: 'bearer '+authServe.getToken(),
       }
     })
     return next.handle(jwtToken);
