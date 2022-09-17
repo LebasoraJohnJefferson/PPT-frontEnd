@@ -9,12 +9,13 @@ const materialModules = [
 ]
 
 @NgModule({
-  declarations: [],
+  declarations: [  
+  ],
   imports: [
     ...materialModules,
     CommonModule
   ],exports:[
-    ...materialModules
+    ...materialModules,
   ]
 })
 export class MaterialModule { }

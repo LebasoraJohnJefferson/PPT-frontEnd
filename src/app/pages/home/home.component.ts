@@ -45,10 +45,7 @@ export class HomeComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    let token = localStorage.getItem('token') || ''
-    if(token != ''){
-      this.router.navigate(['/dashboard'])
-    }
+    
   }
 
   // open the login form

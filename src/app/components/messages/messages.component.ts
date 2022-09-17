@@ -24,8 +24,10 @@ export class MessagesComponent implements OnInit {
   nameOfUserGoingToMessage:string =''
   profileImageOfUserGoingToMessage:string =''
   EmailOfUserGoingToMessage:string =''
+  status:any;
   getUser: Subscription = new Subscription()
   msg: Subscription = new Subscription()
+  isFriendOnline: Subscription = new Subscription()
   sendMessage = this.fb.group({
     message:[null,Validators.required]
   })
@@ -37,15 +39,21 @@ export class MessagesComponent implements OnInit {
     private toastr:ToastrService,
     private sockets:SocketService,
     private authUser:AuthUser,
-    private router:Router
+    private router:Router,
   ) {
+    // enter users own room
     this.getUser = this.authUser.getCurrentUser().subscribe(res=>{
-      this.sockets.join('join',res.email)
+      this.sockets.join('joinRoom',res.email)
     })
+    //enter friend room
+    this.sockets.join('joinRoom',this.route.snapshot.params.email)
     this.msg = this.sockets.messageNotify().subscribe(()=>{
       this.getMessageDetails()
     })
-  }    
+    this.isFriendOnline = this.sockets.friendStatus().subscribe((res)=>{
+      this.status = res.status
+    })
+    }    
 
   ngOnInit(): void {
     
@@ -55,14 +63,15 @@ export class MessagesComponent implements OnInit {
   ngOnDestroy() {
     this.getUser.unsubscribe();
     this.msg.unsubscribe();
+    this.isFriendOnline.unsubscribe()
   }
 
 
   onSubmit(){
     if(this.sendMessage.valid && this.sendMessage.get('message')?.value.trim()){
-      this.messageService.sendMessages(this.route.snapshot.params.friend_id,this.sendMessage.value)
+      this.messageService.sendMessages(this.route.snapshot.params.email,this.sendMessage.value)
       .subscribe((res)=>{
-        this.sockets.join('join',this.EmailOfUserGoingToMessage)
+        this.sockets.join('joinRoom',this.EmailOfUserGoingToMessage)
         this.sendMessage.reset()
       },(err)=>{
         this.toastr.error(err.error.detail)
@@ -76,7 +85,8 @@ export class MessagesComponent implements OnInit {
 
 
   getMessageDetails(){
-    this.messageService.getMessages(this.route.snapshot.params.friend_id)
+    this.sockets.join('isFriendOnline',this.route.snapshot.params.email)
+    this.messageService.getMessages(this.route.snapshot.params.email)
     .subscribe((res)=>{
       this.messages = res.conversion
       this.nameOfUserGoingToMessage = res.friend.full_name ? res.friend.full_name : res.friend.email 
@@ -84,7 +94,7 @@ export class MessagesComponent implements OnInit {
       this.EmailOfUserGoingToMessage = res.friend.email
     },(err)=>{
       this.toastr.error(err.error.detail)
-      this.router.navigate(['/'])
+      this.router.navigate(['/dashboard'])
     })
   }
 }

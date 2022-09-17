@@ -11,11 +11,13 @@ export class AsideComponent implements OnInit {
   fakeArray = new Array(5)
   @Input() email:String = ''
   @Input() path:String = ''
+  @Input() listOfFriend:any
   imgSrc:String = ''
   constructor(
     private toastr:ToastrService,
     private router:Router
-  ) { }
+  ) { 
+  }
 
 
   ngOnInit(): void {

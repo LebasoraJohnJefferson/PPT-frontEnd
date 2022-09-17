@@ -15,6 +15,8 @@ export class AccountComponent implements OnInit {
   uploadFile:any;
   isSubmitRegister=false;
   @Output() updateInfo =  new EventEmitter()
+
+  // form validators
   updateUserForm = this.fb.group({
     email:[null,[Validators.required,Validators.email]],
     newPassword:[null,Validators.required],
@@ -35,6 +37,8 @@ export class AccountComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  // update the profile Info
   onSubmit(){
     if(this.updateUserForm.valid){
       this.isSubmitRegister = true
@@ -55,6 +59,7 @@ export class AccountComponent implements OnInit {
     }
   }
 
+  // load uploaded profile image
   onChange(event:any){
     this.uploadFile = event.target.files[0]
     if(!event.target.files[0] || event.target.files[0].length == 0) {
@@ -77,11 +82,15 @@ export class AccountComponent implements OnInit {
 		}
 	}
 
+
+  //open the image input through image icons
   imgProfileBtn(){
     let element: HTMLElement = document.querySelector('input[type="file"]') as HTMLElement;
     if (element) element.click();
   }
 
+
+  //initialize the details of user
   getUserData(){
     this.authUser.getCurrentUser()
     .subscribe((res)=>{

@@ -2,12 +2,14 @@
     <!-- header -->
     <div class="grid w-full overflow-x-hidden">
         <div class="flex items-center w-full bg-gray-600 h-24 py-1 text-white p-3">
-            <div class="flex border-2 border-green-500 bg-gray-800 rounded-full overflow-hidden" id="friend-profile">
+            <div 
+            [class]="status == 'online' ?  'flex border-2 border-green-500 bg-gray-800 rounded-full overflow-hidden' : 'flex border-2 border-red-500 bg-gray-800 rounded-full overflow-hidden'"
+            id="friend-profile">
                 <img  class="w-full h-full bg-gray-500 shadow-sm" [src]="profileImageOfUserGoingToMessage" alt="user_profile"/>
             </div>
             <div class="px-3 w-56">
                 <div class="w-full">{{nameOfUserGoingToMessage}}</div>
-                <small class="text-green-300">online 1min ago</small>
+                <small class="status == 'online' ? 'text-green-300' : 'text-red-300'">{{status}}</small>
             </div>
         </div>
     </div>
@@ -33,7 +35,7 @@
     </div>
     <form class="grid gap-3 mx-2 grid-cols-5 fixed bottom-2 w-full h-12" (ngSubmit)="onSubmit()" [formGroup]="sendMessage">
         <input formControlName="message" class="col-span-4 h-full w-full rounded shadow-md bg-red-200" id="message-input"/>
-        <button class="bg-black mr-5 rounded text-white hover:bg-white hover:text-black border border-black">
+        <button class="bg-green-700 mr-5 rounded text-white hover:bg-green-500 hover:text-black border border-black">
             <mat-icon class="text-xl md:text-3xl">send</mat-icon>
         </button>
     </form>

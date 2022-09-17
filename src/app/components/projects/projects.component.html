@@ -1,0 +1,21 @@
+<div class="h-screen">
+    <div id="container" class="grid grid-row-2 py-3 m-0 md:m-2 bg-gray-100 shodow-md rounded">
+        <div class="flex justify-center align-center font-bold">
+            {{projectName }}
+        </div>
+        <div class="flex align-center justify-center md:justify-start">
+            <div class="flex align-center justify-center mx-3 cursor-pointer" (click)="addTask()">
+                <mat-icon>add</mat-icon>
+                <small class="ml-1 py-1">ADD</small>
+            </div>
+            <div class="flex align-center justify-center mx-3 cursor-pointer" (click)="addTask()">
+                <mat-icon>edit</mat-icon>
+                <small class="ml-1 py-1">EDIT</small>
+            </div>
+            <div class="flex align-center justify-center mx-3 cursor-pointer" (click)="addTask()">
+                <mat-icon>delete</mat-icon>
+                <small class="ml-1 py-1">DELETE</small>
+            </div>
+        </div>
+    </div>
+</div>

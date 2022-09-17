@@ -1,36 +1,37 @@
 <div class="h-5/6  mx-1 mt-2 overflow-y-scroll overflow-x-hidden">
 <!-- Projects Created -->
 <div class="grid w-full">
-    <div *ngIf="fakeArray" class="flex items-center pt-4">
-      <div class="flex font-bold ml-5">
+    <div  class="flex items-center pt-4">
+      <div class="flex font-bold ml-5 ">
         <h2 class="bg-purple-900 text-white rounded py-1 px-3 shadow-lg">
           Projects Created:
         </h2>
+        <mat-icon (click)="createFormOpen()" class="text-green-700 hover:text-green-500 mx-3 text-3xl">queue</mat-icon>
       </div>
     </div>
     <div
       class="flex h-full overflow-x-scroll overflow-y-hidden"
     >
-    <div class="flex justify-center  gap-2 py-5 mt-2" *ngFor="let _ of fakeArray">
+    <div class="flex justify-center  gap-2 py-5 mt-2" *ngFor="let projectInfo of listOfProjectCreated">
       <div
         class="flex flex-col w-48 p-2 rounded m-1 shadow-md"
         id="card-outline" 
       >
         <h2 class="font-bold mb-2 text-center truncate">
-          Lorem, ipsum dolor.
+          {{projectInfo.project_name}}
         </h2>
         <div class="h-full">
           <app-canvas></app-canvas>
         </div>
-        <button
-          class="font-bold py-2 m-1 bg-green-500 hover:bg-green-400 rounded"
+        <div routerLink="/dashboard/projects/{{projectInfo.project_name}}"
+          class="text-center font-bold py-2 m-1 bg-green-500 hover:bg-green-400 rounded"
         >
           VISIT
-        </button>
+        </div>
       </div>
     </div>
   </div>
-    <div *ngIf="!fakeArray.length" id="Empty" class="flex font-bold text-2xl items-center w-100 justify-center pt-4">
+    <div *ngIf="listOfProjectCreated.length ==0" id="Empty" class="flex font-bold text-2xl items-center w-100 justify-center pt-4">
       <div>NO PROJECT CREATED</div>
     </div>
 </div>
@@ -38,7 +39,7 @@
       <!-- project joined -->
 
 <div class="grid w-full">
-        <div *ngIf="fakeArray2" class="flex items-center pt-4">
+        <div *ngIf="fakeArray" class="flex items-center pt-4">
           <div class="flex font-bold ml-5">
             <h2 class="bg-purple-900 text-white rounded py-1 px-3 shadow-lg">
               Projects Joined:
@@ -48,7 +49,7 @@
         <div
           class="flex h-full overflow-x-scroll overflow-y-hidden"
         >
-          <div class="flex justify-center  gap-2 py-5 mt-2" *ngFor="let _ of fakeArray2">
+          <div class="flex justify-center  gap-2 py-5 mt-2" *ngFor="let _ of fakeArray">
             <div
               class="flex flex-col w-48 p-2 rounded m-1 shadow-md"
               id="card-outline" 
@@ -67,9 +68,81 @@
             </div>
           </div>
         </div>
-        <div *ngIf="!fakeArray2.length"  id="Empty" class="flex font-bold text-2xl items-center w-100 justify-center pt-4">
+        <div *ngIf="!fakeArray.length"  id="Empty" class="flex font-bold text-2xl items-center w-100 justify-center pt-4">
           <div>COLLABORATE TO OTHERS</div>
         </div>
 </div>
 
+
+
+<!-- create project -->
+</div>
+  <div *ngIf="isCreateFormOpen" class="grid fixed bg-transparent-black top-0 right-0 left-0 z-10 grid-cols-1 grid-rows-1 md:grid-cols-3 md:grid-rows-7 bg-transparent-black w-full h-full place-content-center">
+  <div
+      class="grid grid-cols-1 bg-white md:rounded md:col-start-2 md:row-start-1 row-span-5 md:my-10 h-100 md:w-100 place-content-center"
+    >
+      <div id="x" class="flex justify-end">
+        <span
+          class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5"
+          (click)="createFormOpen()"
+          ><i class="fa-regular fa-x"></i
+        ></span>
+      </div>
+      <h3 class="flex justify-center item-center font-bold text-2xl mb-3">
+        CREATE PROJECT
+      </h3>
+      <form
+        method="POST"
+        class="grid mx-4 gap-4 w-100 h-100"
+        (ngSubmit)="onSubmit()" 
+        [formGroup]="projectDetails"
+      >
+      <label class="text-sm">Project Name</label>
+      <input
+          class="shadow-md py-2 rounded"
+          formControlName="project_name"
+          placeholder="Enter Your Project Name"
+          type="email"
+          id="input-design"
+          required
+        />
+      <label class="text-sm">Project Description</label>
+      <textarea
+          class="shadow-md py-2 rounded"
+          formControlName="project_description"
+          placeholder="Enter Project Description"
+          type="email"
+          id="input-design"
+          required
+        ></textarea>
+        <label>Set Due Date</label>
+        <input
+        id="input-design"
+        formControlName="due_date"
+        class="shadow-md py-2 rounded"
+        type="date"
+        />
+        <label>Project Budget</label>
+        <input
+        id="input-design"
+        formControlName="budget"
+        class="shadow-md py-2 rounded"
+        type="number" />
+        <button
+          *ngIf="!isSubmit"
+          class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
+          type="submit"
+        >
+          LOGIN
+        </button>
+        <button
+          *ngIf="isSubmit"
+          class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
+          type="submit"
+          disabled
+        >
+          <mat-spinner [diameter]="25"></mat-spinner>
+        </button>
+      </form>
+    </div>
 </div>

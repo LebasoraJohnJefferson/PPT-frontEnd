@@ -17,13 +17,13 @@ import { MaterialModule } from './shared/material.module';
 import { HeaderComponent } from './components/header/header.component';
 import { AsideComponent } from './components/aside/aside.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { ProjectComponent } from './pages/project/project.component';
 import { CanvasComponent } from './components/canvas/canvas.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { AccountComponent } from './components/account/account.component';
 import { MessagesComponent } from './components/messages/messages.component';
+import { ProjectsComponent } from './components/projects/projects.component';
 
-const token = localStorage.getItem('token') || ''
+
 const config: SocketIoConfig = { url: environment.baseURL,
     options: {
       // Socket.IO client options
@@ -39,11 +39,11 @@ const config: SocketIoConfig = { url: environment.baseURL,
     HeaderComponent,
     AsideComponent,
     FooterComponent,
-    ProjectComponent,
     CanvasComponent,
     AccountComponent,
     OverviewComponent,
-    MessagesComponent
+    MessagesComponent,
+    ProjectsComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +52,9 @@ const config: SocketIoConfig = { url: environment.baseURL,
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      'preventDuplicates': true
+    }),
     SocketIoModule.forRoot(config)
   ],
   providers: [

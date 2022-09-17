@@ -24,7 +24,7 @@
   <div class="grid px-3">
     <small class="mx-3 my-1">Friends :</small>
     <div
-        *ngFor="let _ of fakeArray"
+        *ngFor="let friend of listOfFriend"
         class="flex border cursor-pointer my-1 h-12 shadow-md rounded w-full"
         id="card-online"
       >
@@ -35,9 +35,12 @@
             </div>
           </div>
         </div>
-        <div class="grid justify-center content-center">
-          <h5 class="text-sm truncate">ashley gosiengfiao</h5>
-        </div>
+        <a routerLink="/dashboard/messages/{{friend.friend_info.email}}" class="grid justify-center content-center">
+          <h5 class="text-sm truncate">{{friend.friend_info.email}}</h5>
+        </a>
       </div>
+  </div>
+  <div *ngIf="listOfFriend.length == 0" class="flex justify-center items-center h-80">
+      <div class="font-bold text-red-500" >Empty</div>
   </div>
 </div>

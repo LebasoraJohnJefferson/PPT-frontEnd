@@ -9,6 +9,7 @@
       (deactivate)="unsubscribe($event)"></router-outlet>
     </main>
     <app-aside
+      [listOfFriend]="listOfFriend"
       [email]="email"
       [path] = "path"
       class="shadow-md bg-white"

@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthUser } from 'src/app/service/auth-user.service';
 import { AccountComponent } from 'src/app/components/account/account.component';
+import { SocketService } from 'src/app/service/socket.service';
+import { FriendsService } from 'src/app/service/friends.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -14,29 +17,41 @@ export class DashboardComponent implements OnInit {
   isAsideOpen:boolean = false
   path:string = "./assets/images/profile_thumb.png" 
   email:string = 'example@gmail.com'
-  
- 
+  listOfFriend = []
+  isListOfFriend: Subscription = new Subscription()
+  isGetUser: Subscription = new Subscription()
+
   constructor(
     private toastr:ToastrService,
     private getUser:AuthUser,
-    private router:Router
+    private router:Router,
+    private socket:SocketService,
+    private friend:FriendsService
   ){
     this.getUserData()
+    this.getListOfFriend()
   }
 
   ngOnInit(): void {
     
   }
 
+  ngOnDestroy() {
+    this.isListOfFriend.unsubscribe()
+    this.isGetUser.unsubscribe()
+  }
+
   OpeningAside(){
     this.isAsideOpen = !this.isAsideOpen
   }
 
+  //get current user info
   getUserData(){
-    this.getUser.getCurrentUser()
+    this.isGetUser = this.getUser.getCurrentUser()
     .subscribe((res)=>{      
       this.email = res.full_name ? res.full_name : res.email 
       this.path = res.path ? res.path : this.path
+      this.socket.join('currentUserBecomeOnline',res.email)
     },
       (err)=>{
       if(err.status == 0){
@@ -51,15 +66,27 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  getListOfFriend(){
+    this.isListOfFriend = this.friend.getAllFriend().subscribe((res)=>{
+      this.listOfFriend = res
+      console.log(res)
+    })
+  }
+
+
   subscribeToEmitter(componentRef:ComponentRef<any>){
     if(!(componentRef instanceof AccountComponent)){
       return
     }
+
+    //change everything when child component or update profile is success
     const child: AccountComponent = componentRef;
     child.updateInfo.subscribe(()=>{
       this.getUserData()
     })
+
   }
+
   
   unsubscribe(componentRef:ComponentRef<any>){
     if(!(componentRef instanceof AccountComponent)){
@@ -67,6 +94,7 @@ export class DashboardComponent implements OnInit {
     }
     const child: AccountComponent = componentRef;
     child.updateInfo.unsubscribe()
+    
   }
 
 
