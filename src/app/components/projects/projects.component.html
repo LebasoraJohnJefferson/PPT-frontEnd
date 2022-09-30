@@ -1,21 +1,113 @@
-<div class="h-screen">
+<div class="h-full">
     <div id="container" class="grid grid-row-2 py-3 m-0 md:m-2 bg-gray-100 shodow-md rounded">
         <div class="flex justify-center align-center font-bold">
             {{projectName }}
         </div>
-        <div class="flex align-center justify-center md:justify-start">
-            <div class="flex align-center justify-center mx-3 cursor-pointer" (click)="addTask()">
-                <mat-icon>add</mat-icon>
-                <small class="ml-1 py-1">ADD</small>
-            </div>
-            <div class="flex align-center justify-center mx-3 cursor-pointer" (click)="addTask()">
-                <mat-icon>edit</mat-icon>
-                <small class="ml-1 py-1">EDIT</small>
-            </div>
-            <div class="flex align-center justify-center mx-3 cursor-pointer" (click)="addTask()">
-                <mat-icon>delete</mat-icon>
-                <small class="ml-1 py-1">DELETE</small>
-            </div>
+        <div class="flex md:flex-row flex-col ">
+            
+            <div class="flex hover:text-green-500 align-center justify-center mx-3 cursor-pointer" (click)="changeToPert()">
+              <mat-icon>multiline_chart</mat-icon>
+              <small class="ml-1 py-1">PERT Chart</small>
+          </div>
+            <div class="flex hover:text-green-500 align-center justify-center mx-3 cursor-pointer" (click)="changeToTask()">
+              <mat-icon>task</mat-icon>
+              <small class="ml-1 py-1">Task Details</small>
+          </div>
+          <div *ngIf="isSwitchPertAndTask" class="flex align-center hover:text-green-500 justify-center mx-3 cursor-pointer">
+            <mat-icon>calendar_today</mat-icon>
+            <select class="ml-2 text-sm rounded outline-0 bg-gray-100" #date (change)="changeViewModeEvent(date.value)">
+              <option value="Month">Month</option>
+              <option value="Quarter Day">Quarter Day</option>
+              <option value="Half Day">Half Day</option>
+              <option value="Day">Day</option>
+              <option value="Week">Week</option>
+            </select>
+        </div>
+        <div *ngIf="!isSwitchPertAndTask" class="flex hover:text-green-500 align-center justify-center mx-3 cursor-pointer" (click)="createTaskOpen()">
+          <mat-icon>add</mat-icon>
+          <small class="ml-1 py-1">ADD TASK</small>
+      </div>
         </div>
     </div>
+    <app-pert-chart *ngIf="isSwitchPertAndTask" [dateArrange]="changeViewMode" ></app-pert-chart>
+    <app-task *ngIf="!isSwitchPertAndTask" (deleteTaskWithId)="delTask($event)" [tasks]="tasks"></app-task>
+</div>
+
+
+<!-- add task -->
+
+<div>
+    <div  
+      *ngIf="isCreateTaskOpen" 
+      class="grid fixed bg-transparent-black top-0 right-0 left-0 z-10 grid-cols-1 grid-rows-1 md:grid-cols-3 md:grid-rows-7 bg-transparent-black w-full h-full place-content-center">
+        <div
+            class="bg-white md:rounded md:col-start-2 md:row-start-1 row-span-5 md:my-10 h-98 md:w-100"
+          >
+          <div class="flex justify-end py-2 h-12 ">
+            <span
+              (click)="createTaskOpen()"
+              class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5"
+              ><i class="fa-regular fa-x"></i
+            ></span>
+          </div>
+            
+          <form
+          [formGroup]="taskDetails"
+          method="POST"
+          class="grid mx-4 gap-4 w-100 h-100"
+          >
+            <h3 class="flex justify-center item-center font-bold text-2xl my-3">
+             Create Task
+           </h3>
+            <label class="text-sm">Task Name</label>
+            <input
+                class="shadow-md py-2 rounded"
+                formControlName="task_name"
+                placeholder="Enter Your Project Name"
+                type="email"
+                id="input-design"
+                required
+              />
+
+              <label>Duration</label>
+              <input
+              id="input-design"
+              placeholder="Enter number of Day "
+              formControlName="duration"
+              class="shadow-md py-2 rounded"
+              type="number" />
+
+              <label>Task Budget</label>
+              <input
+              id="input-design"
+              formControlName="budget"
+              class="shadow-md py-2 rounded"
+              type="number"
+              placeholder="Enter Task Budget"
+              />
+              <mat-form-field style="-webkit-text-fill-color: black" class="shadow-md h-5/6" id="input-design" appearance="fill">
+              <mat-label class="text-black">Dependency</mat-label>
+              <mat-select class="text-black" formControlName="dependency" multiple>
+                <mat-option *ngFor="let dependency of list_dependencies" [value]="dependency">{{dependency}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+              
+              <button
+                *ngIf="!isSubmitting"
+                (click)="submitTask()"
+                class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
+                type="submit"
+              >
+                Create Task
+              </button>
+              <button
+                *ngIf="isSubmitting"
+                class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
+                type="submit"
+                disabled
+              >
+                <mat-spinner [diameter]="25"></mat-spinner>
+              </button>
+            </form>
+          </div>
 </div>

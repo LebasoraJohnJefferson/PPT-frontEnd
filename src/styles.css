@@ -4,10 +4,10 @@
 @tailwind utilities;
 
 
-
 body{
     font-family: Tahoma, sans-serif;
 }
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
@@ -42,4 +42,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   ::-webkit-scrollbar-thumb:hover {
     background: #aa1016;
   }
+}
+
+.critical g .bar-progress{
+    fill: red !important;
+    stroke-width: 0.5;
+}
+
+.gantt .handle {
+  display: none;
 }

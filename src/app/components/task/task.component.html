@@ -1,0 +1,19 @@
+<div  class="grid gap-2 mx-2 grid-cols-1 ">
+    <ol class="grid grid-cols-4 w-full bg-purple-900 text-white rounded py-1">
+        <li class="flex justify-center items-center">task_name</li>
+        <li class="flex justify-center items-center">dependency</li>
+        <li class="flex justify-center items-center">duration</li>
+        <li class="flex justify-center items-center">
+            modified
+        </li>
+    </ol>
+    <ol id="task" *ngFor="let task of tasks" class="grid grid-cols-4 w-full py-1">
+        <li class="flex justify-center items-center">{{task.task_name}}</li>
+        <li class="flex justify-center items-center">{{task.dependency}}</li>
+        <li class="flex justify-center items-center">{{task.duration}}</li>
+        <li class="flex justify-center items-center">
+            <div class="px-1 flex justify-center items-center cursor-pointer" (click)="deleteTask(task.id)"><mat-icon class="text-red-500 ">delete_forever</mat-icon></div>
+            <div class="px-1 flex justify-center items-center cursor-pointer"><mat-icon class="text-green-500">edit</mat-icon></div>
+        </li>
+    </ol>
+</div>

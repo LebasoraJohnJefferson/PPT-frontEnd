@@ -69,7 +69,6 @@ export class DashboardComponent implements OnInit {
   getListOfFriend(){
     this.isListOfFriend = this.friend.getAllFriend().subscribe((res)=>{
       this.listOfFriend = res
-      console.log(res)
     })
   }
 

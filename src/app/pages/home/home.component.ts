@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
       },(err)=>{
         if(err.status == 0) this.toastr.error('SERVER ERROR')
         else if (err.status == 403) this.toastr.warning(err.error.detail)
-        else this.toastr.error('Unknown Error')
+        else this.toastr.error("Unknown Error")
         this.isSubmit = false
       })
     }else{
@@ -96,7 +96,7 @@ export class HomeComponent implements OnInit {
           },(err)=>{
             if(err.status == 0) this.toastr.error('SERVER ERROR')
             else if (err.status == 409) this.toastr.warning(err.error.detail)
-            else this.toastr.error('Unknown Error')
+            else this.toastr.error(err.error.detail[0].msg)
             this.isSubmitRegister=false
           })
       }else{

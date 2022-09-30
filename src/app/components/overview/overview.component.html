@@ -1,4 +1,4 @@
-<div class="h-5/6  mx-1 mt-2 overflow-y-scroll overflow-x-hidden">
+<div class="h-full  mx-1 mt-2 ">
 <!-- Projects Created -->
 <div class="grid w-full">
     <div  class="flex items-center pt-4">
@@ -6,7 +6,7 @@
         <h2 class="bg-purple-900 text-white rounded py-1 px-3 shadow-lg">
           Projects Created:
         </h2>
-        <mat-icon (click)="createFormOpen()" class="text-green-700 hover:text-green-500 mx-3 text-3xl">queue</mat-icon>
+        <mat-icon (click)="createFormOpen()" class="cursor-pointer text-green-700 hover:text-green-500 mx-3 text-3xl">queue</mat-icon>
       </div>
     </div>
     <div
@@ -24,7 +24,7 @@
           <app-canvas></app-canvas>
         </div>
         <div routerLink="/dashboard/projects/{{projectInfo.project_name}}"
-          class="text-center font-bold py-2 m-1 bg-green-500 hover:bg-green-400 rounded"
+          class="text-center font-bold py-2 m-1 bg-green-500 hover:bg-green-400 rounded cursor-pointer"
         >
           VISIT
         </div>
@@ -115,25 +115,25 @@
           id="input-design"
           required
         ></textarea>
-        <label>Set Due Date</label>
-        <input
-        id="input-design"
-        formControlName="due_date"
-        class="shadow-md py-2 rounded"
-        type="date"
-        />
         <label>Project Budget</label>
         <input
         id="input-design"
         formControlName="budget"
         class="shadow-md py-2 rounded"
         type="number" />
+        <label>Kickoff</label>
+        <input
+        id="input-design"
+        formControlName="kick_off"
+        class="shadow-md py-2 rounded"
+        type="date"
+        />
         <button
           *ngIf="!isSubmit"
           class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
           type="submit"
         >
-          LOGIN
+          CREATE
         </button>
         <button
           *ngIf="isSubmit"

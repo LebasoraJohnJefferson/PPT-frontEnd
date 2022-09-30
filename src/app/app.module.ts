@@ -22,6 +22,8 @@ import { OverviewComponent } from './components/overview/overview.component';
 import { AccountComponent } from './components/account/account.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { ProjectsComponent } from './components/projects/projects.component';
+import { PertChartComponent } from './components/pert-chart/pert-chart.component';
+import { TaskComponent } from './components/task/task.component';
 
 
 const config: SocketIoConfig = { url: environment.baseURL,
@@ -44,6 +46,8 @@ const config: SocketIoConfig = { url: environment.baseURL,
     OverviewComponent,
     MessagesComponent,
     ProjectsComponent,
+    PertChartComponent,
+    TaskComponent,
   ],
   imports: [
     BrowserModule,

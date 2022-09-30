@@ -20,7 +20,7 @@ export class OverviewComponent implements OnInit {
     {
       project_name:[null,Validators.required],
       project_description:[null,Validators.required],
-      due_date:[null,Validators.required],
+      kick_off:[null,Validators.required],
       budget:[null,Validators.required]
     }
   )
@@ -54,8 +54,7 @@ export class OverviewComponent implements OnInit {
 
   onSubmit(){
     if(this.projectDetails.valid){
-      //matching input=date into db datetime
-      this.projectDetails.value.due_date = new Date(this.projectDetails.get("due_date")?.value)
+      this.projectDetails.value.kick_off = new Date(this.projectDetails.get("kick_off")?.value)
       this.projectService.createProject(this.projectDetails.value).subscribe((res)=>{
         this.toastr.success("Successfully Created!")
         this.isCreateFormOpen = false
