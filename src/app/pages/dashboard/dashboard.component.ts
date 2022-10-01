@@ -6,6 +6,7 @@ import { AccountComponent } from 'src/app/components/account/account.component';
 import { SocketService } from 'src/app/service/socket.service';
 import { FriendsService } from 'src/app/service/friends.service';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/env';
 
 
 @Component({
@@ -15,8 +16,9 @@ import { Subscription } from 'rxjs';
 })
 export class DashboardComponent implements OnInit {
   isAsideOpen:boolean = false
-  path:string = "./assets/images/profile_thumb.png" 
+  path:string = environment.default_profile
   email:string = 'example@gmail.com'
+  name:string="Luffy"
   listOfFriend = []
   isListOfFriend: Subscription = new Subscription()
   isGetUser: Subscription = new Subscription()
@@ -49,7 +51,8 @@ export class DashboardComponent implements OnInit {
   getUserData(){
     this.isGetUser = this.getUser.getCurrentUser()
     .subscribe((res)=>{      
-      this.email = res.full_name ? res.full_name : res.email 
+      this.name = res.full_name ? res.full_name : res.email 
+      this.email = res.email
       this.path = res.path ? res.path : this.path
       this.socket.join('currentUserBecomeOnline',res.email)
     },

@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ProjectsComponent implements OnInit {
     projectName:string = ''
     tasks:any;
-    changeViewMode:any="Month"
+    changeViewMode:any="Quarter Day"
     isCreateTaskOpen:boolean = false
     isSubmitting:boolean=false
     isSwitchPertAndTask:boolean=false

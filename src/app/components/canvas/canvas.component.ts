@@ -19,29 +19,23 @@ export class CanvasComponent implements OnInit {
     this.ctx = this.canvas.getContext('2d');
 
     new Chart(this.ctx, {
-      type: 'line',
+      type: 'doughnut',
       data: {
-          datasets: [{
-              label: 'Task Completed',
-              data: [0, 20, 40, 50],
-              backgroundColor: "rgb(115 185 243 / 65%)",
-              borderColor: "#007ee7",
-              fill: true,
-          },
-          {
-            label: 'Budget',
-            data: [0, 40, 25, 30, 80],
-            backgroundColor: "#d32a01",
-            borderColor: "#e06065",
-            fill: true,
-        }],
-          labels: ['2019', '2020', '2021', '2022']
-      },
-      options: {
-        maintainAspectRatio: false,
+        labels: [
+          'Completed',
+          'On Going',
+        ],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [30, 70],
+          backgroundColor: [
+            'rgb(54, 162, 235)',
+            'rgb(211,211,211)',
+          ],
+          hoverOffset: 4
+        }]         
       }
-
-  });
+    });
   }
 
   constructor() { 

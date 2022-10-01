@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/env';
 
 @Component({
   selector: 'app-aside',
@@ -9,8 +10,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AsideComponent implements OnInit {
   fakeArray = new Array(5)
+  default_image = environment.default_profile
   @Input() email:String = ''
   @Input() path:String = ''
+  @Input() name:String = ''
   @Input() listOfFriend:any
   imgSrc:String = ''
   constructor(
@@ -18,6 +21,7 @@ export class AsideComponent implements OnInit {
     private router:Router
   ) { 
   }
+
 
 
   ngOnInit(): void {

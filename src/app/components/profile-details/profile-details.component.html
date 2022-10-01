@@ -1,0 +1,42 @@
+<div class="flex h-full flex-col md:flex-row">
+    <div class="flex  flex-col shadow-lg truncate md:text-clip overflow-x-scroll" id="profile">
+        <div class="bg-gray-500 h-48 py-1 flex flex-col justify-items-center items-center">
+            <img class="w-40 h-40 rounded-full" [src]="this.details.User.path ? this.details.User.path : path" alt="">
+            <div><p class="text-white">{{name}}</p></div>
+        </div>
+        <ol *ngIf="!isUserProfileIsOwner" class="grid border grid-cols-2 gap-4 p-3">
+            <li class="flex cursor-pointer justify-items-center items-center hover:text-purple-900">
+                <mat-icon>group_add</mat-icon><small class="pl-2">Add Friend</small>
+            </li>
+            <li routerLink="/dashboard/messages/{{details.User.email}}" class="flex cursor-pointer justify-items-center items-center hover:text-purple-900">
+                <mat-icon>textsms</mat-icon><small class="pl-2">Message</small>
+            </li>
+        </ol>
+        <ol class="grid grid-rows-5 gap-6 p-2">
+            <li class="flex justify-items-center items-center">
+                <mat-icon class="flex justify-items-center items-center">create_new_folder</mat-icon><small class="pl-2">Project Created:</small>
+                <small class="pl-1">{{details.project_count}}</small>
+            </li>
+            <li class="flex justify-items-center items-center">
+                <mat-icon>folder_shared</mat-icon><small class="pl-2">Project Joined:</small>
+                <small class="pl-1">1000</small>
+            </li>
+            <li class="flex justify-items-center items-center">
+                <mat-icon>whatshot</mat-icon><small class="pl-2">Joined:</small>
+                <small class="pl-1">{{date_joined}}</small>
+            </li>
+            <li class="flex justify-items-center items-center">
+                <mat-icon> where_to_vote</mat-icon><small class="pl-2">From:</small>
+                <small class="pl-1">{{details.User.address}}</small>
+            </li>
+        </ol>
+    </div>
+    <div class="grid w-full">
+        <div class="mt-4">
+            <h2><small class="bg-purple-900 ml-4  text-white rounded py-2 px-5 m-1">FeedBack:</small></h2>
+            <form class="px-4" *ngIf="!isUserProfileIsOwner">
+                <input id="feedback-input" type="text" class="py-2 rounded shadow-md mt-4 w-full px-5" placeholder="Let me know what you think of me!">
+            </form>
+        </div>
+    </div>
+</div>

@@ -5,7 +5,7 @@
             <div 
             [class]="status == 'online' ?  'flex border-2 border-green-500 bg-gray-800 rounded-full overflow-hidden' : 'flex border-2 border-red-500 bg-gray-800 rounded-full overflow-hidden'"
             id="friend-profile">
-                <img  class="w-full h-full bg-gray-500 shadow-sm" [src]="profileImageOfUserGoingToMessage" alt="user_profile"/>
+                <img  routerLink="/dashboard/profile/{{email}}"  class="w-full cursor-pointer h-full bg-gray-500 shadow-sm" [src]="profileImageOfUserGoingToMessage" alt="user_profile"/>
             </div>
             <div class="px-3 w-56">
                 <div class="w-full">{{nameOfUserGoingToMessage}}</div>

@@ -8,6 +8,7 @@ import { AccountComponent } from '../components/account/account.component';
 import { OverviewComponent } from '../components/overview/overview.component';
 import { MessagesComponent } from '../components/messages/messages.component';
 import { ProjectsComponent } from '../components/projects/projects.component';
+import { ProfileDetailsComponent } from '../components/profile-details/profile-details.component';
 
 const routes:Routes = [
   {path:'',component:HomeComponent},
@@ -16,7 +17,8 @@ const routes:Routes = [
       {path:"",component:OverviewComponent},
       {path:'account',component:AccountComponent},
       {path:"messages/:email",component:MessagesComponent},
-      {path:"projects/:projectName",component:ProjectsComponent}
+      {path:"projects/:projectName",component:ProjectsComponent},
+      {path:"profile/:email",component:ProfileDetailsComponent},
     ],
     canActivate: [AuthGuard]
   },  

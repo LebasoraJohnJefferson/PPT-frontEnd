@@ -7,3 +7,11 @@
         display:none;
     }
   }
+
+#search{
+    text-indent: 10px;
+}
+
+#search:focus{
+    outline:none
+}

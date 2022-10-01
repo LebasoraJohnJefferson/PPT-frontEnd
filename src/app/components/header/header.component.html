@@ -1,10 +1,12 @@
-<header class="grid grid-rows-1 grid-cols-2 sticky top-0 left-0 w-full bg-red-600 grid-flow-col shadow-lg">
+<header class="grid grid-rows-1 w-full bg-red-600  sticky top-0 left-0 shadow-lg">
+    <div class="grid grid-rows-1 grid-cols-2 w-full  grid-flow-col">
     <div class="flex items-end md:h-16 h-full">
         <img routerLink="/dashboard" src="./assets/images/title.png" id="logo" class='md:h-full h-2/3 pt-1 pl-3  cursor-pointer' alt="logo">
     </div>
     <div class="grid grid-cols-4 py-2 grid-flow-row-dense w-full">
         <div class="flex col-span-3 justify-end align-items-center my-2 text-gray-700 grid-flow-col">
         <div class="flex justify-start items-center ml-3">
+            <mat-icon class="text-black text-2xl cursor-pointer" (click)="searchFriend()"> search</mat-icon>
             <mat-icon class="text-black text-2xl mx-3 cursor-pointer"> people_outline</mat-icon>
             <mat-icon class="text-black text-2xl cursor-pointer">notifications_none</mat-icon>
             <mat-icon class="text-black text-2xl mx-3 cursor-pointer"> chat_bubble_outline</mat-icon>
@@ -13,4 +15,18 @@
         </div>
         </div>
     </div>
+    </div>
+    <form *ngIf="showSearchInput" class="flex w-full my-2" (input)="onSubmit()" [formGroup]="searchUser">
+        <input formControlName="email" class="bg-red-300 rounded-l ml-1 w-full" placeholder="Enter Email" id="search">
+        <mat-icon class="mr-1 bg-red-300 rounded-r">search</mat-icon>
+    </form>
 </header>
+<div *ngIf="showSearchInput" class="bg-gray-100 h-54 overflow-y-scroll  my-1 w-full absolute">
+    <div  *ngFor="let userDetail of userSearch">
+        <div (click)="close()" routerLink="/dashboard/profile/{{userDetail.email}}" class="flex shadow-ms hover:bg-gray-50 items-center py-1 relative cursor-pointer">
+            <img class="h-12 w-12 rounded-full ml-5" [src]="userDetail.image ? userDetail.image : path" alt="profile">
+            <small class="ml-5">{{userDetail.email}}</small>
+        </div>
+    </div>
+</div>
+

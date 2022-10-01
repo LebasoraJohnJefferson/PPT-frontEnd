@@ -42,7 +42,6 @@ export class OverviewComponent implements OnInit {
   getAllCreatedProject(){
     this.subscriptionOfProjectCreated = this.projectService.getAllProject().subscribe((res)=>{
       this.listOfProjectCreated = res
-      console.log(res)
     },(err)=>{
       this.toastr.warning("OverView", "An Error Occurred!")
     })

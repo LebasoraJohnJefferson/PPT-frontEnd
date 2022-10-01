@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 })
 export class MessagesComponent implements OnInit {
   messages:any = []
+  email:string=""
   domain:string = environment.baseURL
   image_default:string = environment.default_profile
   todayDate : Date = new Date();
@@ -42,6 +43,7 @@ export class MessagesComponent implements OnInit {
     private router:Router,
   ) {
     // enter users own room
+    this.email = this.route.snapshot.params.email
     this.getUser = this.authUser.getCurrentUser().subscribe(res=>{
       this.sockets.join('joinRoom',res.email)
     })
@@ -52,10 +54,15 @@ export class MessagesComponent implements OnInit {
     })
     this.isFriendOnline = this.sockets.friendStatus().subscribe((res)=>{
       this.status = res.status
-    })
+    }) 
     }    
 
   ngOnInit(): void {
+    this.route.params.subscribe(
+      params => {
+        this.getMessageDetails()
+      }
+  );
     
   }
 

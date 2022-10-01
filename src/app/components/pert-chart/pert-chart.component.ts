@@ -10,7 +10,7 @@ import Gantt from 'frappe-gantt';
   styleUrls: ['./pert-chart.component.css']
 })
 export class PertChartComponent implements OnInit {
-  @Input() dateArrange ='Month'
+  @Input() dateArrange ='Quarter Day'
   gantt:any;
   tasks:any;
   constructor(
@@ -22,7 +22,6 @@ export class PertChartComponent implements OnInit {
 
   getAllProjectTask(){
     this.taskService.getAllTask(this.route.snapshot.params.projectName).subscribe((res)=>{
-      console.log(res)
       this.tasks=res
     },(err)=>{
       console.log(err)

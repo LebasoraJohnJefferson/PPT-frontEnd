@@ -16,11 +16,11 @@
           <div *ngIf="isSwitchPertAndTask" class="flex align-center hover:text-green-500 justify-center mx-3 cursor-pointer">
             <mat-icon>calendar_today</mat-icon>
             <select class="ml-2 text-sm rounded outline-0 bg-gray-100" #date (change)="changeViewModeEvent(date.value)">
-              <option value="Month">Month</option>
               <option value="Quarter Day">Quarter Day</option>
               <option value="Half Day">Half Day</option>
               <option value="Day">Day</option>
               <option value="Week">Week</option>
+              <option value="Month">Month</option>
             </select>
         </div>
         <div *ngIf="!isSwitchPertAndTask" class="flex hover:text-green-500 align-center justify-center mx-3 cursor-pointer" (click)="createTaskOpen()">

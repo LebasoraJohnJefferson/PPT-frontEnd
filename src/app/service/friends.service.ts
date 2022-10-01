@@ -17,4 +17,11 @@ export class FriendsService {
     return this.http.get<any>(`${this.baseURL}/friends/`)
   }
 
+  getSearchFriend(email:string):Observable<any>{
+    return this.http.get<any>(`${this.baseURL}/users/search/${email}`)
+  }
+  getFriendDetails(email:string):Observable<any>{
+    return this.http.get<any>(`${this.baseURL}/friends/profile/${email}`)
+  }
+
 }
