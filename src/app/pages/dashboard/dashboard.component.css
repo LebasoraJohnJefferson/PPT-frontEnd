@@ -16,4 +16,11 @@
 }
 
 
+@media only screen and (max-width: 600px){
+    #app-aside{
+        position:absolute;
+    }
+}
+
+
 

@@ -31,6 +31,6 @@
 
 @media only screen and (max-width: 600px){
     #aside-container{
-        width: 60vw;
+        width: 100vw;
     }
 }

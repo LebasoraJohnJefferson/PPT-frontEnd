@@ -9,6 +9,7 @@ import { OverviewComponent } from '../components/overview/overview.component';
 import { MessagesComponent } from '../components/messages/messages.component';
 import { ProjectsComponent } from '../components/projects/projects.component';
 import { ProfileDetailsComponent } from '../components/profile-details/profile-details.component';
+import { PertChartComponent } from '../components/pert-chart/pert-chart.component';
 
 const routes:Routes = [
   {path:'',component:HomeComponent},

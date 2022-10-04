@@ -1,5 +1,5 @@
-<div class="w-screen overflow-x-hidden h-full flex flex-col">
-  <app-header (OpenAside)="OpeningAside()" class="sticky z-10 top-0 left-0"></app-header>
+<div class="w-screen overflow-x-hidden h-full flex flex-col overflow-hidden">
+  <app-header (ConfirmEventRequest)="FriendRequestEvent()" (OpenAside)="OpeningAside()" class="sticky z-20 top-0 left-0"></app-header>
   <div class="flex h-full w-full">
     <main
       class="h-full w-full"
@@ -15,6 +15,7 @@
       [path] = "path"
       class="shadow-md bg-white z-10"
       *ngIf="isAsideOpen"
+      id="app-aside"
     ></app-aside>
   </div>
 </div>

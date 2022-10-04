@@ -10,6 +10,7 @@ import { environment } from 'src/env';
 })
 export class AsideComponent implements OnInit {
   fakeArray = new Array(5)
+  baseURL = environment.baseURL
   default_image = environment.default_profile
   @Input() email:String = ''
   @Input() path:String = ''

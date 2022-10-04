@@ -1,11 +1,13 @@
 <div class="grid place-items-center content-center h-full w-full">
+  <!-- grid place-items-center content-center overflow-x-hidden bg-white w-full h-full md:w-1/2 rounded md:shadow-md -->
   <div
-    class="grid place-items-center content-center overflow-x-hidden bg-white w-full h-full md:w-1/2 rounded md:shadow-md"
+    class="flex flex-col md:w-1/2 w-full h-full md:shadow-lg  rounded"
     id="form-layout"
   >
+  <!-- grid mx-4 gap-2  p-5 w-full h-full -->
     <form
       method="POST"
-      class="grid h-full mx-4 gap-2 p-5 w-full"
+      class="grid h-full gap-1 p-4"
       enctype="multipart/form-data"
       [formGroup]="updateUserForm"
       (ngSubmit)="onSubmit()"

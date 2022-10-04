@@ -23,22 +23,42 @@
   <hr class="my-3"/>
   <div class="grid px-3">
     <small class="mx-3 my-1">Friends :</small>
+    <div *ngFor="let friend of listOfFriend">
     <div
-        *ngFor="let friend of listOfFriend"
+        *ngIf="friend.friend_info.email != email"
         class="flex border cursor-pointer my-1 h-12 shadow-md rounded w-full"
         id="card-online"
+        routerLink="/dashboard/messages/{{friend.friend_info.email}}"
       >
         <div class="grid justify-center content-center px-2">
           <div class="grid">
             <div class="flex relative border-2 border-green-500 bg-gray-800 rounded-full overflow-hidden" id="friend-profile">
-              <img  class="bg-gray-500  shadow-sm" [src]="friend.friend_info.image ? friend.friend_info.image : default_image" alt="user image"/>
+              <img  class="bg-gray-500  shadow-sm" [src]="friend.friend_info.image ? baseURL+'/users/profiles/'+friend.friend_info.image : default_image" alt="user image"/>
             </div>
           </div>
         </div>
-        <a routerLink="/dashboard/messages/{{friend.friend_info.email}}" class="grid justify-center content-center">
-          <h5 class="text-sm truncate">{{friend.friend_info.email}}</h5>
-        </a>
+        <div  class="grid justify-center content-center">
+          <h5 class="text-sm truncate">{{friend.friend_info.full_name ? friend.friend_info.full_name : friend.friend_info.email}}</h5>
+        </div>
       </div>
+      <div
+        *ngIf="friend.current_user.email != email"
+        class="flex border cursor-pointer my-1 h-12 shadow-md rounded w-full"
+        id="card-online"
+        routerLink="/dashboard/messages/{{friend.current_user.email}}"
+      >
+        <div class="grid justify-center content-center px-2">
+          <div class="grid">
+            <div class="flex relative border-2 border-green-500 bg-gray-800 rounded-full overflow-hidden" id="friend-profile">
+              <img  class="bg-gray-500  shadow-sm" [src]="friend.current_user.image ? baseURL+'/users/profiles/'+friend.current_user.image : default_image" alt="user image"/>
+            </div>
+          </div>
+        </div>
+        <div  class="grid justify-center content-center">
+          <h5 class="text-sm truncate">{{friend.current_user.full_name ? friend.current_user.full_name : friend.current_user.email}}</h5>
+        </div>
+      </div>
+    </div>
   </div>
   <div *ngIf="listOfFriend.length == 0" class="flex justify-center items-center h-80">
       <div class="font-bold text-red-500" >Empty</div>

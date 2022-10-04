@@ -12,7 +12,14 @@ import Gantt from 'frappe-gantt';
 export class PertChartComponent implements OnInit {
   @Input() dateArrange ='Quarter Day'
   gantt:any;
-  tasks:any;
+  tasks:any={
+    id: 'Task 1',
+	  name: 'Redesign website',
+	  start: '2016-12-28',
+	  end: '2016-12-31',
+	  progress: 0,
+	  dependencies: ''
+  };
   constructor(
     private taskService:TasksService,
     private route:ActivatedRoute,
@@ -22,7 +29,8 @@ export class PertChartComponent implements OnInit {
 
   getAllProjectTask(){
     this.taskService.getAllTask(this.route.snapshot.params.projectName).subscribe((res)=>{
-      this.tasks=res
+      this.tasks= res ? res : this.tasks
+      this.DateArranger(this.dateArrange)
     },(err)=>{
       console.log(err)
     })
@@ -37,23 +45,25 @@ export class PertChartComponent implements OnInit {
   }
 
   DateArranger(dateEvent:any){
-    this.gantt = new Gantt('#gantt', this.tasks, {
-      on_click:function(task) {
-        console.log(task)
-      },
-      on_date_change: function(task, start, end) {
-        console.log(task, start, end);
-      },
-      on_progress_change: function(task, progress) {
-        console.log(task, progress);
-      },
-      on_view_change: function(mode) {
-        console.log(mode);
-      },
-      view_mode: dateEvent,
-      language: 'en',
-    });
-  
-  }
+    if(this.tasks.length){
+      this.gantt = new Gantt('#gantt', this.tasks, {
+        on_click:function(task) {
+          console.log(task)
+        },
+        on_date_change: function(task, start, end) {
+          console.log(task, start, end);
+        },
+        on_progress_change: function(task, progress) {
+          console.log(task, progress);
+        },
+        on_view_change: function(mode) {
+          console.log(mode);
+        },
+        view_mode: dateEvent,
+        language: 'en',
+      });
+    
+    }
+    }
 
 }

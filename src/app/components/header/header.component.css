@@ -2,12 +2,6 @@
     display:block;
 }
 
-@media only screen and (max-width: 487px) {
-    #logo{
-        display:none;
-    }
-  }
-
 #search{
     text-indent: 10px;
 }
@@ -15,3 +9,15 @@
 #search:focus{
     outline:none
 }
+
+#dateSize{
+    font-size:10px;
+    
+}
+
+
+@media only screen and (max-width: 487px) {
+    #logo{
+        display:none;
+    }
+  }

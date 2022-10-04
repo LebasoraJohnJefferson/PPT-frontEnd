@@ -20,6 +20,10 @@ export class MessagesService{
     return this.http.get<any>(`${this.baseURL}/messages/${user_id}`)
   }
 
+  getMessageNotify():Observable<any>{
+    return this.http.get<any>(`${this.baseURL}/messages/notify`)
+  }
+
   sendMessages(user_id:any,message:string):Observable<any>{
     return this.http.post<any>(`${this.baseURL}/messages/${user_id}`,message)
   }

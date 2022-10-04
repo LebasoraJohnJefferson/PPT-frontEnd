@@ -7,7 +7,7 @@ import { SocketService } from 'src/app/service/socket.service';
 import { FriendsService } from 'src/app/service/friends.service';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/env';
-
+import { HeaderComponent } from 'src/app/components/header/header.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,6 +32,9 @@ export class DashboardComponent implements OnInit {
   ){
     this.getUserData()
     this.getListOfFriend()
+    friend.changeConfirmRequest$.subscribe(()=>{
+      this.getListOfFriend()
+    })
   }
 
   ngOnInit(): void {
@@ -69,15 +72,20 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  FriendRequestEvent(){
+    this.getListOfFriend()
+  }
+
   getListOfFriend(){
     this.isListOfFriend = this.friend.getAllFriend().subscribe((res)=>{
       this.listOfFriend = res
     })
-  }
+  } 
+  
 
-
+  // ProfileRequestConfirm
   subscribeToEmitter(componentRef:ComponentRef<any>){
-    if(!(componentRef instanceof AccountComponent)){
+    if(!(componentRef instanceof AccountComponent) || !(componentRef instanceof  HeaderComponent)){
       return
     }
 
@@ -87,15 +95,21 @@ export class DashboardComponent implements OnInit {
       this.getUserData()
     })
 
+    const child2:HeaderComponent = componentRef;
+    child2.ConfirmEventRequest.subscribe(()=>{
+      this.getListOfFriend()
+    })
   }
 
   
   unsubscribe(componentRef:ComponentRef<any>){
-    if(!(componentRef instanceof AccountComponent)){
+    if(!(componentRef instanceof AccountComponent) || !(componentRef instanceof HeaderComponent)){
       return
     }
     const child: AccountComponent = componentRef;
     child.updateInfo.unsubscribe()
+    const child2:HeaderComponent = componentRef;
+    child2.ConfirmEventRequest.unsubscribe()
     
   }
 

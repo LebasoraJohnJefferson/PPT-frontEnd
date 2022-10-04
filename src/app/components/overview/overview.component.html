@@ -1,6 +1,6 @@
-<div class="h-full  mx-1 mt-2 ">
+<div class="h-5/6   mx-1 mt-2 overflow-y-scroll ">
 <!-- Projects Created -->
-<div class="grid w-full">
+<div class="grid w-full " >
     <div  class="flex items-center pt-4">
       <div class="flex font-bold ml-5 ">
         <h2 class="bg-purple-900 text-white rounded py-1 px-3 shadow-lg">
@@ -10,18 +10,19 @@
       </div>
     </div>
     <div
+      *ngIf="listOfProjectCreated.length !=0"
       class="flex h-full overflow-x-scroll overflow-y-hidden"
     >
     <div class="flex justify-center  gap-2 py-5 mt-2" *ngFor="let projectInfo of listOfProjectCreated">
       <div
-        class="flex flex-col w-48 p-2 rounded m-1 shadow-md"
+        class="flex flex-col w-48 p-2 rounded m-1 shadow-lg"
         id="card-outline" 
       >
         <h2 class="font-bold mb-2 text-center truncate">
           {{projectInfo.project_name}}
         </h2>
         <div class="h-full">
-          <app-canvas></app-canvas>
+          <app-canvas ></app-canvas>
         </div>
         <div routerLink="/dashboard/projects/{{projectInfo.project_name}}"
           class="text-center font-bold py-2 m-1 bg-green-500 hover:bg-green-400 rounded cursor-pointer"
@@ -51,7 +52,7 @@
         >
           <div class="flex justify-center  gap-2 py-5 mt-2" *ngFor="let _ of fakeArray">
             <div
-              class="flex flex-col w-48 p-2 rounded m-1 shadow-md"
+              class="flex flex-col w-48 p-2 rounded m-1 shadow-lg"
               id="card-outline" 
             >
               <h2 class="font-bold mb-2 text-center truncate">
@@ -77,9 +78,9 @@
 
 <!-- create project -->
 </div>
-  <div *ngIf="isCreateFormOpen" class="grid fixed bg-transparent-black top-0 right-0 left-0 z-10 grid-cols-1 grid-rows-1 md:grid-cols-3 md:grid-rows-7 bg-transparent-black w-full h-full place-content-center">
+  <div *ngIf="isCreateFormOpen" class="grid fixed bg-transparent-black top-0 right-0 left-0 z-10 grid-cols-1 grid-rows-1 md:grid-cols-3 md:grid-rows-7 bg-transparent-black w-full h-full">
   <div
-      class="grid grid-cols-1 bg-white md:rounded md:col-start-2 md:row-start-1 row-span-5 md:my-10 h-100 md:w-100 place-content-center"
+      class="grid grid-cols-1 p-2 bg-white md:rounded md:col-start-2 md:row-start-1 row-span-5 md:my-10 h-100 md:w-100 place-content-center"
     >
       <div id="x" class="flex justify-end">
         <span
@@ -93,7 +94,7 @@
       </h3>
       <form
         method="POST"
-        class="grid mx-4 gap-4 w-100 h-100"
+        class="grid mx-4 gap-1 w-100 h-100"
         (ngSubmit)="onSubmit()" 
         [formGroup]="projectDetails"
       >
@@ -115,13 +116,13 @@
           id="input-design"
           required
         ></textarea>
-        <label>Project Budget</label>
+        <label><small>Project Budget</small></label>
         <input
         id="input-design"
         formControlName="budget"
         class="shadow-md py-2 rounded"
         type="number" />
-        <label>Kickoff</label>
+        <label><small>Kickoff</small></label>
         <input
         id="input-design"
         formControlName="kick_off"
@@ -130,14 +131,14 @@
         />
         <button
           *ngIf="!isSubmit"
-          class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
+          class="flex mt-1 justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
           type="submit"
         >
           CREATE
         </button>
         <button
           *ngIf="isSubmit"
-          class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
+          class="flex mt-1 justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
           type="submit"
           disabled
         >
