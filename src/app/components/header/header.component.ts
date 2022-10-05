@@ -33,14 +33,19 @@ export class HeaderComponent implements OnInit {
     private messageService:MessagesService,
     private friendService:FriendsService
   ) {
+    this.countMessage()
     friendService.changeConfirmRequest$.subscribe(()=>{
       this.getAllFriendRequestFromApi()
     })
-    this.countMessage()
+    messageService.changeSeenMessageEmitter$.subscribe(()=>{
+      this.countMessage()
+    })
   }
 
   ngOnInit(): void {
+    
   }
+
 
   countMessage(){
     this.getAllFriendRequestFromApi()
@@ -48,7 +53,7 @@ export class HeaderComponent implements OnInit {
     this.messageService.getMessageNotify().subscribe((res)=>{
       this.messageDetailsInNotify = res
       res.map((count_unread:any)=>{
-        if(count_unread.is_seen == false) {
+        if(count_unread.is_seen == false && count_unread.you !=1) {
           count +=1
         }
       })
@@ -106,10 +111,20 @@ export class HeaderComponent implements OnInit {
     this.isMessageDrawerOpen = !this.isMessageDrawerOpen
     this.isNotifyDrawerOpen =false
     this.showSearchInput = false
+    this.countMessage()
+  }
+
+  
+  OpenNotify(){
+    this.isNotifyDrawerOpen = !this.isNotifyDrawerOpen
+    this.showSearchInput = false
+    this.isMessageDrawerOpen =false
   }
 
   onClickAside(){
     this.OpenAside.emit()
+    this.showSearchInput = false
+    this.isMessageDrawerOpen =false
     this.isNavBarOpen = !this.isNavBarOpen
   }
 
@@ -123,11 +138,6 @@ export class HeaderComponent implements OnInit {
     })
   }
 
-  OpenNotify(){
-    this.isNotifyDrawerOpen = !this.isNotifyDrawerOpen
-    this.showSearchInput = false
-    this.isMessageDrawerOpen =false
-  }
 
 
 

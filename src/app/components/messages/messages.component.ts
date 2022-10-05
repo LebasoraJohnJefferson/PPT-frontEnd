@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , Output , EventEmitter} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MessagesService } from 'src/app/service/messages.service';
 import { environment } from 'src/env';
@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 export class MessagesComponent implements OnInit {
   messages:any = []
   email:string=""
+  @Output() SeenMsgRequest =  new EventEmitter()
   domain:string = environment.baseURL
   image_default:string = environment.default_profile
   todayDate : Date = new Date();
@@ -43,27 +44,31 @@ export class MessagesComponent implements OnInit {
     private router:Router,
   ) {
     // enter users own room
-    this.email = this.route.snapshot.params.email
-    this.getUser = this.authUser.getCurrentUser().subscribe(res=>{
-      this.sockets.join('joinRoom',res.email)
-    })
-    //enter friend room
-    this.sockets.join('joinRoom',this.route.snapshot.params.email)
-    this.msg = this.sockets.messageNotify().subscribe(()=>{
-      this.getMessageDetails()
-    })
-    this.isFriendOnline = this.sockets.friendStatus().subscribe((res)=>{
-      this.status = res.status
-    }) 
+        this.email = this.route.snapshot.params.email
+        this.getUser = this.authUser.getCurrentUser().subscribe(res=>{
+          this.sockets.join('joinRoom',res.email)
+          
+        })
+        //enter friend room
+        this.sockets.join('joinRoom',this.route.snapshot.params.email)
+        this.msg = this.sockets.messageNotify().subscribe(()=>{
+          this.getMessageDetails()
+        })
+        this.isFriendOnline = this.sockets.friendStatus().subscribe((res)=>{
+          this.status = res.status
+        })
     }    
 
   ngOnInit(): void {
     this.route.params.subscribe(
       params => {
         this.getMessageDetails()
+        this.messageService.updateMessage(params.email).subscribe(()=>{
+          this.messageService.emitSeenMessage()
+        },(err)=>{
+        })
       }
   );
-    
   }
 
   
