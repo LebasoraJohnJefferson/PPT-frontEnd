@@ -29,6 +29,7 @@ export class ProfileDetailsComponent implements OnInit {
   currentUserEmail:string=""
   list_of_feedback:any=[];
   detailSubscription:Subscription = new Subscription();
+  currentUserSubscription:Subscription = new Subscription();
   feedback_id:any = 0
   details:any={
     "User": {
@@ -67,6 +68,7 @@ export class ProfileDetailsComponent implements OnInit {
 
   ngOnDestroy() {
     this.detailSubscription.unsubscribe()
+    this.currentUserSubscription.unsubscribe()
   }
 
   getFriend(parameters:any){
@@ -171,12 +173,14 @@ export class ProfileDetailsComponent implements OnInit {
   }
 
 
+
+
   ngOnInit(): void {
     this.route.params.subscribe(
       params => {
         this.closeUpdateForm()
         this.getFriend(params)
-        this.AU.getCurrentUser().subscribe((res)=>{
+        this.currentUserSubscription = this.AU.getCurrentUser().subscribe((res)=>{
           this.isUserProfileIsOwner = res.email == params.email ? true : false
           this.currentUserEmail = res.email
           this.parameter_email = params.email

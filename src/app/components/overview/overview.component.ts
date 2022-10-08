@@ -3,6 +3,7 @@ import { FormBuilder,Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ProjectsService } from 'src/app/service/projects.service';
 import { Subscription } from 'rxjs';
+import { MembersService } from 'src/app/service/members.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class OverviewComponent implements OnInit {
   listOfProjectCreated:any = []
-  fakeArray = new Array(10)
+  Invite_project:any=[]
   isCreateFormOpen:boolean = false
   isSubmit:boolean=false
   subscriptionOfProjectCreated = new Subscription()
@@ -27,9 +28,11 @@ export class OverviewComponent implements OnInit {
   constructor(
     private fb:FormBuilder,
     private toastr:ToastrService,
-    private projectService:ProjectsService
+    private projectService:ProjectsService,
+    private memberService:MembersService
   ) {
     this.getAllCreatedProject()
+    this.allProjectInv()
   }
 
   ngOnInit(): void {
@@ -37,6 +40,34 @@ export class OverviewComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscriptionOfProjectCreated.unsubscribe();
+  }
+
+  acceptInvitation(id:number){
+    this.memberService.confirmInvitation(id).subscribe((res)=>{
+      this.allProjectInv()
+      this.toastr.success('User joined the project successfully!')
+    },(err)=>{
+      this.toastr.warning(err.error.details)
+    })
+  }
+  
+  cancelInvitation(id:number){
+    this.memberService.deleteInvitation(id).subscribe((res)=>{
+      this.allProjectInv()
+      this.toastr.success('User decline the project invitation successfully!')
+    },(err)=>{
+
+    })
+  }
+
+
+  allProjectInv(){
+      this.projectService.getAllProjectInvitation().subscribe((res)=>{
+        this.Invite_project = res
+        console.log(this.Invite_project)
+      },(err)=>{
+        console.log(err)
+      })
   }
 
   getAllCreatedProject(){

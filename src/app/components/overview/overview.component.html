@@ -25,7 +25,7 @@
           <app-canvas ></app-canvas>
         </div>
         <div routerLink="/dashboard/projects/{{projectInfo.project_name}}"
-          class="text-center font-bold py-2 m-1 bg-green-500 hover:bg-green-400 rounded cursor-pointer"
+          class="text-center font-bold py-2 m-1 bg-green-700 hover:bg-green-500 text-white rounded cursor-pointer"
         >
           VISIT
         </div>
@@ -40,7 +40,7 @@
       <!-- project joined -->
 
 <div class="grid w-full">
-        <div *ngIf="fakeArray" class="flex items-center pt-4">
+        <div *ngIf="Invite_project.length" class="flex items-center pt-4">
           <div class="flex font-bold ml-5">
             <h2 class="bg-purple-900 text-white rounded py-1 px-3 shadow-lg">
               Projects Joined:
@@ -50,26 +50,35 @@
         <div
           class="flex h-full overflow-x-scroll overflow-y-hidden"
         >
-          <div class="flex justify-center  gap-2 py-5 mt-2" *ngFor="let _ of fakeArray">
+          <div class="flex justify-center  gap-2 py-5 mt-2" *ngFor="let inv_pro of Invite_project">
             <div
               class="flex flex-col w-48 p-2 rounded m-1 shadow-lg"
               id="card-outline" 
             >
               <h2 class="font-bold mb-2 pb-2 text-center truncate">
-                Lorem, ipsum dolor.
+                {{inv_pro.base_project.project_name}}
               </h2>
               <div class="h-full">
                 <app-canvas></app-canvas>
               </div>
-              <button
+              <button *ngIf="inv_pro.request_status"
+                routerLink="/dashboard/projects/{{inv_pro.base_project.project_name}}"
                 class="font-bold py-2 m-1 bg-green-500 hover:bg-green-400 rounded"
               >
                 VISIT
               </button>
+              <div *ngIf="!inv_pro.request_status" class=" flex justify-around">
+                <div (click)="acceptInvitation(inv_pro.id)" class="px-2 py-1 cursor-pointer bg-green-700 hover:bg-green-500 rounded text-white">
+                  ACCEPT
+                </div>
+                <div (click)="cancelInvitation(inv_pro.id)" class="px-2 py-1 cursor-pointer bg-red-700 hover:bg-red-500 rounded text-white">
+                  CANCEL
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div *ngIf="!fakeArray.length"  id="Empty" class="flex font-bold text-2xl items-center w-100 justify-center pt-4">
+        <div *ngIf="!Invite_project.length"  id="Empty" class="flex font-bold text-2xl items-center w-100 justify-center pt-4">
           <div>COLLABORATE TO OTHERS</div>
         </div>
 </div>
@@ -78,7 +87,7 @@
 
 <!-- create project -->
 </div>
-  <div *ngIf="isCreateFormOpen" class="grid fixed bg-transparent-black top-0 right-0 left-0 z-10 grid-cols-1 grid-rows-1 md:grid-cols-3 md:grid-rows-7 bg-transparent-black w-full h-full">
+<div *ngIf="isCreateFormOpen" class="grid fixed bg-transparent-black top-0 right-0 left-0 z-10 grid-cols-1 grid-rows-1 md:grid-cols-3 md:grid-rows-7 bg-transparent-black w-full h-full">
   <div
       class="grid grid-cols-1 p-2 bg-white md:rounded md:col-start-2 md:row-start-1 row-span-5 md:my-10 h-100 md:w-100 place-content-center"
     >

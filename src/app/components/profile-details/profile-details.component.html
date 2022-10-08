@@ -1,7 +1,7 @@
 <div class="grid grid-rows-1 md:flex md:h-full md:flex-row -z-2">
     <div class="flex flex-col shadow-lg md:text-clip overflow-x-scroll bg-white" id="profile">
         <div class="bg-gray-500 md:h-48 py-1 hidden md:flex flex-col justify-items-center items-center">
-            <img class="h-12 w-12 md:w-40 md:h-40 rounded-full" [src]="this.details.User.path ? this.details.User.path : path" alt="">
+            <img class="h-12 w-12 md:w-40 md:h-40 rounded-full" [src]="details.User.image ? baseUrl+'/users/profiles/'+details.User.image : path" alt="">
             <div><p class=" break-all text-white text-sm md:text-md">{{name}}</p></div>
         </div>
         <ol *ngIf="!isUserProfileIsOwner" class="grid md:border grid-cols-2 gap-4 p-3">

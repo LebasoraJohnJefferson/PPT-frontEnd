@@ -1,13 +1,7 @@
 <div  class="grid gap-2 mx-2 grid-cols-1 grid-rows-2  md:grid-rows-1 md:grid-cols-3 w-full h-5/6">
-    <div id="container" class="col-span-2 overflow-y-scroll shadow-lg rounded">
+    <div id="container" class="col-span-3 overflow-y-scroll shadow-lg rounded">
       <div  id="gantt-container" *ngIf="this.tasks!=0">
           <svg id="gantt"></svg>
       </div>
-    </div>
-    <div id="container" class="h-full overflow-y-scroll shadow-lg rounded p-2">
-      <div class="my-2 mx-1"><small class="bg-purple-900 text-white rounded py-1 px-3 shadow-lg">Comments:</small></div>
-      <div>This task is done</div>
-      <div>This task is done</div>
-      {{dateArrange}}
     </div>
 </div>

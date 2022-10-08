@@ -24,7 +24,8 @@ import { MessagesComponent } from './components/messages/messages.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { PertChartComponent } from './components/pert-chart/pert-chart.component';
 import { TaskComponent } from './components/task/task.component';
-import { ProfileDetailsComponent} from "./components/profile-details/profile-details.component"
+import { ProfileDetailsComponent} from "./components/profile-details/profile-details.component";
+import { KanbanComponent } from './components/kanban/kanban.component'
 
 
 const config: SocketIoConfig = { url: environment.baseURL,
@@ -50,6 +51,7 @@ const config: SocketIoConfig = { url: environment.baseURL,
     PertChartComponent,
     TaskComponent,
     ProfileDetailsComponent,
+    KanbanComponent,
   ],
   imports: [
     BrowserModule,

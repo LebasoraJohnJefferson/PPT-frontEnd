@@ -47,7 +47,7 @@ export class MessagesComponent implements OnInit {
         this.email = this.route.snapshot.params.email
         this.getUser = this.authUser.getCurrentUser().subscribe(res=>{
           this.sockets.join('joinRoom',res.email)
-          
+          this.messageService.emitSeenMessage()
         })
         //enter friend room
         this.sockets.join('joinRoom',this.route.snapshot.params.email)

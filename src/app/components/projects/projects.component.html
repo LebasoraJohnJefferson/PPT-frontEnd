@@ -1,111 +1,192 @@
 <div class="h-full">
-    <div id="container" class="grid grid-row-2 py-3 m-0 md:m-2 bg-gray-100 shodow-md rounded">
-        <div class="flex justify-center align-center font-bold">
-            {{projectName }}
+  <div id="container" class="grid grid-row-1 py-3 m-0 md:m-2 bg-gray-100 shodow-md rounded">
+      <div class="flex md:flex-row flex-col "> 
+        <div class="flex hover:text-green-500 align-center justify-center mx-3 cursor-pointer" (click)="openKanBanContent()">
+          <mat-icon>view_column</mat-icon>
+          <small class="ml-1 py-1">Kanban</small>
+        </div>        
+        <div class="flex hover:text-green-500 align-center justify-center mx-3 cursor-pointer" (click)="changeToPert()">
+          <mat-icon>multiline_chart</mat-icon>
+          <small class="ml-1 py-1">PERT Chart</small>
         </div>
-        <div class="flex md:flex-row flex-col ">
-            
-            <div class="flex hover:text-green-500 align-center justify-center mx-3 cursor-pointer" (click)="changeToPert()">
-              <mat-icon>multiline_chart</mat-icon>
-              <small class="ml-1 py-1">PERT Chart</small>
+          <div class="flex hover:text-green-500 align-center justify-center mx-3 cursor-pointer" (click)="changeToTask()">
+            <mat-icon>task</mat-icon>
+            <small class="ml-1 py-1">Task Details</small>
           </div>
-            <div class="flex hover:text-green-500 align-center justify-center mx-3 cursor-pointer" (click)="changeToTask()">
-              <mat-icon>task</mat-icon>
-              <small class="ml-1 py-1">Task Details</small>
-          </div>
-          <div *ngIf="isSwitchPertAndTask" class="flex align-center hover:text-green-500 justify-center mx-3 cursor-pointer">
-            <mat-icon>calendar_today</mat-icon>
-            <select class="ml-2 text-sm rounded outline-0 bg-gray-100" #date (change)="changeViewModeEvent(date.value)">
-              <option value="Quarter Day">Quarter Day</option>
-              <option value="Half Day">Half Day</option>
-              <option value="Day">Day</option>
-              <option value="Week">Week</option>
-              <option value="Month">Month</option>
-            </select>
+        <div *ngIf="isSwitchPertAndTask" class="flex align-center hover:text-green-500 justify-center mx-3 cursor-pointer">
+          <mat-icon>calendar_today</mat-icon>
+          <select class="ml-2 text-sm rounded outline-0 bg-gray-100" #date (change)="changeViewModeEvent(date.value)">
+            <option value="Quarter Day">Quarter Day</option>
+            <option value="Half Day">Half Day</option>
+            <option value="Day">Day</option>
+            <option value="Week">Week</option>
+            <option value="Month">Month</option>
+          </select>
         </div>
-        <div *ngIf="!isSwitchPertAndTask" class="flex hover:text-green-500 align-center justify-center mx-3 cursor-pointer" (click)="createTaskOpen()">
+        <div *ngIf="!isSwitchPertAndTask && role=='admin'" class="flex hover:text-green-500 align-center justify-center mx-3 cursor-pointer" (click)="createTaskOpen()">
           <mat-icon>add</mat-icon>
           <small class="ml-1 py-1">ADD TASK</small>
-      </div>
         </div>
-    </div>
-    <app-pert-chart *ngIf="isSwitchPertAndTask" [dateArrange]="changeViewMode" ></app-pert-chart>
-    <app-task *ngIf="!isSwitchPertAndTask" (deleteTaskWithId)="delTask($event)" [tasks]="tasks"></app-task>
+      </div>
+  </div>
+    <app-pert-chart *ngIf="isSwitchPertAndTask && !isKanbanOpen" [dateArrange]="changeViewMode" ></app-pert-chart>
+    <app-task *ngIf="!isSwitchPertAndTask && !isKanbanOpen" (updateTaskWithId)="updateTask($event)" (deleteTaskWithId)="delTask($event)" [tasks]="tasks"></app-task>
+    <app-kanban [role]="role" *ngIf="isKanbanOpen"></app-kanban>
 </div>
-
 
 <!-- add task -->
 
 <div  
   *ngIf="isCreateTaskOpen" 
   class="flex justify-items-center items-center w-full h-full fixed top-0 left-0 place-content-center bg-transparent-black">
-    <div
-        class="grid md:w-1/2 w-full h-full mt-10 md:h-5/6 grid-cols-1 gap-1  place-content-center rounded bg-white border-2 shadow-lg"
-      >
-      <div class="flex justify-end py-2 h-12">
-        <span
-          (click)="createTaskOpen()"
-          class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5"
-          ><i class="fa-regular fa-x"></i
-        ></span>
-      </div>
+  <div
+      class="grid md:w-1/2 w-full h-full mt-10 md:h-5/6 grid-cols-1 gap-1  place-content-center rounded bg-white border-2 shadow-lg"
+    >
+    <div class="flex justify-end py-2 h-12">
+      <span
+        (click)="createTaskOpen()"
+        class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5"
+        ><i class="fa-regular fa-x"></i
+      ></span>
+    </div>
         
-      <form
-      [formGroup]="taskDetails"
-      method="POST"
-      class="grid p-3 gap-2 "
-      >
-        <h3 class="flex justify-center item-center font-bold text-2xl my-1">
-          Create Task
-        </h3>
-        <label class="text-sm"><small>Task Name</small></label>
+    <form
+    [formGroup]="taskDetails"
+    method="POST"
+    class="grid p-3 gap-2 "
+    >
+      <h3 class="flex justify-center item-center font-bold text-2xl my-1">
+        Create Task
+      </h3>
+      <label class="text-sm"><small>Task Name</small></label>
+      <input
+          class="shadow-md py-2 rounded"
+          formControlName="task_name"
+          placeholder="Enter Your Task Name"
+          type="email"
+          id="input-design"
+          required
+        />
+
+        <label><small>Duration</small></label>
         <input
-            class="shadow-md py-2 rounded"
-            formControlName="task_name"
-            placeholder="Enter Your Project Name"
-            type="email"
-            id="input-design"
-            required
-          />
+        id="input-design"
+        placeholder="Enter number of Day "
+        formControlName="duration"
+        class="shadow-md py-2 rounded"
+        type="number" />
 
-          <label><small>Duration</small></label>
-          <input
-          id="input-design"
-          placeholder="Enter number of Day "
-          formControlName="duration"
-          class="shadow-md py-2 rounded"
-          type="number" />
-
-          <label><small>Task Budget</small></label>
-          <input
-          id="input-design"
-          formControlName="budget"
-          class="shadow-md py-2 rounded"
-          type="number"
-          placeholder="Enter Task Budget"
-          />
-          <mat-form-field style="-webkit-text-fill-color: black" class="shadow-md h-5/6" id="input-design" appearance="fill">
+        <label><small>Task Budget</small></label>
+        <input
+        id="input-design"
+        formControlName="budget"
+        class="shadow-md py-2 rounded"
+        type="number"
+        placeholder="Enter Task Budget"
+        />
+        <mat-form-field style="-webkit-text-fill-color: black" class="shadow-md h-5/6" id="input-design" appearance="fill">
           <mat-label class="text-black"><small>Dependency</small></mat-label>
           <mat-select class="text-black" formControlName="dependency" multiple>
             <mat-option *ngFor="let dependency of list_dependencies" [value]="dependency">{{dependency}}</mat-option>
           </mat-select>
         </mat-form-field>
-          
-          <button
-            *ngIf="!isSubmitting"
-            (click)="submitTask()"
-            class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
-            type="submit"
-          >
-            Create Task
-          </button>
-          <button
-            *ngIf="isSubmitting"
-            class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
-            type="submit"
-            disabled
-          >
-            <mat-spinner [diameter]="25"></mat-spinner>
-          </button>
-        </form>
-      </div>
+        
+        <button
+          *ngIf="!isSubmitting"
+          (click)="submitTask()"
+          class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
+          type="submit"
+        >
+          Create Task
+        </button>
+        <button
+          *ngIf="isSubmitting"
+          class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
+          type="submit"
+          disabled
+        >
+          <mat-spinner [diameter]="25"></mat-spinner>
+        </button>
+    </form>
+  </div>
+</div>
+
+<!-- update task -->
+
+<div  
+  *ngIf="isUpdateTaskOpen" 
+  class="flex justify-items-center items-center w-full h-full fixed top-0 left-0 place-content-center bg-transparent-black">
+  <div
+      class="grid md:w-1/2 w-full h-full mt-10 md:h-5/6 grid-cols-1 gap-1  place-content-center rounded bg-white border-2 shadow-lg"
+    >
+    <div class="flex justify-end py-2 h-12">
+      <span
+      (click)="closeUpdateForm()"
+        class="text-red-700 font-bold hover:text-red-500 text-xl cursor-pointer p-1 mr-5"
+        ><i class="fa-regular fa-x"></i
+      ></span>
+    </div>
+        
+    <form
+    [formGroup]="taskUpdateDetails"
+    (ngSubmit)="submitUpdateTask()"
+    method="POST"
+    class="grid p-3 gap-2 "
+    >
+      <h3 class="flex justify-center item-center font-bold text-2xl my-1">
+        Update Task
+      </h3>
+      <label class="text-sm"><small>Task Name</small></label>
+      <input
+          class="shadow-md py-2 rounded"
+          formControlName="task_name"
+          placeholder="Enter New Task Name"
+          type="email"
+          id="input-design"
+          required
+        />
+
+        <label><small>Duration</small></label>
+        <input
+        id="input-design"
+        placeholder="Enter number of Day "
+        formControlName="duration"
+        class="shadow-md py-2 rounded"
+        type="number" />
+
+        <label><small>Task Budget</small></label>
+        <input
+        id="input-design"
+        formControlName="budget"
+        class="shadow-md py-2 rounded"
+        type="number"
+        placeholder="Enter Task Budget"
+        />
+        <mat-form-field style="-webkit-text-fill-color: black" class="shadow-md h-5/6" id="input-design" appearance="fill">
+          <mat-label class="text-black"><small>Dependency</small></mat-label>
+          <mat-select class="text-black" formControlName="dependency" multiple>
+            <mat-option *ngFor="let dependency of list_dependencies" [value]="dependency">{{dependency}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <button
+          *ngIf="!isSubmitting"
+          class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
+          type="submit"
+        >
+          Update Now
+        </button>
+        <button
+          *ngIf="isSubmitting"
+          class="flex justify-self-center text-center items-center justify-center py-3 rounded text-white font-bold shadow-lg bg-green-700 w-3/5 hover:bg-green-500"
+          type="submit"
+          disabled
+        >
+          <mat-spinner [diameter]="25"></mat-spinner>
+        </button>
+    </form>
+  </div>
+</div>
+
+
+      

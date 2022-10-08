@@ -29,7 +29,7 @@ export class CanvasComponent implements OnInit {
           label: 'My First Dataset',
           data: [30, 70],
           backgroundColor: [
-            'rgb(54, 162, 235)',
+            'rgb(220,20,60)',
             'rgb(211,211,211)',
           ],
           hoverOffset: 4

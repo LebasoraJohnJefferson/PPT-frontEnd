@@ -17,8 +17,18 @@ export class ProjectsService {
     return this.http.post(`${this.baseURL}/projects/`,details)
   }
 
+
   getAllProject():Observable<any>{
     return this.http.get<any>(`${this.baseURL}/projects/`)
+  }
+
+
+  getAllProjectInvitation():Observable<any>{
+    return this.http.get<any>(`${this.baseURL}/projects/all_invited_project`)
+  }
+
+  member_or_admin(projectName:string){
+    return this.http.get<any>(`${this.baseURL}/projects/user_or_admin/${projectName}`)
   }
 
 
