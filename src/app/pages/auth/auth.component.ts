@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class AuthComponent implements OnInit {
   isRegisterFormOpen:boolean = false
   isShowPassword:boolean = false
+  isLoginButton:boolean = false
   private _registerSubscription:Subscription = new Subscription()
   private _loginSubscription:Subscription = new Subscription()
 
@@ -55,12 +56,15 @@ export class AuthComponent implements OnInit {
 
   SubmitLogin(){
     if(this.loginFormGroup.valid){
+      this.isLoginButton =true
       this._loginSubscription = this._authService.LoginUser(this.loginFormGroup.value).subscribe((res)=>{
         this.toastr.success("Successfully Login")
         localStorage.setItem('token',res.access_token)
         this.router.navigate(['/dashboard'])
+        this.isLoginButton =false
       },(err)=>{
         this.toastr.warning(err.error.detail)
+        this.isLoginButton =false
       })
     }else{
       this.toastr.warning("Invalid Inputs")
