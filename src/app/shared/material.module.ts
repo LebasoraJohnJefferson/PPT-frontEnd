@@ -3,11 +3,19 @@ import { CommonModule } from '@angular/common';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const materialModules = [
   MatProgressSpinnerModule,
   MatIconModule,
-  MatSelectModule
+  MatSelectModule,
+  MatInputModule,
+  MatStepperModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 ]
 
 @NgModule({

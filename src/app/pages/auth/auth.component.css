@@ -1,0 +1,32 @@
+#outline{
+    text-indent: 10px;
+    outline:0.5px solid rgba(0,0,0,.05)
+}
+
+#formLogin{
+    outline:0.5px solid rgba(0,0,0,.1);
+}
+
+#background-image{
+    width:900px;
+    transform: translateX(-300px);
+}
+
+::ng-deep .mat-step-header .mat-step-icon{
+    background-color: red;
+}
+
+
+::ng-deep .mat-stepper-vertical-line::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    background-color: red;
+}
+
+
+@media only screen and (max-width: 760px){
+    #formLogin{
+        outline:0px solid black;
+    }
+}

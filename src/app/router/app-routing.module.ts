@@ -1,30 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from '../pages/home/home.component';
+import { AuthComponent } from '../pages/auth/auth.component';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { AuthGuardService as AuthGuard } from '../auth/auth-guard.service';
-import { AccountComponent } from '../components/account/account.component';
-import { OverviewComponent } from '../components/overview/overview.component';
-import { MessagesComponent } from '../components/messages/messages.component';
-import { ProjectsComponent } from '../components/projects/projects.component';
-import { ProfileDetailsComponent } from '../components/profile-details/profile-details.component';
-import { PertChartComponent } from '../components/pert-chart/pert-chart.component';
 
 const routes:Routes = [
-  {path:'',component:HomeComponent},
-  {path:'dashboard',component:DashboardComponent,
-    children:[
-      {path:"",component:OverviewComponent},
-      {path:'account',component:AccountComponent},
-      {path:"messages/:email",component:MessagesComponent},
-      {path:"projects/:projectName",component:ProjectsComponent},
-      {path:"profile/:email",component:ProfileDetailsComponent},
-    ],
-    canActivate: [AuthGuard]
-  },  
-  {path:'dashboard',component:DashboardComponent},
-  {path:'**',redirectTo:'dashboard'}
+  {path:'',component:AuthComponent},
+  {path:'dashboard',component:DashboardComponent,canActivate: [AuthGuard]},
+  {path:'**',redirectTo:''}
 ]
 
 
