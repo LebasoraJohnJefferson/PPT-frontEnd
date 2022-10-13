@@ -16,7 +16,7 @@ import { NotificationComponent } from '../components/notification/notification.c
 const routes:Routes = [
   {path:'',component:AuthComponent},
   {path:'dashboard',component:DashboardComponent,children: [
-    { path: '', component:DashboardOverviewComponent },
+    { path: 'overview', component:DashboardOverviewComponent },
     { path: 'projects', component:ProjectsComponent },
     { path: 'timeline', component:TimelineComponent },
     { path: 'members', component:MembersComponent },

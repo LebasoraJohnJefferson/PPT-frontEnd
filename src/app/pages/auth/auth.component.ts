@@ -67,7 +67,7 @@ export class AuthComponent implements OnInit {
       this._loginSubscription = this._authService.LoginUser(this.loginFormGroup.value).subscribe((res)=>{
         this.toastr.success("Successfully Login")
         localStorage.setItem('token',res.access_token)
-        this.router.navigate(['/dashboard'])
+        this.router.navigate(['/dashboard/overview'])
         this.isLoginButton =false
         this.loginFormGroup.reset()
       },(err)=>{

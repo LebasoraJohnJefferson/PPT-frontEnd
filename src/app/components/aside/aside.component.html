@@ -2,7 +2,7 @@
     <img class="w-full bg-red-500 relative" src="../../../assets/images/title.png" alt="logo" />
     <div class="grid grid-row-3 h-full">
         <ol class="grid grid-row-5 h-full ml-10 mt-3">
-            <li routerLink="/dashboard" (click)="AsideFocusPage('dashboard')" [ngClass]=" nav == 'dashboard' ? 'flex items-center font-bold pl-3 text-purple-700 cursor-pointer' : 'flex items-center font-bold pl-3 hover:text-purple-700 cursor-pointer'">
+            <li routerLink="/dashboard/overview" (click)="AsideFocusPage('overview')" [ngClass]=" nav == 'overview' ? 'flex items-center font-bold pl-3 text-purple-700 cursor-pointer' : 'flex items-center font-bold pl-3 hover:text-purple-700 cursor-pointer'">
                 <i class="fa-solid fa-house-chimney"></i><p class="ml-3">Dashboard</p>
             </li>
             <li routerLink="/dashboard/projects" (click)="AsideFocusPage('projects')" [ngClass]=" nav == 'projects' ? 'flex items-center font-bold pl-3 text-purple-700 cursor-pointer' : 'flex items-center font-bold pl-3 hover:text-purple-700 cursor-pointer'">

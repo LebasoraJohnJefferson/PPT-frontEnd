@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./aside.component.css']
 })
 export class AsideComponent implements OnInit {
-  nav:string = 'dashboard'
+  nav:string = 'dashboard';
   constructor(
     private router:Router,
     public toastr:ToastrService
@@ -17,6 +17,7 @@ export class AsideComponent implements OnInit {
   }
 
   ngOnInit(): void {
+ 
   }
 
   AsideFocusPage(navigationName:string){
