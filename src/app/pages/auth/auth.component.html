@@ -20,7 +20,7 @@
             </div>
             <div class="flex items-center justify-center">
                 <button *ngIf="!isLoginButton" type="submit" class="px-10 rounded text-white shadow-md  py-3 bg-green-700 hover:bg-green-500">LOGIN</button>
-                <button *ngIf="isLoginButton" class="px-12 rounded text-white shadow-md  py-3 bg-green-700 hover:bg-green-500">
+                <button *ngIf="isLoginButton" class="px-12 rounded text-white shadow-md  py-3 bg-green-700 hover:bg-green-500" disabled>
                     <mat-spinner [diameter]="25"></mat-spinner>
                 </button>
             </div>
@@ -98,7 +98,10 @@
                 <div class="grid mt-4 grid-cols-3 grid-rows-1 gap-2">
                   <button class="bg-red-700 py-1 hover:bg-red-500 text-white rounded" mat-button matStepperPrevious>Back</button>
                   <button class="bg-yellow-700 py-1  hover:bg-yellow-500 text-white rounded" mat-button (click)="stepper.reset()">Reset</button>
-                  <button (click)="submitRegister()" class="bg-green-700 py-1  hover:bg-green-500 text-white rounded" mat-button matStepperNext>Save</button>
+                  <button *ngIf="!isRegisterButton" (click)="submitRegister()" class="bg-green-700 py-1  hover:bg-green-500 text-white rounded" mat-button matStepperNext>Save</button>
+                  <button *ngIf="isRegisterButton"  class="flex justify-center items-center px-12 rounded text-white shadow-md  py-1 bg-green-500 text-white rounded" disabled>
+                    <mat-spinner [diameter]="25"></mat-spinner>
+                </button>
                 </div>
               </form>
             </mat-step>

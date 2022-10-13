@@ -14,6 +14,7 @@ export class AuthComponent implements OnInit {
   isRegisterFormOpen:boolean = false
   isShowPassword:boolean = false
   isLoginButton:boolean = false
+  isRegisterButton:boolean = false
   private _registerSubscription:Subscription = new Subscription()
   private _loginSubscription:Subscription = new Subscription()
 
@@ -48,10 +49,16 @@ export class AuthComponent implements OnInit {
 
   ngOnDestroy() {
     this._registerSubscription.unsubscribe()
+    this._loginSubscription.unsubscribe()
   }
 
   showPassword(){
     this.isShowPassword = !this.isShowPassword
+  }
+
+  
+  switchToRegister(){
+    this.isRegisterFormOpen = !this.isRegisterFormOpen
   }
 
   SubmitLogin(){
@@ -62,18 +69,16 @@ export class AuthComponent implements OnInit {
         localStorage.setItem('token',res.access_token)
         this.router.navigate(['/dashboard'])
         this.isLoginButton =false
+        this.loginFormGroup.reset()
       },(err)=>{
         this.toastr.warning(err.error.detail)
         this.isLoginButton =false
+        this.loginFormGroup.reset()
       })
     }else{
       this.toastr.warning("Invalid Inputs")
+      this.loginFormGroup.reset()
     }
-    this.loginFormGroup.reset()
-  }
-
-  switchToRegister(){
-    this.isRegisterFormOpen = !this.isRegisterFormOpen
   }
 
   submitRegister(){

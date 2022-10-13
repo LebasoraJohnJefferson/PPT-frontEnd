@@ -1,0 +1,45 @@
+<div class="flex flex-col h-screen shadow-lg" id="aside-size">
+    <img class="w-full bg-red-500 relative" src="../../../assets/images/title.png" alt="logo" />
+    <div class="grid grid-row-3 h-full">
+        <ol class="grid grid-row-5 h-full ml-10 mt-3">
+            <li routerLink="/dashboard" (click)="AsideFocusPage('dashboard')" [ngClass]=" nav == 'dashboard' ? 'flex items-center font-bold pl-3 text-purple-700 cursor-pointer' : 'flex items-center font-bold pl-3 hover:text-purple-700 cursor-pointer'">
+                <i class="fa-solid fa-house-chimney"></i><p class="ml-3">Dashboard</p>
+            </li>
+            <li routerLink="/dashboard/projects" (click)="AsideFocusPage('projects')" [ngClass]=" nav == 'projects' ? 'flex items-center font-bold pl-3 text-purple-700 cursor-pointer' : 'flex items-center font-bold pl-3 hover:text-purple-700 cursor-pointer'">
+                <i class="fa-solid fa-bars-progress"></i><p class="ml-3">Projects</p>
+            </li>
+            <li routerLink="/dashboard/timeline" (click)="AsideFocusPage('timeline')" [ngClass]=" nav == 'timeline' ? 'flex items-center font-bold pl-3 text-purple-700 cursor-pointer' : 'flex items-center font-bold pl-3 hover:text-purple-700 cursor-pointer'">
+                <i class="fa-solid fa-calendar"></i><p class="ml-3">Timeline</p>
+            </li>
+            <li routerLink="/dashboard/members" (click)="AsideFocusPage('members')" [ngClass]=" nav == 'members' ? 'flex items-center font-bold pl-3 text-purple-700 cursor-pointer' : 'flex items-center font-bold pl-3 hover:text-purple-700 cursor-pointer'">
+                <i class="fa-solid fa-people-group"></i><p class="ml-3">Members</p>
+            </li>
+            <hr class="bg-purple-500 rounded w-5/6 flex mt-4"/>
+        </ol>
+        <ol class="grid grid-row-4 h-full ml-10">
+            <li routerLink="/dashboard/settings" (click)="AsideFocusPage('settings')" [ngClass]=" nav == 'settings' ? 'flex items-center font-bold pl-3 text-purple-700 cursor-pointer' : 'flex items-center font-bold pl-3 hover:text-purple-700 cursor-pointer'">
+                <i class="fa-solid fa-gears"></i><p class="ml-3">Settings</p>
+            </li>
+            <li routerLink="/dashboard/reports" (click)="AsideFocusPage('reports')" [ngClass]=" nav == 'reports' ? 'flex items-center font-bold pl-3 text-purple-700 cursor-pointer' : 'flex items-center font-bold pl-3 hover:text-purple-700 cursor-pointer'">
+                <i class="fa-solid fa-print"></i><p class="ml-3">Reports</p>
+            </li>
+            <li routerLink="/dashboard/notification" (click)="AsideFocusPage('Notification')" [ngClass]=" nav == 'Notification' ? 'flex items-center font-bold pl-3 text-purple-700 cursor-pointer' : 'flex items-center font-bold pl-3 hover:text-purple-700 cursor-pointer'">
+                <i class="fa-solid fa-bell"></i><p class="ml-3">Notification</p>
+            </li>
+            <hr class="bg-purple-500 rounded w-5/6 flex mt-4"/>
+        </ol>
+        <div class="grid grid-row-1 h-full">
+            <div class="flex flex-col h-full">
+                <div class="flex flex-col items-center justify-center">
+                    <img class="w-12 h-12" src="../../../assets/images/profile_thumb.png" alt="profile"/>
+                    <small>Super Admin</small>
+                </div>
+                <div class="flex justify-center align-items mt-4">
+                    <div (click)="logout()" class="bg-red-700 hover:bg-red-500 cursor-pointer px-3 py-1 rounded text-white">
+                        <i class="fa-solid fa-right-from-bracket"></i><small class="ml-3">LOGOUT</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

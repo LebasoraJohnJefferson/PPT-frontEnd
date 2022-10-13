@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  // baseURL: 'http://127.0.0.1:8000',
-  baseURL: 'https://ppt-backend.herokuapp.com',
+  baseURL: 'http://127.0.0.1:8000',
   default_profile:'./assets/images/profile_thumb.png',
 };
 

@@ -13,7 +13,16 @@ import { JwtInterceptor } from './interceptor/jwt.interceptor';
 import { MaterialModule } from './shared/material.module';
 
 import { FooterComponent } from './components/footer/footer.component';
-import { AuthComponent } from './pages/auth/auth.component'
+import { AuthComponent } from './pages/auth/auth.component';
+import { AsideComponent } from './components/aside/aside.component'
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DashboardOverviewComponent } from './components/dashboard-overview/dashboard-overview.component';
+import { ProjectsComponent } from './components/projects/projects.component';
+import { TimelineComponent } from './components/timeline/timeline.component';
+import { MembersComponent } from './components/members/members.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { ReportsComponent } from './components/reports/reports.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 
 const config: SocketIoConfig = { url: environment.baseURL,
@@ -26,8 +35,17 @@ const config: SocketIoConfig = { url: environment.baseURL,
 @NgModule({
   declarations: [
     AppComponent,
-    FooterComponent,
     AuthComponent,
+    AsideComponent,
+    DashboardComponent,
+    FooterComponent,
+    DashboardOverviewComponent,
+    ProjectsComponent,
+    TimelineComponent,
+    MembersComponent,
+    SettingsComponent,
+    ReportsComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,
