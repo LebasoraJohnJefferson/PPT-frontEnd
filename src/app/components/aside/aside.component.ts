@@ -13,7 +13,6 @@ export class AsideComponent implements OnInit {
     private router:Router,
     public toastr:ToastrService,
   ) {
-    this.router.events.subscribe((val:any)=>{
       if(this.router.url == '/dashboard/overview' ||
         this.router.url == '/dashboard/projects' ||
         this.router.url == '/dashboard/timeline' ||
@@ -24,7 +23,6 @@ export class AsideComponent implements OnInit {
       ){
         this.nav = this.router.url
       }
-    })
   }
 
   ngOnInit(): void {

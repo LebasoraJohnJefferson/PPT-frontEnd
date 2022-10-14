@@ -1,34 +1,113 @@
 <div class="flex flex-col w-full h-full overflow-x-scroll">
-    <div class="p-3 flex w-full justify-between items-center"> 
+    <div class="p-3 flex w-full justify-between md:items-center md:flex-row flex-col"> 
         <div class="flex justify-center items-center p-2 ">
             <app-button-aside-open></app-button-aside-open>
             <div class="text-2xl font-bold">Members</div>
         </div> 
-        <div class="flex h-8 justify-between rounded items-center shadow-md">
-            <input type="text" class="w-80 ml-2" placeholder="Search..." id="search"/>
+        <div class="flex h-8 justify-between rounded items-center shadow-md" id="search-container">
+            <input type="text" class=" ml-2" placeholder="Search..." id="search"/>
             <i class="fa-sharp fa-solid fa-magnifying-glass px-1 text-md mr-2"></i>
         </div>
     </div>
     <div class="flex">
-        <div class="flex cursor-pointer items-center justify-center bg-purple-700 py-1 px-3 text-white rounded mx-3">
+        <div (click)="registerFormBtn()" class="flex cursor-pointer items-center justify-center bg-purple-700 py-1 px-3 text-white rounded mx-3">
             <p>Add Member</p>
             <i class="fa-solid fa-user-plus ml-2"></i>
         </div>
     </div>
-    <div class="grid grid-cols-4 gap-2 p-3 mt-2" >
+
+
+    <!-- add member -->
+    <mat-vertical-stepper class="text-black bg-transparent" [linear]="false" #stepper *ngIf="isRegisterFormOpen">
+
+        <!-- first Form -->
+
+        <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup" class="grid">
+            <ng-template  matStepLabel><div class="text-black">Authentication Details</div></ng-template>
+            <small class="ml-9 py-1">Email: <span *ngIf="firstFormGroup.controls['email'].invalid && firstFormGroup.controls['email'].value!=''" class="text-red-500">Invalid Email</span></small>
+            <div class="flex">
+                <i class="fa-solid fa-envelope text-xl mr-3"></i>
+              <input placeholder="Enter Email" type="email" formControlName="email" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline" required/>
+            </div>
+            <small class="ml-9 pt-1">Password: </small>
+            <div class="flex my-1">
+                <i class="fa-solid fa-key mr-4 text-xl mr-3"></i>
+                <input placeholder="Enter Password" type="password" formControlName="password" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline" />
+            </div>
+            <small class="ml-9 pt-1">Confirm Password:</small>
+            <small *ngIf="firstFormGroup.controls['password'].value!=firstFormGroup.controls['password2'].value && firstFormGroup.controls['password2'].value!='' && firstFormGroup.controls['password'].value!=''" class="ml-9 text-red-500">Password & Confirm password not matched!</small>
+            <div class="flex my-1">
+                <i class="fa-solid fa-key mr-4 text-xl mr-3"></i>
+                <input placeholder="Enter Confirm Password" type="password" formControlName="password2" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline" />
+            </div>
+            <div class="flex pt-3 justify-center items-center ">
+              <button class="bg-green-700 hover:bg-green-500 px-8 py-1 text-white rounded" mat-button matStepperNext>Next</button>
+            </div>
+          </form>
+        </mat-step>
+
+        <!-- second form -->
+
+        <mat-step [stepControl]="secondFormGroup">
+          <form [formGroup]="secondFormGroup"  class="flex flex-col">
+            <ng-template matStepLabel><div class="text-black">Personal Details</div></ng-template>
+            <small class="ml-9 pt-1">Full Name</small>
+            <div class="flex my-1">
+                <mat-icon class="flex justify-center items-center mr-2" >face</mat-icon>
+                <input placeholder="Full Name"  type="text" formControlName="fullName" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline" />
+            </div>
+            <small class="ml-9 pt-1">Address</small>
+            <div class="flex my-1">
+                <mat-icon class="flex justify-center items-center mr-2" >location_on</mat-icon>
+                <input placeholder="Address" type="text" formControlName="address" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline" />
+            </div>
+            <small class="ml-9 pt-1">Birth Day</small>
+            <div class="flex my-1">
+                <div class="pt-1 mr-3 ml-1"><i class="fa-solid fa-calendar-days"></i></div>
+                <input placeholder="Enter Your Birth Day" type="date" formControlName="birthDay" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline" />
+            </div>
+            <small class="ml-9 pt-1">Gender</small>
+            <div class="flex my-1">
+                <div class="pt-1 mr-3 ml-1"><i class="fa-solid fa-venus-mars"></i></div>
+                <select formControlName="gender"  id="outline" class="w-24 shadow-lg bg-gray-50 rounded">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            
+            <div class="grid mt-4 grid-cols-3 grid-rows-1 gap-2">
+              <button class="bg-red-700 py-1 hover:bg-red-500 text-white rounded" mat-button matStepperPrevious>Back</button>
+              <button class="bg-yellow-700 py-1  hover:bg-yellow-500 text-white rounded" mat-button (click)="stepper.reset()">Reset</button>
+              <button *ngIf="!isRegisterButton" (click)="submitRegister()" class="bg-green-700 py-1  hover:bg-green-500 text-white rounded" mat-button matStepperNext>Save</button>
+              <button *ngIf="isRegisterButton"  class="flex justify-center items-center px-12 rounded text-white shadow-md  py-1 bg-green-500 text-white rounded" disabled>
+                <mat-spinner [diameter]="25"></mat-spinner>
+            </button>
+            </div>
+          </form>
+        </mat-step>
+      </mat-vertical-stepper>
+
+
+
+    <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 p-3 mt-2" >
         <div class="shadow-lg w-full h-full rounded" id="card" *ngFor="let member of members">
             <div class="flex justify-center items-center flex-col p-2">
                 <img class="w-16 h-16 rounded-full" src="../../../assets/images/profile_thumb.png" alt="profile" />
-                <p>My Name</p>
+                <p>{{member.fullName}}</p>
             </div>
-            <div class="grid grid-cols-2 gap-2 py-2 px-3">
+            <div class="grid md:grid-cols-3 grid-cols-1 gap-2 py-2 px-3">
                 <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-blue-500 bg-blue-700">
                     <i class="fa-solid fa-eye"></i>
-                    <p class="ml-2">view</p>
+                    <small class="ml-2">view</small>
                 </div>
                 <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-green-500 bg-green-700">
                     <i class="fa-sharp fa-solid fa-circle-check"></i>
-                    <p class="ml-2">accept</p>
+                    <small class="ml-2">accept</small>
+                </div>
+                <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700">
+                    <i class="fa-solid fa-trash"></i>
+                    <small class="ml-2">decline</small>
                 </div>
             </div>
         </div>

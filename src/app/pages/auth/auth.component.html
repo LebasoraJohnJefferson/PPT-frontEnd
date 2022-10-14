@@ -5,13 +5,13 @@
         <!-- login form -->
         <form method="POST" class="grid gap-2 p-3 my-10" (ngSubmit)="SubmitLogin()" *ngIf="!isRegisterFormOpen" [formGroup]="loginFormGroup">
             <small class="ml-9">Enter Email: <span *ngIf="loginFormGroup.controls['username'].invalid && loginFormGroup.controls['username'].value != ''" class="text-red-500">Invalid Email</span></small>
-            <div class="flex">
-                <mat-icon class="flex justify-center items-center mr-2 ">email</mat-icon>
-                <input formControlName="username" class=" w-full py-1 shadow-lg bg-gray-50 rounded" id="outline" required/>
+            <div class="flex justify-center items-center">
+                <i class="fa-solid fa-envelope text-xl"></i>
+                <input formControlName="username" class="ml-4 w-full py-1 shadow-lg bg-gray-50 rounded" id="outline" required/>
             </div>
             <small class="ml-9 ">Enter Password: </small>
-            <div class="flex">
-                <mat-icon class="flex justify-center items-center mr-2 ">vpn_key</mat-icon>
+            <div class="flex justify-center items-center">
+                <i class="fa-solid fa-key mr-4 text-xl"></i>
                 <input formControlName="password" [type]="isShowPassword ? '' : 'password'" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline" required/>
             </div>
             <div class="flex items-center mt-2">
@@ -46,18 +46,18 @@
                 <ng-template  matStepLabel><div class="text-black">Authentication Details</div></ng-template>
                 <small class="ml-9 py-1">Email: <span *ngIf="firstFormGroup.controls['email'].invalid && firstFormGroup.controls['email'].value!=''" class="text-red-500">Invalid Email</span></small>
                 <div class="flex">
-                  <mat-icon class="flex justify-center items-center mr-2 " >email</mat-icon>
+                    <i class="fa-solid fa-envelope text-xl mr-3"></i>
                   <input placeholder="Enter Email" type="email" formControlName="email" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline" required/>
                 </div>
                 <small class="ml-9 pt-1">Password: </small>
                 <div class="flex my-1">
-                    <mat-icon class="flex justify-center items-center mr-2">vpn_key</mat-icon>
+                    <i class="fa-solid fa-key mr-4 text-xl mr-3"></i>
                     <input placeholder="Enter Password" type="password" formControlName="password" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline" />
                 </div>
                 <small class="ml-9 pt-1">Confirm Password:</small>
                 <small *ngIf="firstFormGroup.controls['password'].value!=firstFormGroup.controls['password2'].value && firstFormGroup.controls['password2'].value!='' && firstFormGroup.controls['password'].value!=''" class="ml-9 text-red-500">Password & Confirm password not matched!</small>
                 <div class="flex my-1">
-                    <mat-icon class="flex justify-center items-center mr-2" >vpn_key</mat-icon>
+                    <i class="fa-solid fa-key mr-4 text-xl mr-3"></i>
                     <input placeholder="Enter Confirm Password" type="password" formControlName="password2" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline" />
                 </div>
                 <div class="flex pt-3 justify-center items-center ">
