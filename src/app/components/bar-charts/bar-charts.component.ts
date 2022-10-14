@@ -23,7 +23,6 @@ export class BarChartsComponent implements OnInit {
   ngAfterViewInit() {
     this.canvas = this.mychart.nativeElement; 
     this.ctx = this.canvas.getContext('2d');
-
     new Chart(this.ctx, {
       type: 'bar',
       options:{
@@ -32,8 +31,7 @@ export class BarChartsComponent implements OnInit {
             display:true,
             text:"Project Progress",
             font: {
-              family: 'Comic Sans MS',
-              size: 20,
+              size: 25,
               weight: 'bold',
               lineHeight: 1.2,
             },

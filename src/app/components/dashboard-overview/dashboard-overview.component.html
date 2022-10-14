@@ -1,26 +1,29 @@
-<div class="flex flex-col w-full h-full">
+<div class="flex flex-col w-full h-full overflow-x-scroll">
     <div class="p-3 flex w-full justify-between items-center"> 
         <div class="flex justify-center items-center p-2 ">
             <app-button-aside-open></app-button-aside-open>
             <div class="text-2xl font-bold">DashBoard</div>
         </div> 
-        <div class="flex h-8 justify-between rounded items-center shadow-md">
+        <div class="flex h-8 justify-between rounded items-center shadow-md" id="search-container">
             <input type="text" class="w-80 ml-2" placeholder="Search..." id="search"/>
             <i class="fa-sharp fa-solid fa-magnifying-glass px-1 text-md mr-2"></i>
         </div>
     </div>
     <div class="grid grid-cols-3 gap-2 w-full p-3">
-        <div class="flex rounded shadow-lg bg-red-700 text-white text-lg h-32 justify-center items-center">
+        <div class="flex md:flex-row flex-col rounded shadow-lg bg-red-700 text-white text-lg h-32 justify-center items-center">
             <i class="fa-sharp fa-solid fa-list-check"></i>
-            <p class="ml-2">0/10 project done</p>
+            <p class="ml-4">0/10 project done</p>
         </div>
-        <div class="flex rounded shadow-lg bg-blue-700 text-white text-lg h-32 justify-center items-center" >
+        <div class="flex md:flex-row flex-col rounded shadow-lg bg-blue-700 text-white text-lg h-32 justify-center items-center" >
             <i class="fa-solid fa-cubes-stacked"></i>
-            <p class="ml-2">5/30 Task done</p>
+            <p class="ml-4">5/30 Task done</p>
         </div>
-        <div routerLink="/dashboard/members"  class="flex cursor-pointer rounded shadow-lg bg-green-700 text-white text-lg h-32 justify-center items-center">
+        <div routerLink="/dashboard/members"  class="flex md:flex-row flex-col cursor-pointer rounded shadow-lg bg-green-700 text-white text-lg h-32 justify-center items-center">
             <i class="fa-solid fa-people-group"></i>
-            <p class="ml-2">5 Members</p>
+            <div class="ml-4 grid">
+                <p>1 Joining</p>
+                <p>5 Members</p>
+            </div>
         </div>
     </div>
     <div class="h-full">

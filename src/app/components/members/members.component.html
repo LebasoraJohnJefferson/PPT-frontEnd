@@ -1,1 +1,36 @@
-<p>members works!</p>
+<div class="flex flex-col w-full h-full overflow-x-scroll">
+    <div class="p-3 flex w-full justify-between items-center"> 
+        <div class="flex justify-center items-center p-2 ">
+            <app-button-aside-open></app-button-aside-open>
+            <div class="text-2xl font-bold">Members</div>
+        </div> 
+        <div class="flex h-8 justify-between rounded items-center shadow-md">
+            <input type="text" class="w-80 ml-2" placeholder="Search..." id="search"/>
+            <i class="fa-sharp fa-solid fa-magnifying-glass px-1 text-md mr-2"></i>
+        </div>
+    </div>
+    <div class="flex">
+        <div class="flex cursor-pointer items-center justify-center bg-purple-700 py-1 px-3 text-white rounded mx-3">
+            <p>Add Member</p>
+            <i class="fa-solid fa-user-plus ml-2"></i>
+        </div>
+    </div>
+    <div class="grid grid-cols-4 gap-2 p-3 mt-2" >
+        <div class="shadow-lg w-full h-full rounded" id="card" *ngFor="let member of members">
+            <div class="flex justify-center items-center flex-col p-2">
+                <img class="w-16 h-16 rounded-full" src="../../../assets/images/profile_thumb.png" alt="profile" />
+                <p>My Name</p>
+            </div>
+            <div class="grid grid-cols-2 gap-2 py-2 px-3">
+                <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-blue-500 bg-blue-700">
+                    <i class="fa-solid fa-eye"></i>
+                    <p class="ml-2">view</p>
+                </div>
+                <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-green-500 bg-green-700">
+                    <i class="fa-sharp fa-solid fa-circle-check"></i>
+                    <p class="ml-2">accept</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

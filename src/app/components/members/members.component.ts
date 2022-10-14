@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./members.component.css']
 })
 export class MembersComponent implements OnInit {
-
+  members = new Array(10)
   constructor() { }
 
   ngOnInit(): void {
