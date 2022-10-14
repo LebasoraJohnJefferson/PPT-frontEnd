@@ -15,10 +15,18 @@
     width:250px;
 }
 
+#aside-size{
+    width:300px;
+}
+
+
 
 @media only screen and (max-width: 600px){
     #app-aside{
         position:absolute;
+    }
+    #aside-size{
+        width:100vw;
     }
 }
 

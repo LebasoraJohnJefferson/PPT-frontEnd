@@ -8,16 +8,26 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./aside.component.css']
 })
 export class AsideComponent implements OnInit {
-  nav:string = 'dashboard';
+  nav:string = '/dashboard/overview';
   constructor(
     private router:Router,
-    public toastr:ToastrService
+    public toastr:ToastrService,
   ) {
-
+    this.router.events.subscribe((val:any)=>{
+      if(this.router.url == '/dashboard/overview' ||
+        this.router.url == '/dashboard/projects' ||
+        this.router.url == '/dashboard/timeline' ||
+        this.router.url == '/dashboard/members' ||
+        this.router.url == '/dashboard/settings' ||
+        this.router.url == '/dashboard/reports' ||
+        this.router.url == '/dashboard/notification'
+      ){
+        this.nav = this.router.url
+      }
+    })
   }
 
   ngOnInit(): void {
- 
   }
 
   AsideFocusPage(navigationName:string){

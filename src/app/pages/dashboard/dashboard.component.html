@@ -1,6 +1,6 @@
 <div class="flex w-screen h-full">
-    <app-aside class="sticky top-0 left-0"></app-aside>
-    <div class="w-full h-full">
+    <app-aside *ngIf="isCloseOrOpen" class="sticky h-full top-0 left-0" id="aside-size"></app-aside>
+    <div class="w-full h-full relative">
         <router-outlet></router-outlet>
     </div>
 </div>

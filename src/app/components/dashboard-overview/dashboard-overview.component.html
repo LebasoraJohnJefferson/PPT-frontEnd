@@ -1,6 +1,9 @@
 <div class="flex flex-col w-full h-full">
     <div class="p-3 flex w-full justify-between items-center"> 
-        <div class="p-2 text-2xl font-bold">DashBoard</div>
+        <div class="flex justify-center items-center p-2 ">
+            <app-button-aside-open></app-button-aside-open>
+            <div class="text-2xl font-bold">DashBoard</div>
+        </div> 
         <div class="flex h-8 justify-between rounded items-center shadow-md">
             <input type="text" class="w-80 ml-2" placeholder="Search..." id="search"/>
             <i class="fa-sharp fa-solid fa-magnifying-glass px-1 text-md mr-2"></i>
@@ -15,9 +18,12 @@
             <i class="fa-solid fa-cubes-stacked"></i>
             <p class="ml-2">5/30 Task done</p>
         </div>
-        <div class="flex rounded shadow-lg bg-green-700 text-white text-lg h-32 justify-center items-center">
+        <div routerLink="/dashboard/members"  class="flex cursor-pointer rounded shadow-lg bg-green-700 text-white text-lg h-32 justify-center items-center">
             <i class="fa-solid fa-people-group"></i>
             <p class="ml-2">5 Members</p>
         </div>
+    </div>
+    <div class="h-full">
+        <app-bar-charts></app-bar-charts>
     </div>
 </div>
