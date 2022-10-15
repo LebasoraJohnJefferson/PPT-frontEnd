@@ -16,7 +16,9 @@ export class MembersComponent implements OnInit {
   loadingQuery:boolean=true
   isRegisterFormOpen:boolean = false
   isRegisterButton:boolean = false
+  declineLoadingBtn:boolean = false
   private _registerSubscription:Subscription = new Subscription()
+  private _deleteMemberSubscription:Subscription = new Subscription()
   firstFormGroup: FormGroup = this._formBuilder.group({
     email: ['',[Validators.required,Validators.email]],
     password:['',[Validators.required]],
@@ -44,6 +46,7 @@ export class MembersComponent implements OnInit {
 
   ngOnDestroy() {
     this._registerSubscription.unsubscribe()
+    this._deleteMemberSubscription.unsubscribe()
   }
 
   registerFormBtn(){
@@ -59,9 +62,19 @@ export class MembersComponent implements OnInit {
     })
   }
 
+  decline(id:any){
+    this.declineLoadingBtn = true
+    this._deleteMemberSubscription=this._memberService.deleteMembers(id).subscribe(()=>{
+      this.declineLoadingBtn = false
+      this.getMembers()
+    },(err)=>{
+      this.toastr.warning(err.error.detail)
+      this.declineLoadingBtn = false
+    })
+  }
+
   submitRegister(){
     this.isRegisterButton = true
-    this.loadingQuery = true
     if(this.firstFormGroup.valid && this.secondFormGroup.valid){
       this.secondFormGroup.value.birthDay= new Date(this.secondFormGroup.get("birthDay")?.value)
       let submitInfo = Object.assign({}, this.firstFormGroup.value, this.secondFormGroup.value);

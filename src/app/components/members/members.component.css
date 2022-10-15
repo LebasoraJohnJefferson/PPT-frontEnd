@@ -6,6 +6,10 @@
     background-color: red;
 }
 
+#decline ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: white;
+}
+
 #outline{
     text-indent: 10px;
 }

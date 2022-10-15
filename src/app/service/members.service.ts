@@ -16,5 +16,9 @@ export class MembersService {
     return this._http.get(`${this.baseURL}/members`)
   }
 
+  deleteMembers(id:any):Observable<any>{
+    return this._http.delete(`${this.baseURL}/members/${id}`)
+  }
+
 
 }

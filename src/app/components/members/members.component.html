@@ -106,9 +106,10 @@
                     <i class="fa-sharp fa-solid fa-circle-check"></i>
                     <small class="ml-2">accept</small>
                 </div>
-                <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700">
+                <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
                     <i class="fa-solid fa-trash"></i>
-                    <small class="ml-2">decline</small>
+                    <small *ngIf="!declineLoadingBtn" class="ml-2" (click)="decline(member.id)">decline</small>
+                    <mat-spinner *ngIf="declineLoadingBtn" class="ml-2" [diameter]="20"></mat-spinner>
                 </div>
             </div>
         </div>
