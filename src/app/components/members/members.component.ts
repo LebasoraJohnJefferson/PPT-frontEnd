@@ -16,7 +16,6 @@ export class MembersComponent implements OnInit {
   loadingQuery:boolean=true
   isRegisterFormOpen:boolean = false
   isRegisterButton:boolean = false
-  declineLoadingBtn:boolean = false
   private _registerSubscription:Subscription = new Subscription()
   private _deleteMemberSubscription:Subscription = new Subscription()
   firstFormGroup: FormGroup = this._formBuilder.group({
@@ -63,13 +62,11 @@ export class MembersComponent implements OnInit {
   }
 
   decline(id:any){
-    this.declineLoadingBtn = true
     this._deleteMemberSubscription=this._memberService.deleteMembers(id).subscribe(()=>{
-      this.declineLoadingBtn = false
       this.getMembers()
+      this.toastr.success("Successfully declined the request!")
     },(err)=>{
       this.toastr.warning(err.error.detail)
-      this.declineLoadingBtn = false
     })
   }
 
@@ -85,7 +82,6 @@ export class MembersComponent implements OnInit {
         this.getMembers()
       },(err)=>{
         this.toastr.warning(err.error.detail)
-        console.log(err)
         this.isRegisterButton = false
       })
     }else{

@@ -108,8 +108,7 @@
                 </div>
                 <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
                     <i class="fa-solid fa-trash"></i>
-                    <small *ngIf="!declineLoadingBtn" class="ml-2" (click)="decline(member.id)">decline</small>
-                    <mat-spinner *ngIf="declineLoadingBtn" class="ml-2" [diameter]="20"></mat-spinner>
+                    <small class="ml-2" (click)="decline(member.id)">decline</small>
                 </div>
             </div>
         </div>
