@@ -12,6 +12,7 @@ import { MembersService } from 'src/app/service/members.service';
 })
 export class MembersComponent implements OnInit {
   members:any = []
+  spinnerDeclineTrigger:number = 0
   loadingCardFakeArray = new Array(10)
   loadingQuery:boolean=true
   isRegisterFormOpen:boolean = false
@@ -62,10 +63,13 @@ export class MembersComponent implements OnInit {
   }
 
   decline(id:any){
+    this.spinnerDeclineTrigger = id
     this._deleteMemberSubscription=this._memberService.deleteMembers(id).subscribe(()=>{
       this.getMembers()
+      this.spinnerDeclineTrigger=0
       this.toastr.success("Successfully declined the request!")
     },(err)=>{
+      this.spinnerDeclineTrigger=0
       this.toastr.warning(err.error.detail)
     })
   }
