@@ -12,6 +12,8 @@ import { MembersService } from 'src/app/service/members.service';
 })
 export class MembersComponent implements OnInit {
   members:any = []
+  loadingCardFakeArray = new Array(10)
+  loadingQuery:boolean=true
   isRegisterFormOpen:boolean = false
   isRegisterButton:boolean = false
   private _registerSubscription:Subscription = new Subscription()
@@ -51,24 +53,26 @@ export class MembersComponent implements OnInit {
   getMembers(){
     this._memberService.getAllMembers().subscribe((res)=>{
       this.members = res
-      console.log(res)
+      this.loadingQuery =false
+    },(err)=>{
+      this.loadingQuery =false
     })
   }
 
   submitRegister(){
+    this.isRegisterButton = false
     if(this.firstFormGroup.valid && this.secondFormGroup.valid){
       this.secondFormGroup.value.birthDay= new Date(this.secondFormGroup.get("birthDay")?.value)
       let submitInfo = Object.assign({}, this.firstFormGroup.value, this.secondFormGroup.value);
       this._registerSubscription = this._authService.RegisterUser(submitInfo).subscribe((res)=>{
         this.toastr.success("Request submitted successfully")
-        this.registerFormBtn()
-        this.firstFormGroup.reset()
-        this.secondFormGroup.reset()
-        this.getMembers()
+        this.isRegisterButton = false
       },(err)=>{
         this.toastr.warning(err.error.detail)
+        this.isRegisterButton = false
       })
     }else{
+      this.isRegisterButton = false
       this.toastr.warning("Invalid Inputs")
     }
   }

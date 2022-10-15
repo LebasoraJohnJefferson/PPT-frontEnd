@@ -82,6 +82,7 @@ export class AuthComponent implements OnInit {
   }
 
   submitRegister(){
+    this.isRegisterButton = false
     if(this.firstFormGroup.valid && this.secondFormGroup.valid){
       this.secondFormGroup.value.birthDay= new Date(this.secondFormGroup.get("birthDay")?.value)
       let submitInfo = Object.assign({}, this.firstFormGroup.value, this.secondFormGroup.value);
@@ -89,10 +90,13 @@ export class AuthComponent implements OnInit {
         this.toastr.success("Request submitted successfully")
         this.switchToRegister()
         this.loginFormGroup.reset()
+        this.isRegisterButton = false
       },(err)=>{
         this.toastr.warning(err.error.detail)
+        this.isRegisterButton = false
       })
     }else{
+      this.isRegisterButton = false
       this.toastr.warning("Invalid Inputs")
     }
   }

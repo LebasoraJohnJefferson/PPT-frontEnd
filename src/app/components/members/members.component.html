@@ -90,7 +90,7 @@
 
 
 
-    <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 p-3 mt-2" >
+    <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 p-3 mt-2" *ngIf="members.length != 0" >
         <div class="shadow-lg w-full h-full rounded" id="card" *ngFor="let member of members">
             <div class="flex justify-center items-center flex-col p-2">
                 <img class="w-16 h-16 rounded-full" src="../../../assets/images/profile_thumb.png" alt="profile" />
@@ -110,6 +110,22 @@
                     <small class="ml-2">decline</small>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="flex justify-center items-center w-full h-full text-2xl" *ngIf="members.length == 0">
+        <p>No member(s) found</p>
+    </div>
+    <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 p-3 mt-2" *ngIf="loadingQuery" >
+        <div class="grid p-3 rounded" id="card"  *ngFor="let fakeArray of loadingCardFakeArray"> 
+            <ngx-skeleton-loader class="flex m-auto" animation="progress" count="1" appearance="circle" [theme]="{
+                height: '70px',
+                width:'70px',
+                'background-color': '#A2ACA5',
+                border: '1px solid white'
+              }"></ngx-skeleton-loader>
+            <!-- Uses `progress` as animation -->
+            <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="pl-5" animation="progress"></ngx-skeleton-loader>
+            <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
         </div>
     </div>
 </div>

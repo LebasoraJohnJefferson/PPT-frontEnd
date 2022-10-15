@@ -13,7 +13,7 @@ export class MembersService {
   ) { }
 
   getAllMembers():Observable<any>{
-    return this._http.get(`${this.baseURL}/users/members`)
+    return this._http.get(`${this.baseURL}/members`)
   }
 
 

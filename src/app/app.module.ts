@@ -25,6 +25,7 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { NotificationComponent } from './components/notification/notification.component';
 import { BarChartsComponent } from './components/bar-charts/bar-charts.component';
 import { ButtonAsideOpenComponent } from './components/button-aside-open/button-aside-open.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 
 const config: SocketIoConfig = { url: environment.baseURL,
     options: {
@@ -57,6 +58,7 @@ const config: SocketIoConfig = { url: environment.baseURL,
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
+    NgxSkeletonLoaderModule,
     ToastrModule.forRoot({
       'preventDuplicates': true
     }),
