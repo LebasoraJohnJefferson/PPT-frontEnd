@@ -91,7 +91,8 @@
 
 
     <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 p-3 mt-2" *ngIf="members.length != 0" >
-        <div class="shadow-lg w-full h-full rounded" id="card" *ngFor="let member of members">
+        <div class="shadow-lg w-full h-full rounded relative" id="card" *ngFor="let member of members">
+            <small [ngClass]="member.isAdminApprove ? 'm-1 px-3 py-1 rounded bg-green-700 text-white absolute' : 'm-1 px-3 py-1 rounded bg-pink-700 text-white absolute' ">{{member.isAdminApprove ? 'Joined' : 'Joining'}}</small>
             <div class="flex justify-center items-center flex-col p-2">
                 <img class="w-16 h-16 rounded-full" src="../../../assets/images/profile_thumb.png" alt="profile" />
                 <p>{{member.fullName}}</p>
@@ -112,7 +113,7 @@
             </div>
         </div>
     </div>
-    <div class="flex justify-center items-center w-full h-full text-2xl" *ngIf="members.length == 0">
+    <div class="flex justify-center items-center w-full h-full text-2xl" *ngIf="members.length == 0 && !loadingQuery">
         <p>No member(s) found</p>
     </div>
     <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 p-3 mt-2" *ngIf="loadingQuery" >
