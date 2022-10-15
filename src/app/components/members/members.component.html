@@ -108,7 +108,7 @@
                 </div>
                 <div (click)="decline(member.id)" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
                     <i class="fa-solid fa-trash"></i>
-                    <small class="ml-2" >decline</small>
+                    <small *ngIf='member.id != spinnerDeclineTrigger' class="ml-2" >decline</small>
                     <mat-spinner *ngIf='member.id == spinnerDeclineTrigger' class="ml-2" [diameter]="20"></mat-spinner>
                 </div>
             </div>
