@@ -97,18 +97,35 @@
                 <img class="w-16 h-16 rounded-full" src="../../../assets/images/profile_thumb.png" alt="profile" />
                 <p>{{member.fullName}}</p>
             </div>
-            <div class="grid md:grid-cols-3 grid-cols-1 gap-2 py-2 px-3">
+
+            <!-- joining button options-->
+
+            <div *ngIf="!member.isAdminApprove" class="grid md:grid-cols-3 grid-cols-1 gap-2 py-2 px-3">
                 <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-blue-500 bg-blue-700">
                     <i class="fa-solid fa-eye"></i>
                     <small class="ml-2">view</small>
                 </div>
-                <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-green-500 bg-green-700">
+                <div (click)="acceptMember(member.id)" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-green-500 bg-green-700" id="decline">
                     <i class="fa-sharp fa-solid fa-circle-check"></i>
-                    <small class="ml-2">accept</small>
+                    <small *ngIf='member.id != spinnerAcceptTrigger' class="ml-2">accept</small>
+                    <mat-spinner *ngIf='member.id == spinnerAcceptTrigger' class="ml-2" [diameter]="20"></mat-spinner>
                 </div>
                 <div (click)="decline(member.id)" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
                     <i class="fa-solid fa-trash"></i>
                     <small *ngIf='member.id != spinnerDeclineTrigger' class="ml-2" >decline</small>
+                    <mat-spinner *ngIf='member.id == spinnerDeclineTrigger' class="ml-2" [diameter]="20"></mat-spinner>
+                </div>
+            </div>
+
+            <!-- joined button options -->
+            <div *ngIf="member.isAdminApprove" class="grid md:grid-cols-2 grid-cols-1 gap-2 py-2 px-3">
+                <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-blue-500 bg-blue-700">
+                    <i class="fa-solid fa-eye"></i>
+                    <small class="ml-2">view</small>
+                </div>
+                <div (click)="remove(member.id)" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
+                    <i class="fa-solid fa-user-slash"></i>
+                    <small *ngIf='member.id != spinnerDeclineTrigger' class="ml-2" >remove</small>
                     <mat-spinner *ngIf='member.id == spinnerDeclineTrigger' class="ml-2" [diameter]="20"></mat-spinner>
                 </div>
             </div>

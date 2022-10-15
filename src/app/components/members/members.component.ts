@@ -13,12 +13,14 @@ import { MembersService } from 'src/app/service/members.service';
 export class MembersComponent implements OnInit {
   members:any = []
   spinnerDeclineTrigger:number = 0
+  spinnerAcceptTrigger:number = 0
   loadingCardFakeArray = new Array(10)
   loadingQuery:boolean=true
   isRegisterFormOpen:boolean = false
   isRegisterButton:boolean = false
   private _registerSubscription:Subscription = new Subscription()
   private _deleteMemberSubscription:Subscription = new Subscription()
+  private _acceptMemberSubscription:Subscription = new Subscription()
   firstFormGroup: FormGroup = this._formBuilder.group({
     email: ['',[Validators.required,Validators.email]],
     password:['',[Validators.required]],
@@ -47,6 +49,7 @@ export class MembersComponent implements OnInit {
   ngOnDestroy() {
     this._registerSubscription.unsubscribe()
     this._deleteMemberSubscription.unsubscribe()
+    this._acceptMemberSubscription.unsubscribe()
   }
 
   registerFormBtn(){
@@ -70,6 +73,29 @@ export class MembersComponent implements OnInit {
       this.toastr.success("Successfully declined the request!")
     },(err)=>{
       this.spinnerDeclineTrigger=0
+      this.toastr.warning(err.error.detail)
+    })
+  }
+
+  remove(id:any){
+    this.spinnerDeclineTrigger = id
+    this._deleteMemberSubscription=this._memberService.deleteMembers(id).subscribe(()=>{
+      this.getMembers()
+      this.spinnerDeclineTrigger=0
+      this.toastr.success("Successfully remove the member!")
+    },(err)=>{
+      this.spinnerDeclineTrigger=0
+      this.toastr.warning(err.error.detail)
+    })
+  }
+
+  acceptMember(id:any){
+    this.spinnerAcceptTrigger = id
+    this._acceptMemberSubscription = this._memberService.acceptMembers(id).subscribe((res)=>{
+      this.toastr.success('Request successfully accepted!')
+      this.spinnerAcceptTrigger = 0
+      this.getMembers()
+    },(err)=>{
       this.toastr.warning(err.error.detail)
     })
   }

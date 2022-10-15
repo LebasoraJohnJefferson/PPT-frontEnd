@@ -20,5 +20,9 @@ export class MembersService {
     return this._http.delete(`${this.baseURL}/members/${id}`)
   }
 
+  acceptMembers(id:any):Observable<any>{
+    return this._http.put(`${this.baseURL}/members/${id}`,null)
+  }
+
 
 }
