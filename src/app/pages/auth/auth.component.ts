@@ -82,7 +82,7 @@ export class AuthComponent implements OnInit {
   }
 
   submitRegister(){
-    this.isRegisterButton = false
+    this.isRegisterButton = true
     if(this.firstFormGroup.valid && this.secondFormGroup.valid){
       this.secondFormGroup.value.birthDay= new Date(this.secondFormGroup.get("birthDay")?.value)
       let submitInfo = Object.assign({}, this.firstFormGroup.value, this.secondFormGroup.value);

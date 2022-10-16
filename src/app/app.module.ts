@@ -26,6 +26,8 @@ import { NotificationComponent } from './components/notification/notification.co
 import { BarChartsComponent } from './components/bar-charts/bar-charts.component';
 import { ButtonAsideOpenComponent } from './components/button-aside-open/button-aside-open.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { StandardUserComponent } from './pages/standard-user/standard-user.component';
+import { MemberInfoComponent } from './components/member-info/member-info.component';
 
 const config: SocketIoConfig = { url: environment.baseURL,
     options: {
@@ -50,6 +52,8 @@ const config: SocketIoConfig = { url: environment.baseURL,
     NotificationComponent,
     BarChartsComponent,
     ButtonAsideOpenComponent,
+    StandardUserComponent,
+    MemberInfoComponent,
   ],
   imports: [
     BrowserModule,

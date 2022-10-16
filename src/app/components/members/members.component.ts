@@ -96,6 +96,7 @@ export class MembersComponent implements OnInit {
       this.spinnerAcceptTrigger = 0
       this.getMembers()
     },(err)=>{
+      this.spinnerAcceptTrigger = 0
       this.toastr.warning(err.error.detail)
     })
   }

@@ -101,7 +101,7 @@
             <!-- joining button options-->
 
             <div *ngIf="!member.isAdminApprove" class="grid md:grid-cols-3 grid-cols-1 gap-2 py-2 px-3">
-                <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-blue-500 bg-blue-700">
+                <div routerLink="/dashboard/members/{{member.id}}"  class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-blue-500 bg-blue-700">
                     <i class="fa-solid fa-eye"></i>
                     <small class="ml-2">view</small>
                 </div>
@@ -119,7 +119,7 @@
 
             <!-- joined button options -->
             <div *ngIf="member.isAdminApprove" class="grid md:grid-cols-2 grid-cols-1 gap-2 py-2 px-3">
-                <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-blue-500 bg-blue-700">
+                <div routerLink="/dashboard/members/{{member.id}}" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-blue-500 bg-blue-700">
                     <i class="fa-solid fa-eye"></i>
                     <small class="ml-2">view</small>
                 </div>

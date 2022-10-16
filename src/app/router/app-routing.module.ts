@@ -11,7 +11,8 @@ import { MembersComponent } from '../components/members/members.component';
 import { SettingsComponent } from '../components/settings/settings.component';
 import { ReportsComponent } from '../components/reports/reports.component';
 import { NotificationComponent } from '../components/notification/notification.component';
-
+import { StandardUserComponent } from '../pages/standard-user/standard-user.component';
+import { MemberInfoComponent } from '../components/member-info/member-info.component';
 
 const routes:Routes = [
   {path:'',component:AuthComponent},
@@ -20,12 +21,14 @@ const routes:Routes = [
     { path: 'projects', component:ProjectsComponent },
     { path: 'timeline', component:TimelineComponent },
     { path: 'members', component:MembersComponent },
+    { path: 'members/:id', component:MemberInfoComponent },
     { path: 'settings', component:SettingsComponent },
     { path: 'reports', component:ReportsComponent },
     { path: 'notification', component:NotificationComponent },
   ],
   canActivate: [AuthGuard]},
-  {path:'**',redirectTo:''}
+  {path:'members',component:StandardUserComponent,canActivate: [AuthGuard]},
+  {path:'**',redirectTo:'dashboard'}
 ]
 
 
