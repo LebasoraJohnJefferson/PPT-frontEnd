@@ -111,6 +111,8 @@ export class MembersComponent implements OnInit {
         this.isRegisterButton = false
         this.registerFormBtn()
         this.getMembers()
+        this.firstFormGroup.reset()
+        this.secondFormGroup.reset()
       },(err)=>{
         this.toastr.warning(err.error.detail)
         this.isRegisterButton = false

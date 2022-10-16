@@ -1,61 +1,126 @@
 <div class="flex flex-col h-full">
-    <div class="flex flex-col h-full w-full">
-        <div class="flex items-center m-3 cursor-pointer">
-            <i class="fa-sharp fa-solid fa-arrow-left"></i><p class="ml-2">go back</p>
+    <div class="flex flex-col h-full w-full" *ngIf="!dataLoader && userDetail">
+        <div (click)="goBack()" class="flex items-center m-3 cursor-pointer">
+            <i class="fa-sharp fa-solid fa-arrow-left bg-purple-900 p-2 rounded-full text-white"></i>
+            <p class="ml-2">go back</p>
         </div>
-        <div class="grid grid-cols-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-500 text-white m-3 p-3 rounded">
             <div class="flex flex-col p-3 justify-center  my-5  h-full">
                 <div class="flex m-auto">
                     <img class="h-24 w-24" src="../../../assets/images/profile_thumb.png" alt="profile">
                     <div class="flex ml-3 flex-col justify-center items-start">
-                        <small [ngClass]="!fakeBoolean ? 'px-3 py-1 rounded bg-green-700 text-white' : ' px-3 py-1 rounded bg-pink-700 text-white' ">{{1==1 ? 'Joined' : 'Joining'}}</small>
-                        <p>Thomas Jefferson</p>
+                        <small [ngClass]="userDetail ? 'px-3 py-1 rounded bg-green-700 text-white' : ' px-3 py-1 rounded bg-pink-700 text-white' ">{{userDetail.isAdminApprove ? 'Joined' : 'Joining'}}</small>
+                        <p>{{userDetail.fullName}}</p>
                     </div>
                 </div>
                 <!-- joining -->
-                <div class="grid grid-cols-2 gap-2 mt-2 my-auto">
-                    <div class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-green-500 bg-green-700" id="decline">
+                <div *ngIf="!userDetail.isAdminApprove" class="grid grid-cols-2 gap-2 mt-2 my-auto">
+                    <div (click)="accept()" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-green-500 bg-green-700" id="decline">
                         <i class="fa-sharp fa-solid fa-circle-check"></i>
-                        <small *ngIf='!fakeBoolean' class="ml-2">accept</small>
-                        <mat-spinner *ngIf='fakeBoolean' class="ml-2" [diameter]="20"></mat-spinner>
+                        <small *ngIf='!spinnerAcceptTrigger' class="ml-2">accept</small>
+                        <mat-spinner *ngIf='spinnerAcceptTrigger' class="ml-2" [diameter]="20"></mat-spinner>
                     </div>
-                    <div  class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
+                    <div (click)="decline()"  class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
                         <i class="fa-solid fa-trash"></i>
-                        <small *ngIf='!fakeBoolean' class="ml-2" >decline</small>
-                        <mat-spinner *ngIf='fakeBoolean' class="ml-2" [diameter]="20"></mat-spinner>
+                        <small *ngIf='!spinnerDeclineTrigger' class="ml-2" >decline</small>
+                        <mat-spinner *ngIf='spinnerDeclineTrigger' class="ml-2" [diameter]="20"></mat-spinner>
+                    </div>
+                </div>
+                <div *ngIf="userDetail.isAdminApprove" class="grid grid-cols-1 gap-2 mt-2 my-auto">
+                    <div (click)="remove()" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
+                        <i class="fa-solid fa-user-slash"></i>
+                        <small *ngIf='!spinnerDeclineTrigger' class="ml-2" >remove</small>
+                        <mat-spinner *ngIf='spinnerDeclineTrigger' class="ml-2" [diameter]="20"></mat-spinner>
                     </div>
                 </div>
         </div>
-            <div class="grid ml-4 text-xl w-full mt-3">
+            <div class="grid grid-cols-1 ml-4 text-sm md:text-lg w-full mt-3">
                 <div class="flex items-center ">
                     <i class="fa-solid fa-arrow-up-1-9"></i>
-                    <p class="ml-4">Age: 7</p>
+                    <p class="ml-4">Age: {{Age}} years old</p>
                 </div>
                 <div class="flex  items-center ">
                     <i class="fa-solid fa-cake-candles"></i>
-                    <p class="ml-4">Birth Day: Sept. 26 , 2015</p>
+                    <p class="ml-4">Birth Day: {{ birthDay | date: 'mediumDate'}}</p>
                 </div>
                 <div class="flex  items-center ">
                     <i class="fa-solid fa-location-dot"></i>
-                    <p class="ml-4">Address: Tacloban City</p>
+                    <p class="ml-4">Address: {{userDetail.address}}</p>
                 </div>
                 <div class="flex  items-center ">
                     <i class="fa-solid fa-venus-mars"></i>
-                    <p class="ml-2">Gender: Male</p>
+                    <p class="ml-2">Gender: {{userDetail.gender}}</p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="flex flex-col px-3 h-full w-full">
+    <div class="flex flex-col px-3 h-full w-full" *ngIf="!dataLoader">
         <div class="flex items-center">
             <h2 class="bg-purple-900 px-3 py-1 rounded font-bold text-white">Project Assigned:</h2>
         </div>
         <div class="mt-2" *ngFor="let _ of fakeArray">
             <div>Project 1</div>
             <div class="flex border-2 rounded bg-gray-100 shadow-md">
-                <p class="flex rounded justify-end text-white bg-transparent-black" style="width:20%;background-image: linear-gradient(to right,black,red);box-shadow:0px 0px 3px rgba(0,0,0,.3);">20%</p>
+                <small class="flex rounded justify-end text-white bg-transparent-black" style="width:20%;background-image: linear-gradient(to right,black,red);box-shadow:0px 0px 3px rgba(0,0,0,.3);">20%</small>
             </div>
         </div>
-        
+    </div>
+
+    <!-- loading animation -->
+
+    <div class="flex flex-col h-full w-full" *ngIf="dataLoader">
+        <div (click)="goBack()" class="flex items-center m-3 cursor-pointer">
+            <i class="fa-sharp fa-solid fa-arrow-left bg-purple-900 p-2 rounded-full text-white"></i>
+            <p class="ml-2">go back</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-500 text-white m-3 p-3 rounded">
+            <div class="flex flex-col p-3 justify-center  my-5  h-full">
+                <div class="flex m-auto">
+                    <ngx-skeleton-loader class="flex m-auto" animation="progress" count="1" appearance="circle" [theme]="{
+                        height: '70px',
+                        width:'70px',
+                        'background-color': '#A2ACA5',
+                        border: '1px solid white'
+                      }"></ngx-skeleton-loader>
+                    <div class="grid w-24 ml-3 flex-col pt-4">
+                        <!-- Uses `progress` as animation -->
+                        <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" animation="progress"></ngx-skeleton-loader>
+                        <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                    </div>
+                </div>
+                <!-- joining -->
+                <div class="grid grid-cols-2 gap-2 mt-2 my-auto">
+                    <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                    <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 mt-4 text-sm md:text-lg w-full mt-3">
+                <div class="grid items-center">
+                    <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                </div>
+                <div class="grid  items-center ">
+                    <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                </div>
+                <div class="grid items-center ">
+                    <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                </div>
+                <div class="grid  items-center ">
+                    <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col px-3 h-full w-full">
+            <div class="grid w-48">
+                <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+            </div>
+            <div class="mt-2" *ngFor="let _ of fakeArray">
+                <div class="w-32">
+                    <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                </div>
+                <div class="grid">
+                    <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

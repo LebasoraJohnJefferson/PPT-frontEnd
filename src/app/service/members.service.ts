@@ -24,5 +24,9 @@ export class MembersService {
     return this._http.put(`${this.baseURL}/members/${id}`,null)
   }
 
+  getOneMemberInfo(id:any):Observable<any>{
+    return this._http.get(`${this.baseURL}/members/${id}`)
+  }
+
 
 }
