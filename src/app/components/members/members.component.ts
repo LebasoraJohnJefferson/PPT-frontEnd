@@ -69,11 +69,7 @@ export class MembersComponent implements OnInit {
   getMembers(){
     this._getAllMemberSubscription = this._memberService.getAllMembers().subscribe((res)=>{
       this.members = res
-      this.loadingQuery =false
-      if(this.selectSortCategoryFormGroup.controls.category.value == 'All'){
-        return
-      }
-      else{
+      if(this.selectSortCategoryFormGroup.controls.category.value != 'All'){
         if(this.members.length == 0 ){
           this.members = []
           return
@@ -87,6 +83,7 @@ export class MembersComponent implements OnInit {
         })
         this.members = temp_member
       }
+      this.loadingQuery =false
     },(err)=>{
       this.loadingQuery =false
     })
