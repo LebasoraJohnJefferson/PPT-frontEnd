@@ -67,6 +67,7 @@ export class MembersComponent implements OnInit {
   }
 
   getMembers(){
+    this.loadingQuery = true
     this._getAllMemberSubscription = this._memberService.getAllMembers().subscribe((res)=>{
       this.members = res
       if(this.selectSortCategoryFormGroup.controls.category.value != 'All'){
