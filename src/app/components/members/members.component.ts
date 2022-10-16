@@ -21,6 +21,7 @@ export class MembersComponent implements OnInit {
   private _registerSubscription:Subscription = new Subscription()
   private _deleteMemberSubscription:Subscription = new Subscription()
   private _acceptMemberSubscription:Subscription = new Subscription()
+  private _getAllMemberSubscription:Subscription = new Subscription()
   firstFormGroup: FormGroup = this._formBuilder.group({
     email: ['',[Validators.required,Validators.email]],
     password:['',[Validators.required]],
@@ -33,6 +34,10 @@ export class MembersComponent implements OnInit {
     birthDay:['',[Validators.required]],
     gender:['',[Validators.required]]
   });
+
+  selectSortCategoryFormGroup:FormGroup = this._formBuilder.group({
+    category:['All']
+  })
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -50,16 +55,38 @@ export class MembersComponent implements OnInit {
     this._registerSubscription.unsubscribe()
     this._deleteMemberSubscription.unsubscribe()
     this._acceptMemberSubscription.unsubscribe()
+    this._getAllMemberSubscription.unsubscribe()
   }
 
   registerFormBtn(){
     this.isRegisterFormOpen = !this.isRegisterFormOpen
   }
 
+  selectCategory(){
+    this.getMembers()
+  }
+
   getMembers(){
-    this._memberService.getAllMembers().subscribe((res)=>{
+    this._getAllMemberSubscription = this._memberService.getAllMembers().subscribe((res)=>{
       this.members = res
       this.loadingQuery =false
+      if(this.selectSortCategoryFormGroup.controls.category.value == 'All'){
+        return
+      }
+      else{
+        if(this.members.length == 0 ){
+          this.members = []
+          return
+        }
+        let isJoin = this.selectSortCategoryFormGroup.controls.category.value == 'Joined' ? 1 : 0
+        let temp_member:any = []
+        this.members.forEach((member:any)=>{
+          if(member.isAdminApprove == isJoin){
+            temp_member.push(member)
+          }
+        })
+        this.members = temp_member
+      }
     },(err)=>{
       this.loadingQuery =false
     })
