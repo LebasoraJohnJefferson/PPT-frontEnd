@@ -68,6 +68,7 @@ export class MembersComponent implements OnInit {
 
   getMembers(){
     this.loadingQuery = true
+    this.members = []
     this._getAllMemberSubscription = this._memberService.getAllMembers().subscribe((res)=>{
       this.loadingQuery =false
       this.members = res
