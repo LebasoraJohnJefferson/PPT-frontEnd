@@ -69,12 +69,10 @@ export class MembersComponent implements OnInit {
   getMembers(){
     this.loadingQuery = true
     this._getAllMemberSubscription = this._memberService.getAllMembers().subscribe((res)=>{
-      this.members = res
+      this.members = []
       if(this.selectSortCategoryFormGroup.controls.category.value != 'All'){
-        if(this.members.length == 0 ){
-          this.members = []
-          return
-        }
+        if(this.members.length == 0 ) return
+        this.members = res
         let isJoin = this.selectSortCategoryFormGroup.controls.category.value == 'Joined' ? 1 : 0
         let temp_member:any = []
         this.members.forEach((member:any)=>{
