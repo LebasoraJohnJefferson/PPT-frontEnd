@@ -14,7 +14,7 @@ export class DashboardService {
   ) { }
 
   getCountOfMemberStatus():Observable<any>{
-    return this._http.get(`${this.baseURL}/dashboard`)
+    return this._http.get(`${this.baseURL}/dashboard/members`)
   }
 
 }

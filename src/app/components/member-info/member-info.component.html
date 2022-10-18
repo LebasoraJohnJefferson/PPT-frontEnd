@@ -1,9 +1,6 @@
 <div class="flex flex-col h-full">
     <div class="flex flex-col h-full w-full" *ngIf="!dataLoader && userDetail">
-        <div (click)="goBack()" class="flex items-center m-3 cursor-pointer">
-            <i class="fa-sharp fa-solid fa-arrow-left bg-purple-900 p-2 rounded-full text-white"></i>
-            <p class="ml-2">go back</p>
-        </div>
+        <app-back-btn></app-back-btn>
         <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-500 text-white m-3 p-3 rounded">
             <div class="flex flex-col p-3 justify-center  my-5  h-full">
                 <div class="flex m-auto">
@@ -69,10 +66,7 @@
     <!-- loading animation -->
 
     <div class="flex flex-col h-full w-full" *ngIf="dataLoader">
-        <div (click)="goBack()" class="flex items-center m-3 cursor-pointer">
-            <i class="fa-sharp fa-solid fa-arrow-left bg-purple-900 p-2 rounded-full text-white"></i>
-            <p class="ml-2">go back</p>
-        </div>
+        <app-back-btn></app-back-btn>
         <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-500 text-white m-3 p-3 rounded">
             <div class="flex flex-col p-3 justify-center  my-5  h-full">
                 <div class="flex m-auto">

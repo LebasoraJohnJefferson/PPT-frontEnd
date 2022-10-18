@@ -1,1 +1,66 @@
-<p>projects works!</p>
+<div class="flex flex-col w-full h-full overflow-x-scroll relative">
+    <div class="p-3 flex w-full justify-between md:items-center md:flex-row flex-col"> 
+        <div class="flex justify-center items-center p-2 ">
+            <app-button-aside-open></app-button-aside-open>
+            <div class="text-2xl font-bold">Projects</div>
+        </div> 
+        <div class="flex h-8 justify-between rounded items-center shadow-md" id="search-container">
+            <input type="text" class=" ml-2" placeholder="Search..." id="search"/>
+            <i class="fa-sharp fa-solid fa-magnifying-glass px-1 text-md mr-2"></i>
+        </div>
+    </div>
+    <div class="flex">
+        <div (click)="showProjectForm()" class="flex items-center ml-5 mt-2 cursor-pointer bg-purple-700 hover:bg-purple-500 px-3 py-2 text-white rounded">
+            <i class="fa-solid fa-pen-to-square"></i> <small class="ml-2">Create Project</small>
+        </div>
+    </div>
+    <div class="flex justify-center items-center w-full h-full">
+        <form *ngIf="isShowProjectForm" action="POST" class="grid gap-2 w-3/4">
+            <small class="ml-9 py-1">Project Name:</small>
+            <div class="flex items-center">
+                <!-- <i class="fa-solid fa-file-lines text-xl mr-3"></i> -->
+                <i class="fa-solid fa-file-lines text-xl mr-3 px-1"></i>
+              <input placeholder="Enter project name" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline"/>
+            </div>
+            
+            <small class="ml-9 py-1">Category:</small>
+            <div class="flex items-center">
+                <i class="fa-solid fa-sitemap text-xl mr-3"></i>
+              <input placeholder="Select Category" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline"/>
+            </div>
+
+            <small class="ml-9 py-1">Project Manager:</small>
+            <div class="flex items-center">
+                <i class="fa-solid fa-person-chalkboard text-xl mr-3"></i>
+                <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
+                    <mat-select class="w-full py-1 shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                      <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            
+            <small class="ml-9 py-1">Team members:</small>
+            <div class="flex items-center">
+                <i class="fa-solid fa-people-group text-xl mr-3"></i>
+                <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
+                    <mat-select multiple class="w-full py-1 shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                      <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+            <small class="ml-9 py-1">Description:</small>
+            <div class="flex items-center">
+                <i class="fa-solid fa-book-open-reader text-xl mr-3"></i>
+              <textarea placeholder="Project Description" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline"></textarea>
+            </div>
+            <button class="w-28 mx-auto mt-5 bg-green-700 py-1 hover:bg-green-500 text-white rounded" >Create Now</button>
+                <!-- <button class="flex justify-center items-center px-12 rounded text-white shadow-md  py-1 bg-green-500 text-white rounded" disabled>
+                <mat-spinner [diameter]="25"></mat-spinner>
+            </button> -->
+        </form>
+        <div *ngIf="!isShowProjectForm">
+            show project details under constructions
+        </div>
+    </div>
+</div>

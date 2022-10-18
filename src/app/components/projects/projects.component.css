@@ -1,0 +1,8 @@
+
+#outline{
+    text-indent: 10px;
+    outline:none;
+}
+
+::ng-deep .mat-select-value{    
+    color: black !important;  }

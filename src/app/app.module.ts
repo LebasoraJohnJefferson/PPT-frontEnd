@@ -28,6 +28,7 @@ import { ButtonAsideOpenComponent } from './components/button-aside-open/button-
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { StandardUserComponent } from './pages/standard-user/standard-user.component';
 import { MemberInfoComponent } from './components/member-info/member-info.component';
+import { BackBtnComponent } from './components/back-btn/back-btn.component';
 
 const config: SocketIoConfig = { url: environment.baseURL,
     options: {
@@ -54,6 +55,7 @@ const config: SocketIoConfig = { url: environment.baseURL,
     ButtonAsideOpenComponent,
     StandardUserComponent,
     MemberInfoComponent,
+    BackBtnComponent,
   ],
   imports: [
     BrowserModule,

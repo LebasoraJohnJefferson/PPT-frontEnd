@@ -10,12 +10,12 @@
         </div>
     </div>
     <div class="flex">
-        <div (click)="registerFormBtn()" class="flex cursor-pointer items-center justify-center bg-purple-700 py-1 px-3 text-white rounded mx-3">
-            <p>Add Member</p>
-            <i class="fa-solid fa-user-plus ml-2"></i>
+        <div (click)="registerFormBtn()" class="flex cursor-pointer items-center justify-center bg-purple-700 py-2 hover:bg-purple-500 px-3 text-white rounded ml-5 mt-2">
+            <i class="fa-solid fa-user-plus mr-2"></i>
+            <small>Add Member</small>
         </div>
-        <form action="GET" [formGroup]="selectSortCategoryFormGroup" (change)="selectCategory()">
-            <select formControlName="category"  style="outline:none;box-shadow:0px 0px 2px rgba(0,0,0,.9);" class="rounded shadow-lg py-1">
+        <form class="ml-5 mt-2" action="GET" [formGroup]="selectSortCategoryFormGroup" (change)="selectCategory()">
+            <select formControlName="category"  style="outline:none;box-shadow:0px 0px 2px rgba(0,0,0,.9);" class="rounded shadow-lg py-2">
                 <option value="All">All</option>
                 <option value="Joined">Joined</option>
                 <option value="Joining">Joining</option>

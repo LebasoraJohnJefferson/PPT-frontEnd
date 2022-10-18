@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
-
+  isShowProjectForm:boolean = false
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  showProjectForm(){
+    this.isShowProjectForm = !this.isShowProjectForm
   }
 
 }

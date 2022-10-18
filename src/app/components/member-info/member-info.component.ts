@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Location} from '@angular/common'
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MembersService } from 'src/app/service/members.service';
@@ -23,7 +22,6 @@ export class MemberInfoComponent implements OnInit {
   private _acceptMemberSubscription:Subscription = new Subscription()
   private _memberProfileSubscription:Subscription = new Subscription()
   constructor(
-    public location:Location,
     private toastr:ToastrService,
     private _memberService:MembersService,
     private _routes:ActivatedRoute,
@@ -41,9 +39,6 @@ export class MemberInfoComponent implements OnInit {
     this._memberProfileSubscription.unsubscribe()
   }
 
-  goBack(){
-    this.location.back()
-  }
 
   getMemberProfileById(){
     this._memberProfileSubscription = this._memberService.getOneMemberInfo(this._routes.snapshot.paramMap.get('id')).subscribe((res)=>{
