@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectsComponent implements OnInit {
   isShowProjectForm:boolean = false
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  isShowCategoryForm:boolean = false
+  categories = ['mason','electrical']
+  managers = ['John Doe', 'James Smith' , 'Maria Clara']
+  members: string[] = ['Juan', 'Johnny', 'Pedro', 'JM', 'CM', 'CH'];
   constructor() { }
 
   ngOnInit(): void {
@@ -15,6 +18,12 @@ export class ProjectsComponent implements OnInit {
 
   showProjectForm(){
     this.isShowProjectForm = !this.isShowProjectForm
+    this.isShowCategoryForm = false
+  }
+
+  showCategoryForm(){
+    this.isShowCategoryForm = !this.isShowCategoryForm
+    this.isShowProjectForm = false
   }
 
 }
