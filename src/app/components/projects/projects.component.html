@@ -31,7 +31,7 @@
                 <i class="fa-solid fa-sitemap text-xl mr-3"></i>
                 <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
                     <mat-select class="w-full py-1 shadow-lg border bg-gray-50 rounded w-full -top-3 h-10 absolute">
-                      <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
+                      <mat-option *ngFor="let category of categories" [value]="category.id">{{category.fullName}}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -79,24 +79,24 @@
                         <i class="fa-solid fa-book-open-reader text-xl mr-3"></i>
                       <textarea formControlName="description" placeholder="Project Description" class="w-full border h-60 py-1 shadow-lg bg-gray-50 rounded" id="outline"></textarea>
                     </div>
-                    <button class="w-40 mx-auto mt-5 bg-green-700 py-1 hover:bg-green-500 text-white rounded" >Create Category</button>
-                        <!-- <button class="flex justify-center items-center px-12 rounded text-white shadow-md  py-1 bg-green-500 text-white rounded" disabled>
+                    <button *ngIf="!isLoadingCategoryBtn" class="w-40 mx-auto mt-5 bg-green-700 py-1 hover:bg-green-500 text-white rounded" >Create Category</button>
+                    <button *ngIf="isLoadingCategoryBtn" class="flex w-40 m-auto justify-center items-center px-12 rounded text-white shadow-md mt-5 py-1 bg-green-500 text-white rounded" disabled>
                         <mat-spinner [diameter]="25"></mat-spinner>
-                    </button> -->
+                    </button>
                 </form>
             </div>
             <div class="w-full h-full  mx-3">
                 <div class="flex justify-center items-center font-bold">Categories</div>
                 <table class="w-full rounded shadow-md">
-                    <tr class="grid grid-cols-3 bg-gray-200 rounded-t">
+                    <tr class="grid grid-cols-3 bg-red-200 rounded-t">
                         <th class="p-1"><small>Name</small></th>
                         <th class="p-1"><small>Description</small></th>
                         <th class="p-1"><small>Modify</small></th>
                     </tr>
-                    <tr class="grid grid-cols-3">
-                        <td>Electrical</td>
-                        <td>Responsible for Electrical connection</td>
-                        <td class="grid grid-cols-2">
+                    <tr [ngClass]="category.id % 2 == 1 ? 'grid grid-cols-3' : 'grid grid-cols-3 bg-gray-200' " *ngFor="let category of categories">
+                        <td class="m-1">{{category.fullName}}</td>
+                        <td class="m-1">{{category.description}}</td>
+                        <td class="grid grid-cols-2 m-1">
                             <i class="fa-solid fa-pencil flex justify-center items-center text-gray-700 hover:text-gray-500 cursor-pointer"></i>
                             <i class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
                         </td>
