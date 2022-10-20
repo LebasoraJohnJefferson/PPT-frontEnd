@@ -67,6 +67,7 @@ export class ProjectsComponent implements OnInit {
         this.getAllCategory()
         this._toastr.success("Category details successfully created!")
         this.isLoadingCategoryBtn  = false
+        this.categoryFormGroup.reset()
       },(err)=>{
         this._toastr.warning(err.error.detail)
         this.isLoadingCategoryBtn  = false
