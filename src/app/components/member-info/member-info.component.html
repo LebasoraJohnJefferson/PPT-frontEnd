@@ -6,7 +6,7 @@
                 <div class="flex m-auto">
                     <img class="h-24 w-24" src="../../../assets/images/profile_thumb.png" alt="profile">
                     <div class="flex ml-3 flex-col justify-center items-start">
-                        <small [ngClass]="userDetail ? 'px-3 py-1 rounded bg-green-700 text-white' : ' px-3 py-1 rounded bg-pink-700 text-white' ">{{userDetail.isAdminApprove ? 'Joined' : 'Joining'}}</small>
+                        <small [ngClass]="userDetail.isAdminApprove ? 'px-3 py-1 rounded bg-green-700 text-white' : ' px-3 py-1 rounded bg-pink-700 text-white' ">{{userDetail.isAdminApprove ? 'Joined' : 'Joining'}}</small>
                         <p>{{userDetail.fullName}}</p>
                     </div>
                 </div>

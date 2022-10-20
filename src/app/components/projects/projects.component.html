@@ -23,14 +23,14 @@
             <div class="flex items-center">
                 <!-- <i class="fa-solid fa-file-lines text-xl mr-3"></i> -->
                 <i class="fa-sharp fa-solid fa-clipboard text-xl mr-3 px-1"></i>
-              <input placeholder="Enter project name" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline"/>
+              <input placeholder="Enter project name" class="w-full py-1 border shadow-lg bg-gray-50 rounded" id="outline"/>
             </div>
             
             <small class="ml-9 py-1">Category:</small>
             <div class="flex items-center">
                 <i class="fa-solid fa-sitemap text-xl mr-3"></i>
                 <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
-                    <mat-select class="w-full py-1 shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                    <mat-select class="w-full py-1 shadow-lg border bg-gray-50 rounded w-full -top-3 h-10 absolute">
                       <mat-option *ngFor="let category of categories" [value]="category">{{category}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -40,7 +40,7 @@
             <div class="flex items-center">
                 <i class="fa-solid fa-person-chalkboard text-xl mr-3"></i>
                 <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
-                    <mat-select class="w-full py-1 shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                    <mat-select class="w-full py-1 shadow-lg border bg-gray-50 rounded w-full -top-3 h-10 absolute">
                       <mat-option *ngFor="let manager of managers" [value]="manager">{{manager}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -50,7 +50,7 @@
             <div class="flex items-center">
                 <i class="fa-solid fa-people-group text-xl mr-3"></i>
                 <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
-                    <mat-select multiple class="w-full py-1 shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                    <mat-select multiple class="w-full py-1 border shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
                       <mat-option *ngFor="let member of members" [value]="member">{{member}}</mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -58,30 +58,52 @@
             <small class="ml-9 py-1">Description:</small>
             <div class="flex items-center">
                 <i class="fa-solid fa-book-open-reader text-xl mr-3"></i>
-              <textarea placeholder="Project Description" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline"></textarea>
+              <textarea placeholder="Project Description" class="w-full border py-1 shadow-lg bg-gray-50 rounded" id="outline"></textarea>
             </div>
             <button class="w-40 mx-auto mt-5 bg-green-700 py-1 hover:bg-green-500 text-white rounded" >Create Project</button>
                 <!-- <button class="flex justify-center items-center px-12 rounded text-white shadow-md  py-1 bg-green-500 text-white rounded" disabled>
                 <mat-spinner [diameter]="25"></mat-spinner>
             </button> -->
         </form>
-        <form *ngIf="isShowCategoryForm" action="POST" class="grid gap-2 w-3/4">
-            <small class="ml-9 py-1">Category Name:</small>
-            <div class="flex items-center">
-                <!-- <i class="fa-solid fa-file-lines text-xl mr-3"></i> -->
-                <i class="fa-solid fa-file-lines text-xl mr-3 px-1"></i>
-              <input placeholder="Enter project name" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline"/>
+        <div *ngIf="isShowCategoryForm" class="flex md:flex-row flex-col w-full h-full">
+            <div class="w-full h-full mt-3">
+                <form [formGroup]="categoryFormGroup" (ngSubmit)="submitCategory()"   action="POST" class="flex flex-col justify-center  w-3/4 m-1  p-3 m-auto md:mx-4 ">
+                    <small class="ml-9 py-2">Category Name:</small>
+                    <div class="flex items-center">
+                        <!-- <i class="fa-solid fa-file-lines text-xl mr-3"></i> -->
+                        <i class="fa-solid fa-file-lines text-xl mr-3 px-1"></i>
+                      <input formControlName="fullName" placeholder="Enter project name" class="w-full py-1 border shadow-lg bg-gray-50 rounded" id="outline"/>
+                    </div>
+                    <small class="ml-9 py-2">Description:</small>
+                    <div class="flex items-center">
+                        <i class="fa-solid fa-book-open-reader text-xl mr-3"></i>
+                      <textarea formControlName="description" placeholder="Project Description" class="w-full border h-60 py-1 shadow-lg bg-gray-50 rounded" id="outline"></textarea>
+                    </div>
+                    <button class="w-40 mx-auto mt-5 bg-green-700 py-1 hover:bg-green-500 text-white rounded" >Create Category</button>
+                        <!-- <button class="flex justify-center items-center px-12 rounded text-white shadow-md  py-1 bg-green-500 text-white rounded" disabled>
+                        <mat-spinner [diameter]="25"></mat-spinner>
+                    </button> -->
+                </form>
             </div>
-            <small class="ml-9 py-1">Description:</small>
-            <div class="flex items-center">
-                <i class="fa-solid fa-book-open-reader text-xl mr-3"></i>
-              <textarea placeholder="Project Description" class="w-full py-1 shadow-lg bg-gray-50 rounded" id="outline"></textarea>
+            <div class="w-full h-full  mx-3">
+                <div class="flex justify-center items-center font-bold">Categories</div>
+                <table class="w-full rounded shadow-md">
+                    <tr class="grid grid-cols-3 bg-gray-200 rounded-t">
+                        <th class="p-1"><small>Name</small></th>
+                        <th class="p-1"><small>Description</small></th>
+                        <th class="p-1"><small>Modify</small></th>
+                    </tr>
+                    <tr class="grid grid-cols-3">
+                        <td>Electrical</td>
+                        <td>Responsible for Electrical connection</td>
+                        <td class="grid grid-cols-2">
+                            <i class="fa-solid fa-pencil flex justify-center items-center text-gray-700 hover:text-gray-500 cursor-pointer"></i>
+                            <i class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <button class="w-40 mx-auto mt-5 bg-green-700 py-1 hover:bg-green-500 text-white rounded" >Create Category</button>
-                <!-- <button class="flex justify-center items-center px-12 rounded text-white shadow-md  py-1 bg-green-500 text-white rounded" disabled>
-                <mat-spinner [diameter]="25"></mat-spinner>
-            </button> -->
-        </form>
+        </div>
         <div class="h-full w-full" *ngIf="!isShowProjectForm && !isShowCategoryForm">
             <table class="w-full mt-4">
                 <tr class="grid grid-cols-6 bg-gray-200 py-2">
