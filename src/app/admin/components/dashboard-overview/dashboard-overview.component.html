@@ -9,7 +9,7 @@
             <i class="fa-sharp fa-solid fa-magnifying-glass px-1 text-md mr-2"></i>
         </div>
     </div>
-    <div class="grid md:grid-cols-3 grid-cols-1 gap-2 w-full p-3">
+    <div class="grid md:grid-cols-4 grid-cols-1 gap-2 w-full p-3">
         <div class="flex md:flex-row flex-col rounded shadow-lg bg-red-700 text-white text-lg h-32 justify-center items-center">
             <i class="fa-sharp fa-solid fa-list-check"></i>
             <p class="ml-4">0/10 project done</p>
@@ -23,6 +23,12 @@
             <div class="ml-4 grid">
                 <p>{{countMemberStatus.joined}} Joining</p>
                 <p>{{countMemberStatus.joining}} Members</p>
+            </div>
+        </div>
+        <div routerLink="/dashboard/members"  class="flex md:flex-row flex-col cursor-pointer rounded shadow-lg bg-yellow-600 text-white text-lg h-32 justify-center items-center">
+            <i class="fa-solid fa-people-group"></i>
+            <div class="ml-4 grid">
+                <p>3 Project Managers</p>
             </div>
         </div>
     </div>

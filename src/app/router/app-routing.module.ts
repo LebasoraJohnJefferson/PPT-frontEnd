@@ -4,15 +4,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthComponent } from '../pages/auth/auth.component';
 import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 import { AuthGuardService as AuthGuard } from '../auth/auth-guard.service';
-import { DashboardOverviewComponent } from '../components/dashboard-overview/dashboard-overview.component';
-import { ProjectsComponent } from '../components/projects/projects.component';
-import { TimelineComponent } from '../components/timeline/timeline.component';
-import { MembersComponent } from '../components/members/members.component';
-import { SettingsComponent } from '../components/settings/settings.component';
-import { ReportsComponent } from '../components/reports/reports.component';
-import { NotificationComponent } from '../components/notification/notification.component';
+import { DashboardOverviewComponent } from '../admin/components/dashboard-overview/dashboard-overview.component';
+import { ProjectsComponent } from '../admin/components/projects/projects.component';
+import { TimelineComponent } from '../admin/components/timeline/timeline.component';
+import { MembersComponent } from '../admin/components/members/members.component';
+import { ReportsComponent } from '../admin/components/reports/reports.component';
+import { NotificationComponent } from '../admin/components/notification/notification.component';
 import { StandardUserComponent } from '../pages/standard-user/standard-user.component';
-import { MemberInfoComponent } from '../components/member-info/member-info.component';
+import { MemberInfoComponent } from '../admin/components/member-info/member-info.component';
+import { ManagersComponent } from '../admin/components/managers/managers.component';
 
 const routes:Routes = [
   {path:'',component:AuthComponent},
@@ -20,15 +20,15 @@ const routes:Routes = [
     { path: 'overview', component:DashboardOverviewComponent },
     { path: 'projects', component:ProjectsComponent },
     { path: 'timeline', component:TimelineComponent },
+    { path: 'managers', component:ManagersComponent },
     { path: 'members', component:MembersComponent },
     { path: 'members/:id', component:MemberInfoComponent },
-    { path: 'settings', component:SettingsComponent },
     { path: 'reports', component:ReportsComponent },
     { path: 'notification', component:NotificationComponent },
   ],
   canActivate: [AuthGuard]},
   {path:'members',component:StandardUserComponent,canActivate: [AuthGuard]},
-  {path:'**',redirectTo:'dashboard'}
+  {path:'**',redirectTo:'dashboard/overview'}
 ]
 
 

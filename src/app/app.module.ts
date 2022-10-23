@@ -12,23 +12,23 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './interceptor/jwt.interceptor';
 import { MaterialModule } from './shared/material.module';
 
-import { FooterComponent } from './components/footer/footer.component';
+import { FooterComponent } from './admin/components/footer/footer.component';
 import { AuthComponent } from './pages/auth/auth.component';
-import { AsideComponent } from './components/aside/aside.component'
+import { AsideComponent } from './admin/components/aside/aside.component'
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { DashboardOverviewComponent } from './components/dashboard-overview/dashboard-overview.component';
-import { ProjectsComponent } from './components/projects/projects.component';
-import { TimelineComponent } from './components/timeline/timeline.component';
-import { MembersComponent } from './components/members/members.component';
-import { SettingsComponent } from './components/settings/settings.component';
-import { ReportsComponent } from './components/reports/reports.component';
-import { NotificationComponent } from './components/notification/notification.component';
-import { BarChartsComponent } from './components/bar-charts/bar-charts.component';
-import { ButtonAsideOpenComponent } from './components/button-aside-open/button-aside-open.component';
+import { DashboardOverviewComponent } from './admin/components/dashboard-overview/dashboard-overview.component';
+import { ProjectsComponent } from './admin/components/projects/projects.component';
+import { TimelineComponent } from './admin/components/timeline/timeline.component';
+import { MembersComponent } from './admin/components/members/members.component';
+import { ReportsComponent } from './admin/components/reports/reports.component';
+import { NotificationComponent } from './admin/components/notification/notification.component';
+import { BarChartsComponent } from './admin/components/bar-charts/bar-charts.component';
+import { ButtonAsideOpenComponent } from './admin/components/button-aside-open/button-aside-open.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { StandardUserComponent } from './pages/standard-user/standard-user.component';
-import { MemberInfoComponent } from './components/member-info/member-info.component';
-import { BackBtnComponent } from './components/back-btn/back-btn.component';
+import { MemberInfoComponent } from './admin/components/member-info/member-info.component';
+import { BackBtnComponent } from './admin/components/back-btn/back-btn.component';
+import { ManagersComponent } from './admin/components/managers/managers.component';
 
 const config: SocketIoConfig = { url: environment.baseURL,
     options: {
@@ -48,7 +48,6 @@ const config: SocketIoConfig = { url: environment.baseURL,
     ProjectsComponent,
     TimelineComponent,
     MembersComponent,
-    SettingsComponent,
     ReportsComponent,
     NotificationComponent,
     BarChartsComponent,
@@ -56,6 +55,7 @@ const config: SocketIoConfig = { url: environment.baseURL,
     StandardUserComponent,
     MemberInfoComponent,
     BackBtnComponent,
+    ManagersComponent,
   ],
   imports: [
     BrowserModule,
