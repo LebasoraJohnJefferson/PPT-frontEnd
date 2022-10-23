@@ -16,6 +16,10 @@ export class AuthUser {
   RegisterUser(details:AuthInterface):Observable<any>{
     return this._http.post(`${this.baseURL}/users`,details)
   }
+
+  RegisterUserByAdmin(details:AuthInterface):Observable<any>{
+    return this._http.post(`${this.baseURL}/users/admin`,details)
+  }
   
   LoginUser(details:AuthInterface2):Observable<ResponseToken>{
     const body = new HttpParams().set("username",details.username).set("password",details.password)

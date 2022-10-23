@@ -129,7 +129,7 @@ export class MembersComponent implements OnInit {
     if(this.firstFormGroup.valid && this.secondFormGroup.valid){
       this.secondFormGroup.value.birthDay= new Date(this.secondFormGroup.get("birthDay")?.value)
       let submitInfo = Object.assign({}, this.firstFormGroup.value, this.secondFormGroup.value);
-      this._registerSubscription = this._authService.RegisterUser(submitInfo).subscribe((res)=>{
+      this._registerSubscription = this._authService.RegisterUserByAdmin(submitInfo).subscribe((res)=>{
         this.toastr.success("Request submitted successfully")
         this.isRegisterButton = false
         this.registerFormBtn()
