@@ -80,8 +80,8 @@
                         </div>
                     </td>
                     <td class="grid grid-cols-2 items-center">
-                        <i class="fa-solid fa-floppy-disk flex justify-center items-center text-blue-700 hover:text-blue-500 cursor-pointer"></i>
-                        <i class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
+                        <i  class="fa-solid fa-floppy-disk flex justify-center items-center text-blue-700 hover:text-blue-500 cursor-pointer"></i>
+                        <i (click)="deleteManager(manager.id,manager.managerDetails.fullName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
                     </td>
                 </tr>
             </table>
@@ -127,6 +127,17 @@
                     </td>
                 </tr>
             </table>
+        </div>
+    </div>
+    <div *ngIf="isDeleteManagerShow" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
+        <div class="bg-white rounded w-96 h-28 flex flex-col">
+            <div class="flex justify-around py-3 font-bold items-center">Are you sure you want to remove {{projectManager}} ?</div>
+            <hr class="mb-5"/>
+            <div class="flex justify-around items-center">
+                <div *ngIf="!isDeleteBtnLoading" (click)="deleteManagerCommit()" class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white">YES</div>
+                <div *ngIf="isDeleteBtnLoading" class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white"><mat-spinner [diameter]="25"></mat-spinner></div>
+                <div class="flex py-1 px-5 border rounded shadow-lg bg-red-700 hover:bg-red-500 cursor-pointer text-white" (click)="closeNotification()">NO</div>
+            </div>
         </div>
     </div>
 </div>

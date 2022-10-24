@@ -92,7 +92,8 @@ export class AuthComponent implements OnInit {
         this.loginFormGroup.reset()
         this.isRegisterButton = false
       },(err)=>{
-        this.toastr.warning(err.error.detail)
+        if(err.status == 422) this.toastr.warning(err.error.detail[0].msg)
+        else this.toastr.warning(err.error.detail)
         this.isRegisterButton = false
       })
     }else{

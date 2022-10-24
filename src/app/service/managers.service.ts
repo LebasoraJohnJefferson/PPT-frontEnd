@@ -22,4 +22,8 @@ export class ManagersService {
     return this._http.get(`${this.baseURL}/managers`)
   }
 
+  deleteManager(id:number):Observable<any>{
+    return this._http.delete(`${this.baseURL}/managers/${id}`)
+  }
+
 }

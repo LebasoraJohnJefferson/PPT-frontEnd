@@ -1,6 +1,5 @@
-#outline{
+input{
     text-indent: 10px;
-    outline:0.5px solid rgba(0,0,0,.05)
 }
 
 #formLogin{

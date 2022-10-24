@@ -14,10 +14,14 @@ import { ManagersService } from 'src/app/service/managers.service';
 })
 export class ManagersComponent implements OnInit {
   isShowCreateManager:boolean = true
+  isDeleteManagerShow:boolean = false
   isLoadingCategoryBtn:boolean = false
   isLoadingManagerBtn:boolean = false
   isShowCategoryForm:boolean = false
+  isDeleteBtnLoading:boolean = false
+  projectManager:string = ''
   members:any=[]
+  managerId:number  = 0
   categories:any = []
   managers:any = []
   private _categoryGetAllSubscription:Subscription = new Subscription()
@@ -128,6 +132,30 @@ export class ManagersComponent implements OnInit {
       this.isLoadingManagerBtn=false
       this._toastr.warning("Pls.. make sure it fill all inputs")
     }
+  }
+
+  deleteManager(id:number,fullName:string){
+    this.isDeleteManagerShow = !this.isDeleteManagerShow
+    this.projectManager = fullName
+    this.managerId = id
+  }
+
+  closeNotification(){
+    this.isDeleteManagerShow = !this.isDeleteManagerShow
+  }
+
+  deleteManagerCommit(){
+    this.isDeleteBtnLoading=true
+    this._managersService.deleteManager(this.managerId)
+    .subscribe(()=>{
+      this.isDeleteBtnLoading=false
+      this._toastr.success(`successfully remove ${this.projectManager}`)
+      this.getAllManager()
+      this.isDeleteManagerShow = false
+    },(err)=>{
+      this.isDeleteBtnLoading=false
+      this._toastr.warning(err.error.detail)
+    })
   }
 
   
