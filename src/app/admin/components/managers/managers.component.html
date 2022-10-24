@@ -18,7 +18,7 @@
         </div>
     </div>
     <div *ngIf="isShowCreateManager" class="flex md:flex-row flex-col w-full h-full">
-        <div class="w-3/5">
+        <div class="w-full md:w-3/5">
 
             
             <!-- create project manager -->
@@ -62,25 +62,59 @@
                     <th class="p-1 col-span-2"><small>Designation</small></th>
                     <th class="p-1"><small>Modify</small></th>
                 </tr>
-                <tr [ngClass]="manager.id % 2 == 1 ? 'grid grid-cols-5' : 'grid grid-cols-5 bg-green-100' " *ngFor="let manager of managers">
-                    <td class="m-1">{{manager.categoryDetails.fullName}}</td>
-                    <td class="m-1">{{manager.managerDetails.fullName}}</td>
-                    <td class="grid grid-cols-4 m-1 col-span-2">
+                <tr [ngClass]="manager.id % 2 == 1 ? 'grid grid-cols-5 gap-1' : 'grid  gap-1 grid-cols-5 bg-green-100' " *ngFor="let manager of managers">
+                    
+                    <!-- edit form  -->
+                    <td *ngIf="selectEditTriggerById == manager.id" class="grid col-span-5">
+                        <form [formGroup]="editProjectManager" class="grid grid-cols-5 gap-1">
+                            <mat-form-field class="w-full relative  flex justify-center items-center h-12 relative">
+                                <mat-select formControlName="categoryId"  class="w-full py-1 shadow-lg border bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                                <mat-option *ngFor="let category of categories" [value]="category.id">{{category.fullName}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-form-field  class="w-full relative  flex justify-center items-center h-12 relative">
+                                <mat-select formControlName="managerId"  class="w-full py-1 shadow-lg border bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                                  <mat-option *ngFor="let member of members" [value]="member.id" >{{member.fullName}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div class="grid col-span-2 grid-cols-4">
+                                <div class="flex flex-col items-center justify-center">
+                                    <input class="pr-2" formControlName="create" type="checkbox"/><small class="text-xs">Create</small>
+                                </div>
+                                <div class="flex flex-col items-center justify-center">
+                                    <input class="pr-2" formControlName="update" type="checkbox"/><small class="text-xs">Update</small>
+                                </div>
+                                <div class="flex flex-col items-center justify-center">
+                                    <input class="pr-2" formControlName="read" type="checkbox"/><small class="text-xs">Read</small>
+                                </div>
+                                <div class="flex flex-col items-center justify-center">
+                                    <input class="pr-2" formControlName="delete" type="checkbox"/><small class="text-xs">Delete</small>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <i *ngIf="selectEditTriggerById == manager.id" (click)="saveEditManager()"  class="fa-solid fa-floppy-disk flex justify-center items-center text-blue-700 hover:text-blue-500 cursor-pointer"></i>
+                                <i (click)="deleteManager(manager.id,manager.managerDetails.fullName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
+                            </div>
+                        </form>
+                    </td>
+                    <td *ngIf="selectEditTriggerById != manager.id" class="m-1">{{manager.categoryDetails.fullName}}</td>
+                    <td *ngIf="selectEditTriggerById != manager.id" class="m-1">{{manager.managerDetails.fullName}}</td>
+                    <td *ngIf="selectEditTriggerById != manager.id" class="grid grid-cols-4 m-1 col-span-2">
                         <div class="flex flex-col items-center justify-center">
-                            <input class="pr-2" type="checkbox"/><small class="text-xs">Create</small>
+                            <input class="pr-2" type="checkbox" disabled [checked]="manager.categoryDetails.create"/><small class="text-xs">Create</small>
                         </div>
                         <div class="flex flex-col items-center justify-center">
-                            <input class="pr-2" type="checkbox"/><small class="text-xs">Update</small>
+                            <input class="pr-2" type="checkbox" disabled [checked]="manager.categoryDetails.update"/><small class="text-xs">Update</small>
                         </div>
                         <div class="flex flex-col items-center justify-center">
-                            <input class="pr-2" type="checkbox"/><small class="text-xs">Read</small>
+                            <input class="pr-2" type="checkbox" disabled [checked]="manager.categoryDetails.read"/><small class="text-xs">Read</small>
                         </div>
                         <div class="flex flex-col items-center justify-center">
-                            <input class="pr-2" type="checkbox"/><small class="text-xs">Delete</small>
+                            <input class="pr-2" type="checkbox" disabled [checked]="manager.categoryDetails.delete"/><small class="text-xs">Delete</small>
                         </div>
                     </td>
-                    <td class="grid grid-cols-2 items-center">
-                        <i  class="fa-solid fa-floppy-disk flex justify-center items-center text-blue-700 hover:text-blue-500 cursor-pointer"></i>
+                    <td *ngIf="selectEditTriggerById != manager.id"  class="grid grid-cols-2 items-center">
+                        <i (click)="editFormShow(manager.id)" class="fa-solid fa-pencil flex justify-center items-center text-gray-700 hover:text-gray-500 cursor-pointer"></i>
                         <i (click)="deleteManager(manager.id,manager.managerDetails.fullName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
                     </td>
                 </tr>
