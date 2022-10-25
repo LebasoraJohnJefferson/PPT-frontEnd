@@ -30,6 +30,7 @@ export class ManagersComponent implements OnInit {
   private _categorySaveSubscription:Subscription = new Subscription()
   private _allMemberSubscription:Subscription = new Subscription()
   private _managerPostSubscription:Subscription = new Subscription()
+  private _managerUpdateSubscription:Subscription = new Subscription()
 
 
   categoryFormGroup:FormGroup = this._formBuilder.group({
@@ -45,10 +46,10 @@ export class ManagersComponent implements OnInit {
   editProjectManager:FormGroup = this._formBuilder.group({
     categoryId:['',Validators.required],
     managerId:['',Validators.required],
-    create:['',Validators.required],
-    read:['',Validators.required],
-    update:['',Validators.required],
-    delete:['',Validators.required],
+    create:[null,Validators.required],
+    read:[null,Validators.required],
+    update:[null,Validators.required],
+    delete:[null,Validators.required],
   })
 
 
@@ -74,6 +75,7 @@ export class ManagersComponent implements OnInit {
     this._allMemberSubscription.unsubscribe()
     this._managerPostSubscription.unsubscribe()
     this._managerGetAllSubscription.unsubscribe()
+    this._managerUpdateSubscription.unsubscribe()
   }
 
   showCreateManager(){
@@ -167,23 +169,33 @@ export class ManagersComponent implements OnInit {
     })
   }
 
-  editFormShow(id:number){
-    this.managers.forEach((data:any)=>{
+  async editFormShow(id:number){
+    await this.managers.forEach((data:any)=>{
       if(data.id == id){
         this.editProjectManager.get("managerId")?.setValue(data.managerDetails.id)
         this.editProjectManager.get("categoryId")?.setValue(data.categoryDetails.id)
-        this.editProjectManager.get("create")?.setValue(data.categoryDetails.create)
-        this.editProjectManager.get("read")?.setValue(data.categoryDetails.read)
-        this.editProjectManager.get("update")?.setValue(data.categoryDetails.update)
-        this.editProjectManager.get("delete")?.setValue(data.categoryDetails.delete)
+        this.editProjectManager.get("create")?.setValue(data.create)
+        this.editProjectManager.get("read")?.setValue(data.read)
+        this.editProjectManager.get("update")?.setValue(data.update)
+        this.editProjectManager.get("delete")?.setValue(data.delete)
       }
     })
     this.selectEditTriggerById = id
+
   }
 
   saveEditManager(){
     if(this.editProjectManager.valid){
-      console.log(this.editProjectManager.value)
+      this._managerUpdateSubscription=this._managersService.updateManager(this.selectEditTriggerById,this.editProjectManager.value).subscribe(()=>{
+        this._toastr.success("Successfully Updated!")
+        this.getAllManager()
+      },(err)=>{
+        if(err.status == 422) this._toastr.warning(err.error.detail[0].msg)
+        else{
+          this._toastr.warning(err.error.detail)
+        }
+      })
+      this.selectEditTriggerById = 0
     }
   }
 

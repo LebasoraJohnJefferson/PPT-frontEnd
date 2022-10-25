@@ -79,7 +79,7 @@
                             </mat-form-field>
                             <div class="grid col-span-2 grid-cols-4">
                                 <div class="flex flex-col items-center justify-center">
-                                    <input class="pr-2" formControlName="create" type="checkbox"/><small class="text-xs">Create</small>
+                                    <input class="pr-2" formControlName="create" type="checkbox"/><small class="text-xs" >Create</small>
                                 </div>
                                 <div class="flex flex-col items-center justify-center">
                                     <input class="pr-2" formControlName="update" type="checkbox"/><small class="text-xs">Update</small>
@@ -101,16 +101,16 @@
                     <td *ngIf="selectEditTriggerById != manager.id" class="m-1">{{manager.managerDetails.fullName}}</td>
                     <td *ngIf="selectEditTriggerById != manager.id" class="grid grid-cols-4 m-1 col-span-2">
                         <div class="flex flex-col items-center justify-center">
-                            <input class="pr-2" type="checkbox" disabled [checked]="manager.categoryDetails.create"/><small class="text-xs">Create</small>
+                            <input class="pr-2" type="checkbox" disabled [checked]="manager.create"/><small class="text-xs">Create</small>
                         </div>
                         <div class="flex flex-col items-center justify-center">
-                            <input class="pr-2" type="checkbox" disabled [checked]="manager.categoryDetails.update"/><small class="text-xs">Update</small>
+                            <input class="pr-2" type="checkbox" disabled [checked]="manager.update"/><small class="text-xs">Update</small>
                         </div>
                         <div class="flex flex-col items-center justify-center">
-                            <input class="pr-2" type="checkbox" disabled [checked]="manager.categoryDetails.read"/><small class="text-xs">Read</small>
+                            <input class="pr-2" type="checkbox" disabled [checked]="manager.read"/><small class="text-xs">Read</small>
                         </div>
                         <div class="flex flex-col items-center justify-center">
-                            <input class="pr-2" type="checkbox" disabled [checked]="manager.categoryDetails.delete"/><small class="text-xs">Delete</small>
+                            <input class="pr-2" type="checkbox" disabled [checked]="manager.delete"/><small class="text-xs">Delete</small>
                         </div>
                     </td>
                     <td *ngIf="selectEditTriggerById != manager.id"  class="grid grid-cols-2 items-center">
