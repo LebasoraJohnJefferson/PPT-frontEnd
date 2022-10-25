@@ -62,7 +62,7 @@
                     <th class="p-1 col-span-2"><small>Designation</small></th>
                     <th class="p-1"><small>Modify</small></th>
                 </tr>
-                <tr [ngClass]="manager.id % 2 == 1 ? 'grid grid-cols-5 gap-1' : 'grid  gap-1 grid-cols-5 bg-green-100' " *ngFor="let manager of managers">
+                <tr id='rowChangerBg' class='grid grid-cols-5 gap-1' *ngFor="let manager of managers">
                     
                     <!-- edit form  -->
                     <td *ngIf="selectEditTriggerById == manager.id" class="grid col-span-5">
@@ -152,12 +152,12 @@
                     <th class="p-1"><small>Description</small></th>
                     <th class="p-1"><small>Modify</small></th>
                 </tr>
-                <tr [ngClass]="category.id % 2 == 1 ? 'grid grid-cols-3' : 'grid grid-cols-3 bg-green-100' " *ngFor="let category of categories">
+                <tr id="rowChangerBg" class='grid grid-cols-3' *ngFor="let category of categories">
                     <td class="m-1">{{category.fullName}}</td>
                     <td class="m-1">{{category.description}}</td>
                     <td class="grid grid-cols-2 m-1">
                         <i class="fa-solid fa-pencil flex justify-center items-center text-gray-700 hover:text-gray-500 cursor-pointer"></i>
-                        <i class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
+                        <i (click)="deleteCategory(category.id,category.fullName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
                     </td>
                 </tr>
             </table>
@@ -171,6 +171,17 @@
                 <div *ngIf="!isDeleteBtnLoading" (click)="deleteManagerCommit()" class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white">YES</div>
                 <div *ngIf="isDeleteBtnLoading" class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white"><mat-spinner [diameter]="25"></mat-spinner></div>
                 <div class="flex py-1 px-5 border rounded shadow-lg bg-red-700 hover:bg-red-500 cursor-pointer text-white" (click)="closeNotification()">NO</div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isDeleteCategoryShow" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
+        <div class="bg-white rounded w-96 h-28 flex flex-col">
+            <div class="flex justify-around py-3 font-bold items-center">Are you sure you want to remove {{categoryName}} ?</div>
+            <hr class="mb-5"/>
+            <div class="flex justify-around items-center">
+                <div *ngIf="!isDeleteBtnLoading_category" (click)="deleteCategoryCommit()" class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white">YES</div>
+                <div *ngIf="isDeleteBtnLoading_category" class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white"><mat-spinner [diameter]="25"></mat-spinner></div>
+                <div class="flex py-1 px-5 border rounded shadow-lg bg-red-700 hover:bg-red-500 cursor-pointer text-white" (click)="closeNotificationCategory()">NO</div>
             </div>
         </div>
     </div>

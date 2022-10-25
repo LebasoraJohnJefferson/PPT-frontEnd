@@ -30,4 +30,5 @@ export class ManagersService {
     return this._http.put(`${this.baseURL}/managers/${id}`,details)
   }
 
+
 }

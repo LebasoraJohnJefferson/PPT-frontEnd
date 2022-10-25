@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup,Validators} from '@angular/forms';
-import { of, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from 'src/app/service/category.service';
 import { MembersService } from 'src/app/service/members.service';
@@ -15,22 +15,28 @@ import { ManagersService } from 'src/app/service/managers.service';
 export class ManagersComponent implements OnInit {
   isShowCreateManager:boolean = true
   isDeleteManagerShow:boolean = false
+  isDeleteCategoryShow:boolean = false
   isLoadingCategoryBtn:boolean = false
   isLoadingManagerBtn:boolean = false
   isShowCategoryForm:boolean = false
   isDeleteBtnLoading:boolean = false
+  isDeleteBtnLoading_category:boolean=false
   projectManager:string = ''
+  categoryName:string = ''
   members:any=[]
   managerId:number  = 0
+  categoryId:number = 0
   selectEditTriggerById:number = 0
   categories:any = []
   managers:any = []
   private _categoryGetAllSubscription:Subscription = new Subscription()
   private _managerGetAllSubscription:Subscription = new Subscription()
-  private _categorySaveSubscription:Subscription = new Subscription()
   private _allMemberSubscription:Subscription = new Subscription()
   private _managerPostSubscription:Subscription = new Subscription()
   private _managerUpdateSubscription:Subscription = new Subscription()
+  private _managerDeleteSubscription:Subscription = new Subscription()
+  private _categorySaveSubscription:Subscription = new Subscription()
+  private _categoryDeleteSubscription:Subscription = new Subscription()
 
 
   categoryFormGroup:FormGroup = this._formBuilder.group({
@@ -76,6 +82,8 @@ export class ManagersComponent implements OnInit {
     this._managerPostSubscription.unsubscribe()
     this._managerGetAllSubscription.unsubscribe()
     this._managerUpdateSubscription.unsubscribe()
+    this._managerDeleteSubscription.unsubscribe()
+    this._categoryDeleteSubscription.unsubscribe()
   }
 
   showCreateManager(){
@@ -157,7 +165,7 @@ export class ManagersComponent implements OnInit {
 
   deleteManagerCommit(){
     this.isDeleteBtnLoading=true
-    this._managersService.deleteManager(this.managerId)
+    this._managerDeleteSubscription = this._managersService.deleteManager(this.managerId)
     .subscribe(()=>{
       this.isDeleteBtnLoading=false
       this._toastr.success(`successfully remove ${this.projectManager}`)
@@ -168,6 +176,32 @@ export class ManagersComponent implements OnInit {
       this._toastr.warning(err.error.detail)
     })
   }
+
+  deleteCategory(id:number,categoryName:string){
+    this.isDeleteCategoryShow = true
+    this.categoryName = categoryName
+    this.categoryId = id
+  }
+  
+  deleteCategoryCommit(){
+    this.isDeleteBtnLoading_category = true
+    this._categoryDeleteSubscription = this._categoryService.deleteCategory(this.categoryId).subscribe(()=>{
+      this.getAllCategory()
+      this.getAllManager()
+      this._toastr.success(`Successfully remove ${this.categoryName}`)
+      this.isDeleteCategoryShow = false
+      this.isDeleteBtnLoading_category = false
+    },(err)=>{
+      this.isDeleteCategoryShow = false
+      this._toastr.warning(err.error.detail)
+      this.isDeleteBtnLoading_category = false
+    })
+  }
+
+  closeNotificationCategory(){
+    this.isDeleteCategoryShow = false
+  }
+
 
   async editFormShow(id:number){
     await this.managers.forEach((data:any)=>{
@@ -183,6 +217,7 @@ export class ManagersComponent implements OnInit {
     this.selectEditTriggerById = id
 
   }
+
 
   saveEditManager(){
     if(this.editProjectManager.valid){

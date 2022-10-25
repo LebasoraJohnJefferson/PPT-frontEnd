@@ -22,4 +22,9 @@ export class CategoryService {
     return this._http.get(`${this.baseURL}/categories`)
   }
 
+  
+  deleteCategory(id:number):Observable<any>{
+    return this._http.delete(`${this.baseURL}/categories/${id}`)
+  }
+
 }
