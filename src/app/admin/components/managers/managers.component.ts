@@ -134,6 +134,7 @@ export class ManagersComponent implements OnInit {
   }
 
   submitCategory(){
+    this.isLoadingCategoryAnimation = true
     this.isLoadingCategoryBtn = true
     if(this.categoryFormGroup.valid){
       this._categorySaveSubscription = this._categoryService.saveCategory(this.categoryFormGroup.value).subscribe((res)=>{
@@ -152,6 +153,7 @@ export class ManagersComponent implements OnInit {
 
   submitManager(){
     this.isLoadingManagerBtn = true
+    this.isLoadingMangerAnimation = true
     if(this.managerFormGroup.valid){
       this._managerPostSubscription = this._managersService.saveManager(this.managerFormGroup.value)
       .subscribe(()=>{
@@ -181,6 +183,7 @@ export class ManagersComponent implements OnInit {
 
   deleteManagerCommit(){
     this.isDeleteBtnLoading=true
+    this.isLoadingMangerAnimation = true
     this._managerDeleteSubscription = this._managersService.deleteManager(this.managerId)
     .subscribe(()=>{
       this.isDeleteBtnLoading=false
@@ -200,6 +203,7 @@ export class ManagersComponent implements OnInit {
   }
   
   deleteCategoryCommit(){
+    this.isLoadingCategoryAnimation = true
     this.isDeleteBtnLoading_category = true
     this._categoryDeleteSubscription = this._categoryService.deleteCategory(this.categoryId).subscribe(()=>{
       this.getAllCategory()
@@ -236,6 +240,7 @@ export class ManagersComponent implements OnInit {
 
 
   saveEditManager(){
+    this.isLoadingMangerAnimation=true
     if(this.editProjectManager.valid){
       this._managerUpdateSubscription=this._managersService.updateManager(this.selectEditTriggerById,this.editProjectManager.value).subscribe(()=>{
         this._toastr.success("Successfully Updated!")
@@ -261,6 +266,7 @@ export class ManagersComponent implements OnInit {
   }
   
   saveEditCategory(){
+    this.isLoadingCategoryAnimation=true
     if(this.editCategory.valid){
       this._categoryUpdateSubscription = this._categoryService.updateCategory(this.selectEditTriggerByIdCategory,this.editCategory.value).subscribe(()=>{
         this._toastr.success("Successfully Updated")
