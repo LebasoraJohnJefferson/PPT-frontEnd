@@ -145,6 +145,7 @@ export class ManagersComponent implements OnInit {
       },(err)=>{
         this._toastr.warning(err.error.detail)
         this.isLoadingCategoryBtn  = false
+        this.isLoadingCategoryAnimation = false
       })
     }else{
       this.isLoadingCategoryBtn = false
@@ -163,6 +164,7 @@ export class ManagersComponent implements OnInit {
         this._toastr.success("Successfully created manager!")
       },(err)=>{ 
         this.isLoadingManagerBtn=false
+        this.isLoadingMangerAnimation = false
         this._toastr.warning(err.error.detail)
       })
     }else{
