@@ -152,12 +152,24 @@
                     <th class="p-1"><small>Description</small></th>
                     <th class="p-1"><small>Modify</small></th>
                 </tr>
-                <tr id="rowChangerBg" class='grid grid-cols-3' *ngFor="let category of categories">
-                    <td class="m-1">{{category.fullName}}</td>
-                    <td class="m-1">{{category.description}}</td>
-                    <td class="grid grid-cols-2 m-1">
-                        <i class="fa-solid fa-pencil flex justify-center items-center text-gray-700 hover:text-gray-500 cursor-pointer"></i>
-                        <i (click)="deleteCategory(category.id,category.fullName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
+                <tr id="rowChangerBg" class='grid gird-rows-1' *ngFor="let category of categories">
+                    <div *ngIf="category.id!=selectEditTriggerByIdCategory" class="grid  grid-cols-3">
+                        <td class="m-1">{{category.fullName}}</td>
+                        <td class="m-1">{{category.description}}</td>
+                        <td class="grid grid-cols-2 m-1">
+                            <i (click)="editFormShowCategory(category.id)" class="fa-solid fa-pencil flex justify-center items-center text-gray-700 hover:text-gray-500 cursor-pointer"></i>
+                            <i (click)="deleteCategory(category.id,category.fullName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
+                        </td>
+                    </div>
+                    <td class="grid  grid-cols-1">
+                        <form [formGroup]="editCategory" *ngIf="category.id==selectEditTriggerByIdCategory" action="POST" class="grid grid-cols-3 ">
+                            <input formControlName="fullName" [value]="category.fullName" class="m-1 border rounded">
+                            <input formControlName="description" [value]="category.description" class="m-1 border rounded">
+                            <div class="grid grid-cols-2 m-1">
+                                <i (click)="saveEditCategory()" class="fa-solid fa-floppy-disk flex justify-center items-center text-blue-700 hover:text-blue-500 cursor-pointer"></i>
+                                <i (click)="deleteCategory(category.id,category.fullName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
+                            </div>
+                        </form>
                     </td>
                 </tr>
             </table>

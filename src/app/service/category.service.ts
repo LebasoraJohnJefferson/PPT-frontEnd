@@ -27,4 +27,8 @@ export class CategoryService {
     return this._http.delete(`${this.baseURL}/categories/${id}`)
   }
 
+  updateCategory(id:number,details:any):Observable<any>{
+    return this._http.put(`${this.baseURL}/categories/${id}`,details)
+  }
+
 }

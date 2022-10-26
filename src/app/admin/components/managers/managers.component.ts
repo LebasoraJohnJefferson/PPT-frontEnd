@@ -13,12 +13,12 @@ import { ManagersService } from 'src/app/service/managers.service';
   styleUrls: ['./managers.component.css']
 })
 export class ManagersComponent implements OnInit {
-  isShowCreateManager:boolean = true
+  isShowCreateManager:boolean = false
+  isShowCategoryForm:boolean = true
   isDeleteManagerShow:boolean = false
   isDeleteCategoryShow:boolean = false
   isLoadingCategoryBtn:boolean = false
   isLoadingManagerBtn:boolean = false
-  isShowCategoryForm:boolean = false
   isDeleteBtnLoading:boolean = false
   isDeleteBtnLoading_category:boolean=false
   projectManager:string = ''
@@ -27,6 +27,7 @@ export class ManagersComponent implements OnInit {
   managerId:number  = 0
   categoryId:number = 0
   selectEditTriggerById:number = 0
+  selectEditTriggerByIdCategory:number = 0
   categories:any = []
   managers:any = []
   private _categoryGetAllSubscription:Subscription = new Subscription()
@@ -37,6 +38,7 @@ export class ManagersComponent implements OnInit {
   private _managerDeleteSubscription:Subscription = new Subscription()
   private _categorySaveSubscription:Subscription = new Subscription()
   private _categoryDeleteSubscription:Subscription = new Subscription()
+  private _categoryUpdateSubscription:Subscription = new Subscription()
 
 
   categoryFormGroup:FormGroup = this._formBuilder.group({
@@ -47,6 +49,11 @@ export class ManagersComponent implements OnInit {
   managerFormGroup:FormGroup = this._formBuilder.group({
     categoryId:['',Validators.required],
     managerId:['',Validators.required]
+  })
+
+  editCategory:FormGroup = this._formBuilder.group({
+    fullName:['',Validators.required],
+    description:['',Validators.required]
   })
 
   editProjectManager:FormGroup = this._formBuilder.group({
@@ -232,6 +239,33 @@ export class ManagersComponent implements OnInit {
       })
       this.selectEditTriggerById = 0
     }
+  }
+
+  async editFormShowCategory(id:number){
+    await this.categories.forEach((data:any)=>{
+      if(data.id == id){
+        this.editCategory.get("fullName")?.setValue(data.fullName)
+        this.editCategory.get("description")?.setValue(data.description)
+      }
+    })
+    this.selectEditTriggerByIdCategory = id
+  }
+  
+  saveEditCategory(){
+    if(this.editCategory.valid){
+      this._categoryUpdateSubscription = this._categoryService.updateCategory(this.selectEditTriggerByIdCategory,this.editCategory.value).subscribe(()=>{
+        this._toastr.success("Successfully Updated")
+      },(err)=>{
+        if(err.status == 422) this._toastr.warning(err.error.detail[0].msg)
+        else{
+          this._toastr.warning(err.error.detail)
+        }
+      })
+      this.getAllCategory()
+    }else{
+      this._toastr.warning("Invalid Inputs")
+    }
+    this.selectEditTriggerByIdCategory = 0
   }
 
   
