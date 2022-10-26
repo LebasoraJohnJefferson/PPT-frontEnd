@@ -13,14 +13,16 @@ import { ManagersService } from 'src/app/service/managers.service';
   styleUrls: ['./managers.component.css']
 })
 export class ManagersComponent implements OnInit {
-  isShowCreateManager:boolean = false
-  isShowCategoryForm:boolean = true
+  isShowCreateManager:boolean = true
+  isShowCategoryForm:boolean = false
   isDeleteManagerShow:boolean = false
   isDeleteCategoryShow:boolean = false
   isLoadingCategoryBtn:boolean = false
   isLoadingManagerBtn:boolean = false
   isDeleteBtnLoading:boolean = false
   isDeleteBtnLoading_category:boolean=false
+  isLoadingCategoryAnimation:boolean=true
+  isLoadingMangerAnimation:boolean=true
   projectManager:string = ''
   categoryName:string = ''
   members:any=[]
@@ -91,6 +93,7 @@ export class ManagersComponent implements OnInit {
     this._managerUpdateSubscription.unsubscribe()
     this._managerDeleteSubscription.unsubscribe()
     this._categoryDeleteSubscription.unsubscribe()
+    this._categoryUpdateSubscription.unsubscribe()
   }
 
   showCreateManager(){
@@ -108,6 +111,9 @@ export class ManagersComponent implements OnInit {
     this._managerGetAllSubscription = this._managersService.allManager().subscribe(
       (res)=>{
         this.managers = res
+        this.isLoadingMangerAnimation = false
+      },()=>{
+        this.isLoadingMangerAnimation = false
       }
     )
   }
@@ -115,6 +121,9 @@ export class ManagersComponent implements OnInit {
   getAllCategory(){
     this._categoryGetAllSubscription = this._categoryService.getCategories().subscribe((res)=>{
       this.categories = res
+      this.isLoadingCategoryAnimation = false
+    },()=>{
+      this.isLoadingCategoryAnimation = false
     })
   }
 
@@ -255,13 +264,13 @@ export class ManagersComponent implements OnInit {
     if(this.editCategory.valid){
       this._categoryUpdateSubscription = this._categoryService.updateCategory(this.selectEditTriggerByIdCategory,this.editCategory.value).subscribe(()=>{
         this._toastr.success("Successfully Updated")
+        this.getAllCategory()
       },(err)=>{
         if(err.status == 422) this._toastr.warning(err.error.detail[0].msg)
         else{
           this._toastr.warning(err.error.detail)
         }
       })
-      this.getAllCategory()
     }else{
       this._toastr.warning("Invalid Inputs")
     }
