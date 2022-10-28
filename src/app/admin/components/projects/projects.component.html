@@ -46,7 +46,7 @@
             <small class="ml-9 py-1">Team members:</small>
             <div class="flex items-center">
                 <i class="fa-solid fa-people-group text-xl mr-3"></i>
-                <mat-form-field (click)="getAllMembers('member')" class="w-full relative flex justify-center items-center h-12 relative">
+                <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
                     <mat-select  formControlName="teamMembers" multiple class="w-full py-1 border shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
                       <mat-option *ngFor="let member of members" [value]="member.id">{{member.fullName}}</mat-option>
                     </mat-select>
@@ -69,7 +69,7 @@
                     <i class="fa-solid fa-person-chalkboard text-xl  lg:mx-3 mr-3"></i>
                     <small class="w-16 mr-3">Project Manager</small>
                     <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
-                        <mat-select (click)="getAllMembers('manager')" formControlName="projectManager" class="w-full py-1 shadow-lg border bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                        <mat-select formControlName="projectManager" class="w-full py-1 shadow-lg border bg-gray-50 rounded w-full -top-3 h-10 absolute">
                           <mat-option *ngFor="let manager of managers" [value]="manager.id">{{manager.fullName}}</mat-option>
                         </mat-select>
                     </mat-form-field>

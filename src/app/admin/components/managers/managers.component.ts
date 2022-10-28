@@ -204,6 +204,7 @@ export class ManagersComponent implements OnInit {
     this.categoryId = id
   }
   
+  
   deleteCategoryCommit(){
     this.isLoadingCategoryAnimation = true
     this.isDeleteBtnLoading_category = true
@@ -237,8 +238,12 @@ export class ManagersComponent implements OnInit {
       }
     })
     this.selectEditTriggerById = id
-
   }
+
+  cancelEditManger(){
+    this.selectEditTriggerById=0
+  }
+
 
 
   saveEditManager(){
@@ -265,6 +270,11 @@ export class ManagersComponent implements OnInit {
       }
     })
     this.selectEditTriggerByIdCategory = id
+  }
+
+  
+  cancelEditCategory(){
+    this.selectEditTriggerByIdCategory = 0
   }
   
   saveEditCategory(){

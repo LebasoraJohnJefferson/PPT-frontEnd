@@ -91,8 +91,9 @@
                                     <input class="pr-2" formControlName="delete" type="checkbox"/><small class="text-xs">Delete</small>
                                 </div>
                             </div>
-                            <div class="grid grid-cols-2">
+                            <div class="grid grid-cols-3">
                                 <i *ngIf="selectEditTriggerById == manager.id" (click)="saveEditManager()"  class="fa-solid fa-floppy-disk flex justify-center items-center text-blue-700 hover:text-blue-500 cursor-pointer"></i>
+                                <i (click)="cancelEditManger()" class="fa-sharp fa-solid fa-ban flex justify-center items-center text-red-700 hover:text-red-900 cursor-pointer"></i>
                                 <i (click)="deleteManager(manager.id,manager.managerDetails.fullName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
                             </div>
                         </form>
@@ -177,8 +178,9 @@
                         <form [formGroup]="editCategory" *ngIf="category.id==selectEditTriggerByIdCategory" action="POST" class="grid grid-cols-3 ">
                             <input formControlName="fullName" [value]="category.fullName" class="m-1 border rounded">
                             <input formControlName="description" [value]="category.description" class="m-1 border rounded">
-                            <div class="grid grid-cols-2 m-1">
+                            <div class="grid grid-cols-3 m-1">
                                 <i (click)="saveEditCategory()" class="fa-solid fa-floppy-disk flex justify-center items-center text-blue-700 hover:text-blue-500 cursor-pointer"></i>
+                                <i (click)="cancelEditCategory()" class="fa-sharp fa-solid fa-ban flex justify-center items-center text-red-700 hover:text-red-900 cursor-pointer"></i>
                                 <i (click)="deleteCategory(category.id,category.fullName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
                             </div>
                         </form>
