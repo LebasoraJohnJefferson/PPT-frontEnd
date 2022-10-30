@@ -10,7 +10,7 @@ import { ProjectService } from 'src/app/service/project.service';
   styleUrls: ['./projects.component.css']
 })
 export class ProjectsComponent implements OnInit {
-  isShowProjectForm:boolean = true
+  isShowProjectForm:boolean = false
   managers:any = []
   members: any = [];
 
@@ -64,10 +64,19 @@ export class ProjectsComponent implements OnInit {
 
   
   submitProject(){
-    console.log(this.projectFormGroup.value)
-    this.projectFormGroup.value.kickOff= new Date(this.projectFormGroup.get("kickOff")?.value)
-    this.projectFormGroup.value.dueDate= new Date(this.projectFormGroup.get("dueDate")?.value)
-    this._SaveProjectSubscription = this._projectService.SaveProject(this.projectFormGroup.value).subscribe()
+    if(this.projectFormGroup.valid){
+      this.projectFormGroup.value.kickOff= new Date(this.projectFormGroup.get("kickOff")?.value)
+      this.projectFormGroup.value.dueDate= new Date(this.projectFormGroup.get("dueDate")?.value)
+      this._SaveProjectSubscription = this._projectService.SaveProject(this.projectFormGroup.value).subscribe(()=>{
+        this._toastr.success("Project successfully created!")
+        this.isShowProjectForm = false
+      },(err)=>{
+        if(err.error.detail) this._toastr.warning(err.error.detail)
+        else this._toastr.warning(err.error.detail.msg)
+      })
+    }else{
+      this._toastr.warning("Invalid Inputs")
+    }
   }
 
 }
