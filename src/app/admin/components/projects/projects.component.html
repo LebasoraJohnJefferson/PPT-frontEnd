@@ -43,36 +43,30 @@
                 </div>
             </div>
             
-            <small class="ml-9 py-1">Team members:</small>
-            <div class="flex items-center">
-                <i class="fa-solid fa-people-group text-xl mr-3"></i>
-                <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
-                    <mat-select  formControlName="teamMembers" multiple class="w-full py-1 border shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
-                      <mat-option *ngFor="let member of members" [value]="member.id">{{member.fullName}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
+            
             
             <div class="grid lg:grid-cols-2 grid-cols-1 w-full">
-                <div class="flex items-center justify-center">
-                    <i class="fa-solid fa-sitemap text-xl  lg:mx-3 mr-3"></i>
-                    <small class="w-16 mr-3">Category</small>
-                    <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
-                        <mat-select formControlName="category" class="py-1 shadow-lg border bg-gray-50 rounded w-full -top-3 h-10 absolute">
-                          <mat-option *ngFor="let category of categories" [value]="category.id">{{category.fullName}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                <div>
+                    <small class="ml-9 py-1">Team members:</small>
+                    <div class="flex items-center justify-center">
+                        <i class="fa-solid fa-people-group text-xl mr-3"></i>
+                        <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
+                            <mat-select  formControlName="teamMembers" multiple class="w-full py-1 border shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                                <mat-option *ngFor="let member of members" [value]="member.id">{{member.fullName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
                 </div>
-    
-                <div class="flex items-center justify-center">
-                    <i class="fa-solid fa-person-chalkboard text-xl  lg:mx-3 mr-3"></i>
-                    <small class="w-16 mr-3">Project Manager</small>
-                    <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
-                        <mat-select formControlName="projectManager" class="w-full py-1 shadow-lg border bg-gray-50 rounded w-full -top-3 h-10 absolute">
-                          <mat-option *ngFor="let manager of managers" [value]="manager.id">{{manager.fullName}}</mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                <div>
+                    <small class="ml-9 lg:ml-12 py-1">Project Manager</small>
+                    <div class="flex items-center justify-center">
+                        <i class="fa-solid fa-person-chalkboard text-xl  lg:mx-3 mr-3"></i>
+                        <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
+                            <mat-select formControlName="projectManager" class="w-full py-1 shadow-lg border bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                              <mat-option  *ngFor="let manager of managers" [value]="manager.managerDetails.id">{{manager.managerDetails.fullName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
 

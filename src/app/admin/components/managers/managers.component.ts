@@ -148,6 +148,8 @@ export class ManagersComponent implements OnInit {
         this.isLoadingCategoryAnimation = false
       })
     }else{
+      this._toastr.warning("Pls.. make sure it fill all inputs")
+      this.isLoadingCategoryAnimation = false
       this.isLoadingCategoryBtn = false
     }
   }
@@ -169,6 +171,7 @@ export class ManagersComponent implements OnInit {
       })
     }else{
       this.isLoadingManagerBtn=false
+      this.isLoadingMangerAnimation = false
       this._toastr.warning("Pls.. make sure it fill all inputs")
     }
   }
