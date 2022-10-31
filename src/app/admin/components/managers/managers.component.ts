@@ -26,12 +26,13 @@ export class ManagersComponent implements OnInit {
   projectManager:string = ''
   categoryName:string = ''
   members:any=[]
+  available_members:any=[]
+  categories:any = []
+  managers:any = []
   managerId:number  = 0
   categoryId:number = 0
   selectEditTriggerById:number = 0
   selectEditTriggerByIdCategory:number = 0
-  categories:any = []
-  managers:any = []
   private _categoryGetAllSubscription:Subscription = new Subscription()
   private _managerGetAllSubscription:Subscription = new Subscription()
   private _allMemberSubscription:Subscription = new Subscription()
@@ -41,6 +42,7 @@ export class ManagersComponent implements OnInit {
   private _categorySaveSubscription:Subscription = new Subscription()
   private _categoryDeleteSubscription:Subscription = new Subscription()
   private _categoryUpdateSubscription:Subscription = new Subscription()
+  private _availableUser:Subscription = new Subscription()
 
 
   categoryFormGroup:FormGroup = this._formBuilder.group({
@@ -78,6 +80,7 @@ export class ManagersComponent implements OnInit {
     this.getAllCategory()
     this.getAllMembers()
     this.getAllManager()
+    this.getAllAvailableUser()
   }
 
   ngOnInit(): void {
@@ -94,6 +97,7 @@ export class ManagersComponent implements OnInit {
     this._managerDeleteSubscription.unsubscribe()
     this._categoryDeleteSubscription.unsubscribe()
     this._categoryUpdateSubscription.unsubscribe()
+    this._availableUser.unsubscribe()
   }
 
   showCreateManager(){
@@ -116,6 +120,12 @@ export class ManagersComponent implements OnInit {
         this.isLoadingMangerAnimation = false
       }
     )
+  }
+
+  getAllAvailableUser(){
+    this._availableUser = this._managersService.getAllUserThatNotMember().subscribe((res)=>{
+      this.available_members = res
+    })
   }
 
   getAllCategory(){

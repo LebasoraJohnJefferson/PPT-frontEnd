@@ -42,7 +42,7 @@
                             <i class="fa-solid fa-person-chalkboard text-xl  lg:mx-3 mr-3"></i>
                             <mat-form-field class="w-full relative  flex justify-center items-center h-12 relative">
                                 <mat-select formControlName="managerId" class="w-full py-1 shadow-lg border bg-gray-50 rounded w-full -top-3 h-10 absolute">
-                                  <mat-option *ngFor="let member of members" [value]="member.id">{{member.fullName}}</mat-option>
+                                  <mat-option *ngFor="let member of available_members" [value]="member.id">{{member.fullName}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>

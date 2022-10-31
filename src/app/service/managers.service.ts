@@ -19,7 +19,11 @@ export class ManagersService {
   }
 
   allManager():Observable<any>{
-    return this._http.get(`${this.baseURL}/managers`)
+    return this._http.get(`${this.baseURL}/managers/`)
+  }
+
+  getAllUserThatNotMember():Observable<any>{
+    return this._http.get(`${this.baseURL}/managers/available_users`)
   }
 
   deleteManager(id:number):Observable<any>{
