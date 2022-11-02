@@ -138,7 +138,7 @@
 
     <!-- create category -->
     <div *ngIf="isShowCategoryForm" class="flex md:flex-row flex-col w-full h-full">
-        <div class="flex flex-col w-3/4 h-full mt-3">
+        <div class="flex flex-col md:w-3/4 w-full h-full mt-3">
             <form [formGroup]="categoryFormGroup" (ngSubmit)="submitCategory()"   action="POST" class="flex flex-col justify-center px-3 mt-3 pb-3  mx-4  rounded border shadow-lg">
                 <h2 class="py-2 font-bold flex justify-center items-center mt-5">CREATE CATEGORY</h2>
                 <small class="ml-9 py-2">Category Name:</small>

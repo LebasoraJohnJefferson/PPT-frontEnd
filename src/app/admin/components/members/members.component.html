@@ -130,7 +130,7 @@
                     <i class="fa-solid fa-eye"></i>
                     <small class="ml-2">view</small>
                 </div>
-                <div (click)="remove(member.id)" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
+                <div (click)="showNotification(member.id,member.fullName)" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
                     <i class="fa-solid fa-user-slash"></i>
                     <small *ngIf='member.id != spinnerDeclineTrigger' class="ml-2" >remove</small>
                     <mat-spinner *ngIf='member.id == spinnerDeclineTrigger' class="ml-2" [diameter]="20"></mat-spinner>
@@ -152,6 +152,17 @@
             <!-- Uses `progress` as animation -->
             <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="pl-5" animation="progress"></ngx-skeleton-loader>
             <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+        </div>
+    </div>
+    <div *ngIf="isDeleteMemberShow" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
+        <div class="bg-white rounded w-96 h-28 flex flex-col">
+            <div class="flex justify-around py-3 font-bold items-center">Are you sure you want to remove {{memberName}} ?</div>
+            <hr class="mb-5"/>
+            <div class="flex justify-around items-center">
+                <div *ngIf="!loadingRemoveBtn" (click)="remove()"  class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white">YES</div>
+                <div *ngIf="loadingRemoveBtn" class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white"><mat-spinner [diameter]="25"></mat-spinner></div>
+                <div (click)="closeNotification()" class="flex py-1 px-5 border rounded shadow-lg bg-red-700 hover:bg-red-500 cursor-pointer text-white">NO</div>
+            </div>
         </div>
     </div>
 </div>

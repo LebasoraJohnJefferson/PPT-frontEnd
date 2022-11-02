@@ -12,12 +12,16 @@ import { MembersService } from 'src/app/service/members.service';
 })
 export class MembersComponent implements OnInit {
   members:any = []
+  memberId:number = 0
+  memberName:string = ''
   spinnerDeclineTrigger:number = 0
   spinnerAcceptTrigger:number = 0
   loadingCardFakeArray = new Array(10)
   loadingQuery:boolean=true
+  loadingRemoveBtn:boolean=false
   isRegisterFormOpen:boolean = false
   isRegisterButton:boolean = false
+  isDeleteMemberShow:boolean = false
   private _registerSubscription:Subscription = new Subscription()
   private _deleteMemberSubscription:Subscription = new Subscription()
   private _acceptMemberSubscription:Subscription = new Subscription()
@@ -100,13 +104,29 @@ export class MembersComponent implements OnInit {
     })
   }
 
-  remove(id:any){
-    this.spinnerDeclineTrigger = id
-    this._deleteMemberSubscription=this._memberService.deleteMembers(id).subscribe(()=>{
+  showNotification(id:number,name:string){
+    this.memberId= id
+    this.isDeleteMemberShow = true
+    this.memberName = name
+  }
+  
+  closeNotification(){
+    this.memberId= 0
+    this.isDeleteMemberShow = false
+  }
+
+  remove(){
+    this.spinnerDeclineTrigger = this.memberId
+    this.loadingRemoveBtn=true
+    this._deleteMemberSubscription=this._memberService.deleteMembers(this.memberId).subscribe(()=>{
       this.getMembers()
       this.spinnerDeclineTrigger=0
+      this.loadingRemoveBtn=false
+      this.isDeleteMemberShow = false
       this.toastr.success("Successfully remove the member!")
     },(err)=>{
+      this.loadingRemoveBtn=false
+      this.isDeleteMemberShow = false
       this.spinnerDeclineTrigger=0
       this.toastr.warning(err.error.detail)
     })

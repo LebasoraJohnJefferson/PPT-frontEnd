@@ -63,7 +63,7 @@
                         <i class="fa-solid fa-person-chalkboard text-xl  lg:mx-3 mr-3"></i>
                         <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
                             <mat-select formControlName="projectManager" class="w-full py-1 shadow-lg border bg-gray-50 rounded w-full -top-3 h-10 absolute">
-                              <mat-option  *ngFor="let manager of managers" [value]="manager.managerDetails.id">{{manager.managerDetails.fullName}}</mat-option>
+                              <mat-option  *ngFor="let manager of managers" [value]="manager.id">{{manager.managerDetails.fullName}}</mat-option>
                             </mat-select>
                         </mat-form-field>
                     </div>
@@ -75,10 +75,10 @@
                 <i class="fa-solid fa-book-open-reader text-xl mr-3"></i>
               <textarea formControlName="description" placeholder="Project Description" class="w-full border py-1 shadow-lg bg-gray-50 rounded" id="outline"></textarea>
             </div>
-            <button class="w-40 mx-auto mt-5 bg-green-700 py-1 hover:bg-green-500 text-white rounded" >Create Project</button>
-                <!-- <button class="flex justify-center items-center px-12 rounded text-white shadow-md  py-1 bg-green-500 text-white rounded" disabled>
-                <mat-spinner [diameter]="25"></mat-spinner>
-            </button> -->
+            <button *ngIf="!loadingSubmitBtn" class="w-40 mx-auto mt-5 bg-green-700 py-1 hover:bg-green-500 text-white rounded" >Create Project</button>
+            <button *ngIf="loadingSubmitBtn" class="flex w-40 mx-auto mt-5 bg-green-700 py-1 hover:bg-green-500 text-white rounded" disabled>
+                <mat-spinner class="flex m-auto" [diameter]="25"></mat-spinner>
+            </button>
         </form>
 
 
@@ -109,30 +109,64 @@
                         <small>Modify</small>
                     </th>
                 </tr>
-                <tr class="grid grid-cols-6">
-                    <td class="flex justify-center items-center">
-                        test1
+                <tr class="grid grid-cols-6" *ngFor="let data of projectDetails">
+                    <td *ngIf="!isShowFakeArray" class="flex justify-center items-center">
+                        {{data.Project.projectName}}
                     </td>
-                    <td class="flex justify-center items-center">
-                        test1
+                    <td *ngIf="!isShowFakeArray" class="flex justify-center items-center">
+                        {{data.Category.fullName}}
                     </td>
-                    <td class="flex justify-center items-center">
-                        test1
+                    <td *ngIf="!isShowFakeArray" class="flex justify-center items-center">
+                        {{data.Manager.managerDetails.fullName}}
                     </td>
-                    <td class="flex justify-center w-full items-center">
-                        <small class="bg-red-200 w-full h-full justify-center items-center flex">critical</small>
+                    <td *ngIf="!isShowFakeArray && data.status=='delay'" class="flex justify-center w-full items-center">
+                        <small class="bg-red-700 text-white w-full h-full justify-center items-center flex">{{data.status}}</small>
                     </td>
-                    <td class="flex justify-center items-center w-full relative">
-                        <div style="width:20%;height:100%" class="bg-green-200"></div>
-                        <small>Feb 1, 2022-Feb 2, 2022</small>
+                    <td *ngIf="!isShowFakeArray && data.status=='ongoing'" class="flex justify-center w-full items-center">
+                        <small class="bg-green-700 text-white w-full h-full justify-center items-center flex">on going</small>
                     </td>
-                    <td class="grid grid-cols-3">
+                    <td *ngIf="!isShowFakeArray && data.status=='pending'" class="flex justify-center w-full items-center">
+                        <small class="bg-blue-700 text-white w-full h-full justify-center items-center flex">{{data.status}}</small>
+                    </td>
+                    <td *ngIf="!isShowFakeArray" class="flex  items-center w-full relative">
+                        <small class="text-xm z-10">{{data.Project.kickOff | date: 'mediumDate'}} - {{data.Project.dueDate | date: 'mediumDate'}}</small>
+                    </td>
+                    <td *ngIf="!isShowFakeArray" class="grid grid-cols-2">
                         <i class="fa-solid fa-eye flex justify-center items-center text-blue-700 hover:text-blue-500 cursor-pointer"></i>
-                        <i class="fa-solid fa-pencil flex justify-center items-center text-gray-700 hover:text-gray-500 cursor-pointer"></i>
-                        <i class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
+                        <i (click)="projectDeleteById(data.Project.id,data.Project.projectName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
+                    </td>
+                    <td *ngIf="isShowFakeArray" class="flex justify-center items-center">
+                        <ngx-skeleton-loader class="grid w-full mt-2" [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                    </td>
+                    <td *ngIf="isShowFakeArray" class="flex justify-center items-center">
+                        <ngx-skeleton-loader class="grid w-full mt-2" [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                    </td>
+                    <td *ngIf="isShowFakeArray" class="flex justify-center items-center">
+                        <ngx-skeleton-loader class="grid w-full mt-2" [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                    </td>
+                    <td *ngIf="isShowFakeArray" class="flex justify-center items-center">
+                        <ngx-skeleton-loader class="grid w-full mt-2" [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                    </td>
+                    <td *ngIf="isShowFakeArray" class="flex justify-center items-center">
+                        <ngx-skeleton-loader class="grid w-full mt-2" [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                    </td>
+                    <td *ngIf="isShowFakeArray" class="grid grid-cols-2 gap-2 mx-3">
+                        <ngx-skeleton-loader class="grid w-full mt-2" [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
+                        <ngx-skeleton-loader class="grid w-full mt-2" [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
                     </td>
                 </tr>
             </table>
+        </div>
+    </div>
+    <div *ngIf="showConformationToDelete" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
+        <div class="bg-white rounded w-96 h-28 flex flex-col">
+            <div class="flex justify-around py-3 font-bold items-center">Are you sure you want to remove {{projectName}}?</div>
+            <hr class="mb-5"/>
+            <div class="flex justify-around items-center">
+                <div *ngIf="!loadingDeleteBtn" (click)="projectCommitDeleteById()"  class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white">YES</div>
+                <div *ngIf="loadingDeleteBtn" class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white"><mat-spinner [diameter]="25"></mat-spinner></div>
+                <div (click)="closeNotification()" class="flex py-1 px-5 border rounded shadow-lg bg-red-700 hover:bg-red-500 cursor-pointer text-white" >NO</div>
+            </div>
         </div>
     </div>
 </div>

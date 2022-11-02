@@ -13,6 +13,7 @@ export class DashboardOverviewComponent implements OnInit {
     'joined':0,
     'joining':0
   }
+  managerCount:number = 0
   private _countStatus:Subscription = new Subscription()
 
 
@@ -34,6 +35,9 @@ export class DashboardOverviewComponent implements OnInit {
       this.countMemberStatus = res
     },(err)=>{
       console.log(err)
+    })
+    this._dashboardService.getCountOfProjectManager().subscribe((res)=>{
+      this.managerCount = res.managerCount
     })
   }
 

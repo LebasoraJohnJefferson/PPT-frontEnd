@@ -17,4 +17,8 @@ export class DashboardService {
     return this._http.get(`${this.baseURL}/dashboard/members`)
   }
 
+  getCountOfProjectManager():Observable<any>{
+    return this._http.get(`${this.baseURL}/dashboard/projectManager`)
+  }
+
 }
