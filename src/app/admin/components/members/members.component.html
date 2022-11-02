@@ -19,6 +19,8 @@
                 <option value="All">All</option>
                 <option value="Joined">Joined</option>
                 <option value="Joining">Joining</option>
+                <option value="Manager">Manager</option>
+                <option value="Member">Member</option>
             </select>
         </form>
     </div>
@@ -99,41 +101,44 @@
 
     <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 p-3 mt-2" *ngIf="members.length != 0" >
         <div class="shadow-lg w-full h-full rounded relative" id="card" *ngFor="let member of members">
-            <small [ngClass]="member.isAdminApprove ? 'm-1 px-3 py-1 rounded bg-green-700 text-white absolute' : 'm-1 px-3 py-1 rounded bg-pink-700 text-white absolute' ">{{member.isAdminApprove ? 'Joined' : 'Joining'}}</small>
+            <div class="absolute grid">
+                <small [ngClass]="member.details.isAdminApprove ? 'm-1 px-3 py-1 rounded bg-green-700 text-white ' : 'm-1 px-3 py-1 rounded bg-pink-700 text-white ' ">{{member.details.isAdminApprove ? 'Joined' : 'Joining'}}</small>
+                <small [ngClass]="member.isManager ? 'm-1 px-3 py-1 rounded bg-gray-700 text-white ' : 'm-1 px-3 py-1 rounded bg-yellow-700 text-white ' ">{{member.isManager ? 'member' : 'manager'}}</small>
+            </div>
             <div class="flex justify-center items-center flex-col p-2">
                 <img class="w-16 h-16 rounded-full" src="../../../assets/images/profile_thumb.png" alt="profile" />
-                <p>{{member.fullName}}</p>
+                <p>{{member.details.fullName}}</p>
             </div>
 
             <!-- joining button options-->
 
-            <div *ngIf="!member.isAdminApprove" class="grid md:grid-cols-3 grid-cols-1 gap-2 py-2 px-3">
-                <div routerLink="/dashboard/members/{{member.id}}"  class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-blue-500 bg-blue-700">
+            <div *ngIf="!member.details.isAdminApprove" class="grid md:grid-cols-3 grid-cols-1 gap-2 py-2 px-3">
+                <div routerLink="/dashboard/members/{{member.details.id}}"  class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-blue-500 bg-blue-700">
                     <i class="fa-solid fa-eye"></i>
                     <small class="ml-2">view</small>
                 </div>
-                <div (click)="acceptMember(member.id)" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-green-500 bg-green-700" id="decline">
+                <div (click)="acceptMember(member.details.id)" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-green-500 bg-green-700" id="decline">
                     <i class="fa-sharp fa-solid fa-circle-check"></i>
-                    <small *ngIf='member.id != spinnerAcceptTrigger' class="ml-2">accept</small>
-                    <mat-spinner *ngIf='member.id == spinnerAcceptTrigger' class="ml-2" [diameter]="20"></mat-spinner>
+                    <small *ngIf='member.details.id != spinnerAcceptTrigger' class="ml-2">accept</small>
+                    <mat-spinner *ngIf='member.details.id == spinnerAcceptTrigger' class="ml-2" [diameter]="20"></mat-spinner>
                 </div>
-                <div (click)="decline(member.id)" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
+                <div (click)="decline(member.details.id)" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
                     <i class="fa-solid fa-trash"></i>
-                    <small *ngIf='member.id != spinnerDeclineTrigger' class="ml-2" >decline</small>
-                    <mat-spinner *ngIf='member.id == spinnerDeclineTrigger' class="ml-2" [diameter]="20"></mat-spinner>
+                    <small *ngIf='member.details.id != spinnerDeclineTrigger' class="ml-2" >decline</small>
+                    <mat-spinner *ngIf='member.details.id == spinnerDeclineTrigger' class="ml-2" [diameter]="20"></mat-spinner>
                 </div>
             </div>
 
             <!-- joined button options -->
-            <div *ngIf="member.isAdminApprove" class="grid md:grid-cols-2 grid-cols-1 gap-2 py-2 px-3">
-                <div routerLink="/dashboard/members/{{member.id}}" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-blue-500 bg-blue-700">
+            <div *ngIf="member.details.isAdminApprove" class="grid md:grid-cols-2 grid-cols-1 gap-2 py-2 px-3">
+                <div routerLink="/dashboard/members/{{member.details.id}}" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-blue-500 bg-blue-700">
                     <i class="fa-solid fa-eye"></i>
                     <small class="ml-2">view</small>
                 </div>
-                <div (click)="showNotification(member.id,member.fullName)" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
+                <div (click)="showNotification(member.details.id,member.details.fullName)" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
                     <i class="fa-solid fa-user-slash"></i>
-                    <small *ngIf='member.id != spinnerDeclineTrigger' class="ml-2" >remove</small>
-                    <mat-spinner *ngIf='member.id == spinnerDeclineTrigger' class="ml-2" [diameter]="20"></mat-spinner>
+                    <small *ngIf='member.details.id != spinnerDeclineTrigger' class="ml-2" >remove</small>
+                    <mat-spinner *ngIf='member.details.id == spinnerDeclineTrigger' class="ml-2" [diameter]="20"></mat-spinner>
                 </div>
             </div>
         </div>

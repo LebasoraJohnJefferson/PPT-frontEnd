@@ -76,15 +76,26 @@ export class MembersComponent implements OnInit {
     this._getAllMemberSubscription = this._memberService.getAllMembers().subscribe((res)=>{
       this.loadingQuery =false
       this.members = res
-      if(this.selectSortCategoryFormGroup.controls.category.value != 'All'){
+      console.log(res)
+      let filterEvent = this.selectSortCategoryFormGroup.controls.category.value
+      if(filterEvent != 'All'){
         if(this.members.length == 0 ) return
-        let isJoin = this.selectSortCategoryFormGroup.controls.category.value == 'Joined' ? 1 : 0
         let temp_member:any = []
-        this.members.forEach((member:any)=>{
-          if(member.isAdminApprove == isJoin){
-            temp_member.push(member)
-          }
-        })
+        if(filterEvent=='Joined' || filterEvent == 'Joining'){
+          let isJoin = filterEvent == 'Joined' ? 1 : 0
+          this.members.forEach((member:any)=>{
+            if(member.details.isAdminApprove == isJoin){
+              temp_member.push(member)
+            }
+          })
+        }else{
+          let role = filterEvent == 'Manager' ? true : false 
+          this.members.forEach((member:any)=>{
+            if(member.isManager == role){
+              temp_member.push(member)
+            }
+          })
+        }
         this.members = temp_member
       }
     },(err)=>{

@@ -135,6 +135,8 @@
                         <i class="fa-solid fa-eye flex justify-center items-center text-blue-700 hover:text-blue-500 cursor-pointer"></i>
                         <i (click)="projectDeleteById(data.Project.id,data.Project.projectName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
                     </td>
+                </tr>
+                <tr class="grid grid-cols-6" *ngFor="let _ of fakeProjectArray">
                     <td *ngIf="isShowFakeArray" class="flex justify-center items-center">
                         <ngx-skeleton-loader class="grid w-full mt-2" [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
                     </td>

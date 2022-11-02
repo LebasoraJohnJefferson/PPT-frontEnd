@@ -68,7 +68,6 @@ export class ProjectsComponent implements OnInit {
     this.isShowFakeArray = true
     this._projectDetailsSubscription = this._projectService.getAllProjectDetails().subscribe((res)=>{
       let temp:any = []
-      let today = new Date()
       res.forEach((data:any)=>{
         if (new Date(data.Project.kickOff) > new Date()){
           data['status'] = 'pending'
