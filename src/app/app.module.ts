@@ -29,6 +29,7 @@ import { StandardUserComponent } from './pages/standard-user/standard-user.compo
 import { MemberInfoComponent } from './admin/components/member-info/member-info.component';
 import { BackBtnComponent } from './admin/components/back-btn/back-btn.component';
 import { ManagersComponent } from './admin/components/managers/managers.component';
+import { ProjectInfoComponent } from './admin/components/project-info/project-info.component';
 
 const config: SocketIoConfig = { url: environment.baseURL,
     options: {
@@ -56,6 +57,7 @@ const config: SocketIoConfig = { url: environment.baseURL,
     MemberInfoComponent,
     BackBtnComponent,
     ManagersComponent,
+    ProjectInfoComponent,
   ],
   imports: [
     BrowserModule,

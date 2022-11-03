@@ -132,7 +132,7 @@
                         <small class="text-xm z-10">{{data.Project.kickOff | date: 'mediumDate'}} - {{data.Project.dueDate | date: 'mediumDate'}}</small>
                     </td>
                     <td *ngIf="!isShowFakeArray" class="grid grid-cols-2">
-                        <i class="fa-solid fa-eye flex justify-center items-center text-blue-700 hover:text-blue-500 cursor-pointer"></i>
+                        <i routerLink="/dashboard/projects/{{data.Project.id}}" class="fa-solid fa-eye flex justify-center items-center text-blue-700 hover:text-blue-500 cursor-pointer"></i>
                         <i (click)="projectDeleteById(data.Project.id,data.Project.projectName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>
                     </td>
                 </tr>

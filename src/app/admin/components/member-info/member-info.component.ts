@@ -44,9 +44,9 @@ export class MemberInfoComponent implements OnInit {
     this._memberProfileSubscription = this._memberService.getOneMemberInfo(this._routes.snapshot.paramMap.get('id')).subscribe((res)=>{
       this.userDetail = res
       this.dataLoader=false
-      let timeDiff = Math.abs(Date.now() - new Date(this.userDetail.birthDay).getTime())
+      let timeDiff = Math.abs(Date.now() - new Date(this.userDetail.details.birthDay).getTime())
       this.Age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25)
-      this.birthDay =new Date(this.userDetail.birthDay)
+      this.birthDay =new Date(this.userDetail.details.birthDay)
     },(err)=>{
       this.toastr.warning(err.error.detail)
       this._router.navigate(['/dashboard/members'])

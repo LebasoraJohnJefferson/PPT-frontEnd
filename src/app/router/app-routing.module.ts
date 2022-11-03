@@ -13,12 +13,14 @@ import { NotificationComponent } from '../admin/components/notification/notifica
 import { StandardUserComponent } from '../pages/standard-user/standard-user.component';
 import { MemberInfoComponent } from '../admin/components/member-info/member-info.component';
 import { ManagersComponent } from '../admin/components/managers/managers.component';
+import { ProjectInfoComponent } from '../admin/components/project-info/project-info.component';
 
 const routes:Routes = [
   {path:'',component:AuthComponent},
   {path:'dashboard',component:DashboardComponent,children: [
     { path: 'overview', component:DashboardOverviewComponent },
-    { path: 'projects', component:ProjectsComponent },
+    { path: 'projects', component:ProjectsComponent},
+    { path: 'projects/:id', component:ProjectInfoComponent},
     { path: 'timeline', component:TimelineComponent },
     { path: 'managers', component:ManagersComponent },
     { path: 'members', component:MembersComponent },

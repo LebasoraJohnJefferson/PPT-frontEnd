@@ -6,12 +6,15 @@
                 <div class="flex m-auto">
                     <img class="h-24 w-24" src="../../../assets/images/profile_thumb.png" alt="profile">
                     <div class="flex ml-3 flex-col justify-center items-start">
-                        <small [ngClass]="userDetail.isAdminApprove ? 'px-3 py-1 rounded bg-green-700 text-white' : ' px-3 py-1 rounded bg-pink-700 text-white' ">{{userDetail.isAdminApprove ? 'Joined' : 'Joining'}}</small>
-                        <p>{{userDetail.fullName}}</p>
+                        <p class="mx-auto">{{userDetail.details.fullName | titlecase}}</p>
+                        <div class="grid grid-cols-2 gap-2  pt-2">
+                            <small [ngClass]="userDetail.details.isAdminApprove ? 'px-3 py-1 rounded bg-green-700 text-white' : ' px-3 py-1 rounded bg-pink-700 text-white' ">{{userDetail.details.isAdminApprove ? 'Joined' : 'Joining'}}</small>
+                            <small [ngClass]="userDetail.isManager ? 'px-3 py-1 rounded bg-yellow-700 text-white' : ' px-3 py-1 rounded bg-gray-700 text-white' ">{{userDetail.isManager ? 'Manager' : 'member'}}</small>
+                        </div>
                     </div>
                 </div>
                 <!-- joining -->
-                <div *ngIf="!userDetail.isAdminApprove" class="grid grid-cols-2 gap-2 mt-2 my-auto">
+                <div *ngIf="!userDetail.details.isAdminApprove" class="grid grid-cols-2 gap-2 mt-2 my-auto">
                     <div (click)="accept()" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-green-500 bg-green-700" id="decline">
                         <i class="fa-sharp fa-solid fa-circle-check"></i>
                         <small *ngIf='!spinnerAcceptTrigger' class="ml-2">accept</small>
@@ -23,7 +26,7 @@
                         <mat-spinner *ngIf='spinnerDeclineTrigger' class="ml-2" [diameter]="20"></mat-spinner>
                     </div>
                 </div>
-                <div *ngIf="userDetail.isAdminApprove" class="grid grid-cols-1 gap-2 mt-2 my-auto">
+                <div *ngIf="userDetail.details.isAdminApprove" class="grid grid-cols-1 gap-2 mt-2 my-auto">
                     <div (click)="remove()" class="flex justify-center cursor-pointer hover:text-black rounded text-white items-center py-2 px-3 hover:bg-red-500 bg-red-700" id="decline">
                         <i class="fa-solid fa-user-slash"></i>
                         <small *ngIf='!spinnerDeclineTrigger' class="ml-2" >remove</small>
@@ -42,11 +45,11 @@
                 </div>
                 <div class="flex  items-center ">
                     <i class="fa-solid fa-location-dot"></i>
-                    <p class="ml-4">Address: {{userDetail.address}}</p>
+                    <p class="ml-4">Address: {{userDetail.details.address}}</p>
                 </div>
                 <div class="flex  items-center ">
                     <i class="fa-solid fa-venus-mars"></i>
-                    <p class="ml-2">Gender: {{userDetail.gender}}</p>
+                    <p class="ml-2">Gender: {{userDetail.details.gender}}</p>
                 </div>
             </div>
         </div>

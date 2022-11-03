@@ -103,11 +103,11 @@
         <div class="shadow-lg w-full h-full rounded relative" id="card" *ngFor="let member of members">
             <div class="absolute grid">
                 <small [ngClass]="member.details.isAdminApprove ? 'm-1 px-3 py-1 rounded bg-green-700 text-white ' : 'm-1 px-3 py-1 rounded bg-pink-700 text-white ' ">{{member.details.isAdminApprove ? 'Joined' : 'Joining'}}</small>
-                <small [ngClass]="member.isManager ? 'm-1 px-3 py-1 rounded bg-gray-700 text-white ' : 'm-1 px-3 py-1 rounded bg-yellow-700 text-white ' ">{{member.isManager ? 'member' : 'manager'}}</small>
+                <small [ngClass]="member.isManager ? 'm-1 px-3 py-1 rounded bg-yellow-700 text-white ' : 'm-1 px-3 py-1 rounded bg-gray-700 text-white ' ">{{member.isManager ? 'manager' : 'member'}}</small>
             </div>
             <div class="flex justify-center items-center flex-col p-2">
                 <img class="w-16 h-16 rounded-full" src="../../../assets/images/profile_thumb.png" alt="profile" />
-                <p>{{member.details.fullName}}</p>
+                <p>{{member.details.fullName | titlecase}}</p>
             </div>
 
             <!-- joining button options-->

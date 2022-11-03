@@ -78,7 +78,6 @@ export class ProjectsComponent implements OnInit {
         }
         temp.push(data)
       })
-      console.log(temp)
       this.projectDetails = res
       this.isShowFakeArray = false
     })
