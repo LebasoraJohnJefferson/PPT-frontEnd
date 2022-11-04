@@ -28,6 +28,10 @@ export class ProjectService {
   getAllProjectDetails():Observable<any>{
     return this._http.get(`${this.baseURL}/projects`)
   }
+  
+  getProjectById(id:any):Observable<any>{
+    return this._http.get(`${this.baseURL}/projects/${id}`)
+  }
 
   deleteProject(id:any):Observable<any>{
     return this._http.delete(`${this.baseURL}/projects/${id}`)

@@ -1,8 +1,125 @@
-<div class="w-full h-full">
+<div class="flex flex-col w-full h-full">
     <app-back-btn></app-back-btn>
-    <div class="flex w-full h-full">
-        <div class="m-auto">
-            Project Info is under construction
+    <div class="flex w-full">
+        <div class="grid grid-cols-2 border-b-2 border-black w-full bg-gray-200">
+            <div (click)="switch('Project')" [ngClass]="isSwitch ? 'grid w-full text-white bg-purple-700 cursor-pointer  border-r border-black' : 'grid w-full hover:bg-purple-300 cursor-pointer  border-r border-black'">
+                <p class="flex m-auto">Project Information</p>
+            </div>
+            <div (click)="switch('')" [ngClass]="!isSwitch ? 'grid w-full text-white bg-purple-700 cursor-pointer  border-l border-black' : 'grid w-full hover:bg-purple-300 cursor-pointer  border-l border-black'">
+                <p class="flex m-auto">Kanban</p>
+            </div>
         </div>
+    </div>
+
+
+
+    <!-- project Details -->
+    <div *ngIf="isSwitch && projectInfo.length!=0" class="grid h-full w-full grid-cols-3 gap-1">
+        <div class="flex flex-col items-center w-full border-2 shadow-md m-1 rounded">
+            <h2 class="flex font-bold py-1">Manager Information</h2>
+            <div class="flex flex-col w-full items-center">
+                <img [src]="defaultProfilePicture" class="w-24 h-24" alt="profile">
+                <p class="py-1 text-lg">{{projectInfo.Manager.managerDetails.fullName}}</p>
+                <div class="grid gap-5 grid-cols-1 ml-4 text-sm md:text-lg w-full mt-5">
+                    <div class="flex items-center ">
+                        <i class="fa-solid fa-arrow-up-1-9"></i>
+                        <p class="ml-4">Age: {{age}} years old</p>
+                    </div>
+                    <div class="flex  items-center ">
+                        <i class="fa-solid fa-cake-candles"></i>
+                        <p class="ml-4">Birth Day: {{ birthDay | date: 'mediumDate'}} </p>
+                    </div>
+                    <div class="flex  items-center ">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p class="ml-4">Address: {{projectInfo.Manager.managerDetails.address}}</p>
+                    </div>
+                    <div class="flex  items-center ">
+                        <i class="fa-solid fa-venus-mars"></i>
+                        <p class="ml-2">Gender: {{projectInfo.Manager.managerDetails.gender}}</p>
+                    </div>
+                    <small class="mx-auto mt-6 bg-purple-900 rounded px-3 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Change Project Manager</small>
+                </div>
+            </div>
+        </div>
+        <div class="grid h-full p-1 col-span-2 gap-1">
+
+            
+            <div class="flex flex-col items-center w-full h-40 border-2 shadow-md m-1 rounded">
+                <h2 class="flex font-bold py-1">Team members</h2>
+                
+            </div>
+
+
+            <!-- category and project Information -->
+            <div class="grid grid-cols-2 gap-2 h-96">
+                <div class="flex flex-col items-center w-full border-2 mx-1  shadow-md rounded overflow-y-scroll">
+                    <h2 class="flex font-bold py-1">Project Information</h2>
+                    <div class="grid gird-row-4 w-full gap-5 px-5  mt-5">
+                        <div>
+                            <div class="flex items-center">
+                                <i class="fa-sharp fa-solid fa-clipboard text-xl mr-1 px-1"></i>
+                                <small class="text-ms font-bold">Project Name</small>
+                            </div>
+                            <p class="ml-7">{{projectInfo.Project.projectName}}</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
+                                <small class="text-ms font-bold">Budget </small>
+                            </div>
+                            <p class="ml-8">{{projectInfo.Project.budget}}</p>
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-calendar-days text-xl mr-1 px-1"></i>
+                                <small class="text-ms font-bold">Kick Off and Due date</small>
+                            </div>
+                            <p class="ml-7">{{projectInfo.Project.kickOff | date: 'mediumDate'}} - {{projectInfo.Project.dueDate | date: 'mediumDate'}}</p>
+
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-book-open-reader text-xl mr-1 px-1"></i>
+                                <small class="text-ms font-bold">Description</small>
+                            </div>
+                            <p class="ml-8">
+                                {{projectInfo.Project.description}}
+                            </p>
+                        </div>
+                        <small class="mx-auto mt-6 bg-purple-900 rounded mb-2 px-3 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Edit Project</small>
+                    </div>
+                </div>
+                <div class="flex flex-col items-center w-full border-2 shadow-md rounded">
+                    <h2 class="flex font-bold py-1">category Information</h2>
+                    <div class="grid gird-row-2 w-full gap-5 px-5  mt-5">
+                        <div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-file-lines text-xl mr-3 px-1"></i>
+                                <small class="text-ms font-bold">Description</small>
+                            </div>
+                            <p class="ml-8">
+                                {{projectInfo.Category.fullName}}
+                            </p>
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-book-open-reader text-xl mr-1 px-1"></i>
+                                <small class="text-ms font-bold">Description</small>
+                            </div>
+                            <p class="ml-8">
+                                {{projectInfo.Category.description}}
+                            </p>
+                        </div>
+                    </div>
+                    <small class="mx-auto mt-10 bg-purple-900 rounded mb-2 px-3 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Change Category</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- kanban -->
+    <div *ngIf="!isSwitch">
+        kanban
     </div>
 </div>
