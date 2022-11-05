@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute,Router  } from '@angular/router'
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
+import {FormBuilder, FormGroup,Validators} from '@angular/forms';
 
 
 
@@ -14,18 +15,36 @@ import { environment } from 'src/environments/environment';
 })
 export class ProjectInfoComponent implements OnInit {
   defaultProfilePicture:string = environment.default_profile
+  memberFakeArrayForAnimation = new Array(5)
   members:any = []
   projectInfo:any = []
+  memberAvailableToAdd:any =[]
+  memberId:any= 0
+  memberName:any = ''
   age:any= 0
   birthDay:any = 0
+  isMemberPlaceHolderAnimation:boolean = true
+  isRemoveMemberConfirmation:boolean = false
+  isRemovalOfMemberAnimation:boolean = false
+  isShowAddMemberFormAnimationBtn:boolean = false
+  isShowAddMemberForm:boolean = false
   isSwitch:boolean = true
+
+  memberAddFormGroup:FormGroup = this._formBuilder.group({
+    teamMembers:['',Validators.required],
+  })
+
   private _projectInformation:Subscription = new Subscription()
   private _allJoinMembers:Subscription = new Subscription()
+  private _removalOfMember:Subscription = new Subscription()
+  private _addMemberIntoTheProject:Subscription = new Subscription()
+  private _retrieveAllInfoCategorySubscription:Subscription = new Subscription()
   constructor(
     private _projectService:ProjectService,
     private _routes:ActivatedRoute,
     private _router:Router,
     private _toastr:ToastrService,
+    private _formBuilder:FormBuilder
 
   ) { 
     this.getAllInformationOfProject()
@@ -35,6 +54,9 @@ export class ProjectInfoComponent implements OnInit {
   ngOnDestroy(){
     this._projectInformation.unsubscribe()
     this._allJoinMembers.unsubscribe()
+    this._removalOfMember.unsubscribe()
+    this._addMemberIntoTheProject.unsubscribe()
+    this._retrieveAllInfoCategorySubscription.unsubscribe()
   }
 
   getAllInformationOfProject(){
@@ -50,10 +72,66 @@ export class ProjectInfoComponent implements OnInit {
     })
   }
 
+  removeMemberById(id:any,memberName:any){
+    this.memberId = id
+    this.isRemoveMemberConfirmation = true
+    this.memberName = memberName
+  }
+
+  commitRemovalOfMember(){
+    this.isRemovalOfMemberAnimation = true
+    this._removalOfMember = this._projectService.removalOfMember(this.memberId).subscribe(()=>{
+      this._toastr.success(`Successfully remove ${this.memberName}`)
+      this.getAllMembers()
+      this.closeRemovalOfMember()
+    },(err)=>{
+      this._toastr.warning(err.error.detail)
+    })
+  }
+
+  closeRemovalOfMember(){
+    this.memberId = 0
+    this.isRemoveMemberConfirmation = false
+    this.isRemovalOfMemberAnimation = false
+    this.memberName = ''
+  }
+
+  addMemberIntoTheProject(){
+    this.isShowAddMemberForm = true
+    this._retrieveAllInfoCategorySubscription = this._projectService.getAllUserNotInProject(this._routes.snapshot.paramMap.get('id'))
+    .subscribe((res)=>{
+      this.memberAvailableToAdd=res
+    })
+  }
+
+  closeMemberForm(){
+    this.isShowAddMemberForm = false
+  }
+
+  submitAddMember(){
+    this.isShowAddMemberFormAnimationBtn= true
+    if(this.memberAddFormGroup.valid){
+      this._addMemberIntoTheProject = this._projectService.addMemberIntoTheProject(this._routes.snapshot.paramMap.get('id'),this.memberAddFormGroup.value).subscribe(()=>{
+        this.isShowAddMemberFormAnimationBtn = false
+        this.getAllMembers()
+        this.closeMemberForm()
+        this._toastr.success("Members successfully added!")
+        this.memberAddFormGroup.reset()
+      },(err)=>{
+        this._toastr.warning(err.error.detail)
+        this.isShowAddMemberFormAnimationBtn = false
+      })
+    }else{
+      this._toastr.warning("Empty Inputs!")
+      this.isShowAddMemberFormAnimationBtn = false
+    }
+  }
+
   getAllMembers(){
+    this.isMemberPlaceHolderAnimation = true
     this._allJoinMembers = this._projectService.getAllMemberByProjectId(this._routes.snapshot.paramMap.get('id')).subscribe((res)=>{
       this.members = res
-      console.log(res)
+      this.isMemberPlaceHolderAnimation = false
     })
   }
 

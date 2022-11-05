@@ -37,9 +37,22 @@ export class ProjectService {
     return this._http.delete(`${this.baseURL}/projects/${id}`)
   }
 
+
+  removalOfMember(id:any):Observable<any>{
+    return this._http.delete(`${this.baseURL}/projects/removal_of_member/${id}`)
+  }
+  
+  addMemberIntoTheProject(id:any,membersId:any):Observable<any>{
+    return this._http.post(`${this.baseURL}/projects/add_member/${id}`,membersId)
+  }
+
+  
   getAllMemberByProjectId(id:any):Observable<any>{
     return this._http.get(`${this.baseURL}/projects/get_all_member_by_project_id/${id}`)
   }
-
+  
+  getAllUserNotInProject(id:any):Observable<any>{
+    return this._http.get(`${this.baseURL}/projects/retrieve_all_info_team_member/${id}`)
+  }
 
 }

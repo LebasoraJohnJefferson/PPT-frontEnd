@@ -1,3 +1,7 @@
 #members-container{
     width:48vw
 }
+
+
+::ng-deep .mat-select-value{    
+    color: black !important;  }

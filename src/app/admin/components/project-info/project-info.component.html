@@ -47,14 +47,35 @@
             <div class="flex flex-col items-center w-full h-40 border-2 shadow-md rounded">
                 <h2 class="flex font-bold py-1">Team members</h2>
                 <div class="flex px-3 overflow-x-scroll overflow-y-hidden container" id="members-container">
-                    <div class="p-3  rounded w-24 flex flex-col items-center justify-center relative" *ngFor="let member of members">
-                        <div class="flex h-16 w-16 relative">
-                            <div class="absolute flex w-full justify-end">
-                                <small class="bg-red-700 cursor-pointer hover:bg-red-500 text-xs p-1 px-2 shadow-md  text-white justify-center items-center flex rounded-full">X</small>
+                    <div class="w-16 h-16 text-3xl rounded-full text-purple-700 items-center justify-center flex mt-3">
+                        <i (click)="addMemberIntoTheProject()" class="fa-solid fa-user-plus cursor-pointer"></i>
+                    </div>
+
+                    <div class="flex" *ngIf="!isMemberPlaceHolderAnimation">
+                        <div class="p-3  rounded w-24 flex flex-col items-center justify-center relative" *ngFor="let member of members">
+                            <div class="flex h-16 w-16 relative">
+                                <div class="absolute flex w-full justify-end">
+                                    <small (click)="removeMemberById(member.id,member.membersDetails.fullName)" class="bg-red-700 cursor-pointer hover:bg-red-500 text-xs p-1 px-2 shadow-md  text-white justify-center items-center flex rounded-full">X</small>
+                                </div>
+                                <img [src]="defaultProfilePicture" alt="profile" class="shadow-md rounded-full w-full h-full">
                             </div>
-                            <img [src]="defaultProfilePicture" alt="profile" class="shadow-md rounded-full w-full h-full">
+                            <small class="flex items-center">{{member.membersDetails.fullName}}</small>
                         </div>
-                        <small class="flex items-center">{{member.membersDetails.fullName}}</small>
+
+                    </div>
+
+                    <div *ngIf="isMemberPlaceHolderAnimation" class="p-3 pl-5 rounded w-24 flex items-center relative">
+                        <div class="flex mx-2" *ngFor="let _ of memberFakeArrayForAnimation">
+                            <div class="flex flex-col">
+                                <ngx-skeleton-loader class="flex m-auto" animation="progress" count="1" appearance="circle" [theme]="{
+                                    height: '70px',
+                                    width:'70px',
+                                    'background-color': '#A2ACA5',
+                                    border: '1px solid white'
+                                  }"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="m-auto w-24" animation="progress"></ngx-skeleton-loader>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -131,5 +152,49 @@
     <!-- kanban -->
     <div *ngIf="!isSwitch">
         kanban
+    </div>
+
+
+
+
+    <!-- notification -->
+
+    <!-- removal of member -->
+    <div *ngIf="isRemoveMemberConfirmation" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
+        <div class="bg-white rounded w-96 h-28 flex flex-col">
+            <div class="flex justify-around py-3 font-bold items-center">Are you sure you want to remove {{memberName}}?</div>
+            <hr class="mb-5"/>
+            <div class="flex justify-around items-center">
+                <div *ngIf="!isRemovalOfMemberAnimation" (click)="commitRemovalOfMember()"  class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white">YES</div>
+                <div *ngIf="isRemovalOfMemberAnimation" class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white"><mat-spinner [diameter]="25"></mat-spinner></div>
+                <div (click)="closeRemovalOfMember()" class="flex py-1 px-5 border rounded shadow-lg bg-red-700 hover:bg-red-500 cursor-pointer text-white">NO</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- add member into the project -->
+    <div *ngIf="isShowAddMemberForm" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
+        <div class="bg-white rounded w-96 flex flex-col">
+            <form class="px-3" [formGroup]="memberAddFormGroup" (ngSubmit)="submitAddMember()">
+                <div class="flex w-full justify-end">
+                    <div class="p-2 font-bold hover:text-red-500 text-red-700 cursor-pointer" (click)="closeMemberForm()">X</div>
+                </div>
+                <small class="ml-9 py-1">Team members:</small>
+                <div class="flex items-center justify-center">
+                    <i class="fa-solid fa-people-group text-xl mr-3"></i>
+                    <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
+                        <mat-select  formControlName="teamMembers" multiple class="w-full py-1 border shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                            <mat-option *ngFor="let member of memberAvailableToAdd" [value]="member.id">{{member.fullName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="!isShowAddMemberFormAnimationBtn" class="flex w-full items-center justify-center">
+                    <button class="w-48 py-1 rounded bg-green-700 mb-2 text-white font-bold" type="submit">Add Member</button>
+                </div>
+                <div *ngIf="isShowAddMemberFormAnimationBtn" class="flex w-full items-center justify-center">
+                    <div *ngIf="isShowAddMemberFormAnimationBtn" class="w-48 flex items-center justify-center px-3 py-1 rounded bg-green-700 mb-2"><mat-spinner [diameter]="25"></mat-spinner></div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
