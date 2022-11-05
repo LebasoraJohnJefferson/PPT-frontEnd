@@ -37,5 +37,9 @@ export class ProjectService {
     return this._http.delete(`${this.baseURL}/projects/${id}`)
   }
 
+  getAllMemberByProjectId(id:any):Observable<any>{
+    return this._http.get(`${this.baseURL}/projects/get_all_member_by_project_id/${id}`)
+  }
+
 
 }

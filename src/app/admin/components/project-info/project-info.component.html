@@ -41,12 +41,22 @@
                 </div>
             </div>
         </div>
-        <div class="grid h-full p-1 col-span-2 gap-1">
+        <div class="grid h-full p-1 col-span-2 gap-1 relative">
 
-            
-            <div class="flex flex-col items-center w-full h-40 border-2 shadow-md m-1 rounded">
+            <!-- team members -->
+            <div class="flex flex-col items-center w-full h-40 border-2 shadow-md rounded">
                 <h2 class="flex font-bold py-1">Team members</h2>
-                
+                <div class="flex px-3 overflow-x-scroll overflow-y-hidden container" id="members-container">
+                    <div class="p-3  rounded w-24 flex flex-col items-center justify-center relative" *ngFor="let member of members">
+                        <div class="flex h-16 w-16 relative">
+                            <div class="absolute flex w-full justify-end">
+                                <small class="bg-red-700 cursor-pointer hover:bg-red-500 text-xs p-1 px-2 shadow-md  text-white justify-center items-center flex rounded-full">X</small>
+                            </div>
+                            <img [src]="defaultProfilePicture" alt="profile" class="shadow-md rounded-full w-full h-full">
+                        </div>
+                        <small class="flex items-center">{{member.membersDetails.fullName}}</small>
+                    </div>
+                </div>
             </div>
 
 
