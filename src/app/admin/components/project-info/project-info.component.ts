@@ -19,9 +19,11 @@ export class ProjectInfoComponent implements OnInit {
   memberFakeArrayForAnimation = new Array(5)
   members:any = []
   managers:any = []
+  categories:any = []
   projectInfo:any = []
   memberAvailableToAdd:any =[]
   memberId:any= 0
+  categoryID:any = 0
   memberName:any = ''
   age:any= 0
   birthDay:any = 0
@@ -29,8 +31,11 @@ export class ProjectInfoComponent implements OnInit {
   isRemoveMemberConfirmation:boolean = false
   isRemovalOfMemberAnimation:boolean = false
   isChangeMemberLoadingAnimation:boolean = true
+  isChangeCategoryLoadingAnimation:boolean = false
+  isChangeCategoryForm:boolean = false
   isShowAddMemberFormAnimationBtn:boolean = false
   isShowChangeManagerFormAnimationBtn:boolean = false
+  isShowChangeCategoryFormAnimationBtn:boolean = false
   isShowAddMemberForm:boolean = false
   isShowAddManagerForm:boolean = false
   isSwitch:boolean = true
@@ -43,6 +48,11 @@ export class ProjectInfoComponent implements OnInit {
     id:['',Validators.required],
   })
 
+  projectCategoryFormGroup:FormGroup = this._formBuilder.group({
+    fullName:['',Validators.required],
+    description:['',Validators.required],
+  })
+
   private _projectInformation:Subscription = new Subscription()
   private _allJoinMembers:Subscription = new Subscription()
   private _removalOfMember:Subscription = new Subscription()
@@ -50,6 +60,7 @@ export class ProjectInfoComponent implements OnInit {
   private _retrieveAllInfoCategorySubscription:Subscription = new Subscription()
   private _getAllProjectManger:Subscription = new Subscription()
   private _changeProjectManager:Subscription = new Subscription()
+  private _changeCategoryManager:Subscription = new Subscription()
 
   constructor(
     private _projectService:ProjectService,
@@ -57,7 +68,7 @@ export class ProjectInfoComponent implements OnInit {
     private _router:Router,
     private _toastr:ToastrService,
     private _formBuilder:FormBuilder,
-    private _managerService:ManagersService
+    private _managerService:ManagersService,
   ) { 
     this.getAllInformationOfProject()
     this.getAllMembers()
@@ -71,6 +82,7 @@ export class ProjectInfoComponent implements OnInit {
     this._retrieveAllInfoCategorySubscription.unsubscribe()
     this._getAllProjectManger.unsubscribe()
     this._changeProjectManager.unsubscribe()
+    this._changeCategoryManager.unsubscribe()
   }
 
   getAllInformationOfProject(){
@@ -78,14 +90,15 @@ export class ProjectInfoComponent implements OnInit {
     this._projectInformation = this._projectService.getProjectById(this._routes.snapshot.paramMap.get('id'))
     .subscribe((res)=>{
       this.projectInfo = res
-      this.isChangeMemberLoadingAnimation = false
       let timeDiff = Math.abs(Date.now() - new Date(this.projectInfo.Manager.managerDetails.birthDay).getTime())
       this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25)
       this.birthDay =new Date(this.projectInfo.Manager.managerDetails.birthDay)
-    },()=>{
       this.isChangeMemberLoadingAnimation = false
+      console.log(res)
+    },()=>{
       this._toastr.warning("Project does`nt exist!")
       this._router.navigate(['/dashboard/projects'])
+      this.isChangeMemberLoadingAnimation = false
     })
   }
 
@@ -171,6 +184,40 @@ export class ProjectInfoComponent implements OnInit {
   
   closeChangeManager(){
     this.isShowAddManagerForm = false
+  }
+
+  changeCategory(id:any){
+    this.categoryID = id
+    this.projectCategoryFormGroup.get("fullName")?.setValue(this.projectInfo.Category.fullName)
+    this.projectCategoryFormGroup.get("description")?.setValue(this.projectInfo.Category.description)
+    this.isChangeCategoryForm = true
+  }
+
+  submitChangeCategory(){
+    this.isChangeCategoryLoadingAnimation = true
+    this.isShowChangeCategoryFormAnimationBtn = true
+    if(this.projectCategoryFormGroup.valid){
+      this._changeCategoryManager = this._projectService.changeProjectCategoryByProjectId(this.categoryID,this.projectCategoryFormGroup.value).subscribe(()=>{
+        this._toastr.success("Successfully updated the category!")
+        this.getAllInformationOfProject()
+        this.closeChangeCategory()
+        this.isChangeCategoryLoadingAnimation = false
+        this.isShowChangeCategoryFormAnimationBtn = false
+        this.isShowChangeCategoryFormAnimationBtn = false
+      },(err)=>{
+        this._toastr.warning(err.error.detail)
+        this.isChangeCategoryLoadingAnimation = false
+        this.isShowChangeCategoryFormAnimationBtn = false
+      })
+    }else{
+      this.isChangeCategoryLoadingAnimation = false
+      this.isShowChangeCategoryFormAnimationBtn = false
+      this._toastr.warning("Empty Inputs!")
+    }
+  }
+
+  closeChangeCategory(){
+    this.isChangeCategoryForm = false
   }
 
   getAllMembers(){

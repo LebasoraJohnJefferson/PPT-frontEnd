@@ -125,6 +125,9 @@ export class ManagersComponent implements OnInit {
   getAllAvailableUser(){
     this._availableUser = this._managersService.getAllUserThatNotMember().subscribe((res)=>{
       this.available_members = res
+      this.isLoadingMangerAnimation = false
+    },()=>{
+      this.isLoadingMangerAnimation = false
     })
   }
 
