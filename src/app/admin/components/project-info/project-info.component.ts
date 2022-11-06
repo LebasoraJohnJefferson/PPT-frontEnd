@@ -86,7 +86,6 @@ export class ProjectInfoComponent implements OnInit {
   }
 
   getAllInformationOfProject(){
-    this.isChangeMemberLoadingAnimation = true
     this._projectInformation = this._projectService.getProjectById(this._routes.snapshot.paramMap.get('id'))
     .subscribe((res)=>{
       this.projectInfo = res
@@ -165,6 +164,7 @@ export class ProjectInfoComponent implements OnInit {
   }
 
   submitChangeMember(){
+    this.isChangeMemberLoadingAnimation = true
     this.isShowChangeManagerFormAnimationBtn = true
     if(this.projectManagerFormGroup.valid){
       this._changeProjectManager = this._projectService.changeProjectManagerByProjectId(this._routes.snapshot.paramMap.get('id'),this.projectManagerFormGroup.value).subscribe(()=>{
@@ -202,7 +202,6 @@ export class ProjectInfoComponent implements OnInit {
         this.getAllInformationOfProject()
         this.closeChangeCategory()
         this.isChangeCategoryLoadingAnimation = false
-        this.isShowChangeCategoryFormAnimationBtn = false
         this.isShowChangeCategoryFormAnimationBtn = false
       },(err)=>{
         this._toastr.warning(err.error.detail)
