@@ -16,31 +16,51 @@
     <!-- project Details -->
     <div *ngIf="isSwitch && projectInfo.length!=0" class="grid h-full w-full grid-cols-3 gap-1">
         <div class="flex flex-col items-center w-full border-2 shadow-md m-1 rounded">
-            <h2 class="flex font-bold py-1">Manager Information</h2>
+            <h2 *ngIf="!isChangeMemberLoadingAnimation" class="flex font-bold py-1">Manager Information</h2>
+            <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="pt-2 w-40" animation="progress"></ngx-skeleton-loader>
             <div class="flex flex-col w-full items-center">
-                <img [src]="defaultProfilePicture" class="w-24 h-24" alt="profile">
-                <p class="py-1 text-lg">{{projectInfo.Manager.managerDetails.fullName}}</p>
+                <img *ngIf="!isChangeMemberLoadingAnimation" [src]="defaultProfilePicture" class="w-24 h-24" alt="profile">
+                <p *ngIf="!isChangeMemberLoadingAnimation" class="py-1 text-lg">{{projectInfo.Manager.managerDetails.fullName}}</p>
+                <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" animation="progress" count="1" appearance="circle" [theme]="{
+                    height: '100px',
+                    width:'100px',
+                    'background-color': '#A2ACA5',
+                    border: '1px solid white'
+                  }"></ngx-skeleton-loader>
+                <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="m-auto w-24" animation="progress"></ngx-skeleton-loader>
                 <div class="grid gap-5 grid-cols-1 ml-4 text-sm md:text-lg w-full mt-5">
-                    <div class="flex items-center ">
-                        <i class="fa-solid fa-arrow-up-1-9"></i>
-                        <p class="ml-4">Age: {{age}} years old</p>
+                    <div class="flex items-center">
+                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-8" animation="progress"></ngx-skeleton-loader>
+                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 ml-2" animation="progress"></ngx-skeleton-loader>
+                        <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-arrow-up-1-9"></i>
+                        <p *ngIf="!isChangeMemberLoadingAnimation" class="ml-4">Age: {{age}} years old</p>
                     </div>
                     <div class="flex  items-center ">
-                        <i class="fa-solid fa-cake-candles"></i>
-                        <p class="ml-4">Birth Day: {{ birthDay | date: 'mediumDate'}} </p>
+                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-8" animation="progress"></ngx-skeleton-loader>
+                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 ml-2" animation="progress"></ngx-skeleton-loader>
+                        <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-cake-candles"></i>
+                        <p *ngIf="!isChangeMemberLoadingAnimation" class="ml-4">Birth Day: {{ birthDay | date: 'mediumDate'}} </p>
                     </div>
                     <div class="flex  items-center ">
-                        <i class="fa-solid fa-location-dot"></i>
-                        <p class="ml-4">Address: {{projectInfo.Manager.managerDetails.address}}</p>
+                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-8" animation="progress"></ngx-skeleton-loader>
+                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 ml-2" animation="progress"></ngx-skeleton-loader>
+                        <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-location-dot"></i>
+                        <p *ngIf="!isChangeMemberLoadingAnimation" class="ml-4">Address: {{projectInfo.Manager.managerDetails.address}}</p>
                     </div>
                     <div class="flex  items-center ">
-                        <i class="fa-solid fa-venus-mars"></i>
-                        <p class="ml-2">Gender: {{projectInfo.Manager.managerDetails.gender}}</p>
+                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-8" animation="progress"></ngx-skeleton-loader>
+                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 ml-2" animation="progress"></ngx-skeleton-loader>
+                        <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-venus-mars"></i>
+                        <p *ngIf="!isChangeMemberLoadingAnimation" class="ml-2">Gender: {{projectInfo.Manager.managerDetails.gender}}</p>
                     </div>
-                    <small class="mx-auto mt-6 bg-purple-900 rounded px-3 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Change Project Manager</small>
+                    <small *ngIf="!isChangeMemberLoadingAnimation" (click)="changeManager()" class="mx-auto mt-6 bg-purple-900 rounded px-3 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Change Project Manager</small>
+                    <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 m-auto" animation="progress"></ngx-skeleton-loader>
                 </div>
             </div>
         </div>
+
+
+
         <div class="grid h-full p-1 col-span-2 gap-1 relative">
 
             <!-- team members -->
@@ -193,6 +213,32 @@
                 </div>
                 <div *ngIf="isShowAddMemberFormAnimationBtn" class="flex w-full items-center justify-center">
                     <div *ngIf="isShowAddMemberFormAnimationBtn" class="w-48 flex items-center justify-center px-3 py-1 rounded bg-green-700 mb-2"><mat-spinner [diameter]="25"></mat-spinner></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Change Project Manager -->
+    <div *ngIf="isShowAddManagerForm" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
+        <div class="bg-white rounded w-96 flex flex-col">
+            <form class="px-3" [formGroup]="projectManagerFormGroup" (ngSubmit)="submitChangeMember()">
+                <div class="flex w-full justify-end">
+                    <div class="p-2 font-bold hover:text-red-500 text-red-700 cursor-pointer" (click)="closeChangeManager()">X</div>
+                </div>
+                <small class="ml-9 py-1">Project Manager:</small>
+                <div class="flex items-center justify-center">
+                    <i class="fa-solid fa-people-group text-xl mr-3"></i>
+                    <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
+                        <mat-select  formControlName="id" class="w-full py-1 border shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                            <mat-option *ngFor="let manager of managers" [value]="manager.id">{{manager.managerDetails.fullName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="!isShowChangeManagerFormAnimationBtn" class="flex w-full items-center justify-center">
+                    <button class="w-48 py-1 rounded bg-green-700 mb-2 text-white font-bold" type="submit">Change Manager</button>
+                </div>
+                <div *ngIf="isShowChangeManagerFormAnimationBtn" class="flex w-full items-center justify-center">
+                    <div class="w-48 flex items-center justify-center px-3 py-1 rounded bg-green-700 mb-2"><mat-spinner [diameter]="25"></mat-spinner></div>
                 </div>
             </form>
         </div>

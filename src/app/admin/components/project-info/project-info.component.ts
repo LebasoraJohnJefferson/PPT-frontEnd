@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/service/project.service';
+import { ManagersService } from 'src/app/service/managers.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute,Router  } from '@angular/router'
 import { ToastrService } from 'ngx-toastr';
@@ -17,6 +18,7 @@ export class ProjectInfoComponent implements OnInit {
   defaultProfilePicture:string = environment.default_profile
   memberFakeArrayForAnimation = new Array(5)
   members:any = []
+  managers:any = []
   projectInfo:any = []
   memberAvailableToAdd:any =[]
   memberId:any= 0
@@ -26,12 +28,19 @@ export class ProjectInfoComponent implements OnInit {
   isMemberPlaceHolderAnimation:boolean = true
   isRemoveMemberConfirmation:boolean = false
   isRemovalOfMemberAnimation:boolean = false
+  isChangeMemberLoadingAnimation:boolean = true
   isShowAddMemberFormAnimationBtn:boolean = false
+  isShowChangeManagerFormAnimationBtn:boolean = false
   isShowAddMemberForm:boolean = false
+  isShowAddManagerForm:boolean = false
   isSwitch:boolean = true
 
   memberAddFormGroup:FormGroup = this._formBuilder.group({
     teamMembers:['',Validators.required],
+  })
+
+  projectManagerFormGroup:FormGroup = this._formBuilder.group({
+    id:['',Validators.required],
   })
 
   private _projectInformation:Subscription = new Subscription()
@@ -39,13 +48,16 @@ export class ProjectInfoComponent implements OnInit {
   private _removalOfMember:Subscription = new Subscription()
   private _addMemberIntoTheProject:Subscription = new Subscription()
   private _retrieveAllInfoCategorySubscription:Subscription = new Subscription()
+  private _getAllProjectManger:Subscription = new Subscription()
+  private _changeProjectManager:Subscription = new Subscription()
+
   constructor(
     private _projectService:ProjectService,
     private _routes:ActivatedRoute,
     private _router:Router,
     private _toastr:ToastrService,
-    private _formBuilder:FormBuilder
-
+    private _formBuilder:FormBuilder,
+    private _managerService:ManagersService
   ) { 
     this.getAllInformationOfProject()
     this.getAllMembers()
@@ -57,16 +69,21 @@ export class ProjectInfoComponent implements OnInit {
     this._removalOfMember.unsubscribe()
     this._addMemberIntoTheProject.unsubscribe()
     this._retrieveAllInfoCategorySubscription.unsubscribe()
+    this._getAllProjectManger.unsubscribe()
+    this._changeProjectManager.unsubscribe()
   }
 
   getAllInformationOfProject(){
+    this.isChangeMemberLoadingAnimation = true
     this._projectInformation = this._projectService.getProjectById(this._routes.snapshot.paramMap.get('id'))
     .subscribe((res)=>{
       this.projectInfo = res
+      this.isChangeMemberLoadingAnimation = false
       let timeDiff = Math.abs(Date.now() - new Date(this.projectInfo.Manager.managerDetails.birthDay).getTime())
       this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25)
       this.birthDay =new Date(this.projectInfo.Manager.managerDetails.birthDay)
     },()=>{
+      this.isChangeMemberLoadingAnimation = false
       this._toastr.warning("Project does`nt exist!")
       this._router.navigate(['/dashboard/projects'])
     })
@@ -125,6 +142,35 @@ export class ProjectInfoComponent implements OnInit {
       this._toastr.warning("Empty Inputs!")
       this.isShowAddMemberFormAnimationBtn = false
     }
+  }
+
+  changeManager(){
+    this.isShowAddManagerForm = true
+    this._getAllProjectManger = this._managerService.allManager().subscribe((res)=>{
+      this.managers = res
+    })
+  }
+
+  submitChangeMember(){
+    this.isShowChangeManagerFormAnimationBtn = true
+    if(this.projectManagerFormGroup.valid){
+      this._changeProjectManager = this._projectService.changeProjectManagerByProjectId(this._routes.snapshot.paramMap.get('id'),this.projectManagerFormGroup.value).subscribe(()=>{
+        this.isShowChangeManagerFormAnimationBtn = false
+        this.getAllInformationOfProject()
+        this._toastr.success("Manager successfully changed!")
+        this.closeChangeManager()
+      },(err)=>{
+        this._toastr.warning(err.error.detail)
+        this.isShowChangeManagerFormAnimationBtn = false
+      })
+    }else{
+      this.isShowChangeManagerFormAnimationBtn = false
+      this._toastr.warning("Empty Inputs!")
+    }
+  }
+  
+  closeChangeManager(){
+    this.isShowAddManagerForm = false
   }
 
   getAllMembers(){

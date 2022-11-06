@@ -55,4 +55,8 @@ export class ProjectService {
     return this._http.get(`${this.baseURL}/projects/retrieve_all_info_team_member/${id}`)
   }
 
+  changeProjectManagerByProjectId(id:any,details:any):Observable<any>{
+    return this._http.put(`${this.baseURL}/projects/changeProjectManagerById/${id}`,details)
+  }
+
 }
