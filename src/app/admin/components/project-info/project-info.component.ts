@@ -92,12 +92,10 @@ export class ProjectInfoComponent implements OnInit {
       let timeDiff = Math.abs(Date.now() - new Date(this.projectInfo.Manager.managerDetails.birthDay).getTime())
       this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25)
       this.birthDay =new Date(this.projectInfo.Manager.managerDetails.birthDay)
-      this.isChangeMemberLoadingAnimation = false
       console.log(res)
     },()=>{
       this._toastr.warning("Project does`nt exist!")
       this._router.navigate(['/dashboard/projects'])
-      this.isChangeMemberLoadingAnimation = false
     })
   }
 
@@ -172,11 +170,14 @@ export class ProjectInfoComponent implements OnInit {
         this.getAllInformationOfProject()
         this._toastr.success("Manager successfully changed!")
         this.closeChangeManager()
+        this.isChangeMemberLoadingAnimation = false
       },(err)=>{
+        this.isChangeMemberLoadingAnimation = false
         this._toastr.warning(err.error.detail)
         this.isShowChangeManagerFormAnimationBtn = false
       })
     }else{
+      this.isChangeMemberLoadingAnimation = false
       this.isShowChangeManagerFormAnimationBtn = false
       this._toastr.warning("Empty Inputs!")
     }
