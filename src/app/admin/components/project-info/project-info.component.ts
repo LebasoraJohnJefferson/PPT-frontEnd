@@ -30,7 +30,7 @@ export class ProjectInfoComponent implements OnInit {
   isMemberPlaceHolderAnimation:boolean = true
   isRemoveMemberConfirmation:boolean = false
   isRemovalOfMemberAnimation:boolean = false
-  isChangeMemberLoadingAnimation:boolean = true
+  isChangeMemberLoadingAnimation:boolean = false
   isChangeCategoryLoadingAnimation:boolean = false
   isChangeCategoryForm:boolean = false
   isShowAddMemberFormAnimationBtn:boolean = false
