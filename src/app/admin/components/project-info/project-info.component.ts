@@ -6,6 +6,7 @@ import { ActivatedRoute,Router  } from '@angular/router'
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import {FormBuilder, FormGroup,Validators} from '@angular/forms';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 
 
 
@@ -43,10 +44,11 @@ export class ProjectInfoComponent implements OnInit {
   isShowAddManagerForm:boolean = false
   isSwitch:boolean = true
 
+  
   memberAddFormGroup:FormGroup = this._formBuilder.group({
     teamMembers:['',Validators.required],
   })
-
+  
   ProjectUpdateFormGroup:FormGroup = this._formBuilder.group({
     projectName:['',Validators.required],
     budget:[0,Validators.required],
@@ -58,12 +60,12 @@ export class ProjectInfoComponent implements OnInit {
   projectManagerFormGroup:FormGroup = this._formBuilder.group({
     id:['',Validators.required],
   })
-
+  
   projectCategoryFormGroup:FormGroup = this._formBuilder.group({
     fullName:['',Validators.required],
     description:['',Validators.required],
   })
-
+  
   private _projectInformation:Subscription = new Subscription()
   private _allJoinMembers:Subscription = new Subscription()
   private _removalOfMember:Subscription = new Subscription()
@@ -73,6 +75,18 @@ export class ProjectInfoComponent implements OnInit {
   private _changeProjectManager:Subscription = new Subscription()
   private _changeCategoryManager:Subscription = new Subscription()
   private _saveProjectUpdatedDetails:Subscription = new Subscription()
+  
+  // ###kanban variables ###
+
+  pending:any = ['task1', 'task2', 'task3', 'task4', 'task5'];
+
+  onGoing:any = [];
+
+  done:any = []
+
+
+
+
 
   constructor(
     private _projectService:ProjectService,
@@ -255,9 +269,9 @@ export class ProjectInfoComponent implements OnInit {
     if(this.ProjectUpdateFormGroup.valid){
       this._saveProjectUpdatedDetails = this._projectService.projectDetailsUpdating(this.projectInfo.Project.id,this.ProjectUpdateFormGroup.value).subscribe(()=>{
         this._toastr.success('Project Information successfully updated')
+        this.isChangeProjectLoadingAnimation=false
         this.closeChangeProjectForm()
         this.getAllInformationOfProject()
-        this.isChangeProjectLoadingAnimation=false
         this.isShowChangeProjectFormAnimationBtn = false
       },(err)=>{
         if(err.error.detail) this._toastr.warning(err.error.detail)
@@ -286,6 +300,19 @@ export class ProjectInfoComponent implements OnInit {
 
 
   ngOnInit(): void {
+    
+  }
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
   }
 
 }

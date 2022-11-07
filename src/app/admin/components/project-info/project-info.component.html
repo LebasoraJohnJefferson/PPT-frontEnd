@@ -144,7 +144,7 @@
                                 {{projectInfo.Project.description}}
                             </p>
                         </div>
-                        <small (click)="openProjectFormForUpdate()" class="mx-auto mt-6 bg-purple-900 rounded mb-2 px-3 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Edit Project</small>
+                        <small (click)="openProjectFormForUpdate()" class="mx-auto bg-purple-900 rounded mb-2 px-3 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Edit Project</small>
                     </div>
                     <!-- project details animation -->
                     <div *ngIf="!isChangeProjectForm && isChangeProjectLoadingAnimation" class="grid gird-row-4 w-full gap-5 px-5  mt-5">
@@ -276,11 +276,81 @@
         </div>
     </div>
 
+
+
+
+
     
     <!-- kanban -->
     <div *ngIf="!isSwitch">
-        kanban
-    </div>
+        <div cdkDropListGroup class="grid grid-cols-3 gap-4 px-3">
+            <div class="example-container">
+              <h2>Pending Task</h2>
+          
+              <div
+                cdkDropList
+                [cdkDropListData]="pending"
+                class="example-list"
+                cdkDropListSortingDisabled
+                (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let pendingItems of pending" cdkDrag>{{pendingItems}}</div>
+              </div>
+            </div>
+          
+            <div class="example-container">
+              <h2>On Going Task</h2>
+          
+              <div
+                cdkDropList
+                [cdkDropListData]="onGoing"
+                class="example-list"
+                (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let onGoingItems of onGoing" cdkDrag>{{onGoingItems}}</div>
+              </div>
+            </div>
+            <div class="example-container">
+                <h2>Finish Task</h2>
+            
+                <div
+                  cdkDropList
+                  [cdkDropListData]="done"
+                  class="example-list"
+                  (cdkDropListDropped)="drop($event)">
+                  <div class="example-box" *ngFor="let doneItems of done" cdkDrag>{{doneItems}}</div>
+                </div>
+              </div>
+          </div>
+        </div>
+        <div *ngIf="!isSwitch" class="w-full flex items-center justify-center">
+            <div class="font-bold text-2xl">NOTICE: KANBAN initial design</div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
