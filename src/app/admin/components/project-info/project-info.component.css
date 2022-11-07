@@ -2,6 +2,9 @@
     width:48vw
 }
 
+input{
+    text-indent: 10px;
+}
 
 ::ng-deep .mat-select-value{    
     color: black !important;  }

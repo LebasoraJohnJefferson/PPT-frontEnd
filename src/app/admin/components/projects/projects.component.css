@@ -4,5 +4,9 @@
     outline:none;
 }
 
+#rowChangerBg:nth-child(even){
+    background-color: #FCF3CF;
+}
+
 ::ng-deep .mat-select-value{    
     color: black !important;  }

@@ -3,24 +3,27 @@
     <div class="flex w-full">
         <div class="grid grid-cols-2 border-b-2 border-black w-full bg-gray-200">
             <div (click)="switch('Project')" [ngClass]="isSwitch ? 'grid w-full text-white bg-purple-700 cursor-pointer  border-r border-black' : 'grid w-full hover:bg-purple-300 cursor-pointer  border-r border-black'">
-                <p class="flex m-auto">Project Information</p>
+                <p class="flex m-auto text-center">Project Information</p>
             </div>
             <div (click)="switch('')" [ngClass]="!isSwitch ? 'grid w-full text-white bg-purple-700 cursor-pointer  border-l border-black' : 'grid w-full hover:bg-purple-300 cursor-pointer  border-l border-black'">
-                <p class="flex m-auto">Kanban</p>
+                <p class="flex m-auto text-center ">Kanban</p>
             </div>
         </div>
     </div>
 
+    <div *ngIf="isSwitch && projectInfo.length == 0" class="grid h-full w-full">
+        <mat-spinner class="flex m-auto" [diameter]="100"></mat-spinner>
+    </div>
 
 
     <!-- project Details -->
-    <div *ngIf="isSwitch && projectInfo.length != 0" class="grid h-full w-full grid-cols-3 gap-1">
+    <div *ngIf="isSwitch && projectInfo.length != 0" class="grid h-full w-full grid-cols-1 lg:grid-cols-3 gap-1">
         <div class="flex flex-col items-center w-full border-2 shadow-md m-1 rounded">
             <h2 *ngIf="!isChangeMemberLoadingAnimation" class="flex font-bold py-1">Manager Information</h2>
             <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="pt-2 w-40" animation="progress"></ngx-skeleton-loader>
             <div class="flex flex-col w-full items-center">
                 <img *ngIf="!isChangeMemberLoadingAnimation" [src]="defaultProfilePicture" class="w-24 h-24" alt="profile">
-                <p *ngIf="!isChangeMemberLoadingAnimation" class="py-1 text-lg">{{projectInfo.Manager.managerDetails.fullName}}</p>
+                <p *ngIf="!isChangeMemberLoadingAnimation" class="py-1 text-lg">{{projectInfo.Manager.managerDetails.fullName}} </p>
                 <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" animation="progress" count="1" appearance="circle" [theme]="{
                     height: '100px',
                     width:'100px',
@@ -53,7 +56,7 @@
                         <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-venus-mars"></i>
                         <p *ngIf="!isChangeMemberLoadingAnimation" class="ml-2">Gender: {{projectInfo.Manager.managerDetails.gender}}</p>
                     </div>
-                    <small *ngIf="!isChangeMemberLoadingAnimation" (click)="changeManager()" class="mx-auto mt-6 bg-purple-900 rounded px-3 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Change Project Manager</small>
+                    <small *ngIf="!isChangeMemberLoadingAnimation" (click)="changeManager()" class="mx-auto mt-6 bg-purple-900 rounded px-3 mb-2 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Change Project Manager</small>
                     <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 m-auto" animation="progress"></ngx-skeleton-loader>
                 </div>
             </div>
@@ -106,10 +109,10 @@
 
 
             <!-- category and project Information -->
-            <div class="grid grid-cols-2 gap-2 h-96">
-                <div class="flex flex-col items-center w-full border-2 mx-1  shadow-md rounded overflow-y-scroll">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 h-96">
+                <div class="flex flex-col items-center w-full border-2 mx-1  shadow-md rounded lg:overflow-y-scroll">
                     <h2 class="flex font-bold py-1">Project Information</h2>
-                    <div class="grid gird-row-4 w-full gap-5 px-5  mt-5">
+                    <div *ngIf="!isChangeProjectForm && !isChangeProjectLoadingAnimation" class="grid gird-row-4 w-full gap-5 px-5  mt-5">
                         <div>
                             <div class="flex items-center">
                                 <i class="fa-sharp fa-solid fa-clipboard text-xl mr-1 px-1"></i>
@@ -137,12 +140,83 @@
                                 <i class="fa-solid fa-book-open-reader text-xl mr-1 px-1"></i>
                                 <small class="text-ms font-bold">Description</small>
                             </div>
-                            <p class="ml-8 break-all">
+                            <p class="ml-8 break-all break-all max-h-36 overflow-y-auto px-2">
                                 {{projectInfo.Project.description}}
                             </p>
                         </div>
-                        <small class="mx-auto mt-6 bg-purple-900 rounded mb-2 px-3 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Edit Project</small>
+                        <small (click)="openProjectFormForUpdate()" class="mx-auto mt-6 bg-purple-900 rounded mb-2 px-3 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Edit Project</small>
                     </div>
+                    <!-- project details animation -->
+                    <div *ngIf="!isChangeProjectForm && isChangeProjectLoadingAnimation" class="grid gird-row-4 w-full gap-5 px-5  mt-5">
+                        <div>
+                            <div class="flex items-center">
+                                <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="w-8 mr-2" animation="progress"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="w-24" animation="progress"></ngx-skeleton-loader>
+                            </div>
+                            <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="w-24" animation="progress"></ngx-skeleton-loader>
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="w-8 mr-2" animation="progress"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="w-24" animation="progress"></ngx-skeleton-loader>
+                            </div>
+                            <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="w-24" animation="progress"></ngx-skeleton-loader>
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="w-8 mr-2" animation="progress"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="w-24" animation="progress"></ngx-skeleton-loader>
+                            </div>
+                            <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="w-24" animation="progress"></ngx-skeleton-loader>
+                        </div>
+                        
+                        <ngx-skeleton-loader [theme]="{'background-color': '#A2ACA5'}" class="flex m-auto w-24" animation="progress"></ngx-skeleton-loader>
+                    </div>
+                    <form *ngIf="isChangeProjectForm" (ngSubmit)="saveProjectUpdatedDetails()" [formGroup]="ProjectUpdateFormGroup"  method="POST" class="grid gird-row-4 w-full gap-5 px-5  mt-5">
+                        <div>
+                            <div class="flex w-full justify-end pr-10">
+                                <div class="font-bold hover:text-red-500 text-red-700 cursor-pointer" (click)="closeChangeProjectForm()">X</div>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fa-sharp fa-solid fa-clipboard text-xl mr-1 px-1"></i>
+                                <small class="text-ms font-bold">Project Name</small>
+                            </div>
+                            <input formControlName="projectName" placeholder="Enter Project Name" class="w-full border-2 rounded shadow-md mt-2" />
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
+                                <small class="text-ms font-bold break-all">Budget </small>
+                            </div>
+                            <input formControlName="budget" placeholder="Enter Project Name" class="w-full border-2 rounded shadow-md mt-2" />
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-calendar-days text-xl mr-1 px-1"></i>
+                                <small class="text-ms font-bold">Kick Off and Due date</small>
+                            </div>
+                            <mat-form-field class="border shadow-md rounded w-full h-8 relative">
+                                <mat-date-range-input [rangePicker]="picker" class="text-black absolute -top-2">
+                                  <input formControlName="kickOff" matStartDate>
+                                  <input formControlName="dueDate" matEndDate>
+                                </mat-date-range-input>
+                                <mat-datepicker-toggle class="text-black" matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-date-range-picker #picker></mat-date-range-picker>
+                            </mat-form-field>
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-book-open-reader text-xl mr-1 px-1"></i>
+                                <small class="text-ms font-bold">Description</small>
+                            </div>
+                            <textarea formControlName="description" placeholder="Enter Project Name" class="w-full border-2 rounded shadow-md mt-2">
+                            </textarea>
+                        </div>
+                        <button *ngIf="!isShowChangeProjectFormAnimationBtn" type="submit" class="mx-auto bg-purple-900 rounded mb-2 px-3 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Save</button>
+                        <small *ngIf="isShowChangeProjectFormAnimationBtn" class="mx-auto bg-purple-900 rounded mb-2 py-1 font-bold text-white cursor-pointer hover:bg-purple-700 px-4">
+                            <mat-spinner class="flex m-auto" [diameter]="25"></mat-spinner>
+                        </small>
+                    </form>
                 </div>
                 <div class="flex flex-col items-center w-full border-2 shadow-md rounded">
                     <h2 class="flex font-bold py-1">category Information</h2>
@@ -163,7 +237,7 @@
                                 <i class="fa-solid fa-book-open-reader text-xl mr-1 px-1"></i>
                                 <small class="text-ms font-bold">Description</small>
                             </div>
-                            <p *ngIf="!isChangeCategoryLoadingAnimation" class="ml-8 break-all">
+                            <p *ngIf="!isChangeCategoryLoadingAnimation" class="ml-8 break-all max-h-36 px-2 overflow-y-auto">
                                 {{projectInfo.Category.description}}
                             </p>
                             <ngx-skeleton-loader *ngIf="isChangeCategoryLoadingAnimation" class="flex w-24" [theme]="{'background-color': '#A2ACA5'}" animation="progress"></ngx-skeleton-loader>

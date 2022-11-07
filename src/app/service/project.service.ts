@@ -63,6 +63,10 @@ export class ProjectService {
     return this._http.put(`${this.baseURL}/projects/changeProjectCategoryById/${id}`,details)
   }
 
+  projectDetailsUpdating(id:any,details:any):Observable<any>{
+    return this._http.put(`${this.baseURL}/projects/${id}`,details)
+  }
+
   
 
 }

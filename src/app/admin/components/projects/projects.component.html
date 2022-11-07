@@ -39,7 +39,7 @@
                         </mat-date-range-input>
                         <mat-datepicker-toggle class="text-black" matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-date-range-picker #picker></mat-date-range-picker>
-                      </mat-form-field>
+                    </mat-form-field>
                 </div>
             </div>
             
@@ -109,7 +109,7 @@
                         <small>Modify</small>
                     </th>
                 </tr>
-                <tr class="grid grid-cols-6" *ngFor="let data of projectDetails">
+                <tr class="grid grid-cols-6" *ngFor="let data of projectDetails" id="rowChangerBg">
                     <td *ngIf="!isShowFakeArray" class="pl-2 truncate">
                         {{data.Project.projectName}}
                     </td>

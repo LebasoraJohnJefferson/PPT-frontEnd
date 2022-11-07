@@ -20,7 +20,7 @@
                 <option value="Joined">Joined</option>
                 <option value="Joining">Joining</option>
                 <option value="Manager">Manager</option>
-                <option value="Member">Member</option>
+                <option value="Member">User</option>
             </select>
         </form>
     </div>
@@ -103,7 +103,7 @@
         <div class="shadow-lg  w-full h-full overflow-x-hidden rounded relative" id="card" *ngFor="let member of members">
             <div class="absolute grid">
                 <small [ngClass]="member.details.isAdminApprove ? 'm-1 px-3 py-1 rounded bg-green-700 text-white ' : 'm-1 px-3 py-1 rounded bg-pink-700 text-white ' ">{{member.details.isAdminApprove ? 'Joined' : 'Joining'}}</small>
-                <small [ngClass]="member.isManager ? 'm-1 px-3 py-1 rounded bg-yellow-700 text-white ' : 'm-1 px-3 py-1 rounded bg-gray-700 text-white ' ">{{member.isManager ? 'manager' : 'member'}}</small>
+                <small [ngClass]="member.isManager ? 'm-1 px-3 py-1 rounded bg-yellow-700 text-white ' : 'm-1 px-3 py-1 rounded bg-gray-700 text-white ' ">{{member.isManager ? 'Manager' : 'User'}}</small>
             </div>
             <div class="flex justify-center items-center flex-col p-2">
                 <img class="w-16 h-16 rounded-full" src="../../../assets/images/profile_thumb.png" alt="profile" />

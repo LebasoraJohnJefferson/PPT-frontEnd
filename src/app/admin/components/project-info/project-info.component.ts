@@ -32,16 +32,27 @@ export class ProjectInfoComponent implements OnInit {
   isRemovalOfMemberAnimation:boolean = false
   isChangeMemberLoadingAnimation:boolean = false
   isChangeCategoryLoadingAnimation:boolean = false
+  isChangeProjectLoadingAnimation:boolean = false
   isChangeCategoryForm:boolean = false
+  isChangeProjectForm:boolean = false
   isShowAddMemberFormAnimationBtn:boolean = false
   isShowChangeManagerFormAnimationBtn:boolean = false
   isShowChangeCategoryFormAnimationBtn:boolean = false
+  isShowChangeProjectFormAnimationBtn:boolean = false
   isShowAddMemberForm:boolean = false
   isShowAddManagerForm:boolean = false
   isSwitch:boolean = true
 
   memberAddFormGroup:FormGroup = this._formBuilder.group({
     teamMembers:['',Validators.required],
+  })
+
+  ProjectUpdateFormGroup:FormGroup = this._formBuilder.group({
+    projectName:['',Validators.required],
+    budget:[0,Validators.required],
+    kickOff:['',Validators.required],
+    dueDate:['',Validators.required],
+    description:['',Validators.required]
   })
 
   projectManagerFormGroup:FormGroup = this._formBuilder.group({
@@ -61,6 +72,7 @@ export class ProjectInfoComponent implements OnInit {
   private _getAllProjectManger:Subscription = new Subscription()
   private _changeProjectManager:Subscription = new Subscription()
   private _changeCategoryManager:Subscription = new Subscription()
+  private _saveProjectUpdatedDetails:Subscription = new Subscription()
 
   constructor(
     private _projectService:ProjectService,
@@ -83,6 +95,7 @@ export class ProjectInfoComponent implements OnInit {
     this._getAllProjectManger.unsubscribe()
     this._changeProjectManager.unsubscribe()
     this._changeCategoryManager.unsubscribe()
+    this._saveProjectUpdatedDetails.unsubscribe()
   }
 
   getAllInformationOfProject(){
@@ -92,7 +105,6 @@ export class ProjectInfoComponent implements OnInit {
       let timeDiff = Math.abs(Date.now() - new Date(this.projectInfo.Manager.managerDetails.birthDay).getTime())
       this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25)
       this.birthDay =new Date(this.projectInfo.Manager.managerDetails.birthDay)
-      console.log(res)
     },()=>{
       this._toastr.warning("Project does`nt exist!")
       this._router.navigate(['/dashboard/projects'])
@@ -228,9 +240,50 @@ export class ProjectInfoComponent implements OnInit {
     })
   }
 
+  openProjectFormForUpdate(){
+    this.ProjectUpdateFormGroup.get("projectName")?.setValue(this.projectInfo.Project.projectName)
+    this.ProjectUpdateFormGroup.get("budget")?.setValue(this.projectInfo.Project.budget)
+    this.ProjectUpdateFormGroup.get("kickOff")?.setValue(this.projectInfo.Project.kickOff)
+    this.ProjectUpdateFormGroup.get("dueDate")?.setValue(this.projectInfo.Project.dueDate)
+    this.ProjectUpdateFormGroup.get("description")?.setValue(this.projectInfo.Project.description)
+    this.isChangeProjectForm = true
+  }
+
+  saveProjectUpdatedDetails(){
+    this.isChangeProjectLoadingAnimation=true
+    this.isShowChangeProjectFormAnimationBtn = true
+    if(this.ProjectUpdateFormGroup.valid){
+      this._saveProjectUpdatedDetails = this._projectService.projectDetailsUpdating(this.projectInfo.Project.id,this.ProjectUpdateFormGroup.value).subscribe(()=>{
+        this._toastr.success('Project Information successfully updated')
+        this.closeChangeProjectForm()
+        this.getAllInformationOfProject()
+        this.isChangeProjectLoadingAnimation=false
+        this.isShowChangeProjectFormAnimationBtn = false
+      },(err)=>{
+        if(err.error.detail) this._toastr.warning(err.error.detail)
+        else if (err.error.detail[0].msg) this._toastr.warning(err.error.detail[0].msg)
+        else this._toastr.warning("SERVER ERROR")
+        this.isShowChangeProjectFormAnimationBtn = false
+        this.isChangeProjectLoadingAnimation=false
+      })
+    }else{
+      this.isChangeProjectLoadingAnimation=false
+      this._toastr.warning('Invalid Inputs')
+      this.isShowChangeProjectFormAnimationBtn = false
+    }
+  }
+
+  closeChangeProjectForm(){
+    this.isChangeProjectForm = false
+  }
+
   switch(nav:string){
     this.isSwitch = nav == 'Project' ? true : false
   }
+
+
+  // ###########################KANBAN###############################
+
 
   ngOnInit(): void {
   }

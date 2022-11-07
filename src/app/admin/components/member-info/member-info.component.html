@@ -9,7 +9,7 @@
                         <p class="font-bold w-40 truncate">{{userDetail.details.fullName | titlecase}}</p>
                         <div class="grid grid-cols-2 gap-2  pt-2">
                             <small [ngClass]="userDetail.details.isAdminApprove ? 'px-3 py-1 rounded bg-green-700 text-white' : ' px-3 py-1 rounded bg-pink-700 text-white' ">{{userDetail.details.isAdminApprove ? 'Joined' : 'Joining'}}</small>
-                            <small [ngClass]="userDetail.isManager ? 'px-3 py-1 rounded bg-yellow-700 text-white' : ' px-3 py-1 rounded bg-gray-700 text-white' ">{{userDetail.isManager ? 'Manager' : 'member'}}</small>
+                            <small [ngClass]="userDetail.isManager ? 'px-3 py-1 rounded bg-yellow-700 text-white' : ' px-3 py-1 rounded bg-gray-700 text-white' ">{{userDetail.isManager ? 'Manager' : 'User'}}</small>
                         </div>
                         <small *ngIf="greetings" class="flex items-center justify-center w-full px-3 mt-2 py-1 rounded bg-purple-700 text-white">
                             <i class="fa-solid fa-gift"></i>
