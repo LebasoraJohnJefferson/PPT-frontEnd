@@ -110,13 +110,13 @@
                     </th>
                 </tr>
                 <tr class="grid grid-cols-6" *ngFor="let data of projectDetails">
-                    <td *ngIf="!isShowFakeArray" class="flex justify-center items-center">
+                    <td *ngIf="!isShowFakeArray" class="pl-2 truncate">
                         {{data.Project.projectName}}
                     </td>
-                    <td *ngIf="!isShowFakeArray" class="flex justify-center items-center">
+                    <td *ngIf="!isShowFakeArray" class="pl-2 truncate">
                         {{data.Category.fullName}}
                     </td>
-                    <td *ngIf="!isShowFakeArray" class="flex justify-center items-center">
+                    <td *ngIf="!isShowFakeArray" class="pl-2 truncate">
                         {{data.Manager.managerDetails.fullName}}
                     </td>
                     <td *ngIf="!isShowFakeArray && data.status=='delay'" class="flex justify-center w-full items-center">

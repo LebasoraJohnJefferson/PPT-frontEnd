@@ -98,8 +98,8 @@
                             </div>
                         </form>
                     </td>
-                    <td *ngIf="selectEditTriggerById != manager.id && !isLoadingMangerAnimation" class="m-1">{{manager.categoryDetails.fullName}}</td>
-                    <td *ngIf="selectEditTriggerById != manager.id && !isLoadingMangerAnimation" class="m-1">{{manager.managerDetails.fullName}}</td>
+                    <td *ngIf="selectEditTriggerById != manager.id && !isLoadingMangerAnimation" class="pl-2 truncate m-1">{{manager.categoryDetails.fullName}}</td>
+                    <td *ngIf="selectEditTriggerById != manager.id && !isLoadingMangerAnimation" class="pl-2 truncate m-1">{{manager.managerDetails.fullName}}</td>
                     <ngx-skeleton-loader *ngIf="isLoadingMangerAnimation" class="grid w-full mt-2" [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
                     <ngx-skeleton-loader *ngIf="isLoadingMangerAnimation" class="grid w-full mt-2" [theme]="{'background-color': '#A2ACA5'}"></ngx-skeleton-loader>
                     <td *ngIf="selectEditTriggerById != manager.id && !isLoadingMangerAnimation" class="grid grid-cols-4 m-1 col-span-2">
@@ -167,8 +167,8 @@
                 </tr>
                 <tr  id="rowChangerBg" class='grid gird-rows-1' *ngFor="let category of categories">
                     <div *ngIf="category.id!=selectEditTriggerByIdCategory && !isLoadingCategoryAnimation" class="grid  grid-cols-3">
-                        <td class="m-1">{{category.fullName}}</td>
-                        <td class="m-1">{{category.description}}</td>
+                        <td class="m-1 pl-2 break-all">{{category.fullName}}</td>
+                        <td class="m-1 pl-2 break-all">{{category.description}}</td>
                         <td class="grid grid-cols-2 m-1">
                             <i (click)="editFormShowCategory(category.id)" class="fa-solid fa-pencil flex justify-center items-center text-gray-700 hover:text-gray-500 cursor-pointer"></i>
                             <i (click)="deleteCategory(category.id,category.fullName)" class="fa-solid fa-trash flex justify-center items-center text-red-700 hover:text-red-500 cursor-pointer"></i>

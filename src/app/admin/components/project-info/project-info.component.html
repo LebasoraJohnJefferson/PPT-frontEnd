@@ -66,7 +66,7 @@
             <!-- team members -->
             <div class="flex flex-col items-center w-full h-40 border-2 shadow-md rounded">
                 <h2 class="flex font-bold py-1">Team members</h2>
-                <div class="flex px-3 overflow-x-scroll overflow-y-hidden container" id="members-container">
+                <div class="flex px-3 overflow-x-auto overflow-y-hidden container" id="members-container">
                     <div class="w-16 h-16 text-3xl rounded-full text-purple-700 items-center justify-center flex mt-3">
                         <i (click)="addMemberIntoTheProject()" class="fa-solid fa-user-plus cursor-pointer"></i>
                     </div>
@@ -79,7 +79,11 @@
                                 </div>
                                 <img [src]="defaultProfilePicture" alt="profile" class="shadow-md rounded-full w-full h-full">
                             </div>
-                            <small class="flex items-center">{{member.membersDetails.fullName}}</small>
+                            <div class="flex m-auto mt-2">
+                                <small class="truncate w-20 border-2 shadow-md py-1 px-2 rounded font-bold  px-1">
+                                    {{member.membersDetails.fullName}}
+                                </small>
+                            </div>
                         </div>
 
                     </div>
@@ -111,21 +115,21 @@
                                 <i class="fa-sharp fa-solid fa-clipboard text-xl mr-1 px-1"></i>
                                 <small class="text-ms font-bold">Project Name</small>
                             </div>
-                            <p class="ml-7">{{projectInfo.Project.projectName}}</p>
+                            <p class="ml-7 break-all">{{projectInfo.Project.projectName}}</p>
                         </div>
                         <div>
                             <div class="flex items-center">
                                 <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
-                                <small class="text-ms font-bold">Budget </small>
+                                <small class="text-ms font-bold break-all">Budget </small>
                             </div>
-                            <p class="ml-8">{{projectInfo.Project.budget}}</p>
+                            <p class="ml-8 break-all">{{projectInfo.Project.budget}}</p>
                         </div>
                         <div>
                             <div class="flex items-center">
                                 <i class="fa-solid fa-calendar-days text-xl mr-1 px-1"></i>
                                 <small class="text-ms font-bold">Kick Off and Due date</small>
                             </div>
-                            <p class="ml-7">{{projectInfo.Project.kickOff | date: 'mediumDate'}} - {{projectInfo.Project.dueDate | date: 'mediumDate'}}</p>
+                            <p class="ml-7 break-all">{{projectInfo.Project.kickOff | date: 'mediumDate'}} - {{projectInfo.Project.dueDate | date: 'mediumDate'}}</p>
 
                         </div>
                         <div>
@@ -133,7 +137,7 @@
                                 <i class="fa-solid fa-book-open-reader text-xl mr-1 px-1"></i>
                                 <small class="text-ms font-bold">Description</small>
                             </div>
-                            <p class="ml-8">
+                            <p class="ml-8 break-all">
                                 {{projectInfo.Project.description}}
                             </p>
                         </div>
@@ -148,7 +152,7 @@
                                 <i class="fa-solid fa-file-lines text-xl mr-3 px-1"></i>
                                 <small class="text-ms font-bold">Category Name:</small>
                             </div>
-                            <p *ngIf="!isChangeCategoryLoadingAnimation" class="ml-8">
+                            <p *ngIf="!isChangeCategoryLoadingAnimation" class="ml-8 break-all">
                                 {{projectInfo.Category.fullName}}
                             </p>
                             <ngx-skeleton-loader *ngIf="isChangeCategoryLoadingAnimation" class="flex w-24" [theme]="{'background-color': '#A2ACA5'}" animation="progress"></ngx-skeleton-loader>
@@ -159,7 +163,7 @@
                                 <i class="fa-solid fa-book-open-reader text-xl mr-1 px-1"></i>
                                 <small class="text-ms font-bold">Description</small>
                             </div>
-                            <p *ngIf="!isChangeCategoryLoadingAnimation" class="ml-8">
+                            <p *ngIf="!isChangeCategoryLoadingAnimation" class="ml-8 break-all">
                                 {{projectInfo.Category.description}}
                             </p>
                             <ngx-skeleton-loader *ngIf="isChangeCategoryLoadingAnimation" class="flex w-24" [theme]="{'background-color': '#A2ACA5'}" animation="progress"></ngx-skeleton-loader>
@@ -212,7 +216,7 @@
     <!-- removal of member -->
     <div *ngIf="isRemoveMemberConfirmation" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
         <div class="bg-white rounded w-96 h-28 flex flex-col">
-            <div class="flex justify-around py-3 font-bold items-center">Are you sure you want to remove {{memberName}}?</div>
+            <div class="font-bold py-3 truncate pl-10">Are you sure you want to remove {{memberName}}?</div>
             <hr class="mb-5"/>
             <div class="flex justify-around items-center">
                 <div *ngIf="!isRemovalOfMemberAnimation" (click)="commitRemovalOfMember()"  class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white">YES</div>

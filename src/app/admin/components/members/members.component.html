@@ -100,7 +100,7 @@
 
 
     <div class="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-2 p-3 mt-2" *ngIf="members.length != 0" >
-        <div class="shadow-lg w-full h-full rounded relative" id="card" *ngFor="let member of members">
+        <div class="shadow-lg  w-full h-full overflow-x-hidden rounded relative" id="card" *ngFor="let member of members">
             <div class="absolute grid">
                 <small [ngClass]="member.details.isAdminApprove ? 'm-1 px-3 py-1 rounded bg-green-700 text-white ' : 'm-1 px-3 py-1 rounded bg-pink-700 text-white ' ">{{member.details.isAdminApprove ? 'Joined' : 'Joining'}}</small>
                 <small [ngClass]="member.isManager ? 'm-1 px-3 py-1 rounded bg-yellow-700 text-white ' : 'm-1 px-3 py-1 rounded bg-gray-700 text-white ' ">{{member.isManager ? 'manager' : 'member'}}</small>
@@ -160,10 +160,10 @@
         </div>
     </div>
     <div *ngIf="isDeleteMemberShow" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
-        <div class="bg-white rounded w-96 h-28 flex flex-col">
-            <div class="flex justify-around py-3 font-bold items-center">Are you sure you want to remove {{memberName}} ?</div>
+        <div class="bg-white rounded w-96 flex flex-col">
+            <div class="font-bold py-3 truncate pl-10">Are you sure you want to remove {{memberName}} ?</div>
             <hr class="mb-5"/>
-            <div class="flex justify-around items-center">
+            <div class="flex justify-around items-center pb-2">
                 <div *ngIf="!loadingRemoveBtn" (click)="remove()"  class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white">YES</div>
                 <div *ngIf="loadingRemoveBtn" class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white"><mat-spinner [diameter]="25"></mat-spinner></div>
                 <div (click)="closeNotification()" class="flex py-1 px-5 border rounded shadow-lg bg-red-700 hover:bg-red-500 cursor-pointer text-white">NO</div>

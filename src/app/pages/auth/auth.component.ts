@@ -90,6 +90,8 @@ export class AuthComponent implements OnInit {
         this.toastr.success("Request submitted successfully")
         this.switchToRegister()
         this.loginFormGroup.reset()
+        this.firstFormGroup.reset()
+        this.secondFormGroup.reset()
         this.isRegisterButton = false
       },(err)=>{
         if(err.status == 422) this.toastr.warning(err.error.detail[0].msg)
