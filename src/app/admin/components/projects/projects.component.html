@@ -162,7 +162,7 @@
     </div>
     <div *ngIf="showConformationToDelete" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
         <div class="bg-white rounded w-96 h-28 flex flex-col">
-            <div class="flex justify-around py-3 font-bold items-center">Are you sure you want to remove {{projectName}}?</div>
+            <div class="ml-10 py-3 font-bold truncate">Are you sure you want to remove {{projectName}}?</div>
             <hr class="mb-5"/>
             <div class="flex justify-around items-center">
                 <div *ngIf="!loadingDeleteBtn" (click)="projectCommitDeleteById()"  class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white">YES</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from 'src/app/service/project.service';
 import { ManagersService } from 'src/app/service/managers.service';
+import { TasksService } from 'src/app/service/tasks.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute,Router  } from '@angular/router'
 import { ToastrService } from 'ngx-toastr';
@@ -28,6 +29,7 @@ export class ProjectInfoComponent implements OnInit {
   memberName:any = ''
   age:any= 0
   birthDay:any = 0
+  totalBudgetUsed:any = 0
   isMemberPlaceHolderAnimation:boolean = true
   isRemoveMemberConfirmation:boolean = false
   isRemovalOfMemberAnimation:boolean = false
@@ -42,7 +44,7 @@ export class ProjectInfoComponent implements OnInit {
   isShowChangeProjectFormAnimationBtn:boolean = false
   isShowAddMemberForm:boolean = false
   isShowAddManagerForm:boolean = false
-  isSwitch:boolean = true
+  isSwitch:boolean = false
 
   
   memberAddFormGroup:FormGroup = this._formBuilder.group({
@@ -76,13 +78,25 @@ export class ProjectInfoComponent implements OnInit {
   private _changeCategoryManager:Subscription = new Subscription()
   private _saveProjectUpdatedDetails:Subscription = new Subscription()
   
+
+
   // ###kanban variables ###
 
+  private _addTaskIntoTheProject:Subscription = new Subscription()
+  private _getAllTask:Subscription = new Subscription()
+
+  isProjectAddTaskFormOpen:boolean = false
+  isAddTaskAnimation:boolean = false
   pending:any = ['task1', 'task2', 'task3', 'task4', 'task5'];
-
   onGoing:any = [];
-
   done:any = []
+  AddTaskFormGroup:FormGroup = this._formBuilder.group({
+    taskName:['',Validators.required],
+    budget:[0,Validators.required],
+    kickOff:['',Validators.required],
+    dueDate:['',Validators.required],
+    description:['',Validators.required]
+  })
 
 
 
@@ -95,9 +109,11 @@ export class ProjectInfoComponent implements OnInit {
     private _toastr:ToastrService,
     private _formBuilder:FormBuilder,
     private _managerService:ManagersService,
+    private _taskService:TasksService
   ) { 
     this.getAllInformationOfProject()
     this.getAllMembers()
+    this.getTasks()
   }
 
   ngOnDestroy(){
@@ -110,12 +126,15 @@ export class ProjectInfoComponent implements OnInit {
     this._changeProjectManager.unsubscribe()
     this._changeCategoryManager.unsubscribe()
     this._saveProjectUpdatedDetails.unsubscribe()
+    this._addTaskIntoTheProject.unsubscribe()
+    this._getAllTask.unsubscribe()
   }
 
   getAllInformationOfProject(){
     this._projectInformation = this._projectService.getProjectById(this._routes.snapshot.paramMap.get('id'))
     .subscribe((res)=>{
-      this.projectInfo = res
+      this.totalBudgetUsed = res.totalBudgetUsed
+      this.projectInfo = res.ProjectDetails
       let timeDiff = Math.abs(Date.now() - new Date(this.projectInfo.Manager.managerDetails.birthDay).getTime())
       this.age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25)
       this.birthDay =new Date(this.projectInfo.Manager.managerDetails.birthDay)
@@ -269,14 +288,14 @@ export class ProjectInfoComponent implements OnInit {
     if(this.ProjectUpdateFormGroup.valid){
       this._saveProjectUpdatedDetails = this._projectService.projectDetailsUpdating(this.projectInfo.Project.id,this.ProjectUpdateFormGroup.value).subscribe(()=>{
         this._toastr.success('Project Information successfully updated')
-        this.isChangeProjectLoadingAnimation=false
         this.closeChangeProjectForm()
         this.getAllInformationOfProject()
+        this.isChangeProjectLoadingAnimation=false
         this.isShowChangeProjectFormAnimationBtn = false
       },(err)=>{
-        if(err.error.detail) this._toastr.warning(err.error.detail)
-        else if (err.error.detail[0].msg) this._toastr.warning(err.error.detail[0].msg)
-        else this._toastr.warning("SERVER ERROR")
+        if(err.error.detail) { this._toastr.warning(err.error.detail) }
+        else if (err.error.detail[0].msg){ this._toastr.warning(err.error.detail[0].msg) }
+        else { this._toastr.warning("SERVER ERROR") }
         this.isShowChangeProjectFormAnimationBtn = false
         this.isChangeProjectLoadingAnimation=false
       })
@@ -299,9 +318,15 @@ export class ProjectInfoComponent implements OnInit {
   // ###########################KANBAN###############################
 
 
-  ngOnInit(): void {
-    
+  openAddTaskForm(){
+    this.isProjectAddTaskFormOpen = true
   }
+
+  closeTaskForm(){
+    this.isProjectAddTaskFormOpen = false
+  }
+  
+  
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -311,8 +336,68 @@ export class ProjectInfoComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex,
-      );
+        );
+      }
+      if(event.container.id != event.previousContainer.id){
+        let temp = event.container.id
+        if(temp == "pending"){
+          console.log('pending')
+        }else if(temp == "onGoing"){
+          console.log('on going')
+        }else{
+          console.log('finished')
+        }
+      }
+    }
+
+  getAllTask(){
+    // getAllTask query here
+  }
+
+  AddTaskSubmit(){
+    this.isAddTaskAnimation = true
+    if(this.AddTaskFormGroup.valid){
+      this._addTaskIntoTheProject = this._taskService.AddTask(this._routes.snapshot.paramMap.get('id'),this.AddTaskFormGroup.value).subscribe(()=>{
+        this._toastr.success('Added task successfully!')
+        this.getAllTask()
+        this.getTasks()
+        this.getAllInformationOfProject()
+        this.closeTaskForm()
+        this.isAddTaskAnimation=false
+        this.AddTaskFormGroup.reset()
+      },(err)=>{
+        this.isAddTaskAnimation=false
+        this._toastr.warning(err.error.detail)
+      })
+    }else{
+      this.isAddTaskAnimation=false
+      this._toastr.warning("Invalid Inputs!")
     }
   }
 
-}
+  getTasks(){
+    this._getAllTask = this._taskService.getAllTask(this._routes.snapshot.paramMap.get('id'))
+    .subscribe((res)=>{
+      let temp_pending:any = []
+      let temp_onGoing:any = []
+      let temp_done:any = []
+      console.log(res)
+      res.forEach((data:any)=>{
+        if(data.status == 'pending'){
+          temp_pending.push(data)
+        }else if(data.status == 'onGoing'){
+          temp_onGoing.push(data)
+        }else{
+          temp_done.push(data)
+        }
+      })
+      this.pending = temp_pending
+      this.onGoing = temp_onGoing
+      this.done = temp_done
+    })
+  }
+    
+    ngOnInit(): void {
+      
+    }
+  }

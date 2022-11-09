@@ -83,8 +83,8 @@
                                 <img [src]="defaultProfilePicture" alt="profile" class="shadow-md rounded-full w-full h-full">
                             </div>
                             <div class="flex m-auto mt-2">
-                                <small class="truncate w-20 border-2 shadow-md py-1 px-2 rounded font-bold  px-1">
-                                    {{member.membersDetails.fullName}}
+                                <small routerLink="/dashboard/members/{{member.membersDetails.id}}" class="truncate w-20 border-2 shadow-md py-1 px-2 rounded font-bold  px-1">
+                                    {{member.membersDetails.fullName}}  
                                 </small>
                             </div>
                         </div>
@@ -120,12 +120,21 @@
                             </div>
                             <p class="ml-7 break-all">{{projectInfo.Project.projectName}}</p>
                         </div>
-                        <div>
-                            <div class="flex items-center">
-                                <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
-                                <small class="text-ms font-bold break-all">Budget </small>
+                        <div class="grid grid-cols-2">
+                            <div>
+                                <div class="flex items-center">
+                                    <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
+                                    <small class="text-ms font-bold break-all">Project Budget</small>
+                                </div>
+                                <p class="ml-8 break-all">₱ {{projectInfo.Project.budget}}</p>
                             </div>
-                            <p class="ml-8 break-all">{{projectInfo.Project.budget}}</p>
+                            <div>
+                                <div class="flex items-center">
+                                    <i class="fa-solid fa-sack-dollar text-xl mr-1 px-1"></i>
+                                    <small class="text-ms font-bold break-all">Total budget used</small>
+                                </div>
+                                <p class="ml-8 break-all">₱ {{totalBudgetUsed}}</p>
+                            </div>
                         </div>
                         <div>
                             <div class="flex items-center">
@@ -283,17 +292,54 @@
     
     <!-- kanban -->
     <div *ngIf="!isSwitch">
+        <div class="flex w-full">
+            <div (click)="openAddTaskForm()" class="m-3 px-3 py-1 bg-purple-900 cursor-pointer hover:bg-purple-700 rounded shadow-md grip text-white ">
+                <i class="fa-solid fa-list-check"></i>
+                <small class="ml-2">Add Task</small>
+            </div>
+        </div>
         <div cdkDropListGroup class="grid grid-cols-3 gap-4 px-3">
             <div class="example-container">
               <h2>Pending Task</h2>
           
               <div
+                id="pending"
                 cdkDropList
                 [cdkDropListData]="pending"
                 class="example-list"
                 cdkDropListSortingDisabled
                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let pendingItems of pending" cdkDrag>{{pendingItems}}</div>
+                <div class="example-box" *ngFor="let pendingItems of pending" cdkDrag>
+                    <div class="grid w-full h-full">
+                        <div class="grid">
+                            <div class="flex w-full justify-end items-center">
+                                <i class="fa-solid fa-gear mx-1"></i>
+                                <div class="mx-1 font-bold cursor-pointer text-red-700 hover:text-red-500">X</div>
+                            </div>
+                            <div class="text-center mt-2 text-md truncate font-bold">{{pendingItems.taskName}}</div>
+                        </div>
+                        <div class="grid grid-cols-1">
+                            <div>
+                                <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
+                                <small>Budget: </small>
+                                <small class="text-ms font-bold">{{pendingItems.budget}}</small>
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
+                                <small>Kick off: </small>
+                                <small class="text-ms font-bold">{{pendingItems.kickOff | date: 'medium'}}</small>
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-clock text-red-700 text-xl mr-1 px-1"></i>
+                                <small>Due date: </small>
+                                <small class="text-ms font-bold">{{pendingItems.dueDate | date: 'medium'}}</small>
+                            </div>
+                            <div class="flex justify-center items-center my-2 w-full">
+                                <p class="flex cursor-pointer px-3 py-1 bg-blue-900 text-white font-bold rounded">view description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
               </div>
             </div>
           
@@ -301,28 +347,142 @@
               <h2>On Going Task</h2>
           
               <div
+                id="onGoing"
                 cdkDropList
                 [cdkDropListData]="onGoing"
                 class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let onGoingItems of onGoing" cdkDrag>{{onGoingItems}}</div>
+                <div class="example-box" *ngFor="let onGoingItems of onGoing" cdkDrag>
+                    <div class="grid w-full h-full">
+                        <div class="grid">
+                            <div class="flex w-full justify-end items-center">
+                                <i class="fa-solid fa-gear mx-1"></i>
+                                <div class="mx-1 font-bold cursor-pointer text-red-700 hover:text-red-500">X</div>
+                            </div>
+                            <div class="text-center mt-2 text-md truncate font-bold">{{onGoingItems.taskName}}</div>
+                        </div>
+                        <div class="grid grid-cols-1">
+                            <div>
+                                <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
+                                <small>Budget: </small>
+                                <small class="text-ms font-bold">{{onGoingItems.budget}}</small>
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
+                                <small>kick off: </small>
+                                <small class="text-ms font-bold">{{onGoingItems.kickOff | date: 'medium'}}</small>
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-clock text-red-700 text-xl mr-1 px-1"></i>
+                                <small>Due date: </small>
+                                <small class="text-ms font-bold">{{onGoingItems.dueDate | date: 'medium'}}</small>
+                            </div>
+                            <div class="flex justify-center items-center my-2 w-full">
+                                <p class="flex cursor-pointer px-3 py-1 bg-blue-900 text-white font-bold rounded">view description</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
               </div>
             </div>
             <div class="example-container">
                 <h2>Finish Task</h2>
             
                 <div
+                  id="finished"
                   cdkDropList
                   [cdkDropListData]="done"
                   class="example-list"
                   (cdkDropListDropped)="drop($event)">
-                  <div class="example-box" *ngFor="let doneItems of done" cdkDrag>{{doneItems}}</div>
+                  <div class="example-box" *ngFor="let doneItems of done" cdkDrag>
+                    <div class="grid w-full h-full">
+                        <div class="grid">
+                            <div class="flex w-full justify-end items-center">
+                                <i class="fa-solid fa-gear mx-1"></i>
+                                <div class="mx-1 font-bold cursor-pointer text-red-700 hover:text-red-500">X</div>
+                            </div>
+                            <div class="text-center mt-2 text-md truncate font-bold">{{doneItems.taskName}}</div>
+                        </div>
+                        <div class="grid grid-cols-1">
+                            <div>
+                                <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
+                                <small>Budget: </small>
+                                <small class="text-ms font-bold">{{doneItems.budget}}</small>
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
+                                <small>kick off: </small>
+                                <small class="text-ms font-bold">{{doneItems.kickOff | date: 'medium'}}</small>
+                            </div>
+                            <div>
+                                <i class="fa-solid fa-clock text-red-700 text-xl mr-1 px-1"></i>
+                                <small>Due date: </small>
+                                <small class="text-ms font-bold">{{doneItems.dueDate | date: 'medium'}}</small>
+                            </div>
+                            <div class="flex justify-center items-center my-2 w-full">
+                                <p class="flex cursor-pointer px-3 py-1 bg-blue-900 text-white font-bold rounded">view description</p>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
                 </div>
               </div>
           </div>
         </div>
-        <div *ngIf="!isSwitch" class="w-full flex items-center justify-center">
-            <div class="font-bold text-2xl">NOTICE: KANBAN initial design</div>
+
+        <!-- kanban notification nad forms -->
+
+        <div *ngIf="isProjectAddTaskFormOpen" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
+            <div class="bg-white rounded w-96 flex flex-col">
+                <form method="POST" class="px-3 py-2" [formGroup]="AddTaskFormGroup" (ngSubmit)="AddTaskSubmit()">
+                    <div class="flex w-full justify-end">
+                        <div class="p-2 font-bold hover:text-red-500 text-red-700 cursor-pointer" (click)="closeTaskForm()">X</div>
+                    </div>
+                    <div class="py-1">
+                        <div class="flex items-center">
+                            <i class="fa-sharp fa-solid fa-clipboard text-xl mr-1 px-1"></i>
+                            <small class="text-ms font-bold">Task Name:</small>
+                        </div>
+                        <input formControlName="taskName" class="border-2 pt-1 shadow-md w-full rounded" placeholder="Enter Task Name"/>
+                    </div>
+                    <div class="py-1">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
+                            <small class="text-ms font-bold">Budget:</small>
+                        </div>
+                        <input type="number" formControlName="budget" class="border-2 pt-1 shadow-md w-full rounded" placeholder="Enter budget"/>
+                    </div>
+                    <div class="py-1">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
+                            <small class="text-ms font-bold">Kick off:</small>
+                        </div>
+                        <input formControlName="kickOff" type="datetime-local" class="border-2 pt-1 shadow-md w-full rounded"/>
+                    </div>
+                    <div class="py-1">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-clock text-red-700 text-xl mr-1 px-1"></i>
+                            <small class="text-ms font-bold">Task due date:</small>
+                        </div>
+                        <input formControlName="dueDate" type="datetime-local" class="border-2 pt-1 shadow-md w-full rounded"/>
+                    </div>
+                    <div class="py-1">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-book-open-reader text-xl mr-1 px-1"></i>
+                            <small class="text-ms font-bold">Task due date:</small>
+                        </div>
+                        <textarea formControlName="description" class="border-2 pt-1 shadow-md w-full rounded" placeholder="Enter task description"></textarea>
+                    </div>
+                    <div *ngIf="!isAddTaskAnimation" class="flex w-full items-center justify-center">
+                        <button class="w-48 py-1 rounded bg-green-700 mb-2 text-white font-bold" type="submit">Add Task</button>
+                    </div>
+                    <div *ngIf="isAddTaskAnimation" class="flex w-full items-center justify-center">
+                        <button class="w-48 py-1 rounded bg-green-700 mb-2 text-white font-bold" type="submit">
+                            <mat-spinner class="m-auto flex w-full py-1" [diameter]="25"></mat-spinner>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
 
 
