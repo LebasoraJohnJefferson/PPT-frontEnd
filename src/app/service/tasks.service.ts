@@ -24,4 +24,8 @@ export class TasksService {
     return this._http.delete(`${this.baseURL}/tasks/${id}`)
   }
 
+  updateTaskById(taskId:any,taskDetails:any):Observable<any>{
+    return this._http.put(`${this.baseURL}/tasks/${taskId}`,taskDetails)
+  }
+
 }

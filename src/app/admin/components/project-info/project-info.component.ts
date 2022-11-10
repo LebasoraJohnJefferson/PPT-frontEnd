@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import {FormBuilder, FormGroup,Validators} from '@angular/forms';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import moment from 'moment';
 
 
 
@@ -85,6 +86,7 @@ export class ProjectInfoComponent implements OnInit {
   private _addTaskIntoTheProject:Subscription = new Subscription()
   private _getAllTask:Subscription = new Subscription()
   private _deleteTaskById:Subscription = new Subscription()
+  private _updateTaskById:Subscription = new Subscription()
 
   isProjectAddTaskFormOpen:boolean = false
   isTaskUpdateFormOpen:boolean = false
@@ -147,6 +149,7 @@ export class ProjectInfoComponent implements OnInit {
     this._addTaskIntoTheProject.unsubscribe()
     this._getAllTask.unsubscribe()
     this._deleteTaskById.unsubscribe()
+    this._updateTaskById.unsubscribe()
   }
 
   getAllInformationOfProject(){
@@ -449,7 +452,17 @@ export class ProjectInfoComponent implements OnInit {
   }
 
   UpdateTaskTaskSubmit(){
-    console.log(this.UpdateTaskFormGroup.value)
+    if(this.UpdateTaskFormGroup.valid){
+      this._updateTaskById = this._taskService.updateTaskById(this.taskId,this.UpdateTaskFormGroup.value)
+      .subscribe(()=>{
+        this.getTasks()
+        this.UpdateTaskFormGroup.reset()
+        this.closeUpdateTaskForm()
+        this._toastr.success("Successfully Updated!")
+      },(err)=>{
+        this._toastr.warning(err.error.detail)
+      })
+    }
   }
 
   updateTaskForm(id:number){
@@ -459,8 +472,13 @@ export class ProjectInfoComponent implements OnInit {
     task = this.tasks.filter((data:any)=>{ if(data.id == this.taskId) return data })
     this.UpdateTaskFormGroup.get("taskName")?.setValue(task[0].taskName)
     this.UpdateTaskFormGroup.get("budget")?.setValue(task[0].budget)
-    this.UpdateTaskFormGroup.get("kickOff")?.setValue(new Date(task[0].kickOff).toISOString().slice(0, 16))
-    this.UpdateTaskFormGroup.get("dueDate")?.setValue(new Date(task[0].dueDate).toISOString().slice(0, 16))
+    let kickOffTemp = moment.utc(new Date(task[0].kickOff))
+    let kickLocal = moment(kickOffTemp).local().format('YYYY-MM-DD HH:mm:ss');
+    this.UpdateTaskFormGroup.get("kickOff")?.setValue(kickLocal)
+    let dueDateTemp = moment.utc(new Date(task[0].dueDate))
+    let dueLocal = moment(dueDateTemp).local().format('YYYY-MM-DD HH:mm:ss');
+    this.UpdateTaskFormGroup.get("kickOff")?.setValue(kickLocal)
+    this.UpdateTaskFormGroup.get("dueDate")?.setValue(dueLocal)
     this.UpdateTaskFormGroup.get("description")?.setValue(task[0].description)
   }
 
