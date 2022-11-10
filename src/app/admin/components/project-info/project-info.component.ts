@@ -84,13 +84,31 @@ export class ProjectInfoComponent implements OnInit {
 
   private _addTaskIntoTheProject:Subscription = new Subscription()
   private _getAllTask:Subscription = new Subscription()
+  private _deleteTaskById:Subscription = new Subscription()
 
   isProjectAddTaskFormOpen:boolean = false
+  isTaskUpdateFormOpen:boolean = false
   isAddTaskAnimation:boolean = false
+  OpenVIewMoreById:number = 0
+  TaskIdToBeDeleted:number = 0
+  TaskNameToBeDeleted:string = ''
+  isRemovalOfTaskAnimation:boolean = false
+  isShowDeleteTaskNotification:boolean = false
   pending:any = ['task1', 'task2', 'task3', 'task4', 'task5'];
   onGoing:any = [];
   done:any = []
+  tasks:any = []
+  taskId:number = 0
+
   AddTaskFormGroup:FormGroup = this._formBuilder.group({
+    taskName:['',Validators.required],
+    budget:[0,Validators.required],
+    kickOff:['',Validators.required],
+    dueDate:['',Validators.required],
+    description:['',Validators.required]
+  })
+
+  UpdateTaskFormGroup:FormGroup = this._formBuilder.group({
     taskName:['',Validators.required],
     budget:[0,Validators.required],
     kickOff:['',Validators.required],
@@ -128,6 +146,7 @@ export class ProjectInfoComponent implements OnInit {
     this._saveProjectUpdatedDetails.unsubscribe()
     this._addTaskIntoTheProject.unsubscribe()
     this._getAllTask.unsubscribe()
+    this._deleteTaskById.unsubscribe()
   }
 
   getAllInformationOfProject(){
@@ -350,16 +369,13 @@ export class ProjectInfoComponent implements OnInit {
       }
     }
 
-  getAllTask(){
-    // getAllTask query here
-  }
+  
 
   AddTaskSubmit(){
     this.isAddTaskAnimation = true
     if(this.AddTaskFormGroup.valid){
       this._addTaskIntoTheProject = this._taskService.AddTask(this._routes.snapshot.paramMap.get('id'),this.AddTaskFormGroup.value).subscribe(()=>{
         this._toastr.success('Added task successfully!')
-        this.getAllTask()
         this.getTasks()
         this.getAllInformationOfProject()
         this.closeTaskForm()
@@ -378,11 +394,12 @@ export class ProjectInfoComponent implements OnInit {
   getTasks(){
     this._getAllTask = this._taskService.getAllTask(this._routes.snapshot.paramMap.get('id'))
     .subscribe((res)=>{
+      this.tasks = res
       let temp_pending:any = []
       let temp_onGoing:any = []
       let temp_done:any = []
       console.log(res)
-      res.forEach((data:any)=>{
+      this.tasks.forEach((data:any)=>{
         if(data.status == 'pending'){
           temp_pending.push(data)
         }else if(data.status == 'onGoing'){
@@ -395,6 +412,61 @@ export class ProjectInfoComponent implements OnInit {
       this.onGoing = temp_onGoing
       this.done = temp_done
     })
+  }
+
+  deleteTask(id:number,taskName:string){
+    this.TaskIdToBeDeleted=id
+    this.TaskNameToBeDeleted = taskName
+    this.isShowDeleteTaskNotification = true
+  }
+
+  cancelDeleteTask(){
+    this.TaskIdToBeDeleted=0
+    this.TaskNameToBeDeleted = ''
+    this.isShowDeleteTaskNotification = false
+  }
+
+  commitRemovalOfTask(){
+    this.isRemovalOfTaskAnimation = true
+    this._deleteTaskById = this._taskService.deleteTaskById(this.TaskIdToBeDeleted).subscribe(()=>{
+      this.getTasks()
+      this.isRemovalOfTaskAnimation = false
+      this._toastr.success(`${this.TaskNameToBeDeleted} successfully deleted!`)
+      this.cancelDeleteTask()
+    },(err)=>{
+      this.isRemovalOfTaskAnimation = false
+      this._toastr.success(err.error.detail)
+    })
+    
+  }
+
+  viewMoreTaskDetails(id:number){
+    this.OpenVIewMoreById = id
+  }
+
+  closeViewMoreTaskDetails(){
+    this.OpenVIewMoreById =0
+  }
+
+  UpdateTaskTaskSubmit(){
+    console.log(this.UpdateTaskFormGroup.value)
+  }
+
+  updateTaskForm(id:number){
+    let task:any =[]
+    this.isTaskUpdateFormOpen = true
+    this.taskId = id
+    task = this.tasks.filter((data:any)=>{ if(data.id == this.taskId) return data })
+    this.UpdateTaskFormGroup.get("taskName")?.setValue(task[0].taskName)
+    this.UpdateTaskFormGroup.get("budget")?.setValue(task[0].budget)
+    this.UpdateTaskFormGroup.get("kickOff")?.setValue(new Date(task[0].kickOff).toISOString().slice(0, 16))
+    this.UpdateTaskFormGroup.get("dueDate")?.setValue(new Date(task[0].dueDate).toISOString().slice(0, 16))
+    this.UpdateTaskFormGroup.get("description")?.setValue(task[0].description)
+  }
+
+  closeUpdateTaskForm(){
+    this.isTaskUpdateFormOpen = false
+    this.taskId = 0
   }
     
     ngOnInit(): void {

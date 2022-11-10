@@ -30,6 +30,7 @@ import { MemberInfoComponent } from './admin/components/member-info/member-info.
 import { BackBtnComponent } from './admin/components/back-btn/back-btn.component';
 import { ManagersComponent } from './admin/components/managers/managers.component';
 import { ProjectInfoComponent } from './admin/components/project-info/project-info.component';
+import { DateAgoPipe } from './pipes/date-ago.pipe';
 
 const config: SocketIoConfig = { url: environment.baseURL,
     options: {
@@ -58,6 +59,7 @@ const config: SocketIoConfig = { url: environment.baseURL,
     BackBtnComponent,
     ManagersComponent,
     ProjectInfoComponent,
+    DateAgoPipe,
   ],
   imports: [
     BrowserModule,

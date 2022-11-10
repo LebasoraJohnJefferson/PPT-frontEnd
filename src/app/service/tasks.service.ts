@@ -20,4 +20,8 @@ export class TasksService {
     return this._http.get(`${this.baseURL}/tasks/${id}`)
   }
 
+  deleteTaskById(id:any):Observable<any>{
+    return this._http.delete(`${this.baseURL}/tasks/${id}`)
+  }
+
 }

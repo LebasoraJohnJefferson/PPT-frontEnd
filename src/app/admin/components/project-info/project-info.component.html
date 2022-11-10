@@ -19,11 +19,15 @@
     <!-- project Details -->
     <div *ngIf="isSwitch && projectInfo.length != 0" class="grid h-full w-full grid-cols-1 lg:grid-cols-3 gap-1">
         <div class="flex flex-col items-center w-full border-2 shadow-md m-1 rounded">
-            <h2 *ngIf="!isChangeMemberLoadingAnimation" class="flex font-bold py-1">Manager Information</h2>
             <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="pt-2 w-40" animation="progress"></ngx-skeleton-loader>
             <div class="flex flex-col w-full items-center">
-                <img *ngIf="!isChangeMemberLoadingAnimation" [src]="defaultProfilePicture" class="w-24 h-24" alt="profile">
-                <p *ngIf="!isChangeMemberLoadingAnimation" class="py-1 text-lg">{{projectInfo.Manager.managerDetails.fullName}} </p>
+                <div *ngIf="!isChangeMemberLoadingAnimation" class="bg-gray-300 rounded-t flex justify-center flex-col items-center rouned-t w-full h-full">
+                    <h2 class="flex font-bold py-1 text-purple-900">Manager Information</h2>
+                    <img  [src]="defaultProfilePicture" class="w-24 h-24" alt="profile">
+                    <p routerLink="/dashboard/members/{{projectInfo.Manager.managerDetails.id}}" class="py-1 text-lg  w-full text-white font-bold cursor-pointer hover:bg-black bg-transparent-black mt-2 px-3 py-1">
+                        {{projectInfo.Manager.managerDetails.fullName}}
+                    </p>
+                </div>
                 <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" animation="progress" count="1" appearance="circle" [theme]="{
                     height: '100px',
                     width:'100px',
@@ -68,22 +72,22 @@
 
             <!-- team members -->
             <div class="flex flex-col items-center w-full h-40 border-2 shadow-md rounded">
-                <h2 class="flex font-bold py-1">Team members</h2>
+                <h2 class="flex font-bold py-1">Team Members</h2>
                 <div class="flex px-3 overflow-x-auto overflow-y-hidden container" id="members-container">
                     <div class="w-16 h-16 text-3xl rounded-full text-purple-700 items-center justify-center flex mt-3">
                         <i (click)="addMemberIntoTheProject()" class="fa-solid fa-user-plus cursor-pointer"></i>
                     </div>
 
                     <div class="flex" *ngIf="!isMemberPlaceHolderAnimation">
-                        <div class="p-3  rounded w-24 flex flex-col items-center justify-center relative" *ngFor="let member of members">
+                        <div class="p-3 border-2 shadow-md mx-1 bg-gray-200 mb-3 rounded w-24 flex flex-col items-center justify-center relative" *ngFor="let member of members">
                             <div class="flex h-16 w-16 relative">
                                 <div class="absolute flex w-full justify-end">
                                     <small (click)="removeMemberById(member.id,member.membersDetails.fullName)" class="bg-red-700 cursor-pointer hover:bg-red-500 text-xs p-1 px-2 shadow-md  text-white justify-center items-center flex rounded-full">X</small>
                                 </div>
                                 <img [src]="defaultProfilePicture" alt="profile" class="shadow-md rounded-full w-full h-full">
                             </div>
-                            <div class="flex m-auto mt-2">
-                                <small routerLink="/dashboard/members/{{member.membersDetails.id}}" class="truncate w-20 border-2 shadow-md py-1 px-2 rounded font-bold  px-1">
+                            <div class="flex mt-1">
+                                <small routerLink="/dashboard/members/{{member.membersDetails.id}}" class="truncate w-20 py-1 px-2 rounded text-white font-bold cursor-pointer hover:bg-black bg-transparent-black ">
                                     {{member.membersDetails.fullName}}  
                                 </small>
                             </div>
@@ -228,7 +232,7 @@
                     </form>
                 </div>
                 <div class="flex flex-col items-center w-full border-2 shadow-md rounded">
-                    <h2 class="flex font-bold py-1">category Information</h2>
+                    <h2 class="flex font-bold py-1">Category Information</h2>
                     <div *ngIf="!isChangeCategoryForm" class="grid gird-row-2 w-full gap-5 px-5  mt-5">
                         <div>
                             <div *ngIf="!isChangeCategoryLoadingAnimation" class="flex items-center">
@@ -300,7 +304,7 @@
         </div>
         <div cdkDropListGroup class="grid grid-cols-3 gap-4 px-3">
             <div class="example-container">
-              <h2>Pending Task</h2>
+              <h2 class="text-center font-bold bg-pink-700 py-1 rounded-t text-white">Pending Task</h2>
           
               <div
                 id="pending"
@@ -313,8 +317,10 @@
                     <div class="grid w-full h-full">
                         <div class="grid">
                             <div class="flex w-full justify-end items-center">
-                                <i class="fa-solid fa-gear mx-1"></i>
-                                <div class="mx-1 font-bold cursor-pointer text-red-700 hover:text-red-500">X</div>
+                                <i (click)="updateTaskForm(pendingItems.id)" class="fa-solid fa-gear mx-1 cursor-pointer text-blue-700 hover:text-blue-500"></i>
+                                <div class="flex items-center mx-1 font-bold cursor-pointer text-red-700 hover:text-red-500">
+                                    <i (click)="deleteTask(pendingItems.id,pendingItems.taskName)" class="fa-solid fa-trash"></i>
+                                </div>
                             </div>
                             <div class="text-center mt-2 text-md truncate font-bold">{{pendingItems.taskName}}</div>
                         </div>
@@ -322,7 +328,7 @@
                             <div>
                                 <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
                                 <small>Budget: </small>
-                                <small class="text-ms font-bold">{{pendingItems.budget}}</small>
+                                <small class="text-ms font-bold">₱ {{pendingItems.budget}}</small>
                             </div>
                             <div>
                                 <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
@@ -334,8 +340,22 @@
                                 <small>Due date: </small>
                                 <small class="text-ms font-bold">{{pendingItems.dueDate | date: 'medium'}}</small>
                             </div>
-                            <div class="flex justify-center items-center my-2 w-full">
-                                <p class="flex cursor-pointer px-3 py-1 bg-blue-900 text-white font-bold rounded">view description</p>
+                            <!-- more details -->
+                            <div *ngIf="OpenVIewMoreById == pendingItems.id" class="mt-2">
+                                <small class="font-bold">Description: </small>
+                                <p class="p-1 border-2 rounded max-h-48 overflow-y-auto shadow-md">
+                                    {{pendingItems.description}}
+                                </p>
+                                <div class="w-full flex justify-end p-2 items-center">
+                                    <i class="fa-solid fa-globe"></i>
+                                    <small class="ml-1">{{pendingItems.created_at | dateAgo}}</small>
+                                </div>
+                            </div>
+                            <div *ngIf="OpenVIewMoreById != pendingItems.id" (click)="viewMoreTaskDetails(pendingItems.id)" class="flex justify-center items-center my-2 w-full">
+                                <p class="flex cursor-pointer px-3 py-1 bg-blue-900 hover:bg-blue-700 text-white font-bold rounded">more</p>
+                            </div>
+                            <div *ngIf="OpenVIewMoreById == pendingItems.id"  (click)="closeViewMoreTaskDetails()" class="flex justify-center items-center my-2 w-full">
+                                <p class="flex cursor-pointer px-3 py-1 bg-red-900 hover:bg-red-700 text-white font-bold rounded">close</p>
                             </div>
                         </div>
                     </div>
@@ -344,7 +364,7 @@
             </div>
           
             <div class="example-container">
-              <h2>On Going Task</h2>
+              <h2 class="text-center font-bold bg-pink-700 py-1 rounded-t text-white">On Going Task</h2>
           
               <div
                 id="onGoing"
@@ -356,8 +376,10 @@
                     <div class="grid w-full h-full">
                         <div class="grid">
                             <div class="flex w-full justify-end items-center">
-                                <i class="fa-solid fa-gear mx-1"></i>
-                                <div class="mx-1 font-bold cursor-pointer text-red-700 hover:text-red-500">X</div>
+                                <i (click)="updateTaskForm(onGoingItems.id)" class="fa-solid fa-gear mx-1 cursor-pointer text-blue-700 hover:text-blue-500"></i>
+                                <div class="flex items-center mx-1 font-bold cursor-pointer text-red-700 hover:text-red-500">
+                                    <i (click)="deleteTask(onGoingItems.id,onGoingItems.taskName)" class="fa-solid fa-trash"></i>
+                                </div>
                             </div>
                             <div class="text-center mt-2 text-md truncate font-bold">{{onGoingItems.taskName}}</div>
                         </div>
@@ -365,7 +387,7 @@
                             <div>
                                 <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
                                 <small>Budget: </small>
-                                <small class="text-ms font-bold">{{onGoingItems.budget}}</small>
+                                <small class="text-ms font-bold">₱ {{onGoingItems.budget}}</small>
                             </div>
                             <div>
                                 <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
@@ -377,8 +399,22 @@
                                 <small>Due date: </small>
                                 <small class="text-ms font-bold">{{onGoingItems.dueDate | date: 'medium'}}</small>
                             </div>
-                            <div class="flex justify-center items-center my-2 w-full">
-                                <p class="flex cursor-pointer px-3 py-1 bg-blue-900 text-white font-bold rounded">view description</p>
+                            <!-- more details -->
+                            <div *ngIf="OpenVIewMoreById == onGoingItems.id" class="mt-2">
+                                <small class="font-bold">Description: </small>
+                                <p class="p-1 border-2 rounded max-h-48 overflow-y-auto shadow-md">
+                                    {{onGoingItems.description}}
+                                </p>
+                                <div class="w-full flex justify-end p-2 items-center">
+                                    <i class="fa-solid fa-globe"></i>
+                                    <small class="ml-1">{{onGoingItems.created_at | dateAgo}}</small>
+                                </div>
+                            </div>
+                            <div *ngIf="OpenVIewMoreById != onGoingItems.id" (click)="viewMoreTaskDetails(onGoingItems.id)" class="flex justify-center items-center my-2 w-full">
+                                <p class="flex cursor-pointer px-3 py-1 bg-blue-900 hover:bg-blue-700 text-white font-bold rounded">more</p>
+                            </div>
+                            <div *ngIf="OpenVIewMoreById == onGoingItems.id"  (click)="closeViewMoreTaskDetails()" class="flex justify-center items-center my-2 w-full">
+                                <p class="flex cursor-pointer px-3 py-1 bg-red-900 hover:bg-red-700 text-white font-bold rounded">close</p>
                             </div>
                         </div>
                     </div>
@@ -386,8 +422,8 @@
               </div>
             </div>
             <div class="example-container">
-                <h2>Finish Task</h2>
-            
+                <h2 class="text-center font-bold bg-pink-700 py-1 rounded-t text-white">Finish Task</h2>
+        
                 <div
                   id="finished"
                   cdkDropList
@@ -398,8 +434,10 @@
                     <div class="grid w-full h-full">
                         <div class="grid">
                             <div class="flex w-full justify-end items-center">
-                                <i class="fa-solid fa-gear mx-1"></i>
-                                <div class="mx-1 font-bold cursor-pointer text-red-700 hover:text-red-500">X</div>
+                                <i (click)="updateTaskForm(doneItems.id)" class="fa-solid fa-gear mx-1 cursor-pointer text-blue-700 hover:text-blue-500"></i>
+                                <div class="flex items-center mx-1 font-bold cursor-pointer text-red-700 hover:text-red-500">
+                                    <i (click)="deleteTask(doneItems.id,doneItems.taskName)" class="fa-solid fa-trash"></i>
+                                </div>
                             </div>
                             <div class="text-center mt-2 text-md truncate font-bold">{{doneItems.taskName}}</div>
                         </div>
@@ -407,7 +445,7 @@
                             <div>
                                 <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
                                 <small>Budget: </small>
-                                <small class="text-ms font-bold">{{doneItems.budget}}</small>
+                                <small class="text-ms font-bold">₱ {{doneItems.budget}}</small>
                             </div>
                             <div>
                                 <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
@@ -419,8 +457,22 @@
                                 <small>Due date: </small>
                                 <small class="text-ms font-bold">{{doneItems.dueDate | date: 'medium'}}</small>
                             </div>
-                            <div class="flex justify-center items-center my-2 w-full">
-                                <p class="flex cursor-pointer px-3 py-1 bg-blue-900 text-white font-bold rounded">view description</p>
+                            <!-- more details -->
+                            <div *ngIf="OpenVIewMoreById == doneItems.id" class="mt-2">
+                                <small class="font-bold">Description: </small>
+                                <p class="p-1 border-2 rounded max-h-48 overflow-y-auto shadow-md">
+                                    {{doneItems.description}}
+                                </p>
+                                <div class="w-full flex justify-end p-2 items-center">
+                                    <i class="fa-solid fa-globe"></i>
+                                    <small class="ml-1">{{doneItems.created_at | dateAgo}}</small>
+                                </div>
+                            </div>
+                            <div *ngIf="OpenVIewMoreById != doneItems.id" (click)="viewMoreTaskDetails(doneItems.id)" class="flex justify-center items-center my-2 w-full">
+                                <p class="flex cursor-pointer px-3 py-1 bg-blue-900 hover:bg-blue-700 text-white font-bold rounded">more</p>
+                            </div>
+                            <div *ngIf="OpenVIewMoreById == doneItems.id"  (click)="closeViewMoreTaskDetails()" class="flex justify-center items-center my-2 w-full">
+                                <p class="flex cursor-pointer px-3 py-1 bg-red-900 hover:bg-red-700 text-white font-bold rounded">close</p>
                             </div>
                         </div>
                     </div>
@@ -430,8 +482,8 @@
           </div>
         </div>
 
-        <!-- kanban notification nad forms -->
-
+        <!-- kanban notification and forms -->
+        <!-- add task  -->
         <div *ngIf="isProjectAddTaskFormOpen" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
             <div class="bg-white rounded w-96 flex flex-col">
                 <form method="POST" class="px-3 py-2" [formGroup]="AddTaskFormGroup" (ngSubmit)="AddTaskSubmit()">
@@ -484,6 +536,74 @@
                 </form>
             </div>
         </div>
+
+        <!-- update task  -->
+        <div *ngIf="isTaskUpdateFormOpen" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
+            <div class="bg-white rounded w-96 flex flex-col">
+                <form method="POST" class="px-3 py-2" [formGroup]="UpdateTaskFormGroup" (ngSubmit)="UpdateTaskTaskSubmit()">
+                    <div class="flex w-full justify-end">
+                        <div class="p-2 font-bold hover:text-red-500 text-red-700 cursor-pointer" (click)="closeUpdateTaskForm()">X</div>
+                    </div>
+                    <div class="py-1">
+                        <div class="flex items-center">
+                            <i class="fa-sharp fa-solid fa-clipboard text-xl mr-1 px-1"></i>
+                            <small class="text-ms font-bold">Task Name:</small>
+                        </div>
+                        <input formControlName="taskName" class="border-2 pt-1 shadow-md w-full rounded" placeholder="Enter Task Name"/>
+                    </div>
+                    <div class="py-1">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
+                            <small class="text-ms font-bold">Budget:</small>
+                        </div>
+                        <input type="number" formControlName="budget" class="border-2 pt-1 shadow-md w-full rounded" placeholder="Enter budget"/>
+                    </div>
+                    <div class="py-1">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
+                            <small class="text-ms font-bold">Kick off:</small>
+                        </div>
+                        <input formControlName="kickOff" type="datetime-local" class="border-2 pt-1 shadow-md w-full rounded"/>
+                    </div>
+                    <div class="py-1">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-clock text-red-700 text-xl mr-1 px-1"></i>
+                            <small class="text-ms font-bold">Task due date:</small>
+                        </div>
+                        <input formControlName="dueDate" type="datetime-local" class="border-2 pt-1 shadow-md w-full rounded"/>
+                    </div>
+                    <div class="py-1">
+                        <div class="flex items-center">
+                            <i class="fa-solid fa-book-open-reader text-xl mr-1 px-1"></i>
+                            <small class="text-ms font-bold">Task due date:</small>
+                        </div>
+                        <textarea formControlName="description" class="border-2 pt-1 shadow-md w-full rounded" placeholder="Enter task description"></textarea>
+                    </div>
+                    <div *ngIf="!isAddTaskAnimation" class="flex w-full items-center justify-center">
+                        <button class="w-48 py-1 rounded bg-green-700 mb-2 text-white font-bold" type="submit">Update Task</button>
+                    </div>
+                    <div *ngIf="isAddTaskAnimation" class="flex w-full items-center justify-center">
+                        <button class="w-48 py-1 rounded bg-green-700 mb-2 text-white font-bold" type="submit">
+                            <mat-spinner class="m-auto flex w-full py-1" [diameter]="25"></mat-spinner>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- delete task  notification -->
+        <div *ngIf="isShowDeleteTaskNotification" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
+            <div class="bg-white rounded w-96 h-28 flex flex-col">
+                <div class="font-bold py-3 truncate pl-10">Are you sure you want to remove {{TaskNameToBeDeleted}}?</div>
+                <hr class="mb-5"/>
+                <div class="flex justify-around items-center">
+                    <div *ngIf="!isRemovalOfTaskAnimation" (click)="commitRemovalOfTask()"  class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white">YES</div>
+                    <div *ngIf="isRemovalOfTaskAnimation" class="flex py-1 px-5 border rounded shadow-lg bg-green-700 hover:bg-green-500 cursor-pointer text-white"><mat-spinner [diameter]="25"></mat-spinner></div>
+                    <div (click)="cancelDeleteTask()" class="flex py-1 px-5 border rounded shadow-lg bg-red-700 hover:bg-red-500 cursor-pointer text-white">NO</div>
+                </div>
+            </div>
+        </div>
+
 
 
 
