@@ -28,18 +28,24 @@
                 <i class="fa-solid fa-hand-holding-dollar mr-4"></i>
               <input formControlName="budget" placeholder="Enter budget" type="number" class="w-full py-1 border shadow-lg bg-gray-50 rounded" id="outline"/>
             </div>
-            <div class="grid grod-cols-2">
-                <small class="ml-9 py-1 w-32">Kick Off - Due Date:</small>
+            <div class="grid grod-cols-2 mt-2">
                 <div class="flex items-center">
-                    <i class="fa-solid fa-calendar-days mr-4 pr-1"></i>
-                    <mat-form-field class="border shadow-md rounded w-full h-8 bg-gray-50 relative">
-                        <mat-date-range-input [rangePicker]="picker" class="text-black absolute -top-2">
-                          <input formControlName="kickOff" matStartDate>
-                          <input formControlName="dueDate" matEndDate>
-                        </mat-date-range-input>
-                        <mat-datepicker-toggle class="text-black" matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-date-range-picker #picker></mat-date-range-picker>
-                    </mat-form-field>
+                    <div class="grid grid-cols-2 w-full gap-1">
+                        <div class="flex items-center">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-clock text-red-700 text-xl mr-1 px-1"></i>
+                                <small class="text-ms w-16">Kick Off</small>
+                            </div>
+                            <input formControlName="kickOff" type="datetime-local" class="w-full py-1 border shadow-lg bg-gray-50 rounded">
+                        </div>
+                        <div class="flex items-center">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
+                                <small class="text-ms w-16">Due date</small>
+                            </div>
+                            <input formControlName="dueDate" type="datetime-local" class="w-full py-1 border shadow-lg bg-gray-50 rounded">
+                        </div>
+                    </div>
                 </div>
             </div>
             

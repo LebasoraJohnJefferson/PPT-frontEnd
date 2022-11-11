@@ -51,7 +51,7 @@ export class MemberInfoComponent implements OnInit {
       this.Age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25)
       if(new Date(today).getMonth() , bDay.getMonth() && new Date(today).getDate() == bDay.getDate()){
         this.greetings = true
-        this.Age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25) + 1
+        this.Age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25)
       }else{
         this.greetings = false
       }

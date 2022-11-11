@@ -462,6 +462,8 @@ export class ProjectInfoComponent implements OnInit {
       },(err)=>{
         this._toastr.warning(err.error.detail)
       })
+    }else{
+      this._toastr.warning("Invalid inputs!")
     }
   }
 

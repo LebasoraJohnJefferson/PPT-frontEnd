@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup,Validators} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { ProjectService } from 'src/app/service/project.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-projects',
@@ -123,8 +124,12 @@ export class ProjectsComponent implements OnInit {
   submitProject(){
     this.loadingSubmitBtn = true
     if(this.projectFormGroup.valid){
-      this.projectFormGroup.value.kickOff= new Date(this.projectFormGroup.get("kickOff")?.value)
-      this.projectFormGroup.value.dueDate= new Date(this.projectFormGroup.get("dueDate")?.value)
+      let kickOffTemp = moment.utc(new Date(this.projectFormGroup.controls.kickOff.value))
+      let kickLocal = moment(kickOffTemp).local().format('YYYY-MM-DD HH:mm:ss');
+      let dueDateTemp = moment.utc(new Date(this.projectFormGroup.controls.dueDate.value))
+      let dueLocal = moment(dueDateTemp).local().format('YYYY-MM-DD HH:mm:ss');
+      this.projectFormGroup.value.kickOff= kickLocal
+      this.projectFormGroup.value.dueDate= dueLocal
       console.log(this.projectFormGroup.value)
       this._SaveProjectSubscription = this._projectService.SaveProject(this.projectFormGroup.value).subscribe(()=>{
         this._toastr.success("Project successfully created!")

@@ -9,4 +9,9 @@
 }
 
 ::ng-deep .mat-select-value{    
-    color: black !important;  }
+    color: black !important;  
+}
+
+input{
+    text-indent: 10px;
+}

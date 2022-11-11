@@ -4,6 +4,7 @@ import { AuthUser } from 'src/app/service/auth-user.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MembersService } from 'src/app/service/members.service';
+import moment from 'moment';
 
 @Component({
   selector: 'app-members',
@@ -157,7 +158,9 @@ export class MembersComponent implements OnInit {
   submitRegister(){
     this.isRegisterButton = true
     if(this.firstFormGroup.valid && this.secondFormGroup.valid){
-      this.secondFormGroup.value.birthDay= new Date(this.secondFormGroup.get("birthDay")?.value)
+      let bDay = moment.utc(new Date(this.secondFormGroup.get("birthDay")?.value))
+      let bDayTemp = moment(bDay).local().format('YYYY-MM-DD 00:00:00');
+      this.secondFormGroup.value.birthDay= bDayTemp
       let submitInfo = Object.assign({}, this.firstFormGroup.value, this.secondFormGroup.value);
       this._registerSubscription = this._authService.RegisterUserByAdmin(submitInfo).subscribe((res)=>{
         this.toastr.success("Created member successfully")

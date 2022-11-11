@@ -145,7 +145,7 @@
                                 <i class="fa-solid fa-calendar-days text-xl mr-1 px-1"></i>
                                 <small class="text-ms font-bold">Kick Off and Due date</small>
                             </div>
-                            <p class="ml-7 break-all">{{projectInfo.Project.kickOff | date: 'mediumDate'}} - {{projectInfo.Project.dueDate | date: 'mediumDate'}}</p>
+                            <small class="ml-7 break-all">{{projectInfo.Project.kickOff | date: 'short'}} - {{projectInfo.Project.dueDate | date: 'short'}}</small>
 
                         </div>
                         <div>
@@ -203,19 +203,17 @@
                             </div>
                             <input formControlName="budget" placeholder="Enter Project Name" class="w-full border-2 rounded shadow-md mt-2" />
                         </div>
-                        <div>
+                        <div >
                             <div class="flex items-center">
-                                <i class="fa-solid fa-calendar-days text-xl mr-1 px-1"></i>
-                                <small class="text-ms font-bold">Kick Off and Due date</small>
+                                <i class="fa-solid fa-clock text-red-700 text-xl mr-1 px-1"></i>
+                                <small class="text-ms font-bold">Kick Off</small>
                             </div>
-                            <mat-form-field class="border shadow-md rounded w-full h-8 relative">
-                                <mat-date-range-input [rangePicker]="picker" class="text-black absolute -top-2">
-                                  <input formControlName="kickOff" matStartDate>
-                                  <input formControlName="dueDate" matEndDate>
-                                </mat-date-range-input>
-                                <mat-datepicker-toggle class="text-black" matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-date-range-picker #picker></mat-date-range-picker>
-                            </mat-form-field>
+                            <input formControlName="kickOff" type="datetime-local" class="w-full border-2 rounded shadow-md mt-2">
+                            <div class="flex items-center">
+                                <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
+                                <small class="text-ms font-bold">Due date</small>
+                            </div>
+                            <input formControlName="dueDate" type="datetime-local" class="w-full border-2 rounded shadow-md mt-2">
                         </div>
                         <div>
                             <div class="flex items-center">
@@ -343,7 +341,7 @@
                             <!-- more details -->
                             <div *ngIf="OpenVIewMoreById == pendingItems.id" class="mt-2">
                                 <small class="font-bold">Description: </small>
-                                <p class="p-1 border-2 rounded max-h-48 overflow-y-auto shadow-md">
+                                <p class="p-1 border-2 rounded max-h-48 overflow-y-auto break-all shadow-md">
                                     {{pendingItems.description}}
                                 </p>
                                 <div class="w-full flex justify-end p-2 items-center">
@@ -402,7 +400,7 @@
                             <!-- more details -->
                             <div *ngIf="OpenVIewMoreById == onGoingItems.id" class="mt-2">
                                 <small class="font-bold">Description: </small>
-                                <p class="p-1 border-2 rounded max-h-48 overflow-y-auto shadow-md">
+                                <p class="p-1 border-2 rounded max-h-48 overflow-y-auto break-all shadow-md">
                                     {{onGoingItems.description}}
                                 </p>
                                 <div class="w-full flex justify-end p-2 items-center">
@@ -460,7 +458,7 @@
                             <!-- more details -->
                             <div *ngIf="OpenVIewMoreById == doneItems.id" class="mt-2">
                                 <small class="font-bold">Description: </small>
-                                <p class="p-1 border-2 rounded max-h-48 overflow-y-auto shadow-md">
+                                <p class="p-1 border-2 rounded max-h-48 overflow-y-auto break-all shadow-md">
                                     {{doneItems.description}}
                                 </p>
                                 <div class="w-full flex justify-end p-2 items-center">
@@ -521,7 +519,7 @@
                     <div class="py-1">
                         <div class="flex items-center">
                             <i class="fa-solid fa-book-open-reader text-xl mr-1 px-1"></i>
-                            <small class="text-ms font-bold">Task due date:</small>
+                            <small class="text-ms font-bold">Description:</small>
                         </div>
                         <textarea formControlName="description" class="border-2 pt-1 shadow-md w-full rounded" placeholder="Enter task description"></textarea>
                     </div>
@@ -575,7 +573,7 @@
                     <div class="py-1">
                         <div class="flex items-center">
                             <i class="fa-solid fa-book-open-reader text-xl mr-1 px-1"></i>
-                            <small class="text-ms font-bold">Task due date:</small>
+                            <small class="text-ms font-bold">Description:</small>
                         </div>
                         <textarea formControlName="description" class="border-2 pt-1 shadow-md w-full rounded" placeholder="Enter task description"></textarea>
                     </div>
