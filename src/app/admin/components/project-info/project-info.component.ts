@@ -375,6 +375,7 @@ export class ProjectInfoComponent implements OnInit {
         }
         this._updateTaskStatus = this._taskService.updateTaskStatus({"id":taskDragId,"status":status}).subscribe(()=>{
           console.log('success')
+          this.getTasks()
         },(err)=>{
           console.log('error')
         })
@@ -417,9 +418,9 @@ export class ProjectInfoComponent implements OnInit {
         let dueDate = moment(data.dueDate).format(format)
         let today =  moment().format(format)
         console.log(today , TheDayBeforeDueDate )
-        if(today > TheDayBeforeDueDate && today<dueDate && data.status !='done'){
+        if(today > TheDayBeforeDueDate && today<dueDate && data.status !="done"){
           status = 'soonToEnd'
-        }else if(TheDayBeforeDueDate<today){
+        }else if(TheDayBeforeDueDate<today && data.status !="done"){
           status = "delay"
         }else{
           status = "normal"
@@ -432,7 +433,6 @@ export class ProjectInfoComponent implements OnInit {
           temp_done.push({data,status})
         }
       })
-      console.log(temp_pending)
       this.pending = temp_pending
       this.onGoing = temp_onGoing
       this.done = temp_done
