@@ -87,6 +87,7 @@ export class ProjectInfoComponent implements OnInit {
   private _getAllTask:Subscription = new Subscription()
   private _deleteTaskById:Subscription = new Subscription()
   private _updateTaskById:Subscription = new Subscription()
+  private _updateTaskStatus:Subscription = new Subscription()
 
   isProjectAddTaskFormOpen:boolean = false
   isTaskUpdateFormOpen:boolean = false
@@ -96,7 +97,7 @@ export class ProjectInfoComponent implements OnInit {
   TaskNameToBeDeleted:string = ''
   isRemovalOfTaskAnimation:boolean = false
   isShowDeleteTaskNotification:boolean = false
-  pending:any = ['task1', 'task2', 'task3', 'task4', 'task5'];
+  pending:any = [];
   onGoing:any = [];
   done:any = []
   tasks:any = []
@@ -150,6 +151,7 @@ export class ProjectInfoComponent implements OnInit {
     this._getAllTask.unsubscribe()
     this._deleteTaskById.unsubscribe()
     this._updateTaskById.unsubscribe()
+    this._updateTaskStatus.unsubscribe()
   }
 
   getAllInformationOfProject(){
@@ -362,13 +364,20 @@ export class ProjectInfoComponent implements OnInit {
       }
       if(event.container.id != event.previousContainer.id){
         let temp = event.container.id
+        let taskDragId = event.item.data.data.id
+        let status = ''
         if(temp == "pending"){
-          console.log('pending')
+          status="pending"
         }else if(temp == "onGoing"){
-          console.log('on going')
+          status="onGoing"
         }else{
-          console.log('finished')
+          status="done"
         }
+        this._updateTaskStatus = this._taskService.updateTaskStatus({"id":taskDragId,"status":status}).subscribe(()=>{
+          console.log('success')
+        },(err)=>{
+          console.log('error')
+        })
       }
     }
 
@@ -401,16 +410,29 @@ export class ProjectInfoComponent implements OnInit {
       let temp_pending:any = []
       let temp_onGoing:any = []
       let temp_done:any = []
-      console.log(res)
+      let format = 'YYYY-MM-DD HH:mm:ss'
       this.tasks.forEach((data:any)=>{
-        if(data.status == 'pending'){
-          temp_pending.push(data)
-        }else if(data.status == 'onGoing'){
-          temp_onGoing.push(data)
+        let status = ''
+        let TheDayBeforeDueDate = moment(data.dueDate).subtract(1, 'days').startOf('day').format(format)
+        let dueDate = moment(data.dueDate).format(format)
+        let today =  moment().format(format)
+        console.log(today , TheDayBeforeDueDate )
+        if(today > TheDayBeforeDueDate && today<dueDate && data.status !='done'){
+          status = 'soonToEnd'
+        }else if(TheDayBeforeDueDate<today){
+          status = "delay"
         }else{
-          temp_done.push(data)
+          status = "normal"
+        }
+        if(data.status == 'pending'){
+          temp_pending.push({data,status})
+        }else if(data.status == 'onGoing'){
+          temp_onGoing.push({data,status})
+        }else{
+          temp_done.push({data,status})
         }
       })
+      console.log(temp_pending)
       this.pending = temp_pending
       this.onGoing = temp_onGoing
       this.done = temp_done

@@ -311,48 +311,52 @@
                 class="example-list"
                 cdkDropListSortingDisabled
                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let pendingItems of pending" cdkDrag>
-                    <div class="grid w-full h-full">
+                <div class="example-box" *ngFor="let pendingItems of pending" cdkDrag [cdkDragData]="pendingItems">
+                    <div class="grid w-full h-full p-3" *ngIf="pendingItems.status != ''" 
+                    [ngClass]="{'bg-yellow-200': pendingItems.status === 'soonToEnd', 
+                    'bg-red-200' : pendingItems.status === 'delay',
+                    'bg-blue-50' : pendingItems.status === 'normal' }"
+                    >
                         <div class="grid">
                             <div class="flex w-full justify-end items-center">
-                                <i (click)="updateTaskForm(pendingItems.id)" class="fa-solid fa-gear mx-1 cursor-pointer text-blue-700 hover:text-blue-500"></i>
+                                <i (click)="updateTaskForm(pendingItems.data.id)" class="fa-solid fa-gear mx-1 cursor-pointer text-blue-700 hover:text-blue-500"></i>
                                 <div class="flex items-center mx-1 font-bold cursor-pointer text-red-700 hover:text-red-500">
-                                    <i (click)="deleteTask(pendingItems.id,pendingItems.taskName)" class="fa-solid fa-trash"></i>
+                                    <i (click)="deleteTask(pendingItems.data.id,pendingItems.data.taskName)" class="fa-solid fa-trash"></i>
                                 </div>
                             </div>
-                            <div class="text-center mt-2 text-md truncate font-bold">{{pendingItems.taskName}}</div>
+                            <div class="text-center mt-2 text-md truncate font-bold">{{pendingItems.data.taskName}}</div>
                         </div>
                         <div class="grid grid-cols-1">
                             <div>
                                 <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
                                 <small>Budget: </small>
-                                <small class="text-ms font-bold">₱ {{pendingItems.budget}}</small>
+                                <small class="text-ms font-bold">₱ {{pendingItems.data.budget}}</small>
                             </div>
                             <div>
                                 <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
                                 <small>Kick off: </small>
-                                <small class="text-ms font-bold">{{pendingItems.kickOff | date: 'medium'}}</small>
+                                <small class="text-ms font-bold">{{pendingItems.data.kickOff | date: 'medium'}}</small>
                             </div>
                             <div>
                                 <i class="fa-solid fa-clock text-red-700 text-xl mr-1 px-1"></i>
                                 <small>Due date: </small>
-                                <small class="text-ms font-bold">{{pendingItems.dueDate | date: 'medium'}}</small>
+                                <small class="text-ms font-bold">{{pendingItems.data.dueDate | date: 'medium'}}</small>
                             </div>
                             <!-- more details -->
-                            <div *ngIf="OpenVIewMoreById == pendingItems.id" class="mt-2">
+                            <div *ngIf="OpenVIewMoreById == pendingItems.data.id" class="mt-2">
                                 <small class="font-bold">Description: </small>
-                                <p class="p-1 border-2 rounded max-h-48 overflow-y-auto break-all shadow-md">
-                                    {{pendingItems.description}}
+                                <p class="p-1 border-2 bg-gray-200 rounded max-h-48 overflow-y-auto break-all shadow-md">
+                                    {{pendingItems.data.description}}
                                 </p>
                                 <div class="w-full flex justify-end p-2 items-center">
                                     <i class="fa-solid fa-globe"></i>
-                                    <small class="ml-1">{{pendingItems.created_at | dateAgo}}</small>
+                                    <small class="ml-1">{{pendingItems.data.created_at | dateAgo}}</small>
                                 </div>
                             </div>
-                            <div *ngIf="OpenVIewMoreById != pendingItems.id" (click)="viewMoreTaskDetails(pendingItems.id)" class="flex justify-center items-center my-2 w-full">
+                            <div *ngIf="OpenVIewMoreById != pendingItems.data.id" (click)="viewMoreTaskDetails(pendingItems.data.id)" class="flex justify-center items-center my-2 w-full">
                                 <p class="flex cursor-pointer px-3 py-1 bg-blue-900 hover:bg-blue-700 text-white font-bold rounded">more</p>
                             </div>
-                            <div *ngIf="OpenVIewMoreById == pendingItems.id"  (click)="closeViewMoreTaskDetails()" class="flex justify-center items-center my-2 w-full">
+                            <div *ngIf="OpenVIewMoreById == pendingItems.data.id"  (click)="closeViewMoreTaskDetails()" class="flex justify-center items-center my-2 w-full">
                                 <p class="flex cursor-pointer px-3 py-1 bg-red-900 hover:bg-red-700 text-white font-bold rounded">close</p>
                             </div>
                         </div>
@@ -370,48 +374,51 @@
                 [cdkDropListData]="onGoing"
                 class="example-list"
                 (cdkDropListDropped)="drop($event)">
-                <div class="example-box" *ngFor="let onGoingItems of onGoing" cdkDrag>
-                    <div class="grid w-full h-full">
+                <div class="example-box" *ngFor="let onGoingItems of onGoing" cdkDrag [cdkDragData]="onGoingItems">
+                    <div class="grid w-full h-full p-3" *ngIf="onGoingItems.status != ''" 
+                    [ngClass]="{'bg-yellow-200': onGoingItems.status === 'soonToEnd', 
+                    'bg-red-200' : onGoingItems.status === 'delay',
+                    'bg-blue-50' : onGoingItems.status === 'normal' }">
                         <div class="grid">
                             <div class="flex w-full justify-end items-center">
-                                <i (click)="updateTaskForm(onGoingItems.id)" class="fa-solid fa-gear mx-1 cursor-pointer text-blue-700 hover:text-blue-500"></i>
+                                <i (click)="updateTaskForm(onGoingItems.data.id)" class="fa-solid fa-gear mx-1 cursor-pointer text-blue-700 hover:text-blue-500"></i>
                                 <div class="flex items-center mx-1 font-bold cursor-pointer text-red-700 hover:text-red-500">
-                                    <i (click)="deleteTask(onGoingItems.id,onGoingItems.taskName)" class="fa-solid fa-trash"></i>
+                                    <i (click)="deleteTask(onGoingItems.data.id,onGoingItems.data.taskName)" class="fa-solid fa-trash"></i>
                                 </div>
                             </div>
-                            <div class="text-center mt-2 text-md truncate font-bold">{{onGoingItems.taskName}}</div>
+                            <div class="text-center mt-2 text-md truncate font-bold">{{onGoingItems.data.taskName}}</div>
                         </div>
                         <div class="grid grid-cols-1">
                             <div>
                                 <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
                                 <small>Budget: </small>
-                                <small class="text-ms font-bold">₱ {{onGoingItems.budget}}</small>
+                                <small class="text-ms font-bold">₱ {{onGoingItems.data.budget}}</small>
                             </div>
                             <div>
                                 <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
                                 <small>kick off: </small>
-                                <small class="text-ms font-bold">{{onGoingItems.kickOff | date: 'medium'}}</small>
+                                <small class="text-ms font-bold">{{onGoingItems.data.kickOff | date: 'medium'}}</small>
                             </div>
                             <div>
                                 <i class="fa-solid fa-clock text-red-700 text-xl mr-1 px-1"></i>
                                 <small>Due date: </small>
-                                <small class="text-ms font-bold">{{onGoingItems.dueDate | date: 'medium'}}</small>
+                                <small class="text-ms font-bold">{{onGoingItems.data.dueDate | date: 'medium'}}</small>
                             </div>
                             <!-- more details -->
-                            <div *ngIf="OpenVIewMoreById == onGoingItems.id" class="mt-2">
+                            <div *ngIf="OpenVIewMoreById == onGoingItems.data.id" class="mt-2">
                                 <small class="font-bold">Description: </small>
-                                <p class="p-1 border-2 rounded max-h-48 overflow-y-auto break-all shadow-md">
-                                    {{onGoingItems.description}}
+                                <p class="p-1 border-2 bg-gray-200 rounded max-h-48 overflow-y-auto break-all shadow-md">
+                                    {{onGoingItems.data.description}}
                                 </p>
                                 <div class="w-full flex justify-end p-2 items-center">
                                     <i class="fa-solid fa-globe"></i>
-                                    <small class="ml-1">{{onGoingItems.created_at | dateAgo}}</small>
+                                    <small class="ml-1">{{onGoingItems.data.created_at | dateAgo}}</small>
                                 </div>
                             </div>
-                            <div *ngIf="OpenVIewMoreById != onGoingItems.id" (click)="viewMoreTaskDetails(onGoingItems.id)" class="flex justify-center items-center my-2 w-full">
+                            <div *ngIf="OpenVIewMoreById != onGoingItems.data.id" (click)="viewMoreTaskDetails(onGoingItems.data.id)" class="flex justify-center items-center my-2 w-full">
                                 <p class="flex cursor-pointer px-3 py-1 bg-blue-900 hover:bg-blue-700 text-white font-bold rounded">more</p>
                             </div>
-                            <div *ngIf="OpenVIewMoreById == onGoingItems.id"  (click)="closeViewMoreTaskDetails()" class="flex justify-center items-center my-2 w-full">
+                            <div *ngIf="OpenVIewMoreById == onGoingItems.data.id"  (click)="closeViewMoreTaskDetails()" class="flex justify-center items-center my-2 w-full">
                                 <p class="flex cursor-pointer px-3 py-1 bg-red-900 hover:bg-red-700 text-white font-bold rounded">close</p>
                             </div>
                         </div>
@@ -428,48 +435,51 @@
                   [cdkDropListData]="done"
                   class="example-list"
                   (cdkDropListDropped)="drop($event)">
-                  <div class="example-box" *ngFor="let doneItems of done" cdkDrag>
-                    <div class="grid w-full h-full">
+                  <div class="example-box" *ngFor="let doneItems of done" cdkDrag [cdkDragData]="doneItems">
+                    <div class="grid w-full h-full p-3" *ngIf="doneItems.status != ''" 
+                    [ngClass]="{'bg-yellow-200': doneItems.status === 'soonToEnd', 
+                    'bg-red-200' : doneItems.status === 'delay',
+                    'bg-blue-50' : doneItems.status === 'normal' }">
                         <div class="grid">
                             <div class="flex w-full justify-end items-center">
-                                <i (click)="updateTaskForm(doneItems.id)" class="fa-solid fa-gear mx-1 cursor-pointer text-blue-700 hover:text-blue-500"></i>
+                                <i (click)="updateTaskForm(doneItems.data.id)" class="fa-solid fa-gear mx-1 cursor-pointer text-blue-700 hover:text-blue-500"></i>
                                 <div class="flex items-center mx-1 font-bold cursor-pointer text-red-700 hover:text-red-500">
-                                    <i (click)="deleteTask(doneItems.id,doneItems.taskName)" class="fa-solid fa-trash"></i>
+                                    <i (click)="deleteTask(doneItems.data.id,doneItems.data.taskName)" class="fa-solid fa-trash"></i>
                                 </div>
                             </div>
-                            <div class="text-center mt-2 text-md truncate font-bold">{{doneItems.taskName}}</div>
+                            <div class="text-center mt-2 text-md truncate font-bold">{{doneItems.data.taskName}}</div>
                         </div>
                         <div class="grid grid-cols-1">
                             <div>
                                 <i class="fa-solid fa-hand-holding-dollar text-xl mr-1 px-1"></i>
                                 <small>Budget: </small>
-                                <small class="text-ms font-bold">₱ {{doneItems.budget}}</small>
+                                <small class="text-ms font-bold">₱ {{doneItems.data.budget}}</small>
                             </div>
                             <div>
                                 <i class="fa-solid fa-clock text-xl text-blue-700 mr-1 px-1"></i>
                                 <small>kick off: </small>
-                                <small class="text-ms font-bold">{{doneItems.kickOff | date: 'medium'}}</small>
+                                <small class="text-ms font-bold">{{doneItems.data.kickOff | date: 'medium'}}</small>
                             </div>
                             <div>
                                 <i class="fa-solid fa-clock text-red-700 text-xl mr-1 px-1"></i>
                                 <small>Due date: </small>
-                                <small class="text-ms font-bold">{{doneItems.dueDate | date: 'medium'}}</small>
+                                <small class="text-ms font-bold">{{doneItems.data.dueDate | date: 'medium'}}</small>
                             </div>
                             <!-- more details -->
-                            <div *ngIf="OpenVIewMoreById == doneItems.id" class="mt-2">
+                            <div *ngIf="OpenVIewMoreById == doneItems.data.id" class="mt-2">
                                 <small class="font-bold">Description: </small>
-                                <p class="p-1 border-2 rounded max-h-48 overflow-y-auto break-all shadow-md">
-                                    {{doneItems.description}}
+                                <p class="p-1 border-2 bg-gray-200 rounded max-h-48 overflow-y-auto break-all shadow-md">
+                                    {{doneItems.data.description}}
                                 </p>
                                 <div class="w-full flex justify-end p-2 items-center">
                                     <i class="fa-solid fa-globe"></i>
-                                    <small class="ml-1">{{doneItems.created_at | dateAgo}}</small>
+                                    <small class="ml-1">{{doneItems.data.created_at | dateAgo}}</small>
                                 </div>
                             </div>
-                            <div *ngIf="OpenVIewMoreById != doneItems.id" (click)="viewMoreTaskDetails(doneItems.id)" class="flex justify-center items-center my-2 w-full">
+                            <div *ngIf="OpenVIewMoreById != doneItems.data.id" (click)="viewMoreTaskDetails(doneItems.data.id)" class="flex justify-center items-center my-2 w-full">
                                 <p class="flex cursor-pointer px-3 py-1 bg-blue-900 hover:bg-blue-700 text-white font-bold rounded">more</p>
                             </div>
-                            <div *ngIf="OpenVIewMoreById == doneItems.id"  (click)="closeViewMoreTaskDetails()" class="flex justify-center items-center my-2 w-full">
+                            <div *ngIf="OpenVIewMoreById == doneItems.data.id"  (click)="closeViewMoreTaskDetails()" class="flex justify-center items-center my-2 w-full">
                                 <p class="flex cursor-pointer px-3 py-1 bg-red-900 hover:bg-red-700 text-white font-bold rounded">close</p>
                             </div>
                         </div>

@@ -28,4 +28,8 @@ export class TasksService {
     return this._http.put(`${this.baseURL}/tasks/${taskId}`,taskDetails)
   }
 
+  updateTaskStatus(taskDetails:any):Observable<any>{
+    return this._http.put(`${this.baseURL}/tasks/update_status`,taskDetails)
+  }
+
 }
