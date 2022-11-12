@@ -31,6 +31,8 @@ import { BackBtnComponent } from './admin/components/back-btn/back-btn.component
 import { ManagersComponent } from './admin/components/managers/managers.component';
 import { ProjectInfoComponent } from './admin/components/project-info/project-info.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
+import { DependencyChartComponent } from './admin/components/dependency-chart/dependency-chart.component';
+import { DoughnutChartsComponent } from './admin/components/doughnut-charts/doughnut-charts.component';
 
 const config: SocketIoConfig = { url: environment.baseURL,
     options: {
@@ -60,6 +62,8 @@ const config: SocketIoConfig = { url: environment.baseURL,
     ManagersComponent,
     ProjectInfoComponent,
     DateAgoPipe,
+    DependencyChartComponent,
+    DoughnutChartsComponent,
   ],
   imports: [
     BrowserModule,

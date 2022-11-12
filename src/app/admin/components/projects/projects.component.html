@@ -51,11 +51,22 @@
             
             
             
-            <div class="grid lg:grid-cols-2 grid-cols-1 w-full">
+            <div class="grid lg:grid-cols-3 grid-cols-1 w-full">
+                <div>
+                    <small class="ml-9 py-1">Project dependencies:</small>
+                    <div class="flex items-center justify-center">
+                        <i class="fa-solid fa-diagram-project text-xl mr-3"></i>
+                        <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
+                            <mat-select  formControlName="dependencies" multiple class="w-full py-1 border shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                                <mat-option *ngFor="let project of projects" [value]="project.Project.id">{{project.Project.projectName}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
                 <div>
                     <small class="ml-9 py-1">Team members:</small>
                     <div class="flex items-center justify-center">
-                        <i class="fa-solid fa-people-group text-xl mr-3"></i>
+                        <i class="fa-solid fa-people-group text-xl mx-3"></i>
                         <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
                             <mat-select  formControlName="teamMembers" multiple class="w-full py-1 border shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
                                 <mat-option *ngFor="let member of members" [value]="member.id">{{member.fullName}}</mat-option>

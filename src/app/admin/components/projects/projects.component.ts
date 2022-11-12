@@ -17,6 +17,7 @@ export class ProjectsComponent implements OnInit {
   projectId:number = 0
   managers:any = []
   members: any = []
+  projects: any = []
   projectDetails: any = []
   showConformationToDelete:boolean = false
   loadingDeleteBtn:boolean = false
@@ -35,7 +36,8 @@ export class ProjectsComponent implements OnInit {
     budget:[0,Validators.required],
     kickOff:['',Validators.required],
     dueDate:['',Validators.required],
-    teamMembers:[''],
+    teamMembers:[[]],
+    dependencies:[[]],
     projectManager:['',Validators.required],
     description:['',Validators.required]
   })
@@ -43,7 +45,7 @@ export class ProjectsComponent implements OnInit {
   constructor(
     private _formBuilder:FormBuilder,
     private _toastr:ToastrService,
-    private _projectService:ProjectService
+    private _projectService:ProjectService,
   ) {
     this.getAllDetails()
     this.getAllProjectDetails()
@@ -67,6 +69,7 @@ export class ProjectsComponent implements OnInit {
   getAllProjectDetails(){
     this.isShowFakeArray = true
     this._projectDetailsSubscription = this._projectService.getAllProjectDetails().subscribe((res)=>{
+      this.projects = res
       let temp:any = []
       res.forEach((data:any)=>{
         if (new Date(data.Project.kickOff) > new Date()){
@@ -130,7 +133,6 @@ export class ProjectsComponent implements OnInit {
       let dueLocal = moment(dueDateTemp).local().format('YYYY-MM-DD HH:mm:ss');
       this.projectFormGroup.value.kickOff= kickLocal
       this.projectFormGroup.value.dueDate= dueLocal
-      console.log(this.projectFormGroup.value)
       this._SaveProjectSubscription = this._projectService.SaveProject(this.projectFormGroup.value).subscribe(()=>{
         this._toastr.success("Project successfully created!")
         this.getAllProjectDetails()

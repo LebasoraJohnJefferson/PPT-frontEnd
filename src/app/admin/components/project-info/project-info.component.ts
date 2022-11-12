@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import {FormBuilder, FormGroup,Validators} from '@angular/forms';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { DependenciesService } from 'src/app/service/dependencies.service';
 import moment from 'moment';
 
 
@@ -21,6 +22,7 @@ export class ProjectInfoComponent implements OnInit {
   defaultProfilePicture:string = environment.default_profile
   memberFakeArrayForAnimation = new Array(5)
   members:any = []
+  dataOfDependency:any;
   managers:any = []
   categories:any = []
   projectInfo:any = []
@@ -33,6 +35,7 @@ export class ProjectInfoComponent implements OnInit {
   totalBudgetUsed:any = 0
   isMemberPlaceHolderAnimation:boolean = true
   isRemoveMemberConfirmation:boolean = false
+  loadingDependenciesData:boolean = false
   isRemovalOfMemberAnimation:boolean = false
   isChangeMemberLoadingAnimation:boolean = false
   isChangeCategoryLoadingAnimation:boolean = false
@@ -45,9 +48,8 @@ export class ProjectInfoComponent implements OnInit {
   isShowChangeProjectFormAnimationBtn:boolean = false
   isShowAddMemberForm:boolean = false
   isShowAddManagerForm:boolean = false
-  isSwitch:boolean = false
-
-  
+  isSwitch:boolean = true
+    
   memberAddFormGroup:FormGroup = this._formBuilder.group({
     teamMembers:['',Validators.required],
   })
@@ -74,6 +76,7 @@ export class ProjectInfoComponent implements OnInit {
   private _removalOfMember:Subscription = new Subscription()
   private _addMemberIntoTheProject:Subscription = new Subscription()
   private _retrieveAllInfoCategorySubscription:Subscription = new Subscription()
+  private _retrieveAllInfoDependencySubscription:Subscription = new Subscription()
   private _getAllProjectManger:Subscription = new Subscription()
   private _changeProjectManager:Subscription = new Subscription()
   private _changeCategoryManager:Subscription = new Subscription()
@@ -130,12 +133,14 @@ export class ProjectInfoComponent implements OnInit {
     private _toastr:ToastrService,
     private _formBuilder:FormBuilder,
     private _managerService:ManagersService,
-    private _taskService:TasksService
+    private _taskService:TasksService,
+    private _dependencyService:DependenciesService
   ) { 
     this.getAllInformationOfProject()
     this.getAllMembers()
     this.getTasks()
   }
+
 
   ngOnDestroy(){
     this._projectInformation.unsubscribe()
@@ -152,6 +157,7 @@ export class ProjectInfoComponent implements OnInit {
     this._deleteTaskById.unsubscribe()
     this._updateTaskById.unsubscribe()
     this._updateTaskStatus.unsubscribe()
+    this._retrieveAllInfoDependencySubscription.unsubscribe()
   }
 
   getAllInformationOfProject(){
@@ -165,6 +171,13 @@ export class ProjectInfoComponent implements OnInit {
     },()=>{
       this._toastr.warning("Project does`nt exist!")
       this._router.navigate(['/dashboard/projects'])
+    })
+    this.loadingDependenciesData = true
+    this._retrieveAllInfoDependencySubscription = this._dependencyService.getAllDependenciesByProjectId(this._routes.snapshot.paramMap.get('id')).subscribe((res)=>{
+      this.loadingDependenciesData = false
+      this.dataOfDependency = res
+    },()=>{
+      this.loadingDependenciesData=false
     })
   }
 
@@ -417,7 +430,6 @@ export class ProjectInfoComponent implements OnInit {
         let TheDayBeforeDueDate = moment(data.dueDate).subtract(1, 'days').startOf('day').format(format)
         let dueDate = moment(data.dueDate).format(format)
         let today =  moment().format(format)
-        console.log(today , TheDayBeforeDueDate )
         if(today > TheDayBeforeDueDate && today<dueDate && data.status !="done"){
           status = 'soonToEnd'
         }else if(TheDayBeforeDueDate<today && data.status !="done"){
@@ -514,4 +526,5 @@ export class ProjectInfoComponent implements OnInit {
     ngOnInit(): void {
       
     }
+
   }

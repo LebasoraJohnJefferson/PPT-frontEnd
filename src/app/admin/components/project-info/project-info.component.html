@@ -19,49 +19,61 @@
     <!-- project Details -->
     <div *ngIf="isSwitch && projectInfo.length != 0" class="grid h-full w-full grid-cols-1 lg:grid-cols-3 gap-1">
         <div class="flex flex-col items-center w-full border-2 shadow-md m-1 rounded">
-            <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="pt-2 w-40" animation="progress"></ngx-skeleton-loader>
             <div class="flex flex-col w-full items-center">
-                <div *ngIf="!isChangeMemberLoadingAnimation" class="bg-gray-300 rounded-t flex justify-center flex-col items-center rouned-t w-full h-full">
-                    <h2 class="flex font-bold py-1 text-purple-900">Manager Information</h2>
-                    <img  [src]="defaultProfilePicture" class="w-24 h-24" alt="profile">
-                    <p routerLink="/dashboard/members/{{projectInfo.Manager.managerDetails.id}}" class="py-1 text-lg  w-full text-white font-bold cursor-pointer hover:bg-black bg-transparent-black mt-2 px-3 py-1">
-                        {{projectInfo.Manager.managerDetails.fullName}}
-                    </p>
-                </div>
-                <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" animation="progress" count="1" appearance="circle" [theme]="{
-                    height: '100px',
-                    width:'100px',
-                    'background-color': '#A2ACA5',
-                    border: '1px solid white'
-                  }"></ngx-skeleton-loader>
-                <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="m-auto w-24" animation="progress"></ngx-skeleton-loader>
-                <div class="grid gap-5 grid-cols-1 ml-4 text-sm md:text-lg w-full mt-5">
-                    <div class="flex items-center">
-                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-8" animation="progress"></ngx-skeleton-loader>
-                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 ml-2" animation="progress"></ngx-skeleton-loader>
-                        <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-arrow-up-1-9"></i>
-                        <p *ngIf="!isChangeMemberLoadingAnimation" class="ml-4">Age: {{age}} years old</p>
-                    </div>
-                    <div class="flex  items-center ">
-                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-8" animation="progress"></ngx-skeleton-loader>
-                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 ml-2" animation="progress"></ngx-skeleton-loader>
-                        <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-cake-candles"></i>
-                        <p *ngIf="!isChangeMemberLoadingAnimation" class="ml-4">Birth Day: {{ birthDay | date: 'mediumDate'}} </p>
-                    </div>
-                    <div class="flex  items-center ">
-                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-8" animation="progress"></ngx-skeleton-loader>
-                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 ml-2" animation="progress"></ngx-skeleton-loader>
-                        <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-location-dot"></i>
-                        <p *ngIf="!isChangeMemberLoadingAnimation" class="ml-4">Address: {{projectInfo.Manager.managerDetails.address}}</p>
-                    </div>
-                    <div class="flex  items-center ">
-                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-8" animation="progress"></ngx-skeleton-loader>
-                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 ml-2" animation="progress"></ngx-skeleton-loader>
-                        <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-venus-mars"></i>
-                        <p *ngIf="!isChangeMemberLoadingAnimation" class="ml-2">Gender: {{projectInfo.Manager.managerDetails.gender}}</p>
+                <div  class="bg-gray-300 rounded-t flex justify-center flex-col items-center rouned-t w-full h-full">
+                    <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="pt-2 w-40" animation="progress"></ngx-skeleton-loader>
+                    <h2 *ngIf="!isChangeMemberLoadingAnimation" class="flex font-bold py-1 text-purple-900">Manager Information</h2>
+                    <div class="grid grid-cols-2">
+                        <img  *ngIf="!isChangeMemberLoadingAnimation"  [src]="defaultProfilePicture" class="rounded-full w-24 h-24" alt="profile">
+                        <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" animation="progress" count="1" appearance="circle" [theme]="{
+                            height: '100px',
+                            width:'100px',
+                            'background-color': '#A2ACA5',
+                            border: '1px solid white'
+                          }"></ngx-skeleton-loader>
+                        <div class="grid gap-1 grid-cols-1 text-sm w-full">
+                            <div class="flex items-center">
+                                <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-8" animation="progress"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 mx-2" animation="progress"></ngx-skeleton-loader>
+                                <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-arrow-up-1-9"></i>
+                                <small *ngIf="!isChangeMemberLoadingAnimation" class="ml-4">Age: {{age}} years old</small>
+                            </div>
+                            <div class="flex  items-center ">
+                                <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-8" animation="progress"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 mx-2" animation="progress"></ngx-skeleton-loader>
+                                <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-cake-candles"></i>
+                                <small *ngIf="!isChangeMemberLoadingAnimation" class="ml-4">Birth Day: {{ birthDay | date: 'mediumDate'}} </small>
+                            </div>
+                            <div class="flex  items-center ">
+                                <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-8" animation="progress"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 mx-2" animation="progress"></ngx-skeleton-loader>
+                                <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-location-dot"></i>
+                                <small *ngIf="!isChangeMemberLoadingAnimation" class="ml-4">Address: {{projectInfo.Manager.managerDetails.address}}</small>
+                            </div>
+                            <div class="flex  items-center ">
+                                <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-8" animation="progress"></ngx-skeleton-loader>
+                                <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 mx-2" animation="progress"></ngx-skeleton-loader>
+                                <i *ngIf="!isChangeMemberLoadingAnimation" class="fa-solid fa-venus-mars"></i>
+                                <small *ngIf="!isChangeMemberLoadingAnimation" class="ml-2">Gender: {{projectInfo.Manager.managerDetails.gender}}</small>
+                            </div>
+                        </div>
                     </div>
                     <small *ngIf="!isChangeMemberLoadingAnimation" (click)="changeManager()" class="mx-auto mt-6 bg-purple-900 rounded px-3 mb-2 py-1 font-bold text-white cursor-pointer hover:bg-purple-700">Change Project Manager</small>
                     <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="w-56 m-auto" animation="progress"></ngx-skeleton-loader>
+                    <p *ngIf="!isChangeMemberLoadingAnimation" routerLink="/dashboard/members/{{projectInfo.Manager.managerDetails.id}}" class="py-1 text-lg  w-full text-white font-bold cursor-pointer hover:bg-black bg-transparent-black mt-2 px-3 py-1">
+                        {{projectInfo.Manager.managerDetails.fullName}}
+                    </p>
+                </div>
+                <div *ngIf="!isChangeMemberLoadingAnimation" class="w-full mt-3 mt-2">
+                    <div class="flex">
+                        <small class="ml-2 cursor-pointer bg-purple-700 text-white font-bold rounded hover:bg-purple-500 px-3 py-2">Add Project Dependency</small>
+                    </div>
+                    <div *ngIf="!loadingDependenciesData">
+                        <app-dependency-chart [dataOfDependency]="dataOfDependency"></app-dependency-chart>
+                    </div>
+                </div>
+                <div *ngIf="isChangeMemberLoadingAnimation || loadingDependenciesData" class="grid h-full w-full relative">
+                    <mat-spinner class="flex mt-10 m-auto" [diameter]="70"></mat-spinner>
                 </div>
             </div>
         </div>
@@ -117,6 +129,9 @@
                 <div class="flex flex-col items-center w-full border-2 mx-1  shadow-md rounded lg:overflow-y-scroll">
                     <h2 class="flex font-bold py-1">Project Information</h2>
                     <div *ngIf="!isChangeProjectForm && !isChangeProjectLoadingAnimation" class="grid gird-row-4 w-full gap-5 px-5  mt-5">
+                        <div class="flex justify-center items-center">
+                            <app-doughnut-charts></app-doughnut-charts>
+                        </div>
                         <div>
                             <div class="flex items-center">
                                 <i class="fa-sharp fa-solid fa-clipboard text-xl mr-1 px-1"></i>

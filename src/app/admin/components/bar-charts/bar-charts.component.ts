@@ -8,7 +8,6 @@ import { Chart,registerables  } from 'chart.js';
   styleUrls: ['./bar-charts.component.css']
 })
 export class BarChartsComponent implements OnInit {
-  public chart: any;
   canvas: any;
   ctx: any;
   @ViewChild('mychart') mychart:any;
@@ -26,6 +25,7 @@ export class BarChartsComponent implements OnInit {
     new Chart(this.ctx, {
       type: 'bar',
       options:{
+        responsive: true,
         plugins:{
           title:{
             display:true,
