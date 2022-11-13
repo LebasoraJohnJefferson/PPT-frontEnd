@@ -15,14 +15,13 @@ export class DependencyChartComponent implements OnInit {
   progress:any=[]
   done:any=[]
   ctx: any;
+  percent:any = 0
   @ViewChild('mychart') mychart:any;
   constructor() {
     Chart.register(...registerables);
   }
   
   ngOnInit(): void {
-    let count = 0
-    console.log(this.dataOfDependency.Projects)
     this.dataOfDependency.Projects.forEach((data:any)=>{
       this.labels.push(data.dependencyInfo.projectName)
     })

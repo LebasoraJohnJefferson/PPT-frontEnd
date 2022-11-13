@@ -16,4 +16,13 @@ export class DependenciesService {
     return this._http.get(`${this.baseURL}/dependencies/get_by_project_id/${project_id}`)
   }
 
+  getDependenciesWithoutConflict(project_id:any):Observable<any>{
+    return this._http.get(`${this.baseURL}/dependencies/${project_id}`)
+  }
+
+  addDependencies(project_id:any,details:any):Observable<any>{
+    return this._http.post(`${this.baseURL}/dependencies/add_dependencies/${project_id}`,details)
+  }
+
+
 }

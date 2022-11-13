@@ -26,6 +26,7 @@ export class ProjectInfoComponent implements OnInit {
   managers:any = []
   categories:any = []
   projectInfo:any = []
+  dependencies:any = []
   memberAvailableToAdd:any =[]
   memberId:any= 0
   categoryID:any = 0
@@ -46,8 +47,10 @@ export class ProjectInfoComponent implements OnInit {
   isShowChangeManagerFormAnimationBtn:boolean = false
   isShowChangeCategoryFormAnimationBtn:boolean = false
   isShowChangeProjectFormAnimationBtn:boolean = false
+  isShowDependenciesForm:boolean = false
   isShowAddMemberForm:boolean = false
   isShowAddManagerForm:boolean = false
+  isShowAddDependenciesFormAnimationBtn:boolean = false
   isSwitch:boolean = true
     
   memberAddFormGroup:FormGroup = this._formBuilder.group({
@@ -63,6 +66,11 @@ export class ProjectInfoComponent implements OnInit {
   })
 
   projectManagerFormGroup:FormGroup = this._formBuilder.group({
+    id:['',Validators.required],
+  })
+
+
+  addDependenciesFormGroup:FormGroup = this._formBuilder.group({
     id:['',Validators.required],
   })
   
@@ -81,6 +89,8 @@ export class ProjectInfoComponent implements OnInit {
   private _changeProjectManager:Subscription = new Subscription()
   private _changeCategoryManager:Subscription = new Subscription()
   private _saveProjectUpdatedDetails:Subscription = new Subscription()
+  private _saveDependenciesDetails:Subscription = new Subscription()
+  private _getAllDependenciesWithOutConflictSubscription:Subscription = new Subscription()
   
 
 
@@ -158,6 +168,8 @@ export class ProjectInfoComponent implements OnInit {
     this._updateTaskById.unsubscribe()
     this._updateTaskStatus.unsubscribe()
     this._retrieveAllInfoDependencySubscription.unsubscribe()
+    this._getAllDependenciesWithOutConflictSubscription.unsubscribe()
+    this._saveDependenciesDetails.unsubscribe()
   }
 
   getAllInformationOfProject(){
@@ -345,6 +357,36 @@ export class ProjectInfoComponent implements OnInit {
 
   closeChangeProjectForm(){
     this.isChangeProjectForm = false
+  }
+
+  openDependenciesForm(){
+    this.isShowDependenciesForm = true
+    this._getAllDependenciesWithOutConflictSubscription = this._dependencyService.getDependenciesWithoutConflict(this._routes.snapshot.paramMap.get('id')).subscribe((res)=>{
+      this.dependencies = res
+    })
+  }
+
+  submitAddDependencies(){
+    this.isShowAddDependenciesFormAnimationBtn = true
+    if(this.addDependenciesFormGroup.valid){
+      this._saveDependenciesDetails = this._dependencyService.addDependencies(this._routes.snapshot.paramMap.get('id'),this.addDependenciesFormGroup.value).subscribe(()=>{
+        this.isShowAddDependenciesFormAnimationBtn = false
+        this._toastr.success("Dependencies successfully added!")
+        this.closeDependenciesForm()
+        this.getAllInformationOfProject()
+        this.addDependenciesFormGroup.reset()
+      },(err)=>{
+        this.isShowAddDependenciesFormAnimationBtn = false
+        this._toastr.warning(err.error.detail)
+      })
+    }else{
+      this.isShowAddDependenciesFormAnimationBtn = false
+      this._toastr.warning("Invalid Inputs!")
+    }
+  }
+
+  closeDependenciesForm(){
+    this.isShowDependenciesForm = false
   }
 
   switch(nav:string){

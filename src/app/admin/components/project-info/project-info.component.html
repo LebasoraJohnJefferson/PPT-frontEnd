@@ -66,7 +66,7 @@
                 </div>
                 <div *ngIf="!isChangeMemberLoadingAnimation" class="w-full mt-3 mt-2">
                     <div class="flex">
-                        <small class="ml-2 cursor-pointer bg-purple-700 text-white font-bold rounded hover:bg-purple-500 px-3 py-2">Add Project Dependency</small>
+                        <small (click)="openDependenciesForm()" class="ml-2 cursor-pointer bg-purple-700 text-white font-bold rounded hover:bg-purple-500 px-3 py-2">Add Project Dependency</small>
                     </div>
                     <div *ngIf="!loadingDependenciesData">
                         <app-dependency-chart [dataOfDependency]="dataOfDependency"></app-dependency-chart>
@@ -129,8 +129,8 @@
                 <div class="flex flex-col items-center w-full border-2 mx-1  shadow-md rounded lg:overflow-y-scroll">
                     <h2 class="flex font-bold py-1">Project Information</h2>
                     <div *ngIf="!isChangeProjectForm && !isChangeProjectLoadingAnimation" class="grid gird-row-4 w-full gap-5 px-5  mt-5">
-                        <div class="flex justify-center items-center">
-                            <app-doughnut-charts></app-doughnut-charts>
+                        <div *ngIf="tasks.length != 0" class="flex justify-center items-center">
+                            <app-doughnut-charts [tasks]="tasks"></app-doughnut-charts>
                         </div>
                         <div>
                             <div class="flex items-center">
@@ -724,4 +724,32 @@
             </form>
         </div>
     </div>
+
+    <div *ngIf="isShowDependenciesForm" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
+        <div class="bg-white rounded w-96 flex flex-col">
+            <form class="px-3" [formGroup]="addDependenciesFormGroup" (ngSubmit)="submitAddDependencies()">
+                <div class="flex w-full justify-end">
+                    <div class="p-2 font-bold hover:text-red-500 text-red-700 cursor-pointer" (click)="closeDependenciesForm()">X</div>
+                </div>
+                <small class="ml-9 py-1">Project Dependencies:</small>
+                <div class="flex items-center justify-center">
+                    <i class="fa-solid fa-diagram-project text-xl mr-3"></i>
+                    <mat-form-field class="w-full relative flex justify-center items-center h-12 relative">
+                        <mat-select  formControlName="id" multiple class="w-full py-1 border shadow-lg bg-gray-50 rounded w-full -top-3 h-10 absolute">
+                            <mat-option *ngFor="let dependency of dependencies" [value]="dependency.id">{{dependency.projectName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="!isShowAddDependenciesFormAnimationBtn" class="flex w-full items-center justify-center">
+                    <button class="w-48 py-1 rounded bg-green-700 mb-2 text-white font-bold" type="submit">Add Dependencies</button>
+                </div>
+                <div *ngIf="isShowAddDependenciesFormAnimationBtn" class="flex w-full items-center justify-center">
+                    <div class="w-48 flex items-center justify-center px-3 py-1 rounded bg-green-700 mb-2"><mat-spinner [diameter]="25"></mat-spinner></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    
 </div>

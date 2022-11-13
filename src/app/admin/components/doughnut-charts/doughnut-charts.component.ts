@@ -1,5 +1,5 @@
 import { Chart,registerables  } from 'chart.js';
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild,Input } from '@angular/core';
 
 @Component({
   selector: 'app-doughnut-charts',
@@ -7,11 +7,29 @@ import { Component, OnInit,ViewChild } from '@angular/core';
   styleUrls: ['./doughnut-charts.component.css']
 })
 export class DoughnutChartsComponent implements OnInit {
+  @Input() tasks:any=[]
   canvas: any;
+  data:any=[]
   ctx: any;
   @ViewChild('mychart2') mychart2:any;
 
+  
+  constructor() { 
+    Chart.register(...registerables);
+  }
+  ngOnInit(): void {
+    
+  }
+
   ngAfterViewInit() {
+    let count = 0
+    this.tasks.forEach((data:any)=>{
+      if(data.status == 'done'){
+        count+=1
+      }
+    })
+    this.data = [count,this.tasks.length-count]
+
     this.canvas = this.mychart2.nativeElement; 
     this.ctx = this.canvas.getContext('2d');
 
@@ -23,7 +41,7 @@ export class DoughnutChartsComponent implements OnInit {
           'Pending'
         ],
         datasets: [{
-          data: [30, 70],
+          data: this.data,
           backgroundColor: [
             "#23C403",
             "#C20712",
@@ -46,7 +64,7 @@ export class DoughnutChartsComponent implements OnInit {
                 dataArr.map(data => {
                     sum += Number(data);
                 });
-                let percent = (parseInt(value) * 100 / sum)
+                let percent = (parseInt(value) * 100 / sum).toFixed(2)
                 let percentage = `${percent}%`;
                 return label + ": " + percentage;
               }
@@ -57,10 +75,5 @@ export class DoughnutChartsComponent implements OnInit {
   });
   }
 
-  constructor() { 
-    Chart.register(...registerables);
-  }
-  ngOnInit(): void {
-  }
 
 }
