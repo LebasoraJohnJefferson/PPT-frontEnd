@@ -17,8 +17,11 @@ export class AuthUser {
     return this._http.post(`${this.baseURL}/users`,details)
   }
 
-  RegisterUserByAdmin(details:AuthInterface):Observable<any>{
-    return this._http.post(`${this.baseURL}/users/admin`,details)
+  RegisterUserByAdmin(details:any,file:File):Observable<any>{
+    const formData = new FormData()
+    if(file) formData.append("file", file, file.name);
+    formData.append("form",JSON.stringify(details))
+    return this._http.post(`${this.baseURL}/users/admin`,formData)
   }
   
   LoginUser(details:AuthInterface2):Observable<ResponseToken>{

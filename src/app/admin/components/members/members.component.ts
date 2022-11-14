@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MembersService } from 'src/app/service/members.service';
 import moment from 'moment';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-members',
@@ -12,7 +13,11 @@ import moment from 'moment';
   styleUrls: ['./members.component.css']
 })
 export class MembersComponent implements OnInit {
+  defaultProfile:string = environment.default_profile
+  onLoadFile:any;
+  hostingName:string = environment.baseURL
   members:any = []
+  uploadFile:any
   memberId:number = 0
   memberName:string = ''
   spinnerDeclineTrigger:number = 0
@@ -34,6 +39,7 @@ export class MembersComponent implements OnInit {
   });
 
   secondFormGroup: FormGroup = this._formBuilder.group({
+    image:[''],
     fullName: ['',[Validators.required]],
     address:['',[Validators.required]],
     birthDay:['',[Validators.required]],
@@ -77,6 +83,7 @@ export class MembersComponent implements OnInit {
     this._getAllMemberSubscription = this._memberService.getAllMembers().subscribe((res)=>{
       this.loadingQuery =false
       this.members = res
+      console.log(res)
       let filterEvent = this.selectSortCategoryFormGroup.controls.category.value
       if(filterEvent != 'All'){
         if(this.members.length == 0 ) return
@@ -162,7 +169,8 @@ export class MembersComponent implements OnInit {
       let bDayTemp = moment(bDay).local().format('YYYY-MM-DD 00:00:00');
       this.secondFormGroup.value.birthDay= bDayTemp
       let submitInfo = Object.assign({}, this.firstFormGroup.value, this.secondFormGroup.value);
-      this._registerSubscription = this._authService.RegisterUserByAdmin(submitInfo).subscribe((res)=>{
+      this._registerSubscription = this._authService.RegisterUserByAdmin(submitInfo,this.uploadFile)
+      .subscribe((res)=>{
         this.toastr.success("Created member successfully")
         this.isRegisterButton = false
         this.registerFormBtn()
@@ -179,6 +187,35 @@ export class MembersComponent implements OnInit {
       this.isRegisterButton = false
       this.toastr.warning("Invalid Inputs")
     }
+  }
+
+  onChange(event:any){
+    if(event.target.files[0]){
+      this.uploadFile = event.target.files[0]
+    }
+    if(!event.target.files[0] || event.target.files[0].length == 0) {
+			this.toastr.warning('You must select an image');
+			return;
+		}
+
+		var mimeType = event.target.files[0].type;
+
+		if (mimeType.match(/image\/*/) == null) {
+      this.toastr.warning("Only images are supported")
+			return;
+		}
+
+		var reader = new FileReader();
+		reader.readAsDataURL(event.target.files[0]);
+
+		reader.onload = (_event) => {
+			this.onLoadFile = `${reader.result}` 
+		}
+  }
+
+  imgProfileBtn(){
+    let element: HTMLElement = document.querySelector('input[type="file"]') as HTMLElement;
+    if (element) element.click();
   }
 
 }
