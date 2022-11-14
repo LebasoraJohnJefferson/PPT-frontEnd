@@ -29,6 +29,7 @@ export class DependencyChartComponent implements OnInit {
     this.done = this.dataOfDependency.temp_2
   }
 
+
   ngAfterViewInit() {
     this.canvas = this.mychart.nativeElement; 
     this.ctx = this.canvas.getContext('2d');
@@ -37,11 +38,6 @@ export class DependencyChartComponent implements OnInit {
       options:{
         indexAxis: 'y',
         responsive: true,
-        onClick: (event:any,i) => {
-          if(i.length != 0){
-            console.log(this.chart.data.labels[i[0].index])
-          }
-        },
         plugins:{
           title:{
             display:true,

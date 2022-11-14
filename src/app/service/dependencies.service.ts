@@ -24,5 +24,9 @@ export class DependenciesService {
     return this._http.post(`${this.baseURL}/dependencies/add_dependencies/${project_id}`,details)
   }
 
+  removalOfDependencyById(id:any):Observable<any>{
+    return this._http.delete(`${this.baseURL}/dependencies/${id}`)
+  }
+
 
 }

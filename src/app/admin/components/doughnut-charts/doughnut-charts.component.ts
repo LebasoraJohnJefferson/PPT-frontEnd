@@ -7,7 +7,7 @@ import { Component, OnInit,ViewChild,Input } from '@angular/core';
   styleUrls: ['./doughnut-charts.component.css']
 })
 export class DoughnutChartsComponent implements OnInit {
-  @Input() tasks:any=[]
+  @Input() tasks:any=[] 
   canvas: any;
   data:any=[]
   ctx: any;

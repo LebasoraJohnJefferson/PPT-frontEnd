@@ -52,6 +52,7 @@ export class ProjectInfoComponent implements OnInit {
   isShowAddManagerForm:boolean = false
   isShowAddDependenciesFormAnimationBtn:boolean = false
   isSwitch:boolean = true
+  isShowDependenciesRemove:boolean = false
     
   memberAddFormGroup:FormGroup = this._formBuilder.group({
     teamMembers:['',Validators.required],
@@ -91,6 +92,7 @@ export class ProjectInfoComponent implements OnInit {
   private _saveProjectUpdatedDetails:Subscription = new Subscription()
   private _saveDependenciesDetails:Subscription = new Subscription()
   private _getAllDependenciesWithOutConflictSubscription:Subscription = new Subscription()
+  private _removalOfDependencySubscription:Subscription = new Subscription()
   
 
 
@@ -170,6 +172,7 @@ export class ProjectInfoComponent implements OnInit {
     this._retrieveAllInfoDependencySubscription.unsubscribe()
     this._getAllDependenciesWithOutConflictSubscription.unsubscribe()
     this._saveDependenciesDetails.unsubscribe()
+    this._removalOfDependencySubscription.unsubscribe()
   }
 
   getAllInformationOfProject(){
@@ -188,6 +191,7 @@ export class ProjectInfoComponent implements OnInit {
     this._retrieveAllInfoDependencySubscription = this._dependencyService.getAllDependenciesByProjectId(this._routes.snapshot.paramMap.get('id')).subscribe((res)=>{
       this.loadingDependenciesData = false
       this.dataOfDependency = res
+      this.dependencies = res.Projects
     },()=>{
       this.loadingDependenciesData=false
     })
@@ -387,6 +391,26 @@ export class ProjectInfoComponent implements OnInit {
 
   closeDependenciesForm(){
     this.isShowDependenciesForm = false
+  }
+
+  openRemovalOfDependencies(){
+    this.isShowDependenciesRemove=true
+    console.log(this.dependencies)
+  }
+
+  commitRemovalOfDependencyById(id:any,name:any){
+    this._removalOfDependencySubscription = this._dependencyService.removalOfDependencyById(id)
+    .subscribe(()=>{
+      this._toastr.success(`Successfully remove ${name}`)
+      this.getAllInformationOfProject()
+      this.closeRemovalOfDependencies()
+    },(err)=>{
+      this._toastr.warning(err.error.detail)
+    })
+  }
+
+  closeRemovalOfDependencies(){
+    this.isShowDependenciesRemove = false
   }
 
   switch(nav:string){
