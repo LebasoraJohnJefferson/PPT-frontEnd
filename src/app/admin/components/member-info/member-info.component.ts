@@ -188,7 +188,10 @@ export class MemberInfoComponent implements OnInit {
       this._updateProfileSubscription = this._authService.UpdateUser(this.uploadFile,submitInfo,this._routes.snapshot.paramMap.get('id'))
       .subscribe(()=>{
         this.closeEdit()
+        this.getMemberProfileById()
+        this.isUpdateButton=false
       },(err)=>{
+        this.isUpdateButton=false
         this.toastr.warning(err.error.detail)
       })
     }

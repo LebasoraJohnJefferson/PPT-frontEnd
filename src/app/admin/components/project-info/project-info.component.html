@@ -24,7 +24,8 @@
                     <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" [theme]="{'background-color': '#A2ACA5'}" class="pt-2 w-40" animation="progress"></ngx-skeleton-loader>
                     <h2 *ngIf="!isChangeMemberLoadingAnimation" class="flex font-bold py-1 text-purple-900">Manager Information</h2>
                     <div class="grid grid-cols-2">
-                        <img  *ngIf="!isChangeMemberLoadingAnimation"  [src]="defaultProfilePicture" class="rounded-full w-24 h-24" alt="profile">
+                        <img  *ngIf="!isChangeMemberLoadingAnimation"  [src]="projectInfo.Manager.managerDetails.image ? hostingName+'/users/profiles/'+projectInfo.Manager.managerDetails.image : defaultProfilePicture" class="shdow-md border-2 border-blue-700 rounded-full w-24 h-24" alt="profile">
+                        
                         <ngx-skeleton-loader *ngIf="isChangeMemberLoadingAnimation" animation="progress" count="1" appearance="circle" [theme]="{
                             height: '100px',
                             width:'100px',
@@ -97,7 +98,7 @@
                                 <div class="absolute flex w-full justify-end">
                                     <small (click)="removeMemberById(member.id,member.membersDetails.fullName)" class="bg-red-700 cursor-pointer hover:bg-red-500 text-xs p-1 px-2 shadow-md  text-white justify-center items-center flex rounded-full">X</small>
                                 </div>
-                                <img [src]="defaultProfilePicture" alt="profile" class="shadow-md rounded-full w-full h-full">
+                                <img [src]="member.membersDetails.image ? hostingName+'/users/profiles/'+member.membersDetails.image : defaultProfilePicture" alt="profile" class="shadow-md rounded-full w-full h-full shadow-md border-2 border-blue-700">
                             </div>
                             <div class="flex mt-1">
                                 <small routerLink="/dashboard/members/{{member.membersDetails.id}}" class="truncate w-20 py-1 px-2 rounded text-white font-bold cursor-pointer hover:bg-black bg-transparent-black ">
