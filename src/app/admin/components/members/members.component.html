@@ -63,8 +63,12 @@
             <ng-template matStepLabel><div class="text-black">Personal Details</div></ng-template>
             <input class="hidden" formControlName="image" type="file" (change)="onChange($event)">
             <div class="w-full flex flex-col items-center mr-10">
-                <img [src]="onLoadFile ? onLoadFile : defaultProfile" (click)="imgProfileBtn()" class="h-20 w-20 rounded-full shadow-lg border-2 border-blue-500" alt="profile">
-                <small class="font-bold pt-3">Select profile picture</small>
+                <div class="flex w-full relative items-center justify-center">
+                    <img [src]="onLoadFile ? onLoadFile : defaultProfile" class="h-20 w-20 rounded-full shadow-lg border-2 border-blue-500" alt="profile">
+                    <div class="absolute -bottom-2 ml-12">
+                        <i (click)="imgProfileBtn()" class="fa-solid fa-camera text-xl bg-white px-1 shadow-md border-2 border-blue-700 hover:bg-gray-50 cursor-pointer rounded-full text-black"></i>
+                    </div>
+                </div>
             </div>
             <small class="ml-9 pt-1">Full Name</small>
             <div class="flex my-1">
@@ -111,7 +115,7 @@
                 <small [ngClass]="member.isManager ? 'm-1 px-3 py-1 rounded bg-yellow-700 text-white ' : 'm-1 px-3 py-1 rounded bg-gray-700 text-white ' ">{{member.isManager ? 'Manager' : 'User'}}</small>
             </div>
             <div class="flex justify-center items-center flex-col p-2">
-                <img class="w-16 h-16 rounded-full" [src]="member.details.image ? hostingName+'/users/profiles/'+member.details.image : defaultProfile" alt="profile" />
+                <img class="w-16 h-16 rounded-full shadow-lg border-2 border-blue-700" [src]="member.details.image ? hostingName+'/users/profiles/'+member.details.image : defaultProfile" alt="profile" />
                 <p>{{member.details.fullName | titlecase}}</p>
             </div>
 

@@ -37,10 +37,10 @@ export class AuthUser {
     return this._http.get<any>(`${this.baseURL}/users`)
   }
 
-  UpdateUser(file:File,form:any):Observable<string>{
+  UpdateUser(file:File,form:any,id:any):Observable<string>{
     const formData = new FormData()
     if(file) formData.append("file", file, file.name);
     formData.append("form",JSON.stringify(form))
-    return this._http.put<string>(`${this.baseURL}/users`,formData)
+    return this._http.put<string>(`${this.baseURL}/users/admin/${id}`,formData)
   }
 }

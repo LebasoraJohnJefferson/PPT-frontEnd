@@ -26,7 +26,6 @@ export class BarChartsComponent implements OnInit {
 
   ngAfterViewInit(){
     this.projectInfo.forEach((data:any)=>{
-      console.log(data)
       this.projectLabel.push(data.Project.projectName)
       this.numberOfTask.push(data.numberOfTask)
       this.numberOfTaskDone.push(data.numberOfTaskDone)

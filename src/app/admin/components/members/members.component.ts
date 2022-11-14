@@ -14,8 +14,8 @@ import { environment } from 'src/environments/environment';
 })
 export class MembersComponent implements OnInit {
   defaultProfile:string = environment.default_profile
-  onLoadFile:any;
   hostingName:string = environment.baseURL
+  onLoadFile:any;
   members:any = []
   uploadFile:any
   memberId:number = 0
@@ -83,7 +83,6 @@ export class MembersComponent implements OnInit {
     this._getAllMemberSubscription = this._memberService.getAllMembers().subscribe((res)=>{
       this.loadingQuery =false
       this.members = res
-      console.log(res)
       let filterEvent = this.selectSortCategoryFormGroup.controls.category.value
       if(filterEvent != 'All'){
         if(this.members.length == 0 ) return
