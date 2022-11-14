@@ -13,8 +13,13 @@ export class DashboardOverviewComponent implements OnInit {
     'joined':0,
     'joining':0
   }
+  projectDone:number = 0
   managerCount:number = 0
+  projectDetails:any =[]
+  hasProject:boolean = false
   private _countStatus:Subscription = new Subscription()
+  private _countManager:Subscription = new Subscription()
+  private _projectDetails:Subscription = new Subscription()
 
 
   constructor(
@@ -28,6 +33,8 @@ export class DashboardOverviewComponent implements OnInit {
 
   ngOnDestroy() {
     this._countStatus.unsubscribe()
+    this._countManager.unsubscribe()
+    this._projectDetails.unsubscribe()
   }
 
   getAllMemberCount(){
@@ -36,8 +43,17 @@ export class DashboardOverviewComponent implements OnInit {
     },(err)=>{
       console.log(err)
     })
-    this._dashboardService.getCountOfProjectManager().subscribe((res)=>{
+    this._countManager = this._dashboardService.getCountOfProjectManager().subscribe((res)=>{
       this.managerCount = res.managerCount
+    })
+    this._projectDetails = this._dashboardService.getAllProject().subscribe((res)=>{
+      this.projectDetails=res
+      this.projectDetails.forEach((data:any)=>{
+        if (data.numberOfTask == data.numberOfTaskDone){
+          this.projectDone+=1
+        }
+      })
+      this.hasProject = true
     })
   }
 

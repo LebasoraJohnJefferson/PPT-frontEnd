@@ -21,4 +21,8 @@ export class DashboardService {
     return this._http.get(`${this.baseURL}/dashboard/projectManager`)
   }
 
+  getAllProject():Observable<any>{
+    return this._http.get(`${this.baseURL}/dashboard/projectDetails`)
+  }
+
 }

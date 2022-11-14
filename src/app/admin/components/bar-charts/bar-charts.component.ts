@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild  } from '@angular/core';
+import { Component, OnInit,ViewChild,Input  } from '@angular/core';
 import { Chart,registerables  } from 'chart.js';
 
 
@@ -8,9 +8,14 @@ import { Chart,registerables  } from 'chart.js';
   styleUrls: ['./bar-charts.component.css']
 })
 export class BarChartsComponent implements OnInit {
+  @Input() projectInfo:any=[];
   canvas: any;
   ctx: any;
-  @ViewChild('mychart') mychart:any;
+  projectLabel:string[] = []
+  numberOfTask:number[] = []
+  numberOfTaskDone:number[] = []
+  @ViewChild('mychart3') mychart3:any;
+  
   constructor() {
     Chart.register(...registerables);
   }
@@ -19,8 +24,14 @@ export class BarChartsComponent implements OnInit {
     
   }
 
-  ngAfterViewInit() {
-    this.canvas = this.mychart.nativeElement; 
+  ngAfterViewInit(){
+    this.projectInfo.forEach((data:any)=>{
+      console.log(data)
+      this.projectLabel.push(data.Project.projectName)
+      this.numberOfTask.push(data.numberOfTask)
+      this.numberOfTaskDone.push(data.numberOfTaskDone)
+    })
+    this.canvas = this.mychart3.nativeElement; 
     this.ctx = this.canvas.getContext('2d');
     new Chart(this.ctx, {
       type: 'bar',
@@ -39,15 +50,15 @@ export class BarChartsComponent implements OnInit {
         }
       },
       data: {
-        labels: ["Project 1", "Project 2", "Project 3", "Project 4", "Project 5", "Project 6"],
+        labels: this.projectLabel,
         datasets: [{
           label: 'task already done',
-          data: [8, 15, 3, 5, 5, 8],
+          data: this.numberOfTask,
           borderColor: 'pink',
           backgroundColor: ["#800080"],
         },{
           label: 'Number of Task',
-          data: [10, 20, 4, 5, 8, 10],
+          data: this.numberOfTaskDone,
           borderColor: 'pink',
           backgroundColor: ["#009580"],
         }
