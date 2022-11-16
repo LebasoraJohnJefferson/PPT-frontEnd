@@ -16,6 +16,10 @@ export class MembersService {
     return this._http.get(`${this.baseURL}/members`)
   }
 
+  getAllMembersByMemberID(id:any):Observable<any>{
+    return this._http.get(`${this.baseURL}/members/project_joined/${id}`)
+  }
+
   deleteMembers(id:any):Observable<any>{
     return this._http.delete(`${this.baseURL}/members/${id}`)
   }

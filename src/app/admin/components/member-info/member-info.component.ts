@@ -20,6 +20,7 @@ export class MemberInfoComponent implements OnInit {
   userDetail:any;
   birthDay:any;
   Age:any;
+  project_list:any=[]
   uploadFile:any;
   onLoadFile:any;
   dataLoader:boolean = true
@@ -50,6 +51,8 @@ export class MemberInfoComponent implements OnInit {
   private _acceptMemberSubscription:Subscription = new Subscription()
   private _memberProfileSubscription:Subscription = new Subscription()
   private _updateProfileSubscription:Subscription = new Subscription()
+  private _getProjectByUserIdSubscription:Subscription = new Subscription()
+
   constructor(
     private toastr:ToastrService,
     private _memberService:MembersService,
@@ -59,6 +62,7 @@ export class MemberInfoComponent implements OnInit {
     private _authService:AuthUser
   ) { 
     this.getMemberProfileById()
+    this.getProjectJoined()
   }
 
   ngOnInit(): void {
@@ -69,6 +73,13 @@ export class MemberInfoComponent implements OnInit {
     this._acceptMemberSubscription.unsubscribe()
     this._memberProfileSubscription.unsubscribe()
     this._updateProfileSubscription.unsubscribe()
+    this._getProjectByUserIdSubscription.unsubscribe()
+  }
+
+  getProjectJoined(){
+    this._getProjectByUserIdSubscription = this._memberService.getAllMembersByMemberID(this._routes.snapshot.paramMap.get('id')).subscribe((res)=>{
+      this.project_list=res
+    })
   }
 
 

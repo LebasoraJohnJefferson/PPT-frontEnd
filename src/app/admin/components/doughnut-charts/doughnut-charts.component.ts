@@ -28,24 +28,27 @@ export class DoughnutChartsComponent implements OnInit {
         count+=1
       }
     })
-    this.data = [count,this.tasks.length-count]
-
+    let label:any=[]
+    let color:any=[]
+    if(count==this.tasks.length-count && count == 0 ){
+      label =['No Tasks']
+      color = ['#83797A','#C20712']
+      this.data = [1,0]
+    }else{
+      color = ["#23C403","#C20712",]
+      label = ['Task done','Pending']
+      this.data = [count,this.tasks.length-count]
+    }
     this.canvas = this.mychart2.nativeElement; 
     this.ctx = this.canvas.getContext('2d');
 
     new Chart(this.ctx, {
       type: 'doughnut',
       data: {
-        labels: [
-          'Task done',
-          'Pending'
-        ],
+        labels: label,
         datasets: [{
           data: this.data,
-          backgroundColor: [
-            "#23C403",
-            "#C20712",
-          ],
+          backgroundColor: color,
           hoverOffset: 7
         }]
       },options:{
