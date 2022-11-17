@@ -131,7 +131,7 @@
                 <div class="flex flex-col items-center w-full border-2 mx-1  shadow-md rounded lg:overflow-y-scroll">
                     <h2 class="flex font-bold py-1">Project Information</h2>
                     <div *ngIf="!isChangeProjectForm && !isChangeProjectLoadingAnimation" class="grid gird-row-4 w-full gap-5 px-5  mt-5">
-                        <div *ngIf="tasks.length != 0" class="flex justify-center items-center">
+                        <div *ngIf="isShowTask" class="flex justify-center items-center">
                             <app-doughnut-charts [tasks]="tasks"></app-doughnut-charts>
                         </div>
                         <div>

@@ -35,6 +35,7 @@ export class ProjectInfoComponent implements OnInit {
   age:any= 0
   birthDay:any = 0
   totalBudgetUsed:any = 0
+  isShowTask:boolean=true
   isMemberPlaceHolderAnimation:boolean = true
   isRemoveMemberConfirmation:boolean = false
   loadingDependenciesData:boolean = false
@@ -486,9 +487,11 @@ export class ProjectInfoComponent implements OnInit {
   }
 
   getTasks(){
+    this.isShowTask=false
     this._getAllTask = this._taskService.getAllTask(this._routes.snapshot.paramMap.get('id'))
     .subscribe((res)=>{
       this.tasks = res
+      this.isShowTask = true
       let temp_pending:any = []
       let temp_onGoing:any = []
       let temp_done:any = []

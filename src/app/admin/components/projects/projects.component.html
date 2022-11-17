@@ -136,14 +136,16 @@
                     <td *ngIf="!isShowFakeArray" class="pl-2 truncate">
                         {{data.Manager.managerDetails.fullName}}
                     </td>
-                    <td *ngIf="!isShowFakeArray && data.status=='delay'" class="flex justify-center w-full items-center">
-                        <small class="bg-red-700 text-white w-full h-full justify-center items-center flex">{{data.status}}</small>
-                    </td>
-                    <td *ngIf="!isShowFakeArray && data.status=='ongoing'" class="flex justify-center w-full items-center">
-                        <small class="bg-green-700 text-white w-full h-full justify-center items-center flex">on going</small>
-                    </td>
-                    <td *ngIf="!isShowFakeArray && data.status=='pending'" class="flex justify-center w-full items-center">
-                        <small class="bg-blue-700 text-white w-full h-full justify-center items-center flex">{{data.status}}</small>
+                    <td *ngIf="!isShowFakeArray" 
+                    [ngClass]="{
+                        'bg-green-600 text-white w-full h-full border-white justify-center items-center flex':data.projectStatus == 'done',
+                        'bg-blue-600 text-white w-full h-full justify-center items-center flex':data.projectStatus == 'normal',
+                        'bg-red-600 text-white w-full h-full justify-center items-center flex':data.projectStatus == 'delay',
+                        'bg-yellow-600 text-white w-full h-full justify-center items-center flex':data.projectStatus == 'soonToEnd'
+                    }">
+                        <small 
+                        class="flex items-center justify-center text-white h-full w-full"
+                        >{{data.projectStatus}}</small>
                     </td>
                     <td *ngIf="!isShowFakeArray" class="flex  items-center w-full relative">
                         <small class="text-xm z-10">{{data.Project.kickOff | date: 'mediumDate'}} - {{data.Project.dueDate | date: 'mediumDate'}}</small>

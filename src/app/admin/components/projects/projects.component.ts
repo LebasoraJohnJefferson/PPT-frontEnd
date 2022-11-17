@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup,Validators} from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { ProjectService } from 'src/app/service/project.service';
+import { TasksService } from 'src/app/service/tasks.service';
 import moment from 'moment';
 
 @Component({
@@ -18,6 +19,9 @@ export class ProjectsComponent implements OnInit {
   managers:any = []
   members: any = []
   projects: any = []
+  tasks: any = []
+  data: any = []
+  projectStatus:string = ''
   projectDetails: any = []
   showConformationToDelete:boolean = false
   loadingDeleteBtn:boolean = false
@@ -29,6 +33,7 @@ export class ProjectsComponent implements OnInit {
   private _SaveProjectSubscription:Subscription = new Subscription()
   private _projectDetailsSubscription:Subscription = new Subscription()
   private _deleteProjectById:Subscription = new Subscription()
+  private _getAllTask:Subscription = new Subscription()
 
 
   projectFormGroup:FormGroup = this._formBuilder.group({
@@ -46,6 +51,7 @@ export class ProjectsComponent implements OnInit {
     private _formBuilder:FormBuilder,
     private _toastr:ToastrService,
     private _projectService:ProjectService,
+    private _taskService:TasksService
   ) {
     this.getAllDetails()
     this.getAllProjectDetails()
@@ -60,26 +66,58 @@ export class ProjectsComponent implements OnInit {
     this._SaveProjectSubscription.unsubscribe()
     this._projectDetailsSubscription.unsubscribe()
     this._deleteProjectById.unsubscribe()
+    this._getAllTask.unsubscribe()
   }
 
   showProjectForm(){
     this.isShowProjectForm = !this.isShowProjectForm
   }
-  
-  getAllProjectDetails(){
+
+  async getAllProjectDetails(){
     this.isShowFakeArray = true
-    this._projectDetailsSubscription = this._projectService.getAllProjectDetails().subscribe((res)=>{
+    this._projectDetailsSubscription = await this._projectService.getAllProjectDetails().subscribe((res)=>{
       this.projects = res
-      let temp:any = []
-      res.forEach((data:any)=>{
-        if (new Date(data.Project.kickOff) > new Date()){
-          data['status'] = 'pending'
-        }else if (new Date(data.Project.dueDate)> new Date()){
-          data['status'] = 'ongoing'
-        }else{
-          data['status'] = 'delay'
-        }
-        temp.push(data)
+      this.projects.forEach((data:any)=>{
+
+        this._getAllTask = this._taskService.getAllTask(data.Project.id).subscribe((res)=>{
+          this.tasks = res
+          let format = 'YYYY-MM-DD HH:mm:ss'
+          this.projectStatus = 'normal'
+          let count = 0
+          console.log(this.tasks.length)
+          this.tasks.forEach((data2:any)=>{
+            let TheDayBeforeDueDate = moment(data2.dueDate).subtract(1, 'days').startOf('day').format(format)
+            let dueDate = moment(data2.dueDate).format(format)
+            let today =  moment().format(format)
+            if(data2.status == 'done'){
+              count+=1
+            }
+            if(today > TheDayBeforeDueDate && today<dueDate && data2.status !="done"){
+              if(this.projectStatus == "normal" ){
+                this.projectStatus = 'soonToEnd'
+              }
+            }else if(TheDayBeforeDueDate<today && data2.status !="done"){
+              if(this.projectStatus == 'normal' || this.projectStatus == 'soonToEnd'){
+                this.projectStatus  = "delay"
+              }
+            }else{
+              if(this.projectStatus != 'soonToEnd' && this.projectStatus != 'delay'){
+                this.projectStatus = 'normal'
+              }
+            }
+          })
+          if(this.tasks.length == count){
+            this.projectStatus = "done"
+          }
+          if (new Date(data.Project.kickOff) > new Date()){
+            data['status'] = 'pending'
+          }else if (new Date(data.Project.dueDate)> new Date()){
+            data['status'] = 'ongoing'
+          }else{
+            data['status'] = 'delay'
+          }
+          data['projectStatus']=this.projectStatus
+        })
       })
       this.projectDetails = res
       this.isShowFakeArray = false
