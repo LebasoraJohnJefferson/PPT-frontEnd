@@ -33,6 +33,8 @@ import { ProjectInfoComponent } from './admin/components/project-info/project-in
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { DependencyChartComponent } from './admin/components/dependency-chart/dependency-chart.component';
 import { DoughnutChartsComponent } from './admin/components/doughnut-charts/doughnut-charts.component';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+
 
 const config: SocketIoConfig = { url: environment.baseURL,
     options: {
@@ -72,6 +74,7 @@ const config: SocketIoConfig = { url: environment.baseURL,
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
+    PdfViewerModule,
     NgxSkeletonLoaderModule,
     ToastrModule.forRoot({
       'preventDuplicates': true

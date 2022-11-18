@@ -106,15 +106,16 @@ export class ProjectsComponent implements OnInit {
               }
             }
           })
-          if(this.tasks.length == count){
-            this.projectStatus = "done"
-          }
           if (new Date(data.Project.kickOff) > new Date()){
             data['status'] = 'pending'
           }else if (new Date(data.Project.dueDate)> new Date()){
             data['status'] = 'ongoing'
           }else{
             data['status'] = 'delay'
+          }
+          if(this.tasks.length == count){
+            data['status'] = "done"
+            this.projectStatus = 'done'
           }
           data['projectStatus']=this.projectStatus
         })

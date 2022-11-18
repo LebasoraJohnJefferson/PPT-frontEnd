@@ -138,14 +138,15 @@
                     </td>
                     <td *ngIf="!isShowFakeArray" 
                     [ngClass]="{
-                        'bg-green-600 text-white w-full h-full border-white justify-center items-center flex':data.projectStatus == 'done',
+                        
                         'bg-blue-600 text-white w-full h-full justify-center items-center flex':data.projectStatus == 'normal',
                         'bg-red-600 text-white w-full h-full justify-center items-center flex':data.projectStatus == 'delay',
-                        'bg-yellow-600 text-white w-full h-full justify-center items-center flex':data.projectStatus == 'soonToEnd'
+                        'bg-yellow-600 text-white w-full h-full justify-center items-center flex':data.projectStatus == 'soonToEnd',
+                        'bg-green-600 text-white w-full h-full border-white justify-center items-center flex':data.projectStatus == 'done'
                     }">
                         <small 
                         class="flex items-center justify-center text-white h-full w-full"
-                        >{{data.projectStatus}}</small>
+                        >{{data.status}}</small>
                     </td>
                     <td *ngIf="!isShowFakeArray" class="flex  items-center w-full relative">
                         <small class="text-xm z-10">{{data.Project.kickOff | date: 'mediumDate'}} - {{data.Project.dueDate | date: 'mediumDate'}}</small>

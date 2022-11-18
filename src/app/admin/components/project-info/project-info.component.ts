@@ -456,7 +456,6 @@ export class ProjectInfoComponent implements OnInit {
           status="done"
         }
         this._updateTaskStatus = this._taskService.updateTaskStatus({"id":taskDragId,"status":status}).subscribe(()=>{
-          console.log('success')
           this.getTasks()
         },(err)=>{
           console.log('error')

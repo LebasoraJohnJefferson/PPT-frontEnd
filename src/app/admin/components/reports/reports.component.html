@@ -1,1 +1,18 @@
-<p>reports works!</p>
+<div class="overflow-y-hidden h-screen" *ngIf="!isLoadFile">
+    <div class="flex m-3">
+        <div (click)="clickDownLoadFile()" class=" px-3 cursor-pointer rounded shadow-lg py-1 bg-purple-900 hover:bg-purple-700 text-white">
+            <i class="fa-solid fa-download mr-2"></i>
+            <small>Download</small>
+        </div>
+    </div>
+    <div  class="flex items-center pt-2 justify-center w-full h-full border relative">
+        <pdf-viewer [src]="url"
+                    [render-text]="true"
+                    [original-size]="true"
+                    class="w-full h-screen"
+            ></pdf-viewer>
+    </div>
+</div>
+<div *ngIf="isLoadFile" class="flex items-center justify-center w-full h-full">
+    <mat-spinner class="m-auto flex w-full py-1" [diameter]="100"></mat-spinner>
+</div>
