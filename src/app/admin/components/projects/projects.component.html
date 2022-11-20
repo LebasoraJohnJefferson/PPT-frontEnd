@@ -1,14 +1,5 @@
 <div class="flex flex-col w-full h-full overflow-x-scroll relative">
-    <div class="p-3 flex w-full justify-between md:items-center md:flex-row flex-col"> 
-        <div class="flex justify-center items-center p-2 ">
-            <app-button-aside-open></app-button-aside-open>
-            <div class="text-2xl font-bold">Projects</div>
-        </div> 
-        <div class="flex h-8 justify-between rounded items-center shadow-md" id="search-container">
-            <input type="text" class=" ml-2" placeholder="Search..." id="search"/>
-            <i class="fa-sharp fa-solid fa-magnifying-glass px-1 text-md mr-2"></i>
-        </div>
-    </div>
+    <app-header [section]="'Projects'"></app-header>
     <div class="flex">
         <div (click)="showProjectForm()" [ngClass]="isShowProjectForm  ? 'flex items-center ml-5 mt-2 cursor-pointer bg-red-700 hover:bg-red-500 px-3 py-2 text-white rounded' : 'flex items-center ml-5 mt-2 cursor-pointer bg-purple-700 hover:bg-purple-500 px-3 py-2 text-white rounded'">
             <i class="fa-solid fa-pen-to-square"></i> <small class="ml-2">Create Project</small>
@@ -149,7 +140,7 @@
                         >{{data.status}}</small>
                     </td>
                     <td *ngIf="!isShowFakeArray" class="flex  items-center w-full relative">
-                        <small class="text-xm z-10">{{data.Project.kickOff | date: 'mediumDate'}} - {{data.Project.dueDate | date: 'mediumDate'}}</small>
+                        <small class="text-xm">{{data.Project.kickOff | date: 'mediumDate'}} - {{data.Project.dueDate | date: 'mediumDate'}}</small>
                     </td>
                     <td *ngIf="!isShowFakeArray" class="grid grid-cols-2">
                         <i routerLink="/dashboard/projects/{{data.Project.id}}" class="fa-solid fa-eye flex justify-center items-center text-blue-700 hover:text-blue-500 cursor-pointer"></i>

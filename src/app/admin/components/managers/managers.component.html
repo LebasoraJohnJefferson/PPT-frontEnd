@@ -1,14 +1,5 @@
 <div class="flex flex-col w-full h-full overflow-x-scroll">
-    <div class="p-3 flex w-full justify-between md:items-center md:flex-row flex-col"> 
-        <div class="flex justify-center items-center p-2 ">
-            <app-button-aside-open></app-button-aside-open>
-            <div class="text-2xl font-bold">Managers</div>
-        </div> 
-        <div class="flex h-8 justify-between rounded items-center shadow-md" id="search-container">
-            <input type="text" class=" ml-2" placeholder="Search..." id="search"/>
-            <i class="fa-sharp fa-solid fa-magnifying-glass px-1 text-md mr-2"></i>
-        </div>
-    </div>
+    <app-header [section]="'Managers'"></app-header>
     <div class="flex">
         <div (click)="showCreateManager()" [ngClass]="isShowCreateManager  ? 'flex items-center ml-5 mt-2 cursor-pointer bg-red-700 hover:bg-red-500 px-3 py-2 text-white rounded' : 'flex items-center ml-5 mt-2 cursor-pointer bg-purple-700 hover:bg-purple-500 px-3 py-2 text-white rounded'">
             <i class="fa-solid fa-chalkboard-user"></i><small class="ml-2">Create Project Manager</small>

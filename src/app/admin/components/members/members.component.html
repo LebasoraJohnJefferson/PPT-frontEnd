@@ -1,14 +1,5 @@
 <div class="flex flex-col w-full h-full overflow-x-scroll">
-    <div class="p-3 flex w-full justify-between md:items-center md:flex-row flex-col"> 
-        <div class="flex justify-center items-center p-2 ">
-            <app-button-aside-open></app-button-aside-open>
-            <div class="text-2xl font-bold">Members</div>
-        </div> 
-        <div class="flex h-8 justify-between rounded items-center shadow-md" id="search-container">
-            <input type="text" class=" ml-2" placeholder="Search..." id="search"/>
-            <i class="fa-sharp fa-solid fa-magnifying-glass px-1 text-md mr-2"></i>
-        </div>
-    </div>
+    <app-header [section]="'Members'"></app-header>
     <div class="flex">
         <div (click)="registerFormBtn()" [ngClass]="isRegisterFormOpen ? 'flex cursor-pointer items-center justify-center bg-red-700 hover:bg-red-500 px-3 text-white rounded ml-5 mt-2' : 'flex cursor-pointer items-center justify-center bg-purple-700 py-2 hover:bg-purple-500 px-3 text-white rounded ml-5 mt-2'">
             <i class="fa-solid fa-user-plus mr-2"></i>

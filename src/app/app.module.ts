@@ -34,6 +34,7 @@ import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { DependencyChartComponent } from './admin/components/dependency-chart/dependency-chart.component';
 import { DoughnutChartsComponent } from './admin/components/doughnut-charts/doughnut-charts.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { HeaderComponent } from './admin/components/header/header.component';
 
 
 const config: SocketIoConfig = { url: environment.baseURL,
@@ -66,6 +67,7 @@ const config: SocketIoConfig = { url: environment.baseURL,
     DateAgoPipe,
     DependencyChartComponent,
     DoughnutChartsComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

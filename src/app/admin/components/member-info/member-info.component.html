@@ -1,4 +1,4 @@
-<div class="flex flex-col h-full">
+<div class="flex flex-col h-full relative">
     <div class="flex flex-col h-full w-full" *ngIf="!dataLoader && userDetail">
         <app-back-btn></app-back-btn>
         <div class="grid grid-cols-1 md:grid-cols-2 bg-gray-500 text-white m-3 p-3 rounded">
@@ -139,7 +139,7 @@
         </div>
     </div>
 
-    <div *ngIf="isShowEditForm" class="fixed top-0 left-0 w-full h-full bg-transparent-black flex justify-center items-center">
+    <div *ngIf="isShowEditForm" class="absolute top-0 left-0 w-full h-screen bg-transparent-black flex justify-center items-center">
         <div class="bg-white rounded w-full  lg:w-96 py-3 flex flex-col">
             <div class="w-full flex items-center justify-center font-bold mt-2 relative">
                 <p>EDIT PROFILE INFO</p>

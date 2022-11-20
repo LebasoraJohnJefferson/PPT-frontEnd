@@ -1,4 +1,5 @@
 <div class="overflow-y-hidden h-screen" *ngIf="!isLoadFile">
+    <app-header [section]="'Reports'"></app-header>
     <div class="flex m-3">
         <div (click)="clickDownLoadFile()" class=" px-3 cursor-pointer rounded shadow-lg py-1 bg-purple-900 hover:bg-purple-700 text-white">
             <i class="fa-solid fa-download mr-2"></i>
