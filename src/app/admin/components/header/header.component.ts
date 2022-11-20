@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit {
   data:any=[]
   FakeArray = new Array(4)
   fetching:boolean = false
+  noData:boolean = false
   private _searchDataSubscription:Subscription = new Subscription()
   defaultProfile = environment.default_profile
   hostingName = environment.baseURL
@@ -33,12 +34,14 @@ export class HeaderComponent implements OnInit {
   }
 
   search(){
+    this.noData = false
     this.fetching = true
     if(this.searchFormGroup.valid){
       this._headerService.searchData(this.searchFormGroup.get('searchName')?.value).subscribe((res)=>{
         this.data=res
         if(res.projects.length == 0 && res.users.length == 0){
           this.data=[]
+          this.noData = true
         }
         this.fetching = false
       },()=>{
