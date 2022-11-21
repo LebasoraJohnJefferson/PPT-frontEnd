@@ -175,6 +175,7 @@ export class ProjectsComponent implements OnInit {
       this._SaveProjectSubscription = this._projectService.SaveProject(this.projectFormGroup.value).subscribe(()=>{
         this._toastr.success("Project successfully created!")
         this.getAllProjectDetails()
+        this.projectFormGroup.reset()
         this.isShowProjectForm = false
         this.loadingSubmitBtn = false
       },(err)=>{

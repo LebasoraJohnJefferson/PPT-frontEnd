@@ -7,15 +7,15 @@
         <input (input)="search()" formControlName="searchName" type="text" class="ml-2 w-full  bg-gray-50 " placeholder="Search..." id="search"/>
         <i class="fa-sharp fa-solid fa-magnifying-glass px-1 text-md mr-2"></i>
     </form>
-    <div *ngIf="data.length != 0" class="absolute w-full  top-12 px-2" >
-        <div class="w-full h-full bg-white  mt-2 border rounded shadow-md" id="heightDecider">
-            <div class="py-2 w-full border hover:bg-gray-100 cursor-pointer" *ngFor="let project of data.projects">
+    <div *ngIf="data.length != 0" class="absolute w-full px-2" id="headerPosition">
+        <div class="w-full h-full bg-white border mt-2 ring-black ring-opacity-5 rounded shadow-md" id="heightDecider">
+            <div class="py-2 w-full border ring-black ring-opacity-5 hover:bg-gray-100 cursor-pointer" *ngFor="let project of data.projects">
                 <div routerLink="/dashboard/projects/{{project.id}}" class="p-1 flex items-center">
                     <small class="px-2 py-1 bg-purple-700 mx-3 rounded text-white">Project: </small>
                     <div>{{project.projectName}}</div>
                 </div>
             </div>
-            <div class="py-2 w-full border hover:bg-gray-100 cursor-pointer" *ngFor="let users of data.users">
+            <div class="py-2 w-full border ring-black ring-opacity-5 hover:bg-gray-100 cursor-pointer" *ngFor="let users of data.users">
                 <div routerLink="/dashboard/members/{{users.id}}" class="p-1 flex items-center">
                     <img [src]="users.image ? hostingName+'/users/profiles/'+users.image : defaultProfile" class="h-10 w-10 mx-3 rounded-full border-2 border-blue-700 shadow-md" alt="profile">
                     <div>{{users.fullName}}</div>
@@ -23,9 +23,9 @@
             </div>
         </div>
     </div>
-    <div *ngIf="data.length == 0 && fetching" class="absolute w-full  top-12 px-2" >
-        <div class="w-full h-full bg-white  mt-2 border rounded shadow-md" id="heightDecider">
-            <div class="py-2 w-full border hover:bg-gray-100 cursor-pointer" *ngFor="let fake of FakeArray">
+    <div *ngIf="data.length == 0 && fetching" class="absolute w-full  px-2" id="headerPosition">
+        <div class="w-full h-full bg-white  mt-2 ring-black ring-opacity-5 rounded shadow-md" id="heightDecider">
+            <div class="py-2 w-full ring-black ring-opacity-5 hover:bg-gray-100 cursor-pointer" *ngFor="let fake of FakeArray">
                 <div  class="p-1 flex items-center">
                     <ngx-skeleton-loader class="flex w-10 mx-3 h-full" [theme]="{'background-color': '#A2ACA5'}" animation="progress"></ngx-skeleton-loader>
                     <ngx-skeleton-loader class="flex w-full h-full" [theme]="{'background-color': '#A2ACA5'}" animation="progress"></ngx-skeleton-loader>
@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="noData" class="absolute w-full  top-12 px-2" >
+    <div *ngIf="noData" class="absolute w-full px-2" id="headerPosition">
         <div class="w-full h-full bg-white  mt-2 border rounded shadow-md" id="heightDecider">
             <div class="py-2 w-full border hover:bg-gray-100 cursor-pointer">
                 <div  class="p-1 flex items-center">

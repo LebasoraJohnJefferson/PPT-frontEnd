@@ -1,4 +1,4 @@
-<div class="flex flex-col w-full h-full overflow-x-scroll">
+<div class="flex flex-col w-full">
     <app-header [section]="'Dashboard'"></app-header>
     <div routerLink="/dashboard/projects"   class="grid cursor-pointer md:grid-cols-3 grid-cols-1 gap-2 w-full p-3">
         <div class="flex md:flex-row flex-col rounded shadow-lg bg-red-700 text-white text-lg h-32 justify-center items-center">
@@ -19,7 +19,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="hasProject" class="h-full">
-        <app-bar-charts [projectInfo]="projectDetails"></app-bar-charts>
+    <div *ngIf="hasProject"  id="projectOverVIewSizeContainer">
+        <app-bar-charts class="w-screen border-2 shadow-md rounded" [projectInfo]="projectDetails"></app-bar-charts>
     </div>
 </div>
