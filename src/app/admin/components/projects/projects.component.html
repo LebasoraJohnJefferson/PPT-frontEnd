@@ -7,7 +7,7 @@
     </div>
 
     <!-- create project  -->
-    <div class="flex justify-center items-center w-full h-full">
+    <div class="flex justify-center overflow-x-auto items-center w-full h-full">
         <form *ngIf="isShowProjectForm" [formGroup]="projectFormGroup" (ngSubmit)="submitProject()"  action="POST" class="grid gap-2 w-3/4">
             <small class="ml-9 py-1">Project Name:</small>
             <div class="flex items-center">
@@ -90,28 +90,23 @@
         </form>
 
 
-        <div class="h-full w-full" *ngIf="!isShowProjectForm">
+        <div class="h-full w-screen" *ngIf="!isShowProjectForm">
             <table class="w-full mt-4">
                 <tr class="grid grid-cols-6 bg-gray-200 py-2">
                     <th class="flex justify-center items-center">
                         <small>Project Name</small>
-                        <i class="fa-solid fa-repeat ml-2"></i>
                     </th>
                     <th class="flex justify-center items-center">
                         <small>Project Category</small>
-                        <i class="fa-solid fa-repeat ml-2"></i>
                     </th>
                     <th class="flex justify-center items-center">
                         <small>Project Manager</small>
-                        <i class="fa-solid fa-repeat ml-2"></i>
                     </th>
                     <th class="flex justify-center items-center">
                         <small>Project Status</small>
-                        <i class="fa-solid fa-repeat ml-2"></i>
                     </th>
                     <th class="flex justify-center items-center">
                         <small>Project timeline</small>
-                        <i class="fa-solid fa-repeat ml-2"></i>
                     </th>
                     <th>
                         <small>Modify</small>
