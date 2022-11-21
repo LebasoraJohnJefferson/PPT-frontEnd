@@ -19,7 +19,8 @@ export class AsideComponent implements OnInit {
         this.router.url == '/dashboard/members' ||
         this.router.url == '/dashboard/managers' ||
         this.router.url == '/dashboard/reports' ||
-        this.router.url == '/dashboard/notification'
+        this.router.url == '/dashboard/notification' ||
+        this.router.url == '/dashboard/admin'
       ){
         this.nav = this.router.url
       }

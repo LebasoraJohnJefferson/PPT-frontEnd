@@ -35,6 +35,7 @@ import { DependencyChartComponent } from './admin/components/dependency-chart/de
 import { DoughnutChartsComponent } from './admin/components/doughnut-charts/doughnut-charts.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { HeaderComponent } from './admin/components/header/header.component';
+import { AdminComponent } from './admin/components/admin/admin.component';
 
 
 const config: SocketIoConfig = { url: environment.baseURL,
@@ -68,6 +69,7 @@ const config: SocketIoConfig = { url: environment.baseURL,
     DependencyChartComponent,
     DoughnutChartsComponent,
     HeaderComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule,

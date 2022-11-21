@@ -51,12 +51,12 @@ export class BarChartsComponent implements OnInit {
       data: {
         labels: this.projectLabel,
         datasets: [{
-          label: 'task already done',
+          label: 'Number of task',
           data: this.numberOfTask,
           borderColor: 'pink',
           backgroundColor: ["#800080"],
         },{
-          label: 'Number of Task',
+          label: 'Task already done',
           data: this.numberOfTaskDone,
           borderColor: 'pink',
           backgroundColor: ["#009580"],

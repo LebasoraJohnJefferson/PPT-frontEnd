@@ -14,6 +14,7 @@ import { StandardUserComponent } from '../pages/standard-user/standard-user.comp
 import { MemberInfoComponent } from '../admin/components/member-info/member-info.component';
 import { ManagersComponent } from '../admin/components/managers/managers.component';
 import { ProjectInfoComponent } from '../admin/components/project-info/project-info.component';
+import { AdminComponent } from '../admin/components/admin/admin.component';
 
 const routes:Routes = [
   {path:'',component:AuthComponent},
@@ -27,6 +28,7 @@ const routes:Routes = [
     { path: 'members/:id', component:MemberInfoComponent },
     { path: 'reports', component:ReportsComponent },
     { path: 'notification', component:NotificationComponent },
+    { path: 'admin', component:AdminComponent },
   ],
   canActivate: [AuthGuard]},
   {path:'members',component:StandardUserComponent,canActivate: [AuthGuard]},

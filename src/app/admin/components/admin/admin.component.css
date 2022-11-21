@@ -1,0 +1,17 @@
+
+
+::ng-deep .mat-step-header .mat-step-icon{
+    background-color: red;
+}
+
+#decline ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+    stroke: white;
+}
+
+
+::ng-deep .mat-stepper-vertical-line::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    background-color: red;
+}

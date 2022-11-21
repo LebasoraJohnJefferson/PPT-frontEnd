@@ -32,10 +32,11 @@
             <div class="flex flex-col h-full">
                 <div class="flex flex-col items-center justify-center">
                     <img class="w-12 h-12" src="../../../assets/images/profile_thumb.png" alt="profile"/>
-                    <small>Super Admin</small>
+                    <small (click)="AsideFocusPage('/dashboard/admin')" routerLink="/dashboard/admin" 
+                    [ngClass]=" nav == '/dashboard/admin'? 'font-bold cursor-pointer text-blue-700' : 'font-bold cursor-pointer hover:text-blue-700' ">Super Admin</small>
                 </div>
                 <div class="flex justify-center align-items mt-4">
-                    <div (click)="logout()" class="bg-red-700 hover:bg-red-500 cursor-pointer px-3 py-1 rounded text-white">
+                    <div (click)="logout()"  class="bg-red-700 hover:bg-red-500 cursor-pointer px-3 py-1 rounded text-white">
                         <i class="fa-solid fa-right-from-bracket"></i><small class="ml-3">LOGOUT</small>
                     </div>
                 </div>
