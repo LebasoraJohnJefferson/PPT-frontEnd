@@ -16,8 +16,7 @@ export class AsideComponent implements OnInit {
   nav:string = '/dashboard/overview';
   hostingName = environment.baseURL
   defaultProfile = environment.default_profile
-  adminDetails:any;
-  isDataLoad:boolean = false
+  name:string = 'Super Admin'
 
   private _getAdminDetailsSubscription:Subscription = new Subscription()
 
@@ -63,8 +62,12 @@ export class AsideComponent implements OnInit {
 
   getDetails(){
     this._getAdminDetailsSubscription = this._adminService.getAdminDetails().subscribe((res)=>{
-      this.adminDetails = res
-      this.isDataLoad = true
+      if(res.image){
+        this.defaultProfile =  this.hostingName+'/users/profiles/'+res.image
+      }
+      if(res.fullName){
+        this.name = res.fullName
+      }
     })
   }
 

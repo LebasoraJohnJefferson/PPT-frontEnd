@@ -23,6 +23,7 @@
     "@auth0/angular-jwt": "^5.0.2",
     "@syncfusion/ej2-angular-gantt": "^20.2.49",
     "chart.js": "^3.9.1",
+    "DlhSoft.GanttChartHyperLibrary": "http://DlhSoft.com/Packages/DlhSoft.GanttChartHyperLibrary.tar",
     "frappe-gantt": "^0.6.1",
     "highcharts-angular": "^3.0.0",
     "ng2-pdf-viewer": "^9.1.2",

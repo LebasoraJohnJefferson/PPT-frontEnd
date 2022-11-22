@@ -4,7 +4,7 @@
         <div class="text-2xl font-bold">{{section}}</div>
     </div> 
     <form [formGroup]="searchFormGroup" class="flex h-8 justify-between border-2 bg-gray-50 border-1 rounded items-center shadow-md w-full" id="search-container">
-        <input (input)="search()" formControlName="searchName" type="text" class="ml-2 w-full  bg-gray-50 " placeholder="Search..." id="search"/>
+        <input (input)="search()" autocomplete="off" formControlName="searchName" type="text" class="ml-2 w-full  bg-gray-50 " placeholder="Search..." id="search"/>
         <i class="fa-sharp fa-solid fa-magnifying-glass px-1 text-md mr-2"></i>
     </form>
     <div *ngIf="data.length != 0" class="absolute w-full px-2" id="headerPosition">
