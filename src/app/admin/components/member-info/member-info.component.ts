@@ -67,7 +67,7 @@ export class MemberInfoComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
   ngOnDestroy() {
     this._deleteMemberSubscription.unsubscribe()
     this._acceptMemberSubscription.unsubscribe()

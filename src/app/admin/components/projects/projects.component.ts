@@ -84,7 +84,6 @@ export class ProjectsComponent implements OnInit {
           let format = 'YYYY-MM-DD HH:mm:ss'
           this.projectStatus = 'normal'
           let count = 0
-          console.log(this.tasks.length)
           this.tasks.forEach((data2:any)=>{
             let TheDayBeforeDueDate = moment(data2.dueDate).subtract(1, 'days').startOf('day').format(format)
             let dueDate = moment(data2.dueDate).format(format)
