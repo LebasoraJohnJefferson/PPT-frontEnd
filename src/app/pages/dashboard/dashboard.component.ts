@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  isCloseOrOpen:boolean = true
+  isCloseOrOpen:boolean = false
   private _identityCheck:Subscription = new Subscription()
   
 
