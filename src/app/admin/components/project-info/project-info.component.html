@@ -1,5 +1,4 @@
 <div class="flex flex-col w-full h-full">
-    <app-back-btn></app-back-btn>
     <div class="flex w-full">
         <div class="grid grid-cols-2 border-b-2 border-black w-full bg-gray-200">
             <div (click)="switch('Project')" [ngClass]="isSwitch ? 'grid w-full text-white bg-purple-700 cursor-pointer  border-r border-black' : 'grid w-full hover:bg-purple-300 cursor-pointer  border-r border-black'">
@@ -10,6 +9,7 @@
             </div>
         </div>
     </div>
+    <app-back-btn></app-back-btn>
 
     <div *ngIf="isSwitch && projectInfo.length == 0" class="grid h-full w-full">
         <mat-spinner class="flex m-auto" [diameter]="100"></mat-spinner>

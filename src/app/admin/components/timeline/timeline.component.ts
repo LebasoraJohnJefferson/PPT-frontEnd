@@ -8,7 +8,7 @@ import Gantt from 'frappe-gantt';
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit {
-  dateArrange ='Month'
+  dateArrange ='Day'
   gantt:any;
   tasks:any;
   
@@ -67,6 +67,7 @@ export class TimelineComponent implements OnInit {
   }
 
   DateArranger(dateEvent:any){
+    this.dateArrange=dateEvent
     this.gantt = new Gantt('#gantt', this.tasks, {
       on_click:function(task) {
         console.log(task)

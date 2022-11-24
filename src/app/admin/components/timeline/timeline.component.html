@@ -1,5 +1,21 @@
 <div>
     <app-header [section]="'PERT Chart'"></app-header>
+    <div class="grid md:grid-cols-2 grid-cols-1 mb-2">
+        <ol class="grid w-full grid-cols-4">
+            <li class="flex items-center justify-center" (click)="DateArranger('Day')">
+                <p [ngClass]="dateArrange == 'Day' ? 'bg-red-700  w-24 py-1 cursor-pointer hover:bg-red-500 text-center text-white rounded shadow-md' : 'bg-purple-700  w-24 py-1 cursor-pointer hover:bg-purple-500 text-center text-white rounded shadow-md'">Day</p>
+            </li>
+            <li class="flex items-center justify-center" (click)="DateArranger('Week')">
+                <p [ngClass]="dateArrange == 'Week' ? 'bg-red-700  w-24 py-1 cursor-pointer hover:bg-red-500 text-center text-white rounded shadow-md' : 'bg-purple-700  w-24 py-1 cursor-pointer hover:bg-purple-500 text-center text-white rounded shadow-md'">Week</p>
+            </li>
+            <li class="flex items-center justify-center" (click)="DateArranger('Month')">
+                <p [ngClass]="dateArrange == 'Month' ? 'bg-red-700  w-24 py-1 cursor-pointer hover:bg-red-500 text-center text-white rounded shadow-md' : 'bg-purple-700  w-24 py-1 cursor-pointer hover:bg-purple-500 text-center text-white rounded shadow-md'">Month</p>
+            </li>
+            <li class="flex items-center justify-center" (click)="DateArranger('Year')">
+                <p [ngClass]="dateArrange == 'Year' ? 'bg-red-700  w-24 py-1 cursor-pointer hover:bg-red-500 text-center text-white rounded shadow-md' : 'bg-purple-700  w-24 py-1 cursor-pointer hover:bg-purple-500 text-center text-white rounded shadow-md'">Year</p>
+            </li>
+        </ol>
+    </div>
     <div class="w-96 w-full px-3">
         <div  id="gantt-container" class="w-full h-full border-2 rounded">
             <svg id="gantt"></svg>
