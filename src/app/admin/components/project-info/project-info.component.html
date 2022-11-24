@@ -453,10 +453,8 @@
                   class="example-list"
                   (cdkDropListDropped)="drop($event)">
                   <div class="example-box" *ngFor="let doneItems of done" cdkDrag [cdkDragData]="doneItems">
-                    <div class="grid w-full h-full p-3" *ngIf="doneItems.status != ''" 
-                    [ngClass]="{'bg-yellow-200': doneItems.status === 'soonToEnd', 
-                    'bg-red-200' : doneItems.status === 'delay',
-                    'bg-blue-50' : doneItems.status === 'normal' }">
+                    <div *ngIf="doneItems.status != ''" 
+                    class="grid w-full h-full p-3 bg-green-300">
                         <div class="grid">
                             <div class="flex w-full justify-end items-center">
                                 <i (click)="updateTaskForm(doneItems.data.id)" class="fa-solid fa-gear mx-1 cursor-pointer text-blue-700 hover:text-blue-500"></i>

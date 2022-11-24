@@ -12,6 +12,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './interceptor/jwt.interceptor';
 import { MaterialModule } from './shared/material.module';
 
+
+
+
 import { FooterComponent } from './admin/components/footer/footer.component';
 import { AuthComponent } from './pages/auth/auth.component';
 import { AsideComponent } from './admin/components/aside/aside.component'
