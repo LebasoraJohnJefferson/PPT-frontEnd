@@ -44,11 +44,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
-.critical g .bar-progress{
-    fill: red !important;
-    stroke-width: 0.5;
+
+
+.critical g .bar{
+  outline:2px solid red !important;
+  border-radius: .3rem;
+
 }
 
-.gantt .handle {
-  display: none;
+.normal g .bar{
+  outline:2px solid blue !important;
+  border-radius: .3rem;
 }
+
+.critical g .bar-progress,
+.normal g .bar-progress{
+  fill: green !important;
+  stroke-width: 0.5;
+}
+

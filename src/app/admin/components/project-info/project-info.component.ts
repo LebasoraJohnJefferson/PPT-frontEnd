@@ -180,7 +180,6 @@ export class ProjectInfoComponent implements OnInit {
   getAllInformationOfProject(){
     this._projectInformation = this._projectService.getProjectById(this._routes.snapshot.paramMap.get('id'))
     .subscribe((res)=>{
-      console.log(res)
       this.totalBudgetUsed = res.totalBudgetUsed
       this.projectInfo = res.ProjectDetails
       let timeDiff = Math.abs(Date.now() - new Date(this.projectInfo.Manager.managerDetails.birthDay).getTime())

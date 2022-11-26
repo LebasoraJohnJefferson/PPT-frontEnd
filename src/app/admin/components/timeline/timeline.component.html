@@ -1,6 +1,6 @@
 <div class="w-full h-full">
     <app-header [section]="'PERT Chart'"></app-header>
-    <div class="grid md:grid-cols-2 grid-cols-1 mb-4">
+    <div class="grid md:grid-cols-2 grid-cols-1 mb-4 gap-2">
         <ol class="grid w-full grid-cols-4">
             <li class="flex items-center justify-center" (click)="DateArranger('Day')">
                 <p [ngClass]="dateArrange == 'Day' ? 'bg-red-700  w-24 py-1 cursor-pointer hover:bg-red-500 text-center text-white rounded shadow-md' : 'bg-purple-700  w-24 py-1 cursor-pointer hover:bg-purple-500 text-center text-white rounded shadow-md'">Day</p>
@@ -17,7 +17,7 @@
         </ol>
     </div>
     <div class="w-full flex items-center justify-center px-3">
-        <div  id="gantt-container" class="w-full h-full border-2 rounded">
+        <div id="gantt-container" class="w-full h-full border-2 rounded">
             <svg id="gantt"></svg>
         </div>
     </div>

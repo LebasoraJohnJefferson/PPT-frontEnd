@@ -171,6 +171,12 @@ export class ProjectsComponent implements OnInit {
       let dueLocal = moment(dueDateTemp).local().format('YYYY-MM-DD HH:mm:ss');
       this.projectFormGroup.value.kickOff= kickLocal
       this.projectFormGroup.value.dueDate= dueLocal
+      if(this.projectFormGroup.get('teamMembers')?.value == null){
+        this.projectFormGroup.get('teamMembers')?.setValue([])
+      }
+      if(this.projectFormGroup.get('dependencies')?.value == null){
+        this.projectFormGroup.get('dependencies')?.setValue([])
+      }
       this._SaveProjectSubscription = this._projectService.SaveProject(this.projectFormGroup.value).subscribe(()=>{
         this._toastr.success("Project successfully created!")
         this.getAllProjectDetails()
