@@ -19,7 +19,8 @@ export class TimelineComponent implements OnInit {
   gantt:any;
   changeDateByGantt:any;
   tasks:any=[];
-  isSwitch:boolean = false
+  isSwitch:boolean = true
+
   
   displayedColumns: string[] = [
     'projectName',
