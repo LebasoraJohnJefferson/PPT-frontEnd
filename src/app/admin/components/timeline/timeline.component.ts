@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import moment from 'moment';
 import {MatTableDataSource} from '@angular/material/table';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -16,6 +17,7 @@ import { Router } from '@angular/router';
 export class TimelineComponent implements OnInit {
   dateArrange ='Day'
   gantt:any;
+  changeDateByGantt:any;
   tasks:any=[];
   isSwitch:boolean = false
   
@@ -46,10 +48,12 @@ export class TimelineComponent implements OnInit {
   
   
   private _timeLineInfo:Subscription = new Subscription()
+  private _changeDate:Subscription = new Subscription()
 
 
   constructor(
     private _timeLineService:TimelineService,
+    private _toast:ToastrService,
     private router:Router
   ) {
     this.getTimeLineDetails()
@@ -127,11 +131,16 @@ export class TimelineComponent implements OnInit {
     this.dateArrange=dateEvent
     this.gantt = new Gantt('#gantt', this.tasks, {
       on_click:(task)=> {
-        console.log(task);
         this.router.navigate([`/dashboard/projects/${task.id}`])
       },
-      on_date_change: function(task, start, end) {
-        console.log(task, start, end);
+      on_date_change: (task, start, end)=> {
+        this.changeDateByGantt = {id:task.id,
+          start:moment(start).local().format('YYYY-MM-DD HH:mm:ss'),
+          end:moment(end).local().format('YYYY-MM-DD HH:mm:ss')}
+        this._changeDate = this._timeLineService.changeViaGantt(this.changeDateByGantt).subscribe((res)=>{
+        },(err)=>{
+          this._toast.warning(err.error.detail)
+        });
       },
       on_progress_change: function(task, progress) {
         console.log(task, progress);
@@ -165,6 +174,7 @@ export class TimelineComponent implements OnInit {
 
   ngOnDestroy() {
     this._timeLineInfo.unsubscribe()
+    this._changeDate.unsubscribe()
   }
 
 }

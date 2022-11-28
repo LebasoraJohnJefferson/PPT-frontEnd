@@ -16,4 +16,12 @@ export class TimelineService {
   timeLine():Observable<any>{
     return this._http.get(`${this.baseURL}/timeline`)
   }
+
+  
+  changeViaGantt(data:any):Observable<any>{
+    return this._http.put(`${this.baseURL}/timeline/changeDateViaGanttChart/`,data)
+  }
+
+
 }
+
