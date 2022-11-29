@@ -29,10 +29,10 @@ export class AdminComponent implements OnInit {
 
   secondFormGroup: FormGroup = this._formBuilder.group({
     image:[''],
-    fullName: [''],
-    address:['',],
-    birthDay:[''],
-    gender:['']
+    fullName: ['',[Validators.required]],
+    address:['',[Validators.required]],
+    birthDay:['',[Validators.required]],
+    gender:['',[Validators.required]]
   });
 
   private _getAdminDetailsSubscription:Subscription = new Subscription()
