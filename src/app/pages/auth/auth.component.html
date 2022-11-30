@@ -4,10 +4,10 @@
 
         <!-- login form -->
         <form method="POST" class="grid gap-2 p-3 my-10" (ngSubmit)="SubmitLogin()" *ngIf="!isRegisterFormOpen" [formGroup]="loginFormGroup">
-            <small class="ml-9">Enter Email: <span *ngIf="loginFormGroup.controls['username'].invalid && loginFormGroup.controls['username'].value != ''" class="text-red-500">Invalid Email</span></small>
+            <small class="ml-9">Enter Email: <span *ngIf="isUserLoginInvalid" class="text-red-500">Invalid Email</span></small>
             <div class="flex justify-center items-center">
                 <i class="fa-solid fa-envelope text-xl"></i>
-                <input formControlName="username" class="ml-4 w-full py-1 shadow-lg bg-gray-50 rounded border" required/>
+                <input (input)="checkEmailValidation()" formControlName="username" class="ml-4 w-full py-1 shadow-lg bg-gray-50 rounded border" required/>
             </div>
             <small class="ml-9 ">Enter Password: </small>
             <div class="flex justify-center items-center">

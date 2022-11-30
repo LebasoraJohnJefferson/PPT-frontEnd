@@ -5,7 +5,3 @@
 #rowChangerBg:nth-child(even){
     background-color: #FCF3CF;
 }
-
-#inputFromManager{
-    z-index: -1;
-}

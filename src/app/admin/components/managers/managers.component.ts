@@ -134,6 +134,7 @@ export class ManagersComponent implements OnInit {
   getAllCategory(){
     this._categoryGetAllSubscription = this._categoryService.getCategories().subscribe((res)=>{
       this.categories = res
+      console.log(res)
       this.isLoadingCategoryAnimation = false
     },()=>{
       this.isLoadingCategoryAnimation = false

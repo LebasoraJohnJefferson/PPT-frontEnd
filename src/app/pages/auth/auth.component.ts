@@ -15,6 +15,7 @@ export class AuthComponent implements OnInit {
   isShowPassword:boolean = false
   isLoginButton:boolean = false
   isRegisterButton:boolean = false
+  isUserLoginInvalid:boolean = false
   private _registerSubscription:Subscription = new Subscription()
   private _loginSubscription:Subscription = new Subscription()
 
@@ -50,6 +51,14 @@ export class AuthComponent implements OnInit {
   ngOnDestroy() {
     this._registerSubscription.unsubscribe()
     this._loginSubscription.unsubscribe()
+  }
+
+  checkEmailValidation(){
+    if(this.loginFormGroup.controls.username.valid || this.loginFormGroup.get('username')?.value.length ==0){
+      this.isUserLoginInvalid = false
+    }else{
+      this.isUserLoginInvalid = true
+    }
   }
 
   showPassword(){
