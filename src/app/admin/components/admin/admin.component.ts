@@ -117,7 +117,7 @@ export class AdminComponent implements OnInit {
         this.toastr.warning(err.error.detail)
       })
     }else{
-      this.toastr.warning('Email and password are required!')
+      this.toastr.warning('Empty Inputs!')
     }
   }
 

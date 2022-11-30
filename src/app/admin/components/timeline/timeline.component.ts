@@ -6,6 +6,7 @@ import moment from 'moment';
 import {MatTableDataSource} from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { delay } from 'rxjs/operators';
 
 
 
@@ -138,10 +139,11 @@ export class TimelineComponent implements OnInit {
         this.changeDateByGantt = {id:task.id,
           start:moment(start).local().format('YYYY-MM-DD HH:mm:ss'),
           end:moment(end).local().format('YYYY-MM-DD HH:mm:ss')}
-        this._changeDate = this._timeLineService.changeViaGantt(this.changeDateByGantt).subscribe((res)=>{
-        },(err)=>{
-          this._toast.warning(err.error.detail)
-        });
+          this._changeDate = this._timeLineService.changeViaGantt(this.changeDateByGantt).pipe(delay(5000)).subscribe((res)=>{
+               this.getTimeLineDetails()
+            },(err)=>{
+              this._toast.warning(err.error.detail)
+            });
       },
       on_progress_change: function(task, progress) {
         console.log(task, progress);
@@ -170,7 +172,6 @@ export class TimelineComponent implements OnInit {
   switch(page:any){
     this.isSwitch = 'chart' == page ? true : false
     this.getTimeLineDetails()
-
   }
 
   ngOnDestroy() {
