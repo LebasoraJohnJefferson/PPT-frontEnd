@@ -18,17 +18,10 @@ export class DashboardComponent implements OnInit {
   constructor(
     public eventEmitterService:EventEmitterService,
     private _userService:UsersService,
-    private _router:Router
+    private _router:Router,
   ){
     eventEmitterService.openCloseAside$.subscribe(()=>{
       this.isCloseOrOpen = !this.isCloseOrOpen
-    })
-    this._identityCheck = this._userService.getIdentity().subscribe((res)=>{
-      if(res.role != 'admin'){
-        this._router.navigate(['members'])
-      }
-    },(err)=>{
-      console.log(err)
     })
   }
 

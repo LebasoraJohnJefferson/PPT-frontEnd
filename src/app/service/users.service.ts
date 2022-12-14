@@ -15,7 +15,17 @@ export class UsersService {
     private _http:HttpClient
   ) { }
 
-  getIdentity():Observable<any>{
-    return this._http.get(`${this.baseURL}/users/identity`)
+  updateUserDetails(file:File,form:any):Observable<any>{
+    const formData = new FormData()
+    if(file) formData.append("file", file, file.name);
+    formData.append("form",JSON.stringify(form))
+    return this._http.put<string>(`${this.baseURL}/users`,formData)
   }
+
+  getUserDetails():Observable<any>{
+    return this._http.get<any>(`${this.baseURL}/users`)
+  }
+
+
+  
 }

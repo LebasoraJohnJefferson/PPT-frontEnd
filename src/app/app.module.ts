@@ -13,32 +13,27 @@ import { JwtInterceptor } from './interceptor/jwt.interceptor';
 import { MaterialModule } from './shared/material.module';
 
 
-
-
-import { FooterComponent } from './admin/components/footer/footer.component';
 import { AuthComponent } from './pages/auth/auth.component';
-import { AsideComponent } from './admin/components/aside/aside.component'
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { DashboardOverviewComponent } from './admin/components/dashboard-overview/dashboard-overview.component';
-import { ProjectsComponent } from './admin/components/projects/projects.component';
-import { TimelineComponent } from './admin/components/timeline/timeline.component';
-import { MembersComponent } from './admin/components/members/members.component';
-import { ReportsComponent } from './admin/components/reports/reports.component';
-import { NotificationComponent } from './admin/components/notification/notification.component';
-import { BarChartsComponent } from './admin/components/bar-charts/bar-charts.component';
-import { ButtonAsideOpenComponent } from './admin/components/button-aside-open/button-aside-open.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { StandardUserComponent } from './pages/standard-user/standard-user.component';
-import { MemberInfoComponent } from './admin/components/member-info/member-info.component';
-import { BackBtnComponent } from './admin/components/back-btn/back-btn.component';
-import { ManagersComponent } from './admin/components/managers/managers.component';
-import { ProjectInfoComponent } from './admin/components/project-info/project-info.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
-import { DependencyChartComponent } from './admin/components/dependency-chart/dependency-chart.component';
-import { DoughnutChartsComponent } from './admin/components/doughnut-charts/doughnut-charts.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { HeaderComponent } from './admin/components/header/header.component';
-import { AdminComponent } from './admin/components/admin/admin.component';
+import { AsideComponent } from './components/aside/aside.component';
+import { HeaderComponent } from './components/header/header.component';
+import { BaseProjectComponent } from './components/base-project/base-project.component';
+import { ProjectComponent } from './components/project/project.component';
+import { MechanicalEngineerComponent } from './components/mechanical-engineer/mechanical-engineer.component';
+import { CivilEngineerComponent } from './components/civil-engineer/civil-engineer.component';
+import { InformationTechnologyComponent } from './components/information-technology/information-technology.component';
+import { CreateActivityFormComponent } from './components/create-activity-form/create-activity-form.component';
+import { BackBtnComponent } from './components/back-btn/back-btn.component';
+import { SettingComponent } from './components/setting/setting.component';
+import { ProjectDetailsComponent } from './components/project-details/project-details.component';
+import { GanttComponent } from './components/gantt/gantt.component';
+import { BarChartsComponent } from './components/bar-charts/bar-charts.component';
+import { FeedbackComponent } from './components/feedback/feedback.component';
+import { SubTasksComponent } from './components/sub-tasks/sub-tasks.component';
 
 
 const config: SocketIoConfig = { url: environment.baseURL,
@@ -52,27 +47,24 @@ const config: SocketIoConfig = { url: environment.baseURL,
   declarations: [
     AppComponent,
     AuthComponent,
-    AsideComponent,
     DashboardComponent,
-    FooterComponent,
-    DashboardOverviewComponent,
-    ProjectsComponent,
-    TimelineComponent,
-    MembersComponent,
-    ReportsComponent,
-    NotificationComponent,
-    BarChartsComponent,
-    ButtonAsideOpenComponent,
     StandardUserComponent,
-    MemberInfoComponent,
-    BackBtnComponent,
-    ManagersComponent,
-    ProjectInfoComponent,
     DateAgoPipe,
-    DependencyChartComponent,
-    DoughnutChartsComponent,
+    AsideComponent,
     HeaderComponent,
-    AdminComponent,
+    BaseProjectComponent,
+    ProjectComponent,
+    MechanicalEngineerComponent,
+    CivilEngineerComponent,
+    InformationTechnologyComponent,
+    CreateActivityFormComponent,
+    BackBtnComponent,
+    SettingComponent,
+    ProjectDetailsComponent,
+    GanttComponent,
+    BarChartsComponent,
+    FeedbackComponent,
+    SubTasksComponent
   ],
   imports: [
     BrowserModule,

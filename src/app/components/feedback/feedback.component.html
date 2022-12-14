@@ -1,0 +1,37 @@
+<div class="fixed top-0 left-0 text-yellow-500 z-20 font-bold flex items-center justify-center h-screen w-screen" id="CreateProject">
+    <div class="bg-black rounded relative bg-gray-800 text-blue-500" id="formContainer">
+        <p class="mr-10 mt-5 cursor-pointer flex w-full justify-end items-center text-2xl">
+            <i (click)="close()" class="fa-solid fa-rectangle-xmark text-2xl mr-4 hover:text-red-400 text-red-600 cursor-pointer"></i>
+        </p>
+        <div class="w-full text-center font-bold text-yellow-500">FEEDBACK</div>
+        <ol class="h-4/6 w-full flex flex-col overflow-y-auto" *ngIf="feedBacks.length != 0">
+            <li class="grid px-3 my-1" *ngFor="let feedBack of feedBacks">
+                <div class="flex items-center mb-1">
+                    <img class="h-7 w-7 bg-white rounded-full border border-blue-500" [src]="feedBack.ownerDetails.image ? feedBack.ownerDetails.image :defaultImage" alt="profile" >
+                    <small class="mx-2 text-yellow-500">{{feedBack.ownerDetails.fullName | uppercase}}</small>
+                    |
+                    <small class="flex w-full items-center mx-1">
+                        <i class="fa-solid fa-globe mr-1 text-xs"></i>
+                        <p  id="date">{{feedBack.created_at | dateAgo}}</p>
+                    </small>  
+                </div>
+                <div class="bg-blue-300 text-black rounded my-1 px-3 py-2">
+                    <small>
+                        {{feedBack.message}}
+                    </small>  
+                </div>
+            </li>
+        </ol>
+        <ol *ngIf="feedBacks.length == 0" class="h-4/6 w-full flex items-center justify-center">
+            <li class="text-center font-bold text-white">
+                NO FEEDBACK(s) FOUND!
+            </li>
+        </ol>
+        <form class="absolute bottom-2 w-full flex" (ngSubmit)="sendFeedback()" method="POST" [formGroup]="sendFeedBackForm">
+            <input formControlName="message" type="text" class="flex w-full rounded outline-none text-white bg-gray-500 mx-2 py-1">
+            <button class="text-white hover:bg-green-500 bg-green-700 rounded flex items-center justify-center px-3 mx-1">
+                <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </form>  
+    </div>
+</div>

@@ -1,4 +1,4 @@
-<div class="flex z-2 flex-col justify-center items-center align-center w-screen h-screen">
+<div class="flex bg-gray-900 text-yellow-600 font-bold z-2 flex-col justify-center items-center align-center w-screen h-screen">
     <div class="grid  w-full md:max-w-max md:h-auto h-full  rounded justify-center align-center md:shadow-lg z-10" id="formLogin">
         <img class="rounded-t h-24 md:w-full w-screen bg-red-500" src="../../../assets/images/title.png" alt="" />
 
@@ -7,12 +7,12 @@
             <small class="ml-9">Enter Email: <span *ngIf="isUserLoginInvalid" class="text-red-500">Invalid Email</span></small>
             <div class="flex justify-center items-center">
                 <i class="fa-solid fa-envelope text-xl"></i>
-                <input (input)="checkEmailValidation()" formControlName="username" class="ml-4 w-full py-1 shadow-lg bg-gray-50 rounded border" required/>
+                <input placeholder="Enter Email..." (input)="checkEmailValidation()" formControlName="username" class="ml-4 w-full py-1 shadow-lg bg-gray-50 rounded border" required/>
             </div>
             <small class="ml-9 ">Enter Password: </small>
             <div class="flex justify-center items-center">
                 <i class="fa-solid fa-key mr-4 text-xl"></i>
-                <input formControlName="password" [type]="isShowPassword ? '' : 'password'" class="w-full py-1 shadow-lg bg-gray-50 rounded border" required/>
+                <input placeholder="Enter Password..." formControlName="password" [type]="isShowPassword ? '' : 'password'" class="w-full py-1 shadow-lg bg-gray-50 rounded border" required/>
             </div>
             <div class="flex items-center mt-2">
                 <input class="ml-9 mr-1" (click)="showPassword()" type="checkbox" required>
@@ -25,7 +25,7 @@
                 </button>
             </div>
             <div class="flex justify-end px-4">
-                <div (click)="switchToRegister()" class="text-blue-700 text-sm cursor-pointer hover:text-blue-500">Request an account?</div>
+                <div (click)="switchToRegister()" class="text-blue-700 text-sm cursor-pointer hover:text-blue-500">Create new account</div>
             </div>
         </form>
 
@@ -37,13 +37,13 @@
                 <small >LOGIN</small>
             </div>
         </div>
-        <mat-vertical-stepper class="text-black bg-transparent" [linear]="false" #stepper *ngIf="isRegisterFormOpen">
+        <mat-vertical-stepper class="text-yellow-600 bg-transparent" [linear]="false" #stepper *ngIf="isRegisterFormOpen">
 
             <!-- first Form -->
 
             <mat-step [stepControl]="firstFormGroup">
                 <form [formGroup]="firstFormGroup" class="grid">
-                <ng-template  matStepLabel><div class="text-black">Authentication Details</div></ng-template>
+                <ng-template  matStepLabel><div class="text-white">Authentication Details</div></ng-template>
                 <small class="ml-9 py-1">Email: <span *ngIf="firstFormGroup.controls['email'].invalid && firstFormGroup.controls['email'].value!=''" class="text-red-500">Invalid Email</span></small>
                 <div class="flex">
                     <i class="fa-solid fa-envelope text-xl mr-3"></i>
@@ -70,7 +70,7 @@
 
             <mat-step [stepControl]="secondFormGroup">
               <form [formGroup]="secondFormGroup"  class="flex flex-col">
-                <ng-template matStepLabel><div class="text-black">Personal Details</div></ng-template>
+                <ng-template matStepLabel><div class="text-white">Personal Details</div></ng-template>
                 <small class="ml-9 pt-1">Full Name</small>
                 <div class="flex my-1">
                     <mat-icon class="flex justify-center items-center mr-2" >face</mat-icon>
@@ -110,6 +110,6 @@
 
     </div>
 </div>
-<div class="fixed flex -bottom-20 left-0">
-    <img id="background-image" class="opacity-20 w-98" src="../../../assets/images/evsu.jpg" alt="evsu-logo">
+<div class="fixed flex -bottom-0 left-0">
+    <img id="background-image" class="opacity-20 w-full" src="../../../assets/images/background-image.gif" alt="evsu-logo">
 </div>

@@ -1,14 +1,14 @@
 input{
     text-indent: 10px;
+    color:black;
 }
 
 #formLogin{
-    outline:0.5px solid rgba(0,0,0,.1);
+    outline:0.5px solid rgba(255,255,255,.5);
 }
 
 #background-image{
-    width:900px;
-    transform: translateX(-300px);
+    width:100%;
 }
 
 ::ng-deep .mat-step-header .mat-step-icon{

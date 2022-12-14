@@ -1,0 +1,9 @@
+#aside-container{
+    width:250px;
+    border-right:1px solid white;
+}
+
+#aside-menu:hover{
+    border-left:2px solid orange;
+}
+

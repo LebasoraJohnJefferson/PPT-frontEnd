@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 body{
-    font-family: Tahoma, sans-serif;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
 
@@ -13,7 +13,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* width */
 ::-webkit-scrollbar {
-    width: 5px;
+    width: 2.5px;
     height: 4px;
 }
   
@@ -75,5 +75,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .gantt .bar-label {
   fill: blue !important;
   font-weight: bold !important;
+}
+
+.mat-accent .mat-slider-track-fill {
+  background-color: red !important;
+}
+
+.mat-slider-thumb-label {
+  background-color: red !important;
+
+}
+
+.mat-slider-thumb {
+  background-color: red !important;
 }
 

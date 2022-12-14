@@ -9,6 +9,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatTableModule} from '@angular/material/table';
+import {MatSliderModule} from '@angular/material/slider';
+
 
 const materialModules = [
   MatProgressSpinnerModule,
@@ -19,7 +21,8 @@ const materialModules = [
   MatStepperModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatTableModule
+  MatTableModule,
+  MatSliderModule
 ]
 
 @NgModule({

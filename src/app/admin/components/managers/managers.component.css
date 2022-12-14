@@ -1,7 +1,0 @@
-
-::ng-deep .mat-select-value{    
-    color: black !important;  }
-
-#rowChangerBg:nth-child(even){
-    background-color: #FCF3CF;
-}

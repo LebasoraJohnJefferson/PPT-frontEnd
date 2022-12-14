@@ -1,0 +1,60 @@
+<div class="w-screen bg-yellow-500 h-16 grid grid-cols-2">
+    <div>
+        <img routerLink="/dashboard/" class="h-16 cursor-pointer" src="../../../assets/images/title.png" alt="ppt-logo">
+    </div>
+    <div class="flex items-center justify-end mr-4">
+        <div class="relative">
+            <div class="flex items-center">
+              <p class="mx-2 font-bold">{{name | uppercase}}</p>
+              <img (click)="showMenuBar()" class="bg-gray-200 h-8 w-8 border border-blue-500 rounded-full" [src]="img" alt="">
+            </div>
+            <div *ngIf="isShowMenuBar" class="absolute mt-1 right-0 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
+                  <li>
+                    <a (click)="showMenuBar()" routerLink="/dashboard/" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                      <i class="fa-solid fa-house"></i>
+                      Dashboard</a>
+                  </li>
+                  <li>
+                    <a (click)="showMenuBar()" routerLink="/dashboard/setting" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                      <i class="fa-solid fa-gears"></i>
+                      Settings</a>
+                  </li>
+                  <li>
+                    <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                  </li>
+                  <li>
+                    <a class="block cursor-pointer py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" (click)="logout()">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Sign out
+                    </a>
+                  </li>
+                </ul>
+            </div>
+        </div>
+        <div class="relative">
+          <div class="relative">
+            <i (click)="openNotification()" class="fa-solid fa-bell text-xl px-3"></i>
+            <small *ngIf="numberOfNotification != 0" class="absolute -top-1 left-5 px-1 text-xs rounded-full bg-red-600  text-white">{{numberOfNotification}}</small>
+          </div>
+          <div *ngIf="isNotificationOpen" class="absolute mt-1 right-0 z-10 w-80 max-h-80 overflow-y-auto bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+            <ul *ngIf="notifications.length != 0" class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
+              <li *ngFor = "let notification of notifications">
+                <div [ngClass]="notification.isSeen == false ? 'block border-b py-2 px-5 dark:hover:bg-gray-600 dark:hover:text-white' : 'bg-gray-200  block border-b py-2 px-5 dark:hover:bg-gray-600 dark:hover:text-white'">
+                  <p class="my-2">
+                    {{notification.message}}
+                  </p>
+                  <div class="flex items-center text-xs justify-end">
+                    <i class="fa-solid fa-globe mr-2"></i>
+                    <small>{{notification.created_at | dateAgo}}</small>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <ul *ngIf="notifications.length == 0">
+              <li class="text-center font-bold py-3">Empty Notification(s)</li>
+            </ul>
+        </div>
+        </div>
+      </div>
+</div>

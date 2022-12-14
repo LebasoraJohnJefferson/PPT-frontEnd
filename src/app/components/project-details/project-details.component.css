@@ -1,0 +1,19 @@
+#aside{
+    max-width:230px;
+    min-width:230px;
+    height:72vh
+}
+
+input{
+    color:black;
+    text-indent:10px
+}
+
+#toDeleteContainer{
+    background-color: rgba(255,255,255,.6);
+}
+
+#gantt-chart-container{
+    height:31.1rem;
+    overflow-y: auto;
+}

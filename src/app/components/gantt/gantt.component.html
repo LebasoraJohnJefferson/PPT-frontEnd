@@ -1,0 +1,12 @@
+<div id="gantt-container" class="p-3">
+    <div class="my-1">
+        <select class="rounded shadow-lg border-2 px-2 py-1 text-black outline-none" (change)="changeDate($event.target)">
+            <option value="Day">Day</option>
+            <option value="Quarter Day">Quarter Day</option>
+            <option value="Half Day">Half Day</option>
+            <option value="Week">Week</option>
+            <option value="Month">Month</option>
+        </select>
+    </div>
+    <svg id="gantt" class="bg-white"></svg>
+</div>

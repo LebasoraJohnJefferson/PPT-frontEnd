@@ -1,0 +1,111 @@
+<div class="flex flex-col full m-auto">
+    <div class="p-5 mt-10">
+        <div class="text-yellow-500 font-bold">Working Station :</div>
+        <div class="p-5">
+
+            <div class="mt-5 flex flex-wrap">
+                <div id="createProjectContainer" class="flex mx-2 w-32 h-32 border rounded flex-col justify-center items-center cursor-pointer" (click)="CreateFormOpen('true')">
+                    <small class="text-white mb-2">Create Project</small>                
+                    <i class="fa-solid fa-pen-to-square text-4xl text-yellow-500"></i>
+                </div>
+
+                <div *ngFor="let project of projects" class="flex mx-2 w-32 h-32 border rounded flex-col justify-center items-center cursor-pointer relative">
+
+                    <div *ngIf="project.projectCategory == 'IT'" class="absolute flex items-center justify-center top-1 rounded-full bg-yellow-500 left-2 w-6 h-6 text-white text-">
+                        <small class="font-bold">{{project.projectCategory}}</small>
+                    </div>
+                    <div *ngIf="project.projectCategory == 'ME'" class="absolute flex items-center justify-center top-1 rounded-full bg-blue-500 left-2 w-6 h-6 text-white text-">
+                        <small class="font-bold">{{project.projectCategory}}</small>
+                    </div>
+                    <div *ngIf="project.projectCategory == 'CE'" class="absolute flex items-center justify-center top-1 rounded-full bg-red-500 left-2 w-6 h-6 text-white text-">
+                        <small class="font-bold">{{project.projectCategory}}</small>
+                    </div>
+
+                    <small class="text-white font-bold mb-2 w-full  text-center truncate">
+                        {{project.projectName}}</small>
+                    <div class="w-full flex justify-center items-center">
+                        <div routerLink="/dashboard/projects/{{project.id}}" class="hover:bg-green-500 px-3 py-2 bg-green-700 rounded text-white font-bold shadow-md">VISIT</div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="p-5">
+        <div class="text-yellow-500 font-bold">Project Joined :</div>
+        <div class="p-5" *ngIf="projectsJoined.length == 0">
+            <div class="mt-5">
+                <div class="text-white text-center font-bold text-2xl">No Project(s) found!</div>
+            </div>
+        </div>
+
+        <div class="p-5 flex items-center truncate flex-wrap" *ngIf="projectsJoined.length != 0">
+            <div *ngFor="let project of projectsJoined" class="text-white">
+                <div class="border w-40 h-54 rounded mx-2">
+                    <div class="relative m-1 mt-2 flex items-center justify-around w-full">
+                        <div *ngIf="project.Project.projectCategory == 'IT'" class="flex items-center justify-center top-1 rounded-full bg-yellow-500 left-2 w-6 h-6 text-white text-">
+                            <small class="font-bold">{{project.Project.projectCategory}}</small>
+                        </div>
+                        <div *ngIf="project.Project.projectCategory == 'ME'" class=" flex items-center justify-center top-1 rounded-full bg-blue-500 left-2 w-6 h-6 text-white text-">
+                            <small class="font-bold">{{project.Project.projectCategory}}</small>
+                        </div>
+                        <div *ngIf="project.Project.projectCategory == 'CE'" class=" flex items-center justify-center top-1 rounded-full bg-red-500 left-2 w-6 h-6 text-white text-">
+                            <small class="font-bold">{{project.Project.projectCategory}}</small>
+                        </div>
+                        <div *ngIf="project.Collaborator.isAccepted == false" class="w-1/2 flex justify-around items-center">
+                            <i (click)="AcceptInvitationForCollaboration(project.Collaborator.id)" class="fa-solid fa-check cursor-pointer bg-green-500 hover:bg-green-500 py-1 px-1 rounded-full"></i>
+                            <i (click)="deleteInvitationForCollaboration(project.Collaborator.id)" class="fa-solid fa-xmark cursor-pointer bg-red-500 hover:bg-red-400 py-1 px-2 rounded-full"></i>
+                        </div>
+                        <div *ngIf="project.Collaborator.isAccepted != false" class="w-1/2 flex justify-around items-center">
+                            <i class="fa-solid fa-eye  cursor-pointer bg-blue-500 hover:bg-blue-400 p-1 rounded-full"></i>
+                            <i (click)="leaveProject(project.Collaborator.id)" class="fa-solid fa-arrow-right-from-bracket cursor-pointer bg-red-500 hover:bg-red-400 p-1 rounded-full"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-white bg-yellow-700 truncate font-bold  text-center px-3 border mt-2">
+                            {{project.Project.projectName | uppercase}}
+                        </p>
+                        <div class="mt-2 flex flex-col">
+                            <small class="bg-purple-900 font-bold mx-2 my-1 text-xs px-2 py-1 rounded text-center">OWNER</small>
+                            <small class="text-center text-yellow-400 truncate my-1">{{project.Project.ownerDetails.fullName}}</small>
+                        </div>
+                        <div class="flex flex-col">
+                            <small class="bg-purple-900 font-bold mx-2 px-2 py-1 text-xs rounded text-center">JOB</small>
+                            <small class="text-center text-yellow-400 truncate my-1">{{project.Collaborator.expertise}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="isCreateFormOpen" class="fixed top-0 left-0 text-yellow-600 font-bold flex items-center justify-center h-screen w-screen" id="CreateProject">
+    <div class="bg-black rounded relative" id="formContainer">
+        <div class="absolute flex w-full justify-end">
+            <p (click)="CreateFormOpen('false')" class="mr-10 mt-5 cursor-pointer text-2xl text-red-700 hover:text-red-500">X</p>
+        </div>
+        <div class="text-center mt-10 text-white py-2">CREATE PROJECT:</div>
+        <form (ngSubmit)="submitCreateProject()" [formGroup]="createBaseProjectFormGroup" class="grid">
+            <div class="grid gap-2 px-3">
+                <div>
+                    <small>Project Name:</small>
+                    <input formControlName="projectName" class="w-full rounded py-1" placeholder="Enter project name...">
+                </div>
+                
+
+                <div class="mt-2 flex flex-col">
+                    <small>Project Category :</small>
+                    <select formControlName="projectCategory" class="rounded py-1 text-black">
+                        <option value="IT">Information Technology</option>
+                        <option value="CE">Civil Engineering</option>
+                        <option value="ME">Mechanical Engineering</option>
+                    </select>
+                </div>
+                <div class="mt-5 flex justify-center items-center">
+                    <button type="submit" class="w-32 bg-green-700 hover:bg-green-500 py-1 rounded text-white font-bold">CREATE</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

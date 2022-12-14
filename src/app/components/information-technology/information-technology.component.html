@@ -1,0 +1,184 @@
+<div class="grid w-full px-3">
+    <div cdkDropListGroup class="grid grid-cols-5 gap-2">
+        <div class="example-container">
+          <h2 class="text-white flex justify-center items-center bg-pink-700 rounded-t py-2">Requirements</h2>
+      
+          <div
+            id="requirements"
+            cdkDropList
+            [cdkDropListData]="requirements"
+            class="example-list"
+            cdkDropListSortingDisabled
+            (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let requirement of requirements" cdkDrag [cdkDragData]="requirement.Activity">
+              <div class="w-full h-full flex">
+                <div class="flex justify-between flex-col w-full px-1">
+                  <p class="h-full text-center  w-52 font-bold truncate">{{requirement.Activity.activityName | uppercase}}</p>
+                  <div class="flex justify-center w-full items-center flex-col">
+                    <img *ngIf="!requirement.User" [src]="defaultImage" class="rounded-full h-10 w-10" alt="Icon">
+                    <img *ngIf="requirement.User" [src]="requirement.User.image ? requirement.User.image : defaultImage" class="rounded-full h-10 w-10" alt="Icon">
+                    <small class="truncate text-center w-32">{{requirement.User ? requirement.User.fullName : '????'}}</small>
+                    <p class="truncate bg-yellow-600 text-white rounded font-bold text-center w-32">{{requirement.roles}}</p>
+                  </div>
+                </div>
+                  <div class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 relative">
+                      <i (click)="showAssignForm(requirement.Activity.id)" class="fa-solid fa-caret-down cursor-pointer"></i>
+                      
+                        <div *ngIf="activityIdClickToAssignMember == requirement.Activity.id"  class="absolute top-4 max-h-28 bg-green-700 overflow-y-auto right-3 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                            <div (click)="assignActivity(collaborator.Collaborator.id,requirement.Activity.id)" *ngFor="let collaborator of collaborators" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
+                        </div>
+
+                      <i routerLink="/dashboard/projects/{{projectID}}/{{requirement.Activity.id}}" class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer"></i>
+                      <i (click)="openFeedBack(requirement.Activity.id)" class="fa-solid fa-file cursor-pointer my-1 hover:text-gray-600"></i>
+                      <i (click)="deleteActivity(requirement.Activity.id,requirement.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer"></i>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="example-container">
+          <h2 class="text-white flex justify-center items-center bg-pink-700 rounded-t py-2">Design</h2>
+      
+          <div
+            id="designs"
+            cdkDropList
+            [cdkDropListData]="designs"
+            class="example-list"
+            cdkDropListSortingDisabled
+            (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let design of designs" cdkDrag [cdkDragData]="design.Activity">
+              <div class="w-full h-full flex">
+                <div class="flex justify-between flex-col w-full px-1">
+                  <p class="h-full text-center w-52 font-bold truncate">{{design.Activity.activityName | uppercase}}</p>
+                  <div class="flex justify-center w-full items-center flex-col">
+                    <img *ngIf="!design.User" [src]="defaultImage" class="rounded-full h-10 w-10" alt="Icon">
+                    <img *ngIf="design.User" [src]="design.User.image ? design.User.image : defaultImage" class="rounded-full h-10 w-10" alt="Icon">
+                    <small class="truncate text-center w-32">{{design.User ? design.User.fullName : '????'}}</small>
+                    <p class="truncate bg-yellow-600 text-white rounded font-bold text-center w-32">{{design.roles}}</p>
+                  </div>
+                </div>
+                  <div class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 relative">
+                      <i (click)="showAssignForm(design.Activity.id)" class="fa-solid fa-caret-down cursor-pointer"></i>
+                      
+                        <div *ngIf="activityIdClickToAssignMember == design.Activity.id"  class="absolute top-4 max-h-28 bg-green-700  overflow-y-auto right-3 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                            <div (click)="assignActivity(collaborator.Collaborator.id,design.Activity.id)" *ngFor="let collaborator of collaborators" class="text-white hover:bg-green-600 text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
+                        </div>
+
+                      <i routerLink="/dashboard/projects/{{projectID}}/{{design.Activity.id}}"  class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer"></i>
+                      <i (click)="openFeedBack(design.Activity.id)" class="fa-solid fa-file cursor-pointer my-1 hover:text-gray-600"></i>
+                      <i (click)="deleteActivity(design.Activity.id,design.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer"></i>
+                  </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+      
+        <div class="example-container">
+          <h2 class="text-white flex justify-center items-center bg-pink-700 rounded-t py-2">Implementation</h2>
+      
+          <div
+            id="implementations"
+            cdkDropList
+            [cdkDropListData]="implementations"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let implementation of implementations" cdkDrag [cdkDragData]="implementation.Activity">
+              <div class="w-full h-full flex">
+                <div class="flex justify-between flex-col w-full px-1">
+                  <p class="h-full text-center w-52 font-bold truncate">{{implementation.Activity.activityName | uppercase}}</p>
+                  <div class="flex justify-center w-full items-center flex-col">
+                    <img *ngIf="!implementation.User" [src]="defaultImage" class="rounded-full h-10 w-10" alt="Icon">
+                    <img *ngIf="implementation.User" [src]="implementation.User.image ? implementation.User.image : defaultImage" class="rounded-full h-10 w-10" alt="Icon">
+                    <small class="truncate text-center w-32">{{implementation.User ? implementation.User.fullName : '????'}}</small>
+                    <p class="truncate bg-yellow-600 text-white rounded font-bold text-center w-32">{{implementation.roles}}</p>
+                  </div>
+                </div>
+                  <div class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 relative">
+                      <i (click)="showAssignForm(implementation.Activity.id)" class="fa-solid fa-caret-down cursor-pointer"></i>
+                      
+                        <div *ngIf="activityIdClickToAssignMember == implementation.Activity.id"  class="absolute top-4 max-h-28 bg-green-700  overflow-y-auto right-3 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                            <div (click)="assignActivity(collaborator.Collaborator.id,implementation.Activity.id)" *ngFor="let collaborator of collaborators" class="hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
+                        </div>
+
+                      <i routerLink="/dashboard/projects/{{projectID}}/{{implementation.Activity.id}}"  class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer"></i>
+                      <i (click)="openFeedBack(implementation.Activity.id)" class="fa-solid fa-file cursor-pointer my-1 hover:text-gray-600"></i>
+                      <i (click)="deleteActivity(implementation.Activity.id,implementation.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer"></i>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="example-container">
+          <h2 class="text-white flex justify-center items-center bg-pink-700 rounded-t py-2">Verification</h2>
+      
+          <div
+            id="verifications"
+            cdkDropList
+            [cdkDropListData]="verifications"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let verification of verifications" cdkDrag [cdkDragData]="verification.Activity">
+              <div class="w-full h-full flex">
+                <div class="flex justify-between flex-col w-full px-1">
+                  <p class="h-full text-center w-52 font-bold truncate">{{verification.Activity.activityName | uppercase}}</p>
+                  <div class="flex justify-center w-full items-center flex-col">
+                    <img *ngIf="!verification.User" [src]="defaultImage" class="rounded-full h-10 w-10" alt="Icon">
+                    <img *ngIf="verification.User" [src]="verification.User.image ? verification.User.image : defaultImage" class="rounded-full h-10 w-10" alt="Icon">
+                    <small class="truncate text-center w-32">{{verification.User ? verification.User.fullName : '????'}}</small>
+                    <p class="truncate bg-yellow-600 text-white rounded font-bold text-center w-32">{{verification.roles}}</p>
+                  </div>
+                </div>
+                  <div class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 relative">
+                      <i (click)="showAssignForm(verification.Activity.id)" class="fa-solid fa-caret-down cursor-pointer"></i>
+                      
+                        <div *ngIf="activityIdClickToAssignMember == verification.Activity.id"  class="absolute top-4 max-h-28 bg-green-700  overflow-y-auto right-3 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                            <div (click)="assignActivity(collaborator.Collaborator.id,verification.Activity.id)" *ngFor="let collaborator of collaborators" class="hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
+                        </div>
+
+                      <i routerLink="/dashboard/projects/{{projectID}}/{{verification.Activity.id}}"  class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer"></i>
+                      <i (click)="openFeedBack(verification.Activity.id)" class="fa-solid fa-file cursor-pointer my-1 hover:text-gray-600"></i>
+                      <i (click)="deleteActivity(verification.Activity.id,verification.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer"></i>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="example-container">
+          <h2 class="text-white flex justify-center items-center bg-pink-700 rounded-t py-2">Maintenance</h2>
+      
+          <div
+            id="maintenance"
+            cdkDropList
+            [cdkDropListData]="maintenance"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)">
+            <div class="example-box" *ngFor="let maintain of maintenance" cdkDrag [cdkDragData]="maintain.Activity">
+              <div class="w-full h-full flex">
+                <div class="flex justify-between flex-col w-full px-1">
+                  <p class="h-full text-center w-52 font-bold truncate">{{maintain.Activity.activityName | uppercase}}</p>
+                  <div class="flex justify-center w-full items-center flex-col">
+                    <img *ngIf="!maintain.User" [src]="defaultImage" class="rounded-full h-10 w-10" alt="Icon">
+                    <img *ngIf="maintain.User" [src]="maintain.User.image ? maintain.User.image : defaultImage" class="rounded-full h-10 w-10" alt="Icon">
+                    <small class="truncate text-center w-32">{{maintain.User ? maintain.User.fullName : '????'}}</small>
+                    <p class="truncate bg-yellow-600 text-white rounded font-bold text-center w-32">{{maintain.roles}}</p>
+                  </div>
+                </div>
+                  <div class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 relative">
+                      <i (click)="showAssignForm(maintain.Activity.id)" class="fa-solid fa-caret-down cursor-pointer"></i>
+                      
+                        <div *ngIf="activityIdClickToAssignMember == maintain.Activity.id"  class="absolute top-4 max-h-28 bg-green-700 overflow-y-auto right-3 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                            <div (click)="assignActivity(collaborator.Collaborator.id,maintain.Activity.id)" *ngFor="let collaborator of collaborators" class="text-white hover:bg-green-600 text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
+                        </div>
+
+                      <i routerLink="/dashboard/projects/{{projectID}}/{{maintain.Activity.id}}"  class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer"></i>
+                      <i (click)="openFeedBack(maintain.Activity.id)" class="fa-solid fa-file cursor-pointer my-1 hover:text-gray-600"></i>
+                      <i (click)="deleteActivity(maintain.Activity.id,maintain.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer"></i>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>          
+</div>

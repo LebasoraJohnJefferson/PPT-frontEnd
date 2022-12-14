@@ -16,13 +16,6 @@ export class AuthUser {
   RegisterUser(details:AuthInterface):Observable<any>{
     return this._http.post(`${this.baseURL}/users`,details)
   }
-
-  RegisterUserByAdmin(details:any,file:File):Observable<any>{
-    const formData = new FormData()
-    if(file) formData.append("file", file, file.name);
-    formData.append("form",JSON.stringify(details))
-    return this._http.post(`${this.baseURL}/users/admin`,formData)
-  }
   
   LoginUser(details:AuthInterface2):Observable<ResponseToken>{
     const body = new HttpParams().set("username",details.username).set("password",details.password)
@@ -35,12 +28,5 @@ export class AuthUser {
 
   getCurrentUser():Observable<any>{
     return this._http.get<any>(`${this.baseURL}/users`)
-  }
-
-  UpdateUser(file:File,form:any,id:any):Observable<string>{
-    const formData = new FormData()
-    if(file) formData.append("file", file, file.name);
-    formData.append("form",JSON.stringify(form))
-    return this._http.put<string>(`${this.baseURL}/users/admin/${id}`,formData)
   }
 }
