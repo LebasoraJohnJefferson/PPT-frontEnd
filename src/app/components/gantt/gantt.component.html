@@ -1,6 +1,6 @@
-<div id="gantt-container" class="p-3">
+<div id="gantt-container" class="p-3 bg-gray-600 rounded">
     <div class="my-1">
-        <select class="rounded shadow-lg border-2 px-2 py-1 text-black outline-none" (change)="changeDate($event.target)">
+        <select class="rounded shadow-lg px-2 py-1 text-white bg-gray-800 my-1 outline-none" (change)="changeDate($event.target)">
             <option value="Day">Day</option>
             <option value="Quarter Day">Quarter Day</option>
             <option value="Half Day">Half Day</option>
@@ -8,5 +8,5 @@
             <option value="Month">Month</option>
         </select>
     </div>
-    <svg id="gantt" class="bg-white"></svg>
+    <svg id="gantt"></svg>
 </div>

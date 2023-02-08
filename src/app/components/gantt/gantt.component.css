@@ -2,3 +2,7 @@
     max-width:50rem;
     height: 65vh;
 }
+
+svg{
+    background-color: transparent;
+}

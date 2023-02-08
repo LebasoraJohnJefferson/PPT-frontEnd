@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute  } from '@angular/router'
-import { Subscription } from 'rxjs';
-import { ProjectsService } from 'src/app/service/projects.service';
 import { CollaboratorService } from 'src/app/service/collaborator.service';
-import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { SubTasksService } from 'src/app/service/sub-tasks.service';
+import { ProjectsService } from 'src/app/service/projects.service';
 import {FormBuilder, FormGroup,Validators} from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute  } from '@angular/router'
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sub-tasks',
@@ -18,7 +19,7 @@ export class SubTasksComponent implements OnInit {
   isFeedBackOpen:boolean=false
   activityId:any=0
   activityDetails:any=[]
-  isCreateSubTaskFormOpen:boolean = true
+  isCreateSubTaskFormOpen:boolean = false
   duration:any=0
   fakeArray = new Array(10)
   collaboratorDetails:any={
@@ -45,6 +46,8 @@ export class SubTasksComponent implements OnInit {
   image:string=environment.default_profile
   private _getAllProjectByIdSubscription:Subscription = new Subscription()
   private _getCollaboratorAndActivityDetailsSubscription:Subscription = new Subscription()
+  private _getAllSubTaskSubscription:Subscription = new Subscription()
+  private _createSubTaskSubscription:Subscription = new Subscription()
 
 
   constructor(
@@ -52,6 +55,7 @@ export class SubTasksComponent implements OnInit {
     private _projectService:ProjectsService,
     private _toastr:ToastrService,
     private _router:Router,
+    private _subTaskService:SubTasksService,
     private _collaboratorService:CollaboratorService,
     private _formBuilder:FormBuilder
   ) { 
@@ -62,6 +66,14 @@ export class SubTasksComponent implements OnInit {
     this.projectId = this._routes.snapshot.paramMap.get('id')
     this.getProjectById()
     this.getCollaboratorAndActivityDetails()
+    this.getAllSubTask()
+  }
+
+  getAllSubTask(){
+    this._getAllSubTaskSubscription = this._subTaskService.getAllSubTask(this.activityId).subscribe((res)=>{
+      this.dependencies = res
+      console.log(this.dependencies)
+    })
   }
 
   submitCreateTask(){
@@ -74,7 +86,11 @@ export class SubTasksComponent implements OnInit {
       return
     }
     if(this.createTask.valid){
-      console.log(this.createTask.value)
+      this._createSubTaskSubscription = this._subTaskService.createSubTask(this.createTask.value,this.activityId).subscribe(()=>{
+
+      },(err)=>{
+        this._toastr.warning(err.error.detail)
+      })
     }else{
       this._toastr.warning('Make sure too fill out all inputs!')
     }
@@ -101,7 +117,6 @@ export class SubTasksComponent implements OnInit {
         this.image = res.Collaborator.image ? res.Collaborator.image : this.image
       }
       this.activityDetails =  res.Activity
-      console.log(res)
     },(err)=>{
       if(err.status==404) this._toastr.warning(err.error.detail)
       else if(err.status == 422) this._toastr.warning(err.error.detail[0].msg)
@@ -131,8 +146,10 @@ export class SubTasksComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this._getAllProjectByIdSubscription.unsubscribe()
     this._getCollaboratorAndActivityDetailsSubscription.unsubscribe()
+    this._getAllProjectByIdSubscription.unsubscribe()
+    this._createSubTaskSubscription.unsubscribe()
+    this._getAllSubTaskSubscription.unsubscribe()
   }
 
 }
