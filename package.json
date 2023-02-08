@@ -12,7 +12,7 @@
   "dependencies": {
     "@angular/animations": "~12.2.0",
     "@angular/cdk": "^12.2.13",
-    "@angular/common": "~12.2.0",
+    "@angular/common": "^13.3.12",
     "@angular/compiler": "~12.2.0",
     "@angular/core": "~12.2.0",
     "@angular/forms": "~12.2.0",
@@ -25,6 +25,7 @@
     "chart.js": "^3.9.1",
     "DlhSoft.GanttChartHyperLibrary": "http://DlhSoft.com/Packages/DlhSoft.GanttChartHyperLibrary.tar",
     "frappe-gantt": "^0.6.1",
+    "from": "^0.1.7",
     "highcharts-angular": "^3.0.0",
     "ng2-pdf-viewer": "^9.1.2",
     "ngx-skeleton-loader": "^6.0.0",
