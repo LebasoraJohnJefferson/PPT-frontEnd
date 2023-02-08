@@ -4,7 +4,7 @@ import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import { ToastrModule } from 'ngx-toastr';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from 'src/environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './router/app-routing.module';
@@ -36,12 +36,12 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
 import { SubTasksComponent } from './components/sub-tasks/sub-tasks.component';
 
 
-const config: SocketIoConfig = { url: environment.baseURL,
-    options: {
-      // Socket.IO client options
-      transports:["websocket","polling"],
-      path:'/subapi/socket.io/'
-    }};
+// const config: SocketIoConfig = { url: environment.baseURL,
+//     options: {
+//       // Socket.IO client options
+//       transports:["websocket","polling"],
+//       path:'/subapi/socket.io/'
+//     }};
 
 @NgModule({
   declarations: [
@@ -78,7 +78,7 @@ const config: SocketIoConfig = { url: environment.baseURL,
     ToastrModule.forRoot({
       'preventDuplicates': true
     }),
-    SocketIoModule.forRoot(config)
+    // SocketIoModule.forRoot(config)
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true},
