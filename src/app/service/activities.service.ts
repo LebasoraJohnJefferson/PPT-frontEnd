@@ -19,6 +19,10 @@ export class ActivitiesService {
     return this._http.get(`${this.baseURL}/activities/${id}`)
   }
 
+  getActivityDependencies(id:any):Observable<any>{
+    return this._http.get(`${this.baseURL}/activities/get_dependencies/${id}`)
+  }
+
   createActivities(id:any,data:any):Observable<any>{
     return this._http.post(`${this.baseURL}/activities/${id}`,data)
   }
@@ -29,5 +33,9 @@ export class ActivitiesService {
 
   updateActivitiesStage(data:any):Observable<any>{
     return this._http.put(`${this.baseURL}/activities/`,data)
+  }
+
+  updateActivitiesDetails(activityID:any,data:any):Observable<any>{
+    return this._http.put(`${this.baseURL}/activities/${activityID}`,data)
   }
 }

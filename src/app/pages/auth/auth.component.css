@@ -4,12 +4,10 @@ input{
 }
 
 #formLogin{
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2),inset 0 0 10px #000000;
     outline:0.5px solid rgba(255,255,255,.5);
 }
 
-#background-image{
-    width:100%;
-}
 
 ::ng-deep .mat-step-header .mat-step-icon{
     background-color: red;

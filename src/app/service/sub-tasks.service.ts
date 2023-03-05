@@ -23,5 +23,21 @@ export class SubTasksService {
     return this._http.get(`${this.baseURL}/subTasks/${activity_id}`)
   }
 
+  deleteOneTask(taskId:any):Observable<any>{
+    return this._http.delete(`${this.baseURL}/subTasks/${taskId}`)
+  }
+
+  changeTaskStatus(taskId:any):Observable<any>{
+    return this._http.put(`${this.baseURL}/subTasks/changeStatus/${taskId}`,'')
+  }
+
+  getDependencyById(taskID:number):Observable<any>{
+    return this._http.get(`${this.baseURL}/subTasks/getDependencyById/${taskID}`)
+  }
+
+  updateTaskById(taskID:number,Details:any):Observable<any>{
+    return this._http.put(`${this.baseURL}/subTasks/updateTaskById/${taskID}`,Details)
+  }
+
 
 }

@@ -1,0 +1,28 @@
+
+<div (click)="OpenLogs()" class="px-3 hover:bg-purple-600 bg-purple-700 py-1 cursor-pointer flex justify-center items-center w-32 rounded  mx-2 shadow-md">
+    <small class="mr-2">Logs</small>
+    <span class="relative">
+        <i class="fa-solid fa-bug"></i> 
+        <small *ngIf="bugs.length!=0" id="bugs-count">{{bugs.length}}</small>
+    </span>
+</div>
+
+    
+<div *ngIf="isLogsOpen"  class="fixed top-0 left-0 text-yellow-500 z-20 font-bold flex items-center justify-center h-screen w-screen " id="createSubTaskContainer">
+    <div class="rounded relative bg-gray-800" id="formContainer">
+        <div class="absolute flex w-full justify-end">
+            <p class="mr-10 mt-5 cursor-pointer text-2xl text-red-700 hover:text-red-500">
+                <i (click)="OpenLogs()" class="fa-solid fa-rectangle-xmark text-2xl mr-4 hover:text-red-400 text-red-600 cursor-pointer"></i>
+            </p>
+        </div>
+        <div class="text-center mt-10 text-white py-2"><p>System Recommendation</p></div>
+        <ol class="flex flex-col items-center p-3 relative  overflow-y-auto" id="all-bug-container">
+            <li class="filter blur-l" id="log-container-details"  *ngFor="let bug of bugs">
+                <pre>{{bug}}</pre>
+            </li>
+            <li *ngIf="bugs.length ==0" id="no-bugs">
+                <p class="flex w-full h-full items-center justify-center">No Bug(s) Detected</p>
+            </li>
+        </ol>
+    </div>
+</div>

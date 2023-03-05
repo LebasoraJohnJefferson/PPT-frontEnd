@@ -1,0 +1,53 @@
+#createSubTaskContainer{
+    background-color: rgba(255,255,255,.6);
+}
+
+
+#formContainer{
+    width:60vw;
+    height: 33rem;
+}
+
+#all-bug-container{
+    height: 430px;
+}
+
+#bugs-count{
+    border-radius: 9999px;
+    font-size: 10px;
+    width:15px;
+    height: 15px;
+    position: absolute;
+    background-color: red;
+    display:flex;
+    justify-content:center;
+    left:0;
+    top: 0;
+    transform: translateX(10px);
+}
+
+#log-container-details{
+    width:85%;
+    transition: all 1s ease-in-out;
+    border-radius: .1rem;
+    box-shadow: 0px 0px 3px white,
+                2px 1px 5px white,
+                0px 0px 3px white;
+    font-size: 12px;
+    padding:5px 10px;
+    margin:5px 0px;
+    border-left:5px solid orange;
+    
+}
+
+#taskTitle,
+pre{
+    white-space: break-spaces;
+}
+
+
+#no-bugs{
+    width:100%;
+    height: 50vh;
+    font-size: 24px;
+}

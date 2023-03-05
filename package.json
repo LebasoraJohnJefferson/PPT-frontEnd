@@ -26,6 +26,7 @@
     "DlhSoft.GanttChartHyperLibrary": "http://DlhSoft.com/Packages/DlhSoft.GanttChartHyperLibrary.tar",
     "frappe-gantt": "^0.6.1",
     "highcharts-angular": "^3.0.0",
+    "ng-circle-progress": "^1.6.0",
     "ng2-pdf-viewer": "^9.1.2",
     "ngx-skeleton-loader": "^6.0.0",
     "ngx-toastr": "^13.2.1",

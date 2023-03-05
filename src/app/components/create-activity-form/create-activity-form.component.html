@@ -24,10 +24,21 @@
                     <small>Due date</small>
                     <input formControlName="dueDate" type="datetime-local"  class="w-full rounded py-1" placeholder="Enter budget...">
                 </div>
+
+                <div>
+                    <small>Activity Dependency</small>
+                    <mat-form-field class="w-full bg-white rounded text-black py-none my-none">
+                        <mat-select multiple formControlName="dependencies">
+                          <mat-option  *ngFor="let activity of activityDependencies" [value]="activity.id">{{activity.activityName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
                 <div class="flex flex-col">
                     <small>Activity description</small>
                     <textarea  class="rounded px-3" formControlName="descriptions" placeholder="Enter activity description"></textarea>
                 </div>
+                
 
                 <div class="mt-3 flex justify-center items-center">
                     <button type="submit" class="w-32 bg-green-700 hover:bg-green-500 py-1 rounded text-white font-bold">CREATE</button>

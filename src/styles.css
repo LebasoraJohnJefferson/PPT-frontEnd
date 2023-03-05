@@ -13,7 +13,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* width */
 ::-webkit-scrollbar {
-    width: 2.5px;
+    width: 4px;
     height: 4px;
 }
   
@@ -44,12 +44,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 
+.bar-wrapper.critical .bar,
+.bar-wrapper.normal .bar {
+  pointer-events: none;
+}
 
 .critical g .bar{
   outline:2px solid red !important;
   border-radius: .3rem;
   overflow: hidden;
 }
+
+.gantt .handle {
+  display: none;
+}
+
+
 
 .normal g .bar{
   outline:2px solid blue !important;
@@ -59,9 +69,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .critical g .bar-progress,
 .normal g .bar-progress{
-  fill: rgb(30, 165, 30) !important;
+  fill: rgb(111, 216, 111) !important;
+  pointer-events: none;
   stroke-width: 0.5;
 }
+
 
 .gantt .bar {
   fill: rgba(0,0,0,.2) !important;
@@ -73,7 +85,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .gantt .bar-label {
-  fill: blue !important;
+  fill: rgb(8, 8, 8) !important;
+  text-transform: capitalize;
   font-weight: bold !important;
 }
 

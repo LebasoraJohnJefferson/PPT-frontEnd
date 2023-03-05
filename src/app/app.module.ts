@@ -12,7 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JwtInterceptor } from './interceptor/jwt.interceptor';
 import { MaterialModule } from './shared/material.module';
 
-
+import { NgCircleProgressModule } from 'ng-circle-progress';
 import { AuthComponent } from './pages/auth/auth.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
@@ -34,6 +34,7 @@ import { GanttComponent } from './components/gantt/gantt.component';
 import { BarChartsComponent } from './components/bar-charts/bar-charts.component';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { SubTasksComponent } from './components/sub-tasks/sub-tasks.component';
+import { LogsComponent } from './components/logs/logs.component';
 
 
 // const config: SocketIoConfig = { url: environment.baseURL,
@@ -64,7 +65,8 @@ import { SubTasksComponent } from './components/sub-tasks/sub-tasks.component';
     GanttComponent,
     BarChartsComponent,
     FeedbackComponent,
-    SubTasksComponent
+    SubTasksComponent,
+    LogsComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +80,21 @@ import { SubTasksComponent } from './components/sub-tasks/sub-tasks.component';
     ToastrModule.forRoot({
       'preventDuplicates': true
     }),
+    NgCircleProgressModule.forRoot(
+      {
+      radius: 100,
+      subtitleFontWeight:'900',
+      titleFontWeight:'600',
+      subtitleFontSize:'30',
+      unitsFontSize:'50',
+      titleFontSize:'50',
+      outerStrokeWidth: 16,
+      innerStrokeWidth: 8,
+      outerStrokeColor: "#78C000",
+      innerStrokeColor: "#C7E596",
+      animationDuration: 300,
+      }
+    )
     // SocketIoModule.forRoot(config)
   ],
   providers: [

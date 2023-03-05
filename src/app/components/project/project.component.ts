@@ -23,9 +23,11 @@ export class ProjectComponent implements OnInit {
   isFeedBackOpen:boolean = false
   isAddCollaboratorFormOpen:boolean = false
   data:any=[]
+  bugs:any=[]
   activityToDelete:any = {name:'',id:0};
   projectId:any;
   title:any=''
+  activityDependencies=[]
   collaborators:any = []
 
   createCollaboratorDetails:FormGroup = this._formBuilder.group({
@@ -85,7 +87,13 @@ export class ProjectComponent implements OnInit {
   getAllActivity(){
     this._getAllActivitySubscription = this._activityService.getAllActivities(this.projectId)
     .subscribe((res)=>{
-      this.data = res
+      this.data = res.data
+      this.bugs = res.bugs
+      let tempActivityDependencies:any = []
+      this.data.forEach((data:any) => {
+        tempActivityDependencies.push(data.Activity)
+      });
+      this.activityDependencies = tempActivityDependencies
     })
   }
 

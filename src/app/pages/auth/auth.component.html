@@ -1,22 +1,22 @@
 <div class="flex bg-gray-900 text-yellow-600 font-bold z-2 flex-col justify-center items-center align-center w-screen h-screen">
-    <div class="grid  w-full md:max-w-max md:h-auto h-full  rounded justify-center align-center md:shadow-lg z-10" id="formLogin">
+    <div class="grid  bg-transparent-black w-full md:max-w-max md:h-auto h-full  rounded justify-center align-center md:shadow-lg z-10" id="formLogin">
         <img class="rounded-t h-24 md:w-full w-screen bg-red-500" src="../../../assets/images/title.png" alt="" />
 
         <!-- login form -->
-        <form method="POST" class="grid gap-2 p-3 my-10" (ngSubmit)="SubmitLogin()" *ngIf="!isRegisterFormOpen" [formGroup]="loginFormGroup">
-            <small class="ml-9">Enter Email: <span *ngIf="isUserLoginInvalid" class="text-red-500">Invalid Email</span></small>
-            <div class="flex justify-center items-center">
+        <form method="POST" class="grid gap-2 p-3 text-white my-10 text-yellow-400" (ngSubmit)="SubmitLogin()" *ngIf="!isRegisterFormOpen" [formGroup]="loginFormGroup">
+            <small class="ml-9"><span class="bg-purple-900 px-2 py-1 rounded text-white">Enter Email:</span> <span *ngIf="isUserLoginInvalid" class="text-red-400"> Invalid Email</span></small>
+            <div class="flex justify-center items-center mb-3">
                 <i class="fa-solid fa-envelope text-xl"></i>
                 <input placeholder="Enter Email..." (input)="checkEmailValidation()" formControlName="username" class="ml-4 w-full py-1 shadow-lg bg-gray-50 rounded border" required/>
             </div>
-            <small class="ml-9 ">Enter Password: </small>
+            <small class="ml-9 "><span class="bg-purple-900 px-2 py-1 rounded text-white">Enter Password: </span></small>
             <div class="flex justify-center items-center">
                 <i class="fa-solid fa-key mr-4 text-xl"></i>
                 <input placeholder="Enter Password..." formControlName="password" [type]="isShowPassword ? '' : 'password'" class="w-full py-1 shadow-lg bg-gray-50 rounded border" required/>
             </div>
             <div class="flex items-center mt-2">
                 <input class="ml-9 mr-1" (click)="showPassword()" type="checkbox" required>
-                <small >show password</small>
+                <p class="text-white text-xs" >S h o w - P a s s w o r d</p>
             </div>
             <div class="flex items-center justify-center">
                 <button *ngIf="!isLoginButton" type="submit" class="px-10 rounded text-white shadow-md  py-3 bg-green-700 hover:bg-green-500">LOGIN</button>
@@ -25,7 +25,7 @@
                 </button>
             </div>
             <div class="flex justify-end px-4">
-                <div (click)="switchToRegister()" class="text-blue-700 text-sm cursor-pointer hover:text-blue-500">Create new account</div>
+                <div (click)="switchToRegister()" class="text-blue-300 text-sm cursor-pointer hover:text-blue-500">Create new account</div>
             </div>
         </form>
 
@@ -37,7 +37,7 @@
                 <small >LOGIN</small>
             </div>
         </div>
-        <mat-vertical-stepper class="text-yellow-600 bg-transparent" [linear]="false" #stepper *ngIf="isRegisterFormOpen">
+        <mat-vertical-stepper class="text-yellow-400 bg-transparent" [linear]="false" #stepper *ngIf="isRegisterFormOpen">
 
             <!-- first Form -->
 
@@ -110,6 +110,6 @@
 
     </div>
 </div>
-<div class="fixed flex -bottom-0 left-0">
-    <img id="background-image" class="opacity-20 w-full" src="../../../assets/images/background-image.gif" alt="evsu-logo">
+<div class="fixed flex top-0 left-0   ">
+    <img id="background-image" class=" w-screen h-screen" src="../../../assets/images/pexels-fauxels-3184325.jpg" alt="evsu-logo">
 </div>

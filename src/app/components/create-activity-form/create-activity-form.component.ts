@@ -1,4 +1,4 @@
-import { Component, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter,Input } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ActivitiesService } from 'src/app/service/activities.service';
@@ -19,7 +19,6 @@ export class CreateActivityFormComponent implements OnInit {
   @Output() closeForm:EventEmitter<any> = new EventEmitter();
   private _getActivitiesSubscription:Subscription = new Subscription()
   private _createActivitiesSubscription:Subscription = new Subscription()
-  dependencies:any=[]
   
   today = moment(new Date()).format(this.format)
   createActivity:FormGroup = this._formBuilder.group({
@@ -30,6 +29,10 @@ export class CreateActivityFormComponent implements OnInit {
     dependencies:[[]],
     descriptions:['',Validators.required]
   })
+  @Input() activityDependencies:any = []
+
+
+
   constructor(
     private _activityService:ActivitiesService,
     private _routes:ActivatedRoute,
@@ -37,7 +40,7 @@ export class CreateActivityFormComponent implements OnInit {
     private _toastr:ToastrService
   ) { 
     this.projectId = this._routes.snapshot.paramMap.get('id');
-    this.getAllProject()
+    console.log(this.activityDependencies)
   }
 
   ngOnInit(): void {
@@ -46,15 +49,8 @@ export class CreateActivityFormComponent implements OnInit {
 
   toggle(){
     this.closeForm.emit()
-    this.getAllProject()
   }
 
-  getAllProject(){
-    this._getActivitiesSubscription = this._activityService.getAllActivities(this.projectId)
-    .subscribe((res)=>{
-      this.dependencies = res
-    })
-  }
 
   submitActivity(){
     if(this.createActivity.get('budget')?.value <= 0 ){

@@ -24,18 +24,19 @@
                 <small class="mr-2">Invite Collaborator</small>
                 <i class="fa-solid fa-handshake"></i>
             </div>
+            <app-logs [bugs]="bugs"></app-logs>
         </div>
     </div>
-    <div class="w-screen flex">
+    <div class="w-screen flex overflow-x-auto">
         <!-- members -->
         <app-project-details (changeDataBaseOnCollaboratorAction)="getAllActivity()" *ngIf="isMemberDetailsOpen"></app-project-details>
-        <app-information-technology (openFeedBackForm)="openFeedBack($event)" (changeData)="getAllActivity()" (deleteBtn)="deleteActivity($event)" [data]="data" *ngIf="category.projectCategory=='IT'"></app-information-technology>
+        <app-information-technology (openFeedBackForm)="openFeedBack($event)" (changeData)="getAllActivity()" (deleteBtn)="deleteActivity($event)" [data]="data"  *ngIf="category.projectCategory=='IT'"></app-information-technology>
         <app-civil-engineer *ngIf="category.projectCategory=='CE'"></app-civil-engineer>
         <app-mechanical-engineer *ngIf="category.projectCategory=='ME'"></app-mechanical-engineer>
     </div>
 </div>
 <div class="w-full h-w-full absolute" *ngIf="isOpenForm">
-    <app-create-activity-form (closeForm)="toggleForm()" ></app-create-activity-form>
+    <app-create-activity-form [activityDependencies] = 'activityDependencies' (closeForm)="toggleForm()" ></app-create-activity-form>
 </div>
 
 <div *ngIf="activityToDelete.id!=0" class="w-full h-screen flex items-center justify-center  fixed top-0 left-0" id="toDeleteContainer">

@@ -3,8 +3,8 @@
         <div class="flex items-center">
             <app-back-btn></app-back-btn>
             <div class="text-yellow-500 font-bold flex items-center">
-                <p>{{category.projectName | uppercase}}/ {{activityDetails.activityName | uppercase}}</p>
-                <i class="fa-solid fa-pen mx-1 hover:text-blue-500 cursor-pointer"></i>
+                <p class="mr-2">{{category.projectName | uppercase}}/ {{activityDetails.activityName | uppercase}}</p>
+                <i (click)="editActivityDetails()" class="fa-regular fa-pen-to-square cursor-pointer hover:text-blue-600"></i>
             </div>
         </div>
         <div class="text-white mt-2 flex flex-wrap">
@@ -16,6 +16,7 @@
                 <small class="mr-2">FeedBack</small>
                 <i  class="fa-solid fa-file cursor-pointer"></i>
             </div>
+            <app-logs [bugs]="bugs"></app-logs>
         </div>
     </div>
     <div class="flex">
@@ -25,56 +26,67 @@
                 <div class="flex justify-center text-white items-center px-3 bg-gray-600 py-2 rounded w-64">
                     <div class="flex flex-col items-center justify-center w-20">
                         <img [src]="image" alt="profile" class="bg-white h-12 w-12 border border-blue-500 rounded-full">
-                        <p class="font-bold mt-2 text-yellow-700 text-center truncate">
+                        <p class="font-bold mt-2 text-blue-300 text-center truncate">
                             {{collaboratorDetails.fullName}}</p>
                     </div>
                     <div class="grid gap-1 w-44 flex-col px-3">
                         <small class="truncate">
-                            <i class="fa-solid fa-location-dot mr-2"></i>
-                            {{collaboratorDetails.address}}
+                            <i class="fa-solid fa-location-dot mr-2 text-red-500"></i>
+                            {{collaboratorDetails.address | titlecase}}
                         </small>
                         <small class="truncate">
-                            <i class="fa-solid fa-cake-candles mr-2"></i>
+                            <i class="fa-solid fa-cake-candles mr-2 text-pink-300"></i>
                             {{collaboratorDetails.birthDay | date:'mediumDate'}}
                         </small>
                         <small class="truncate">
-                            <i class="fa-solid fa-person-half-dress mr-2"></i>
+                            <i class="fa-solid fa-person-half-dress mr-3"></i>
                             {{collaboratorDetails.gender}}
                         </small>
                         <small class="truncate">
-                            <i class="fa-solid fa-envelope mr-2"></i>
+                            <i class="fa-solid fa-envelope mr-2 text-green-300"></i>
                             {{collaboratorDetails.email}}
                         </small>
                     </div>
                 </div>
             </div>
-            <div class="text-white mx-2 mt-2">
-                <small class="text-yellow-500 mr-2">Activity details:</small>
-                <small class="bg-purple-600 rounded text-white py-1 px-3" id="stage">{{activityDetails.stage}}</small>
-                <div class="flex mt-1 flex-col justify-center items-center px-3 bg-gray-700 py-2     rounded w-64">
+            <div class="text-white mx-2 mt-3">
+                <small class="text-yellow-500 mr-1">Activity details:</small>
+                <small class="bg-purple-600 rounded text-white py-1 px-3" id="stage">{{activityDetails.stage | titlecase}}</small>
+                <small class="ml-1 py-1 px-2 rounded bg-purple-600 rounded text-white" id="stage">{{percentage}}%</small>
+                <div class="flex mt-1 flex-col justify-center items-center px-3 bg-gray-700 py-2 rounded w-64">
                     <div class="grid gap-1  w-full flex-col px-3">
-                        <p class="truncate text-yellow-700 text-center font-bold">
-                            {{activityDetails.activityName | uppercase}}
-                        </p>
-                        <small class="truncate">
-                            <i class="fa-solid fa-sack-dollar mr-2"></i>
-                            <small>Budget :</small>
-                            <div class="flex items-center">
-                                {{activityDetails.budget}}
+                        <div class="truncate text-blue-300 text-center font-bold">
+                            <i *ngIf="showRecommendationDateIcon && !isAllTasksDone" (click)="seeRecommendDate()" class="fa-solid fa-triangle-exclamation text-red-500 hover:text-red-700 cursor-pointer mr-1"></i>
+                            <span>{{activityDetails.activityName | uppercase}} </span>
+                            <div *ngIf="isRecommendDate && showRecommendationDateIcon && !isAllTasksDone" class="relative z-10 rounded bg-red-400 h-12 flex items-center justify-center" >
+                                <div class="py-3 text-black" >
+                                    <p id="recommendDateText">Recommend Date</p>
+                                    <div id="dateRecommended" class="text-xs">{{activityDetails.recommendDate  | date : 'medium'}}</div>
+                                </div>
                             </div>
+                        </div>
+                        
+                        <hr />
+                        <small class="truncate flex items-center mt-1">
+                            <i class="fa-solid fa-sack-dollar mr-2 text-yellow-500"></i>
+                            <div>Budget : ₱{{activityDetails.budget}} </div> 
                         </small>
                         <small class="truncate">
-                            <i class="fa-solid fa-calendar-days mr-2"></i>
-                            <small>Start - End Date :</small>
-                            <div class="flex items-center">
-                                {{activityDetails.kickOff | date:'mediumDate'}} -
-                                {{activityDetails.dueDate | date:'mediumDate'}} 
+                            <div class="mt-1">
+                                <i class="fa-solid fa-calendar-days mr-2 text-blue-300"></i>
+                                <span>Start : {{activityDetails.kickOff | date:'medium'}} </span>
+                            </div>  
+                        </small>
+                        <small class="truncate">
+                            <div class="mt-1">
+                                <i class="fa-solid fa-calendar-days mr-2 text-red-300"></i>
+                                <span>end : {{activityDetails.dueDate | date:'medium'}}  </span>
                             </div>
                         </small>
-                        <small>
-                            <i class="fa-solid fa-book mr-2"></i>
+                        <small class="mt-1">
+                            <i class="fa-solid fa-clipboard mr-2 text-purple-300"></i>
                             <small >Descriptions :</small>
-                            <div class="bg-gray-600 flex items-center mt-1 shadow-lg border border-gray-800  w-full rounded py-1 px-3 max-h-32 overflow-y-auto">
+                            <div class="bg-gray-600 flex mt-1 shadow-lg border border-gray-800  w-full rounded py-1 px-3 max-h-32  overflow-y-auto">
                                 {{activityDetails.descriptions}} 
                             </div>
                         </small>
@@ -84,26 +96,65 @@
         </div>
         <div class="h-5/6">
             <small class="text-yellow-500">Gantt chart :</small>
-            <div class="rounded">
-                <app-gantt></app-gantt>
+            <div class="rounded" >
+                <app-gantt [gannttData]="gannttData"></app-gantt>
             </div>
         </div>
         <div class="w-full mx-2 text-white">
-            <small class="text-yellow-500">To do:</small>
-            <ol *ngIf="dependencies.length != 0" class="overflow-y-auto py-1 flex w-full h-full flex-col bg-gray-600 rounded" id="container-of-to-do">
-                <li class="flex flex-col text-black bg-blue-200 m-1 rounded px-3 py-1" *ngFor="let dependency of dependencies">
-                    <small class="text-center truncate">{{dependency.taskName}}</small>
-                    <p class="text-xs">Estimate Date to Start:</p>
-                    <p class="text-xs">Estimate Date to End:</p>
+            <div class="w-full flex items-center ">
+                <small class="text-yellow-500 " id="to-do">To do:</small>
+                <input (input)="searchTask($event.target)" placeholder="Search for tasks..." type="text" class="rounded bg-gray-700 text-xs p-1 w-full " id="to-do-input">
+            </div>
+            <ol *ngIf="tasks.length != 0" class="overflow-y-auto py-1 flex w-full h-full flex-col bg-gray-600 rounded" id="container-of-to-do">
+                <li class="{{task.data.date_status == 'problematic'? 'flex flex-col text-black bg-red-100 m-1 rounded px-3 py-1' : 'flex flex-col text-black bg-blue-200 m-1 rounded px-3 py-1'}}" *ngFor="let task of tasks">
+                    <div class="w-full flex justify-between">
+                        <div class='text-xs flex items-center'>
+                            <div [ngClass]="{
+                                'bg-green-500' : task.data.date_status == 'done',
+                                'bg-blue-500' : task.data.date_status == 'normal',
+                                'bg-yellow-500' : task.data.date_status == 'soonToEnd',
+                                'bg-red-500' : task.data.date_status == 'ended',
+                                'bg-red-700' : task.data.date_status == 'problematic'
+                            }" id="identify"></div>
+                            <p class="mx-1">{{task.data.date_status}}</p>
+                        </div>
+                        <i (click)="openTaskDescription(task.taskInfo.id)" *ngIf="task.taskInfo.id!= descriptionShowById" class="fa-solid fa-book"></i>
+                        <i (click)="openTaskDescription(task.taskInfo.id)" *ngIf="task.taskInfo.id == descriptionShowById" class="fa-solid fa-book-open"></i>
+                    </div>
+                    <p class="text-center truncate font-bold" id="taskTitle">  {{task.taskInfo.taskName | uppercase}}</p>
+                    
+                    <p class="text-xs"><i class="fa-sharp fa-solid fa-calendar px-2 text-blue-700"></i> <b>Start</b>: {{task.data.start | date: 'medium'}}</p>
+                    <p class="text-xs"><i class="fa-solid fa-calendar-xmark px-2  text-red-700"></i> <b>End</b>: {{task.data.end | date : 'medium'}}</p>
+                    
+                    <div class="mt-2" *ngIf="task.taskInfo.id == descriptionShowById">
+                        <small class="bg-purple-700 p-1 rounded text-white text-xs">Others :</small>
+                        <ol class="px-2 mt-1 rounded p-2" id="moreTaskDetails">
+                            
+                            <li>
+                                <p class="text-xs"><i class="fa-solid fa-wallet px-2"></i><b>Budget</b>: ₱{{task.taskInfo.budget}}</p>
+                            </li>
+                            <li>
+                                <p class="text-xs"><i class="fa-sharp fa-solid fa-stopwatch px-2"></i><b>Duration</b>: {{task.taskInfo.duration}} {{task.taskInfo.duration>1 ? 'days' : 'day'}}</p>
+                            </li>
+                            <li>
+                                <p class="text-xs"><i class="fa-solid fa-heart px-2"></i><b>Slacks</b>: {{task.data.slacks}}</p>
+                            </li>
+                            <li >
+                                <p class="text-xs"><i class="fa-solid fa-clipboard px-2"></i><b>Descriptions</b>: </p>
+                                <p class="text-xs p-3">{{task.taskInfo.descriptions}}</p>
+                            </li>
+                        </ol>
+                        
+                    </div>
                     <div class="flex items-center justify-center mt-2">
-                        <small class="px-2 mx-1 py-1 bg-green-500 hover:bg-green-700 rounded text-white cursor-pointer">DONE</small>
-                        <small class="px-2 mx-1 py-1 bg-yellow-500 hover:bg-yellow-700 rounded text-white cursor-pointer">EDIT</small>
-                        <small class="px-2 mx-1 py-1 bg-red-500 hover:bg-red-700 rounded text-white cursor-pointer">DELETE</small>
+                        <small (click)="changeStatus(task.taskInfo.id)" class="px-2 mx-1 py-1 bg-green-500 hover:bg-green-700 rounded text-white cursor-pointer">{{task.taskInfo.status  ? 'UNDONE' : 'DONE'}}</small>
+                        <small (click)="openEditForm(task.taskInfo.taskName,task.taskInfo.id,task.taskInfo.budget,task.taskInfo.duration,task.taskInfo.descriptions,task.data.dependencies)" class="px-2 mx-1 py-1 bg-yellow-500 hover:bg-yellow-700 rounded text-white cursor-pointer">EDIT</small>
+                        <small (click)="openDeleteNotification(task.taskInfo.taskName,task.taskInfo.id)" class="px-2 mx-1 py-1 bg-red-500 hover:bg-red-700 rounded text-white cursor-pointer">DELETE</small>
                     </div>
                 </li>
             </ol>
-            <ol *ngIf="dependencies.length == 0" class="overflow-y-auto grid gap-1  bg-white rounded" id="container-of-to-do">
-                <li class="flex items-center justify-center font-bold text-black">No Sub Task(s) Found!</li>
+            <ol *ngIf="tasks.length == 0" class="overflow-y-auto grid gap-1  bg-white rounded" id="container-of-to-do">
+                <li class="flex bg-gray-600 items-center justify-center font-bold text-white">No Sub Task(s) Found!</li>
             </ol>
         </div>
     </div>
@@ -118,6 +169,69 @@
 <div *ngIf="activityDetails.length == 0" id="spinner-container">
     <mat-spinner [diameter]="75"></mat-spinner>
 </div>
+
+
+<div *ngIf="isEditActivityOpen" class="fixed top-0 left-0 text-yellow-500 z-20 font-bold flex items-center justify-center h-screen w-screen " id="createSubTaskContainer">
+    <div class="bg-black rounded relative" id="formContainer2">
+        <div class="absolute flex w-full justify-end">
+            <p class="mr-10 mt-5 cursor-pointer text-2xl text-red-700 hover:text-red-500">
+                <i (click)="editActivityDetails()" class="fa-solid fa-rectangle-xmark text-2xl mr-4 hover:text-red-400 text-red-600 cursor-pointer"></i>
+            </p>
+        </div>
+        <div class="text-center mt-10 text-white py-2"><p>Edit Activity</p><p>{{activityDetails.activityName | uppercase}}</p></div>
+        <form  class="grid" [formGroup]="editActivity" (ngSubmit)="submitEditActivity()">
+            <div class="grid gap-2 px-5">
+                <div>
+                    <small>Activity Name </small>
+                    <input formControlName="activityName"  class="w-full rounded py-1" placeholder="Enter activity name...">
+                </div>
+                <div>
+                    <small>Budget </small>
+                    <input formControlName="budget"  class="w-full rounded py-1" type="number" placeholder="Enter budget...">
+                </div>
+                <div>
+                    <small>Kick off </small>
+                    <input formControlName="kickOff" type="datetime-local"  class="w-full rounded py-1" placeholder="Enter budget...">
+                </div>
+                <div>
+                    <small>Due date</small>
+                    <input formControlName="dueDate" type="datetime-local"  class="w-full rounded py-1" placeholder="Enter budget...">
+                </div>
+                <div>
+                    <small>Activity Dependency</small>
+                    <mat-form-field class="w-full bg-white rounded text-black py-none my-none">
+                        <mat-select multiple formControlName="dependencies">
+                          <mat-option  *ngFor="let activity of activityDependencies" [value]="activity.id">{{activity.activityName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col">
+                    <small>Activity description</small>
+                    <textarea  class="rounded px-3 text-black" formControlName="descriptions" placeholder="Enter activity description"></textarea>
+                </div>
+
+                <div class="mt-3 flex justify-center items-center">
+                    <button type="submit" class="w-32 bg-green-700 hover:bg-green-500 py-1 rounded text-white font-bold">EDIT</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div *ngIf="isDeleteNotificationOpen" class="w-full h-screen flex items-center justify-center  fixed top-0 left-0" id="toDeleteContainer">
+    <div class="bg-gray-900 text-yellow-500 w-96 py-3 rounded relative">
+        <p class="truncate text-center py-2 my-2">Are you sure you want to delete {{taskToBeDeleted}}?</p>
+        <div class="flex justify-around items-center">
+            <div (click)="commitDeleteTask()" class="bg-red-700 cursor-pointer hover:bg-red-500 text-white py-1 px-2 rounded">
+                <i class="fa-solid fa-trash mr-1"></i>DELETE</div>
+            <div (click)="closeDeleteNotification()" class="bg-blue-700 cursor-pointer hover:bg-blue-500 text-white py-1 px-2 rounded">
+                <i class="fa-solid fa-ban mr-1"></i>
+                CANCEL
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div *ngIf="isCreateSubTaskFormOpen" class="fixed top-0 left-0 text-yellow-500 z-20 font-bold flex items-center justify-center h-screen w-screen " id="createSubTaskContainer">
     <div class="bg-black rounded relative" id="formContainer">
@@ -139,16 +253,16 @@
                 </div>
 
                 <div>
-                    <small>Dependency</small>
+                    <small>Task Dependency</small>
                     <mat-form-field class="w-full bg-white rounded text-black py-none my-none">
                         <mat-select multiple formControlName="dependency">
-                          <mat-option  *ngFor="let dependency of dependencies" [value]="dependency.id">{{dependency.taskName}}</mat-option>
+                          <mat-option  *ngFor="let task of tasks" [value]="task.taskInfo.id">{{task.taskInfo.taskName}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
                   
                 <div class="flex flex-col">
-                    <small>Activity description</small>
+                    <small>Task description</small>
                     <textarea  class="rounded text-black px-3" formControlName="descriptions" placeholder="Enter activity description"></textarea>
                 </div>
                 
@@ -161,6 +275,56 @@
 
                 <div class="mt-3 flex justify-center items-center">
                     <button type="submit" class="w-32 bg-green-700 hover:bg-green-500 py-1 rounded text-white font-bold">CREATE</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- edit sub task  -->
+
+<div *ngIf="isEditSubTaskOpen" class="fixed top-0 left-0 text-yellow-500 z-20 font-bold flex items-center justify-center h-screen w-screen " id="createSubTaskContainer">
+    <div class="bg-black rounded relative" id="formContainer">
+        <div class="absolute flex w-full justify-end">
+            <p class="mr-10 mt-5 cursor-pointer text-2xl text-red-700 hover:text-red-500">
+                <i (click)="closeEditForm()" class="fa-solid fa-rectangle-xmark text-2xl mr-4 hover:text-red-400 text-red-600 cursor-pointer"></i>
+            </p>
+        </div>
+        <div class="text-center mt-10 text-white py-2"><p>Edit Sub-Task</p><p>{{taskToBeEdited | uppercase}}</p></div>
+        <form  class="grid" [formGroup]="editTask" (ngSubmit)="submitEditTask()">
+            <div class="grid gap-2 px-5">
+                <div>
+                    <small>Task Name</small>
+                    <input formControlName="taskName"  class="w-full rounded py-1" placeholder="Enter task name...">
+                </div>
+                <div>
+                    <small>Budget</small>
+                    <input formControlName="budget"  class="w-full rounded py-1" type="number" placeholder="Enter budget...">
+                </div>
+
+                <div>
+                    <small>Task Dependency</small>
+                    <mat-form-field class="w-full bg-white rounded text-black py-none my-none">
+                        <mat-select multiple formControlName="dependency">
+                          <mat-option  *ngFor="let task of editTaskDependencyArray" [value]="task.id">{{task.taskName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                  
+                <div class="flex flex-col">
+                    <small>Task description</small>
+                    <textarea  class="rounded text-black px-3" formControlName="descriptions" placeholder="Enter activity description"></textarea>
+                </div>
+                
+                <div>
+                    <small class="flex items-center">Duration : {{durationTask}}<p class="ml-1" *ngIf="durationTask!=0">{{durationTask>1 ? 'days' : 'day'}}</p></small>
+                    <mat-slider formControlName="duration"  class="w-full" (change)="changeEditTaskDuration($event)">
+                        <input  matSliderThumb>
+                    </mat-slider>
+                </div>
+
+                <div class="mt-1 flex justify-center items-center">
+                    <button type="submit" class="w-32 bg-green-700 hover:bg-green-500 py-1 rounded text-white font-bold">EDIT</button>
                 </div>
             </div>
         </form>

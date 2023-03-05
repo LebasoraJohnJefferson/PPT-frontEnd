@@ -6,7 +6,12 @@
     vertical-align: top;
   }
   
-  .example-list {
+  #requirements,
+  #designs,
+  #verifications,
+  #maintenance,
+  #implementations,
+  #example-list {
     min-height: 60px;
     background: white;
     border-radius: 4px;
@@ -15,7 +20,7 @@
     background-color: #4b5563;
   }
   
-  .example-box {
+  #example-box {
     padding: 4px 3px;
     color: rgba(0, 0, 0, 0.87);
     display: flex;
@@ -42,16 +47,58 @@
   .cdk-drag-placeholder {
     opacity: 0;
   }
+
+  #box-container{
+    width:100%;
+  }
+
+  .blue-border{
+    width:100%;
+    background-color: blue;
+  }
+
+  .green-border{
+    width:100%;
+    background-color: green;
+  }
+
+  .red-border{
+    width:100%;
+    background-color: red;
+  }
+
+  .orange-border{
+    width:100%;
+    background-color: orange;
+  }
   
   .cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
-  
-  .example-box:last-child {
+
+  #requirements:last-child,
+  #designs:last-child,
+  #verifications:last-child,
+  #maintenance:last-child,
+  #implementations:last-child,
+  #example-box:last-child {
     border: none;
   }
-  
-  .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+
+  #requirements.cdk-drop-list-dragging #example-box:not(.cdk-drag-placeholder),
+  #designs.cdk-drop-list-dragging #example-box:not(.cdk-drag-placeholder),
+  #verifications.cdk-drop-list-dragging #example-box:not(.cdk-drag-placeholder),
+  #implementations.cdk-drop-list-dragging #example-box:not(.cdk-drag-placeholder),
+  #maintenance.cdk-drop-list-dragging #example-box:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
+
   
+#formContainer2{
+  width:60vw;
+  height: 37rem;
+}
+  
+#createSubTaskContainer{
+  background-color: rgba(255,255,255,.6);
+}

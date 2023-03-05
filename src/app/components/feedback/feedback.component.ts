@@ -16,8 +16,12 @@ export class FeedbackComponent implements OnInit {
   @Input() activityID:any;
   defaultImage:string = environment.default_profile
   feedBacks:any = []
+  isBugOptionShow:boolean = false
+  bugsIndex:number = 0
+  bugs = ['normal','bugs','fixed']
 
   sendFeedBackForm:FormGroup = this._formBuilder.group({
+    bugs:['',Validators.required],
     activityID:['',Validators.required],
     message:['',Validators.required]
   })
@@ -38,6 +42,7 @@ export class FeedbackComponent implements OnInit {
 
   sendFeedback(){
     this.sendFeedBackForm.get('activityID')?.setValue(this.activityID)
+    this.sendFeedBackForm.controls.bugs.setValue(this.bugs[this.bugsIndex])
     if(this.sendFeedBackForm.valid){
       this._createActivityFeedBackSubscription = this._feedBackService.createFeedBack(this.sendFeedBackForm.value)
       .subscribe(()=>{
@@ -56,11 +61,21 @@ export class FeedbackComponent implements OnInit {
     this._getAllActivityFeedBackSubscription = this._feedBackService.getAllFeedBack(this.activityID)
     .subscribe((res)=>{
       this.feedBacks = res
+      console.log(res)
     })
   }
 
   close(){
     this.feedBackToggle.emit()
+  }
+
+  showBugsOptions(){
+    this.isBugOptionShow = !this.isBugOptionShow
+  }
+
+  changeBugIndex(bug:string){
+    this.bugsIndex = this.bugs.indexOf(bug)
+    this.showBugsOptions()
   }
 
   ngOnDestroy() {
