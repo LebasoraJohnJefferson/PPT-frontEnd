@@ -1,0 +1,42 @@
+.openAside{
+    width: 250px;
+    height: 90vh;
+    display:flex;
+    flex-direction: column;
+    position: sticky;
+    top:0; left:0;
+    font-size: 10px;
+    justify-items: center;
+    padding: 0px 10px;
+    color:white;
+    background-color:#166534;
+    transition: width 1s ease-in-out;
+    overflow: hidden;
+}
+
+.closeAside{
+    overflow: hidden;
+    height: 90vh;
+    display:flex;
+    flex-direction: column;
+    position: sticky;
+    top:0; left:0;
+    font-size: 10px;
+    justify-items: center;
+    padding: 0px 10px;
+    color:white;
+    background-color:#166534;
+    width: 40px;
+    transition: width 1s ease-in-out;
+}
+
+
+#project-mananger{
+    font-size: 14px;
+}
+
+li{
+    margin:13px 0px;
+}
+
+ 

@@ -27,6 +27,7 @@ export class SubTasksComponent implements OnInit {
   activityDependencies:any=[]
   descriptionShowById:number = -1
   isFeedBackOpen:boolean=false
+  subTaskID:number = -1
   taskToBeEdited:string = ''
   taskToBeDeleted:string = ''
   taskIdToBeDEleted:number = 0
@@ -200,8 +201,9 @@ export class SubTasksComponent implements OnInit {
     })
   }
 
-  openFeedBack(){
+  openFeedBack(taskID:any){
     this.isFeedBackOpen = true
+    this.subTaskID = taskID
   }
   
 

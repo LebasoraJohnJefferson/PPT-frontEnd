@@ -30,9 +30,9 @@
     <div class="w-screen flex overflow-x-auto">
         <!-- members -->
         <app-project-details (changeDataBaseOnCollaboratorAction)="getAllActivity()" *ngIf="isMemberDetailsOpen"></app-project-details>
-        <app-information-technology (openFeedBackForm)="openFeedBack($event)" (changeData)="getAllActivity()" (deleteBtn)="deleteActivity($event)" [data]="data"  *ngIf="category.projectCategory=='IT'"></app-information-technology>
-        <app-civil-engineer *ngIf="category.projectCategory=='CE'"></app-civil-engineer>
-        <app-mechanical-engineer *ngIf="category.projectCategory=='ME'"></app-mechanical-engineer>
+        <app-information-technology  (changeData)="getAllActivity()" (deleteBtn)="deleteActivity($event)" [data]="data"  *ngIf="category.projectCategory=='IT'"></app-information-technology>
+        <app-civil-engineer  (changeData)="getAllActivity()" (deleteBtn)="deleteActivity($event)" [data]="data"   *ngIf="category.projectCategory=='CE'"></app-civil-engineer>
+        <app-mechanical-engineer (changeData)="getAllActivity()" (deleteBtn)="deleteActivity($event)" [data]="data" *ngIf="category.projectCategory=='ME'"></app-mechanical-engineer>
     </div>
 </div>
 <div class="w-full h-w-full absolute" *ngIf="isOpenForm">
@@ -81,9 +81,6 @@
     </div>
 </div>
 
-<div class="w-full h-w-full absolute" *ngIf="isFeedBackOpen">
-    <app-feedback [activityID]="activityID" (feedBackToggle)="openFeedBack($event)" ></app-feedback>
-</div>
 
 
 

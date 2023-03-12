@@ -6,11 +6,11 @@
         <div class="w-full text-center font-bold text-yellow-500">FEEDBACK</div>
         <ol class="h-4/6 w-full flex flex-col overflow-y-auto flex-col-reverse" *ngIf="feedBacks.length != 0">
             <li class="grid px-3 my-1" *ngFor="let feedBack of feedBacks">
-                <div class="flex items-center mb-1">
-                    <img class="h-7 w-7 bg-white rounded-full border border-blue-500" [src]="feedBack.ownerDetails.image ? feedBack.ownerDetails.image :defaultImage" alt="profile" >
-                    <small class="mx-2 text-yellow-500">{{feedBack.ownerDetails.fullName | uppercase}}</small>
+                <div [ngClass]=" feedBack.role == 'sender' ? 'flex items-center mb-1' : 'flex items-center mb-1 justify-end'">
+                    <img class="h-7 w-7  bg-white rounded-full border border-blue-500" [src]="feedBack.ownerDetails.image ? feedBack.ownerDetails.image :defaultImage" alt="profile" >
+                    <small [ngClass]="feedBack.role == 'sender' ? 'mx-2 text-yellow-500' : 'mx-2 text-red-500'">{{feedBack.ownerDetails.fullName | uppercase}}</small>
                     |
-                    <small class="flex w-full items-center mx-1">
+                    <small class="flex items-center mx-1">
                         <i class="fa-solid fa-globe mr-1 text-xs"></i>
                         <p  id="date">{{feedBack.created_at | dateAgo}}</p>
                         <p class="bold text-lg mx-1">|</p>
@@ -20,7 +20,7 @@
                         </div>
                     </small>  
                 </div>
-                <div class="bg-blue-300 text-black rounded my-1 px-3 py-2">
+                <div [ngClass]="feedBack.role == 'sender' ? 'bg-blue-300 w-80 text-black rounded my-1 px-3 py-2' : 'bg-gray-300 text-black rounded my-1 px-3 py-2 w-80 justify-self-end'">
                     <small>
                         {{feedBack.message}}
                     </small>  

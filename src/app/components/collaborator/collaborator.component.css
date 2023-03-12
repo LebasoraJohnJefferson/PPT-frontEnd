@@ -1,0 +1,114 @@
+#activities-details-container{
+    box-shadow:0px 3px 5px rgba(255,255,255,.6);
+}
+
+#container-table{
+    max-height: 87vh;
+    overflow-y: auto;
+}
+
+#view-task{
+    position: sticky;
+    top:0; right:0;
+    height: 90vh;
+    overflow-y: auto;
+    min-width: 250px;
+    display: block;
+    background-color:#166534;
+    transition: min-width 3s ease-in-out;
+}
+
+
+#spinner-container{
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+#recommendDateText{
+    font-size: 12px;
+    font-weight: bolder;
+}
+
+
+#dateRecommended{
+    font-size:10px;
+    font-weight: 500;
+}
+
+
+
+
+#stage{
+    font-size: 11px;
+}
+
+#to-do-input{
+    outline: none;
+    filter:blur(.2px);
+    transform: translateY(-5px);
+    color:whitesmoke;
+    box-shadow: 0px 0px 1px white;
+}
+
+#to-do{
+    width:50px;
+}
+
+#container-of-to-do{
+    height: 65vh;
+}
+
+#createSubTaskContainer{
+    background-color: rgba(255,255,255,.6);
+}
+
+#toDeleteContainer{
+    background-color: rgba(255,255,255,.6);
+}
+
+#moreTaskDetails{
+    box-shadow: 2px 2px 3px rgba(10,10,10,.6),
+                0px 0px 1px rgba(10,10,10,.6),
+                2px 2px 1px rgba(10,10,10,.6);
+}
+
+#formContainer{
+    width:60vw;
+    height: 33rem;
+}
+
+#formContainer2{
+    width:60vw;
+    height: 37rem;
+}
+
+#identify{
+    border: .5px solid black;
+    width:10px;
+    height:10px;
+    border-radius: 9999px;
+}
+
+input{
+    color:black;
+}
+
+.not-empty-select.mat-selected {
+color: black !important;
+}
+
+:host /deep/ .mat-select-value-text {
+color: black !important;
+}
+
+
+#taskTitle{
+    white-space: break-spaces;
+}
+
+#activitiesDepend{
+    box-shadow: 0px 0px 5px rgba(255,255,255,.6);
+}

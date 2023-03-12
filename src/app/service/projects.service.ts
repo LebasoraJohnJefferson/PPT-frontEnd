@@ -31,4 +31,8 @@ export class ProjectsService {
     return this._http.put(`${this.baseURL}/projects/${id}`,data)
   }
 
+  deleteProject(id:any):Observable<any>{
+    return this._http.delete(`${this.baseURL}/projects/${id}`)
+  }
+
 }

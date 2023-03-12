@@ -28,7 +28,6 @@
                 <div  *ngIf="showOptionById == requirement.Activity.id" class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 top-0 right-2 absolute">
                   <i (click)="editActivityDetails(requirement.Activity)" class="fa-solid fa-gear my-1 cursor-pointer"></i>
                   <i routerLink="/dashboard/projects/{{projectID}}/{{requirement.Activity.id}}" class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer mb-1"></i>
-                  <i (click)="openFeedBack(requirement.Activity.id)" class="fa-solid fa-file cursor-pointer my-1 hover:text-gray-600 mb-1"></i>
                   <i (click)="deleteActivity(requirement.Activity.id,requirement.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer mb-1"></i>
               </div>
               </div>
@@ -101,7 +100,6 @@
                 <div  *ngIf="showOptionById == design.Activity.id" class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 top-0 right-2 absolute">
                   <i (click)="editActivityDetails(design.Activity)" class="fa-solid fa-gear my-1 cursor-pointer"></i>
                   <i routerLink="/dashboard/projects/{{projectID}}/{{design.Activity.id}}" class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer mb-1"></i>
-                  <i (click)="openFeedBack(design.Activity.id)" class="fa-solid fa-file cursor-pointer my-1 hover:text-gray-600 mb-1"></i>
                   <i (click)="deleteActivity(design.Activity.id,design.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer mb-1"></i>
               </div>
               </div>
@@ -177,7 +175,7 @@
                 <div  *ngIf="showOptionById == implementation.Activity.id" class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 top-0 right-2 absolute">
                   <i (click)="editActivityDetails(implementation.Activity)" class="fa-solid fa-gear my-1 cursor-pointer"></i>
                   <i routerLink="/dashboard/projects/{{projectID}}/{{implementation.Activity.id}}" class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer mb-1"></i>
-                  <i (click)="openFeedBack(implementation.Activity.id)" class="fa-solid fa-file cursor-pointer my-1 hover:text-gray-600 mb-1"></i>
+                  
                   <i (click)="deleteActivity(implementation.Activity.id,implementation.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer mb-1"></i>
               </div>
               </div>
@@ -251,7 +249,7 @@
                 <div  *ngIf="showOptionById == verification.Activity.id" class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 top-0 right-2 absolute">
                   <i (click)="editActivityDetails(verification.Activity)" class="fa-solid fa-gear my-1 cursor-pointer"></i>
                   <i routerLink="/dashboard/projects/{{projectID}}/{{verification.Activity.id}}" class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer mb-1"></i>
-                  <i (click)="openFeedBack(verification.Activity.id)" class="fa-solid fa-file cursor-pointer my-1 hover:text-gray-600 mb-1"></i>
+                  
                   <i (click)="deleteActivity(verification.Activity.id,verification.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer mb-1"></i>
               </div>
               </div>
@@ -323,7 +321,6 @@
                 <div  *ngIf="showOptionById == main.Activity.id" class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 top-0 right-2 absolute">
                   <i (click)="editActivityDetails(main.Activity)" class="fa-solid fa-gear my-1 cursor-pointer"></i>
                   <i routerLink="/dashboard/projects/{{projectID}}/{{main.Activity.id}}" class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer mb-1"></i>
-                  <i (click)="openFeedBack(main.Activity.id)" class="fa-solid fa-file cursor-pointer my-1 hover:text-gray-600 mb-1"></i>
                   <i (click)="deleteActivity(main.Activity.id,main.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer mb-1"></i>
               </div>
               </div>

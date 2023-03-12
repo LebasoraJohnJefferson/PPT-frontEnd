@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class FeedbackComponent implements OnInit {
   @Output() feedBackToggle:EventEmitter<any> = new EventEmitter
-  @Input() activityID:any;
+  @Input() subTaskID:any;
   defaultImage:string = environment.default_profile
   feedBacks:any = []
   isBugOptionShow:boolean = false
@@ -22,7 +22,7 @@ export class FeedbackComponent implements OnInit {
 
   sendFeedBackForm:FormGroup = this._formBuilder.group({
     bugs:['',Validators.required],
-    activityID:['',Validators.required],
+    subTaskID:['',Validators.required],
     message:['',Validators.required]
   })
   private _getAllActivityFeedBackSubscription:Subscription = new Subscription()
@@ -41,7 +41,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   sendFeedback(){
-    this.sendFeedBackForm.get('activityID')?.setValue(this.activityID)
+    this.sendFeedBackForm.get('subTaskID')?.setValue(this.subTaskID)
     this.sendFeedBackForm.controls.bugs.setValue(this.bugs[this.bugsIndex])
     if(this.sendFeedBackForm.valid){
       this._createActivityFeedBackSubscription = this._feedBackService.createFeedBack(this.sendFeedBackForm.value)
@@ -58,10 +58,9 @@ export class FeedbackComponent implements OnInit {
   }
 
   getAllActivityFeedBack(){
-    this._getAllActivityFeedBackSubscription = this._feedBackService.getAllFeedBack(this.activityID)
+    this._getAllActivityFeedBackSubscription = this._feedBackService.getAllFeedBack(this.subTaskID)
     .subscribe((res)=>{
       this.feedBacks = res
-      console.log(res)
     })
   }
 

@@ -35,6 +35,10 @@ import { BarChartsComponent } from './components/bar-charts/bar-charts.component
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { SubTasksComponent } from './components/sub-tasks/sub-tasks.component';
 import { LogsComponent } from './components/logs/logs.component';
+import { PieChartComponent } from './components/pie-chart/pie-chart.component';
+import { CollaboratorComponent } from './components/collaborator/collaborator.component';
+import { AsideUserComponent } from './components/aside-user/aside-user.component';
+import { PieChartUserComponent } from './components/pie-chart-user/pie-chart-user.component';
 
 
 // const config: SocketIoConfig = { url: environment.baseURL,
@@ -67,6 +71,10 @@ import { LogsComponent } from './components/logs/logs.component';
     FeedbackComponent,
     SubTasksComponent,
     LogsComponent,
+    PieChartComponent,
+    CollaboratorComponent,
+    AsideUserComponent,
+    PieChartUserComponent,
   ],
   imports: [
     BrowserModule,

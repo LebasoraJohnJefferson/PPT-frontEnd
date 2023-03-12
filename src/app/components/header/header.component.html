@@ -5,16 +5,12 @@
     <div class="flex items-center justify-end mr-4">
         <div class="relative">
             <div class="flex items-center">
-              <img (click)="showMenuBar()" class="bg-gray-200 h-8 w-8 border border-blue-500 rounded-full" [src]="img" alt="">
+              <p class="text-white font-bold">{{name | uppercase}}</p>
+              <img (click)="showMenuBar()" class="ml-2 bg-gray-200 h-8 w-8 border border-blue-500 rounded-full" [src]="img" alt="">
             </div>
             <div *ngIf="isShowMenuBar" class="absolute mt-1 right-0 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
                 <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
-                  <li class="flex items-center hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                    <i class="fa-solid fa-user w-10 text-center"></i>
-                    <a href="#" class="block py-2">
-                      {{name | uppercase}}
-                    </a>
-                  </li>
+                  
                   <li class="flex items-center hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" (click)="showMenuBar()">
                     <i class="fa-solid fa-house w-10 text-center"></i>
                     <a routerLink="/dashboard/" class="block py-2">

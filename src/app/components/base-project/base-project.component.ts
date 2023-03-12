@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ProjectsService } from 'src/app/service/projects.service';
 import { CollaboratorService } from 'src/app/service/collaborator.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -13,8 +14,14 @@ import { CollaboratorService } from 'src/app/service/collaborator.service';
 })
 export class BaseProjectComponent implements OnInit {
   projects:any = []
+  defaultImage:string = environment.default_profile
   projectsJoined:any = []
-
+  openNumberById:number = -1
+  isSwitchRole:boolean = true
+  isDeleteProjectOpen:boolean = false
+  isDetailsOpen:boolean = false
+  projectId:number = -1
+  name:string='';
   createBaseProjectFormGroup:FormGroup = this._formBuilder.group({
     projectName:['',Validators.required],
     projectCategory:['',Validators.required]
@@ -24,6 +31,7 @@ export class BaseProjectComponent implements OnInit {
   private _getAllProjectJoinSubscription:Subscription = new Subscription()
   private _deleteInvitationForCollaborationSubscription:Subscription = new Subscription()
   private _acceptInvitationForCollaborationSubscription:Subscription = new Subscription()
+  private _deleteProjectByIdSubscription:Subscription = new Subscription()
 
   isCreateFormOpen:boolean = false
   constructor(
@@ -34,6 +42,8 @@ export class BaseProjectComponent implements OnInit {
   ) {
     this.getAllProject()
     this.allProjectJoin()
+    let switchR = localStorage.getItem('switchRole')
+    this.isSwitchRole = switchR == null || switchR== 'false'
   }
   
   ngOnInit(): void {
@@ -45,14 +55,21 @@ export class BaseProjectComponent implements OnInit {
     this._getAllProjectJoinSubscription.unsubscribe()
     this._deleteInvitationForCollaborationSubscription.unsubscribe()
     this._acceptInvitationForCollaborationSubscription.unsubscribe()
+    this._deleteProjectByIdSubscription.unsubscribe()
   }
 
   allProjectJoin(){
     this._getAllProjectJoinSubscription = this._collaborateService.getAllProject().subscribe((res)=>{
       this.projectsJoined = res
-      console.log(res)
     })
   }
+
+  switchRole(){
+    this.isSwitchRole = !this.isSwitchRole
+    let switchR = localStorage.getItem('switchRole')
+    localStorage.setItem('switchRole', switchR == 'true' ? 'false' : 'true');
+  }
+
 
   getAllProject(){
     this._getAllProjectSubscription = this._projectService.getAllProject()
@@ -68,6 +85,22 @@ export class BaseProjectComponent implements OnInit {
       this.allProjectJoin()
     },(err)=>{
       this._toastr.error(err.error.detail)
+    })
+  }
+
+  initialProjectToDelete(id:number,name:string){
+    this.isDeleteProjectOpen =!this.isDeleteProjectOpen
+    this.projectId = id
+    this.name = name
+  }
+
+  deleteProject(){
+    this._deleteProjectByIdSubscription = this._projectService.deleteProject(this.projectId).subscribe((res)=>{
+      this.getAllProject()
+      this.isDeleteProjectOpen =false
+      this._toastr.success(`${this.name} successfully deleted`)
+    },()=>{
+      this._toastr.error("Request Denied")
     })
   }
 
@@ -112,6 +145,14 @@ export class BaseProjectComponent implements OnInit {
     }else{
       this._toastr.warning('Make sure to fill out all inputs!')
     }
+  }
+
+  openOption(id:number){
+    this.openNumberById =  id!=this.openNumberById ? id : -1
+  }
+
+  openDetailsById(id:number){
+
   }
 
   CreateFormOpen(isTrue:any){

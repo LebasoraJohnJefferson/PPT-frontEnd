@@ -1,1 +1,418 @@
-<p class="flex w-screen mt-10 justify-center items-center font-bold text-xl text-white">mechanical-engineer works!</p>
+<div class="grid w-screen px-3">
+    <div cdkDropListGroup class="grid grid-cols-5 gap-2">
+  
+      <div class="example-container">
+        <h2 class="text-white flex justify-center items-center bg-blue-700 rounded-t py-2">Defines</h2>
+  
+        <div
+          cdkDropList
+          [cdkDropListData]="defines"
+          id="defines"
+          cdkDropListSortingDisabled
+          (cdkDropListDropped)="drop($event)">
+          <div id="example-box" *ngFor="let requirement of defines" cdkDrag [cdkDragData]="requirement.Activity">
+            <div class="w-full">
+              <div class="flex justify-between items-center w-full px-2">
+                <div class="flex relative">
+                  <img (click)="showAssignForm(requirement.Activity.id)" *ngIf="!requirement.User" [src]="defaultImage" class="rounded-full h-6 w-6 cursor-pointer" alt="Icon">
+                  <img (click)="showAssignForm(requirement.Activity.id)" *ngIf="requirement.User" [src]="requirement.User.image ? requirement.User.image : defaultImage" class="rounded-full h-6 w-6 cursor-pointer" alt="Icon">
+                  <div *ngIf="activityIdClickToAssignMember == requirement.Activity.id"  class="absolute top-7 left-1 max-h-28 bg-green-700 overflow-y-auto right-3 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                    <div  (click)="assignActivity(collaborator.Collaborator.id,requirement.Activity.id)" *ngFor="let collaborator of collaborators" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
+                    <div (click)="closeAssignMember()" *ngIf="collaborators.length == 0" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">None</div>
+                </div>
+                  <small class="truncate text-bold flex items-center ml-2 w-32">{{requirement.User ? requirement.User.fullName : 'N/A'}}</small>
+                </div>
+                <div class="relative">
+                  <i class="fa-solid fa-ellipsis-vertical cursor-pointer" (click)="openOptions(requirement.Activity.id)"></i>
+                  <div  *ngIf="showOptionById == requirement.Activity.id" class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 top-0 right-2 absolute">
+                    <i (click)="editActivityDetails(requirement.Activity)" class="fa-solid fa-gear my-1 cursor-pointer"></i>
+                    <i routerLink="/dashboard/projects/{{projectID}}/{{requirement.Activity.id}}" class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer mb-1"></i>
+                    <i (click)="deleteActivity(requirement.Activity.id,requirement.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer mb-1"></i>
+                </div>
+                </div>
+              </div>
+              <div class="w-full flex flex-col justify-center items-center">
+                <circle-progress
+                  class="w-24 h-24"
+                  [percent]="requirement.progress"
+                  [radius]="100"
+                  [outerStrokeWidth]="10"
+                  [innerStrokeWidth]="8"
+                  [outerStrokeColor]="'#78C000'"
+                  [innerStrokeColor]="'#C7E596'"
+                  [animation]="true"
+                  [animationDuration]="300"
+              ></circle-progress>
+              <div [ngClass]="{ 
+                'red-border' : requirement.date_status=='ended',
+                'orange-border' : requirement.date_status=='soonToEnd',
+                'blue-border' : requirement.date_status=='normal',
+                'green-border' : requirement.date_status=='done'}">
+              <h2 class="font-bold px-2 py-1  text-center text-white w-full my-1">{{requirement.Activity.activityName | uppercase}}</h2>
+              </div>
+              </div>
+  
+              <div class="flex items-center justify-center flex-col">
+                <small class="truncate">
+                  <div class="mt-1">
+                      <i class="fa-solid fa-calendar-days mr-2 text-blue-500"></i>
+                      <span>Start : {{requirement.Activity.kickOff | date : 'medium'}} </span>
+                  </div>  
+              </small>
+              <small class="truncate">
+                  <div class="mt-1">
+                      <i class="fa-solid fa-calendar-days mr-2 text-red-500"></i>
+                      <span>end : {{requirement.Activity.dueDate | date : 'medium'}}  </span>
+                  </div>
+              </small>
+              </div>
+  
+            </div>
+        </div>
+      </div>
+      </div>
+  
+      <div class="example-container">
+        <h2 class="text-white flex justify-center items-center bg-blue-700 rounded-t py-2">Measures</h2>
+  
+        <div
+          id="measures"
+          cdkDropList
+          [cdkDropListData]="measures"
+          id="measures"
+          cdkDropListSortingDisabled
+          (cdkDropListDropped)="drop($event)">
+          <div id="example-box" *ngFor="let design of measures" cdkDrag [cdkDragData]="design.Activity">
+            <div class="w-full">
+              <div class="flex justify-between items-center w-full px-2">
+                <div class="flex relative">
+                  <img (click)="showAssignForm(design.Activity.id)" *ngIf="!design.User" [src]="defaultImage" class="rounded-full h-6 w-6 cursor-pointer" alt="Icon">
+                  <img (click)="showAssignForm(design.Activity.id)" *ngIf="design.User" [src]="design.User.image ? design.User.image : defaultImage" class="rounded-full h-6 w-6 cursor-pointer" alt="Icon">
+                  <div *ngIf="activityIdClickToAssignMember == design.Activity.id"  class="absolute top-7 left-1 max-h-28 bg-green-700 overflow-y-auto right-3 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                    <div  (click)="assignActivity(collaborator.Collaborator.id,design.Activity.id)" *ngFor="let collaborator of collaborators" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
+                    <div (click)="closeAssignMember()" *ngIf="collaborators.length == 0" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">None</div>
+                </div>
+                  <small class="truncate text-bold flex items-center ml-2 w-32">{{design.User ? design.User.fullName : 'N/A'}}</small>
+                </div>
+                <div class="relative">
+                  <i class="fa-solid fa-ellipsis-vertical cursor-pointer" (click)="openOptions(design.Activity.id)"></i>
+                  <div  *ngIf="showOptionById == design.Activity.id" class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 top-0 right-2 absolute">
+                    <i (click)="editActivityDetails(design.Activity)" class="fa-solid fa-gear my-1 cursor-pointer"></i>
+                    <i routerLink="/dashboard/projects/{{projectID}}/{{design.Activity.id}}" class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer mb-1"></i>
+                    <i (click)="deleteActivity(design.Activity.id,design.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer mb-1"></i>
+                </div>
+                </div>
+              </div>
+              <div class="w-full flex flex-col justify-center items-center">
+                <circle-progress
+                  class="w-24 h-24"
+                  [percent]="design.progress"
+                  [radius]="100"
+                  [outerStrokeWidth]="10"
+                  [innerStrokeWidth]="8"
+                  [outerStrokeColor]="'#78C000'"
+                  [innerStrokeColor]="'#C7E596'"
+                  [animation]="true"
+                  [animationDuration]="300"
+              ></circle-progress>
+              <div [ngClass]="{ 
+                'red-border' : design.date_status=='ended',
+                'orange-border' : design.date_status=='soonToEnd',
+                'blue-border' : design.date_status=='normal',
+                'green-border' : design.date_status=='done'}">
+              <h2 class="font-bold px-2 py-1  text-center text-white w-full my-1">{{design.Activity.activityName | uppercase}}</h2>
+              </div>
+              </div>
+  
+              <div class="flex items-center justify-center flex-col">
+                <small class="truncate">
+                  <div class="mt-1">
+                      <i class="fa-solid fa-calendar-days mr-2 text-blue-500"></i>
+                      <span>Start : {{design.Activity.kickOff | date : 'medium'}} </span>
+                  </div>  
+              </small>
+              <small class="truncate">
+                  <div class="mt-1">
+                      <i class="fa-solid fa-calendar-days mr-2 text-red-500"></i>
+                      <span>end : {{design.Activity.dueDate | date : 'medium'}}  </span>
+                  </div>
+              </small>
+              </div>
+  
+            </div>
+        </div>
+      </div>
+  
+  
+  
+      </div>
+  
+      <div class="example-container">
+        <h2 class="text-white flex justify-center items-center bg-blue-700 rounded-t py-2">Analyze</h2>
+  
+        <div
+          id="analyze"
+          cdkDropList
+          [cdkDropListData]="analyze"
+          cdkDropListSortingDisabled
+          (cdkDropListDropped)="drop($event)">
+          <div id="example-box" *ngFor="let implementation of analyze" cdkDrag [cdkDragData]="implementation.Activity">
+            <div class="w-full">
+              <div class="flex justify-between items-center w-full px-2">
+                <div class="flex relative">
+                  <img (click)="showAssignForm(implementation.Activity.id)" *ngIf="!implementation.User" [src]="defaultImage" class="rounded-full h-6 w-6 cursor-pointer" alt="Icon">
+                  <img (click)="showAssignForm(implementation.Activity.id)" *ngIf="implementation.User" [src]="implementation.User.image ? implementation.User.image : defaultImage" class="rounded-full h-6 w-6 cursor-pointer" alt="Icon">
+                  <div *ngIf="activityIdClickToAssignMember == implementation.Activity.id"  class="absolute top-7 left-1 max-h-28 bg-green-700 overflow-y-auto right-3 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                    <div  (click)="assignActivity(collaborator.Collaborator.id,implementation.Activity.id)" *ngFor="let collaborator of collaborators" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
+                    <div (click)="closeAssignMember()" *ngIf="collaborators.length == 0" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">None</div>
+                </div>
+                  <small class="truncate text-bold flex items-center ml-2 w-32">{{implementation.User ? implementation.User.fullName : 'N/A'}}</small>
+                </div>
+                <div class="relative">
+                  <i class="fa-solid fa-ellipsis-vertical cursor-pointer" (click)="openOptions(implementation.Activity.id)"></i>
+                  <div  *ngIf="showOptionById == implementation.Activity.id" class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 top-0 right-2 absolute">
+                    <i (click)="editActivityDetails(implementation.Activity)" class="fa-solid fa-gear my-1 cursor-pointer"></i>
+                    <i routerLink="/dashboard/projects/{{projectID}}/{{implementation.Activity.id}}" class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer mb-1"></i>
+                    
+                    <i (click)="deleteActivity(implementation.Activity.id,implementation.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer mb-1"></i>
+                </div>
+                </div>
+              </div>
+              <div class="w-full flex flex-col justify-center items-center">
+                <circle-progress
+                  class="w-24 h-24"
+                  [percent]="implementation.progress"
+                  [radius]="100"
+                  [outerStrokeWidth]="10"
+                  [innerStrokeWidth]="8"
+                  [outerStrokeColor]="'#78C000'"
+                  [innerStrokeColor]="'#C7E596'"
+                  [animation]="true"
+                  [animationDuration]="300"
+              ></circle-progress>
+              <div [ngClass]="{ 
+                'red-border' : implementation.date_status=='ended',
+                'orange-border' : implementation.date_status=='soonToEnd',
+                'blue-border' : implementation.date_status=='normal',
+                'green-border' : implementation.date_status=='done'}">
+              <h2 class="font-bold px-2 py-1  text-center text-white w-full my-1">{{implementation.Activity.activityName | uppercase}}</h2>
+              </div>
+              </div>
+  
+              <div class="flex items-center justify-center flex-col">
+                <small class="truncate">
+                  <div class="mt-1">
+                      <i class="fa-solid fa-calendar-days mr-2 text-blue-500"></i>
+                      <span>Start : {{implementation.Activity.kickOff | date : 'medium'}} </span>
+                  </div>  
+              </small>
+              <small class="truncate">
+                  <div class="mt-1">
+                      <i class="fa-solid fa-calendar-days mr-2 text-red-500"></i>
+                      <span>end : {{implementation.Activity.dueDate | date : 'medium'}}  </span>
+                  </div>
+              </small>
+              </div>
+  
+            </div>
+        </div>
+      </div>
+      </div>
+  
+      <div class="example-container">
+        <h2 class="text-white flex justify-center items-center bg-blue-700 rounded-t py-2">Designs</h2>
+  
+        <div
+          cdkDropList
+          [cdkDropListData]="designs"
+          id="designs"
+          cdkDropListSortingDisabled
+          (cdkDropListDropped)="drop($event)">
+          <div id="example-box" *ngFor="let verification of designs" cdkDrag [cdkDragData]="verification.Activity">
+            <div class="w-full relative">
+              <div class="flex justify-between items-center w-full px-2">
+                <div class="flex">
+                  <img (click)="showAssignForm(verification.Activity.id)" *ngIf="!verification.User" [src]="defaultImage" class="rounded-full h-6 w-6 cursor-pointer" alt="Icon">
+                  <img (click)="showAssignForm(verification.Activity.id)" *ngIf="verification.User" [src]="verification.User.image ? verification.User.image : defaultImage" class="rounded-full h-6 w-6 cursor-pointer" alt="Icon">
+                  <div *ngIf="activityIdClickToAssignMember == verification.Activity.id"  class="absolute top-7 left-1 max-h-28 bg-green-700 overflow-y-auto right-3 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                    <div  (click)="assignActivity(collaborator.Collaborator.id,verification.Activity.id)" *ngFor="let collaborator of collaborators" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
+                    <div (click)="closeAssignMember()" *ngIf="collaborators.length == 0" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">None</div>
+                </div>
+  
+                  <small class="truncate text-bold flex items-center ml-2 w-32">{{verification.User ? verification.User.fullName : 'N/A'}}</small>
+                </div>
+                <div class="relative">
+                  <i class="fa-solid fa-ellipsis-vertical cursor-pointer" (click)="openOptions(verification.Activity.id)"></i>
+                  <div  *ngIf="showOptionById == verification.Activity.id" class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 top-0 right-2 absolute">
+                    <i (click)="editActivityDetails(verification.Activity)" class="fa-solid fa-gear my-1 cursor-pointer"></i>
+                    <i routerLink="/dashboard/projects/{{projectID}}/{{verification.Activity.id}}" class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer mb-1"></i>
+                    <i (click)="deleteActivity(verification.Activity.id,verification.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer mb-1"></i>
+                </div>
+                </div>
+              </div>
+              <div class="w-full flex flex-col justify-center items-center">
+                <circle-progress
+                  class="w-24 h-24"
+                  [percent]="verification.progress"
+                  [radius]="100"
+                  [outerStrokeWidth]="10"
+                  [innerStrokeWidth]="8"
+                  [outerStrokeColor]="'#78C000'"
+                  [innerStrokeColor]="'#C7E596'"
+                  [animation]="true"
+                  [animationDuration]="300"
+              ></circle-progress>
+              <div [ngClass]="{ 
+                'red-border' : verification.date_status=='ended',
+                'orange-border' : verification.date_status=='soonToEnd',
+                'blue-border' : verification.date_status=='normal',
+                'green-border' : verification.date_status=='done'}">
+              <h2 class="font-bold px-2 py-1 text-white text-center w-full my-1">{{verification.Activity.activityName | uppercase}}</h2>
+              </div>
+              </div>
+  
+              <div class="flex items-center justify-center flex-col">
+                <small class="truncate">
+                  <div class="mt-1">
+                      <i class="fa-solid fa-calendar-days mr-2 text-blue-500"></i>
+                      <span>Start : {{verification.Activity.kickOff | date : 'medium'}} </span>
+                  </div>  
+              </small>
+              <small class="truncate">
+                  <div class="mt-1">
+                      <i class="fa-solid fa-calendar-days mr-2 text-red-500"></i>
+                      <span>end : {{verification.Activity.dueDate | date : 'medium'}}  </span>
+                  </div>
+              </small>
+              </div>
+  
+            </div>
+        </div>
+      </div>
+      </div>
+  
+      <div class="example-container">
+        <h2 class="text-white flex justify-center items-center bg-blue-700 rounded-t py-2">Verifies</h2>
+  
+        <div
+          id="verifies"
+          cdkDropList
+          [cdkDropListData]="verifies"
+          cdkDropListSortingDisabled
+          (cdkDropListDropped)="drop($event)">
+          <div id="example-box" *ngFor="let main of verifies" cdkDrag [cdkDragData]="main.Activity">
+            <div id="box-container">
+              <div class="flex justify-between items-center w-full px-2">
+                <div class="flex relative">
+                  <img  (click)="showAssignForm(main.Activity.id)" *ngIf="!main.User" [src]="defaultImage" class="rounded-full h-6 w-6 cursor-pointer" alt="Icon">
+                  <img  (click)="showAssignForm(main.Activity.id)" *ngIf="main.User" [src]="main.User.image ? main.User.image : defaultImage" class="rounded-full h-6 w-6 cursor-pointer" alt="Icon">
+                  <div *ngIf="activityIdClickToAssignMember == main.Activity.id"  class="absolute top-7 left-1 max-h-28 bg-green-700 overflow-y-auto right-3 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
+                    <div  (click)="assignActivity(collaborator.Collaborator.id,main.Activity.id)" *ngFor="let collaborator of collaborators" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
+                    <div (click)="closeAssignMember()" *ngIf="collaborators.length == 0" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">None</div>
+                </div>
+                  <small class="truncate text-bold flex items-center ml-2 w-32">{{main.User ? main.User.fullName : 'N/A'}}</small>
+                </div>
+                <div class="relative">
+                  <i class="fa-solid fa-ellipsis-vertical cursor-pointer" (click)="openOptions(main.Activity.id)"></i>
+                  <div  *ngIf="showOptionById == main.Activity.id" class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 top-0 right-2 absolute">
+                    <i (click)="editActivityDetails(main.Activity)" class="fa-solid fa-gear my-1 cursor-pointer"></i>
+                    <i routerLink="/dashboard/projects/{{projectID}}/{{main.Activity.id}}" class="fa-solid fa-eye text-blue-700 hover:text-blue-500 cursor-pointer mb-1"></i>
+                    <i (click)="deleteActivity(main.Activity.id,main.Activity.activityName)" class="fa-solid fa-trash  text-red-700 hover:text-red-500  cursor-pointer mb-1"></i>
+                </div>
+                </div>
+              </div>
+              <div class="w-full flex flex-col justify-center items-center">
+                <circle-progress
+                  class="w-24 h-24"
+                  [percent]="main.progress"
+                  [radius]="100"
+                  [outerStrokeWidth]="10"
+                  [innerStrokeWidth]="8"
+                  [outerStrokeColor]="'#78C000'"
+                  [innerStrokeColor]="'#C7E596'"
+                  [animation]="true"
+                  [animationDuration]="300"
+              ></circle-progress>
+              <div [ngClass]="{ 
+                'red-border' : main.date_status=='ended',
+                'orange-border' : main.date_status=='soonToEnd',
+                'blue-border' : main.date_status=='normal',
+                'green-border' : main.date_status=='done'}">
+                <h2 class="font-bold px-2 py-1 text-white  text-center w-full my-1">{{main.Activity.activityName | uppercase}}</h2>
+              </div>
+              </div>
+  
+              <div class="flex items-center justify-center flex-col">
+                <small class="truncate">
+                  <div class="mt-1">
+                      <i class="fa-solid fa-calendar-days mr-2 text-blue-500"></i>
+                      <span>Start : {{main.Activity.kickOff | date : 'medium'}} </span>
+                  </div>  
+              </small>
+              <small class="truncate">
+                  <div class="mt-1">
+                      <i class="fa-solid fa-calendar-days mr-2 text-red-500"></i>
+                      <span>end : {{main.Activity.dueDate | date : 'medium'}}  </span>
+                  </div>
+              </small>
+              </div>
+  
+            </div>
+        </div>
+      </div>
+      </div>
+  
+  </div>
+  
+  
+  
+  
+  
+  
+  <div *ngIf="isEditActivityOpen" class="fixed top-0 left-0 text-yellow-500 z-20 font-bold flex items-center justify-center h-screen w-screen " id="createSubTaskContainer">
+    <div class="bg-black rounded relative" id="formContainer2">
+        <div class="absolute flex w-full justify-end">
+            <p class="mr-10 mt-5 cursor-pointer text-2xl text-red-700 hover:text-red-500">
+                <i (click)="closeEditForm()" class="fa-solid fa-rectangle-xmark text-2xl mr-4 hover:text-red-400 text-red-600 cursor-pointer"></i>
+            </p>
+        </div>
+        <div class="text-center mt-10 text-white py-2"><p>Edit Activity</p><p>{{activityDetails.activityName | uppercase}}</p></div>
+        <form  class="grid" [formGroup]="editActivity" (ngSubmit)="submitEditActivity()">
+            <div class="grid gap-2 px-5">
+                <div>
+                    <small>Activity Name </small>
+                    <input formControlName="activityName"  class="w-full rounded py-1 text-black" placeholder="Enter activity name...">
+                </div>
+                <div>
+                    <small>Budget </small>
+                    <input formControlName="budget"  class="w-full rounded py-1 text-black" type="number" placeholder="Enter budget...">
+                </div>
+                <div>
+                    <small>Kick off </small>
+                    <input formControlName="kickOff" type="datetime-local"  class="w-full rounded py-1 text-black" placeholder="Enter budget...">
+                </div>
+                <div>
+                    <small>Due date</small>
+                    <input formControlName="dueDate" type="datetime-local"  class="w-full rounded py-1 text-black" placeholder="Enter budget...">
+                </div>
+                <div>
+                    <small>Activity Dependency</small>
+                    <mat-form-field class="w-full bg-white rounded text-black py-none my-none text-black">
+                        <mat-select multiple formControlName="dependencies">
+                          <mat-option  *ngFor="let activity of activityDependencies" [value]="activity.id">{{activity.activityName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col">
+                    <small>Activity description</small>
+                    <textarea  class="rounded px-3 text-black text-black" formControlName="descriptions" placeholder="Enter activity description"></textarea>
+                </div>
+  
+                <div class="mt-3 flex justify-center items-center">
+                    <button type="submit" class="w-32 bg-green-700 hover:bg-green-500 py-1 rounded text-white font-bold">EDIT</button>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
+  

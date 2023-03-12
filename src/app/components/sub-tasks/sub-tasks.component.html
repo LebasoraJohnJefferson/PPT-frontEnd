@@ -12,10 +12,7 @@
                 <small class="mr-2">Create Tasks</small>
                 <i class="fa-solid fa-plus"></i>
             </div>
-            <div (click)="openFeedBack()" class="px-3 hover:bg-purple-600 bg-purple-700 py-1 cursor-pointer flex justify-center items-center w-32 rounded  mx-2 shadow-md">
-                <small class="mr-2">FeedBack</small>
-                <i  class="fa-solid fa-file cursor-pointer"></i>
-            </div>
+            
             <app-logs [bugs]="bugs"></app-logs>
         </div>
     </div>
@@ -146,7 +143,8 @@
                         </ol>
                         
                     </div>
-                    <div class="flex items-center justify-center mt-2">
+                    <div class="flex items-center text-xs justify-center mt-2">
+                        <small (click)="openFeedBack(task.taskInfo.id)" class="px-2 mx-1 py-1 bg-blue-500 hover:bg-blue-700 rounded text-white cursor-pointer">REPORT</small>
                         <small (click)="changeStatus(task.taskInfo.id)" class="px-2 mx-1 py-1 bg-green-500 hover:bg-green-700 rounded text-white cursor-pointer">{{task.taskInfo.status  ? 'UNDONE' : 'DONE'}}</small>
                         <small (click)="openEditForm(task.taskInfo.taskName,task.taskInfo.id,task.taskInfo.budget,task.taskInfo.duration,task.taskInfo.descriptions,task.data.dependencies)" class="px-2 mx-1 py-1 bg-yellow-500 hover:bg-yellow-700 rounded text-white cursor-pointer">EDIT</small>
                         <small (click)="openDeleteNotification(task.taskInfo.taskName,task.taskInfo.id)" class="px-2 mx-1 py-1 bg-red-500 hover:bg-red-700 rounded text-white cursor-pointer">DELETE</small>
@@ -162,7 +160,7 @@
 
 
 <div class="w-full h-full absolute" *ngIf="isFeedBackOpen">
-    <app-feedback [activityID]="activityId" (feedBackToggle)="openFeedBack2($event)" ></app-feedback>
+    <app-feedback [subTaskID]="subTaskID" (feedBackToggle)="openFeedBack2($event)" ></app-feedback>
 </div>
 
 

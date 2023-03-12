@@ -16,7 +16,7 @@ import {FormBuilder, FormGroup,Validators} from '@angular/forms';
 })
 export class ProjectComponent implements OnInit {
   category:any = []
-  activityID:any = 0
+  // activityID:any = 0
   isEditTitleFormOpen:boolean = false
   isOpenForm:boolean = false
   isMemberDetailsOpen:boolean = false
@@ -161,12 +161,6 @@ export class ProjectComponent implements OnInit {
     this.getAllActivity()
   }
 
-  openFeedBack(event:any){
-    if(event != undefined){
-      this.activityID = event
-    }
-    this.isFeedBackOpen = !this.isFeedBackOpen
-  }
 
   ngOnDestroy() {
     this._getAllProjectByIdSubscription.unsubscribe()
