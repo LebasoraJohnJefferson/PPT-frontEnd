@@ -7,12 +7,21 @@
     overflow-y: auto;
 }
 
+.mat-row {
+    height: auto;
+  }
+  
+  .mat-cell {
+    padding: 10px 10px 10px 0;
+  }
+
 #view-task{
     position: sticky;
     top:0; right:0;
     height: 90vh;
     overflow-y: auto;
     min-width: 250px;
+    max-width: 250px;
     display: block;
     background-color:#166534;
     transition: min-width 3s ease-in-out;
