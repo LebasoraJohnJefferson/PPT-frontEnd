@@ -26,7 +26,8 @@ const routes:Routes = [
   {path:'admin',component:AdminComponent},
   {path:'users',component:UsersComponent,children:[
     {path:'',component:UsersDashboardComponent},
-    {path:'collaborator/:projectID',component:CollaboratorComponent}
+    {path:'collaborator/:projectID',component:CollaboratorComponent},
+    {path:'setting',component:SettingComponent},
   ],
   canActivate: [AuthGuard]},
   {path:'**',redirectTo:'dashboard'}
