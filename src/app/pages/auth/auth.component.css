@@ -3,6 +3,23 @@ input{
     color:black;
 }
 
+#roles{
+    font-size: 10px;
+    margin-top: 3px;
+    width:0;
+    overflow: hidden;
+}
+
+#roles-container{
+    width:40px;
+    cursor: pointer;
+}
+
+#roles-container:hover > #roles{
+    transition:width 1s ease-in-out;
+    width:40px;
+}
+
 #formLogin{
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2),inset 0 0 10px #fff;
     outline:0.5px solid rgba(255,255,255,.5);

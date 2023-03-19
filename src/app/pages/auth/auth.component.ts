@@ -16,6 +16,7 @@ export class AuthComponent implements OnInit {
   isLoginButton:boolean = false
   isRegisterButton:boolean = false
   isUserLoginInvalid:boolean = false
+  roles:string = 'USER'
   private _registerSubscription:Subscription = new Subscription()
   private _loginSubscription:Subscription = new Subscription()
 
@@ -65,6 +66,10 @@ export class AuthComponent implements OnInit {
     this.isShowPassword = !this.isShowPassword
   }
 
+  switchRole(){
+    this.roles = this.roles == 'USER' ? 'MANAGER' : 'USER'
+  }
+
   
   switchToRegister(){
     this.isRegisterFormOpen = !this.isRegisterFormOpen
@@ -76,7 +81,8 @@ export class AuthComponent implements OnInit {
       this._loginSubscription = this._authService.LoginUser(this.loginFormGroup.value).subscribe((res)=>{
         this.toastr.success("Successfully Login")
         localStorage.setItem('token',res.access_token)
-        this.router.navigate(['/dashboard'])
+        localStorage.setItem('roles',this.roles)
+        this.roles == 'MANAGER' ? this.router.navigate(['/dashboard']) : this.router.navigate(['/users'])
         this.isLoginButton =false
         this.loginFormGroup.reset()
       },(err)=>{

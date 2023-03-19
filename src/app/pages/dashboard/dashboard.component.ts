@@ -3,6 +3,7 @@ import { EventEmitterService } from 'src/app/service/event-emitter.service';
 import { UsersService } from 'src/app/service/users.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class DashboardComponent implements OnInit {
     public eventEmitterService:EventEmitterService,
     private _userService:UsersService,
     private _router:Router,
+    public toastr:ToastrService
   ){
     eventEmitterService.openCloseAside$.subscribe(()=>{
       this.isCloseOrOpen = !this.isCloseOrOpen
@@ -26,7 +28,12 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    let roles = localStorage.getItem('roles')
+    if(roles == 'USER'){
+      this._router.navigate(['/users'])
+      this.toastr.warning('Illegal Action!')
+    }
+      
   }
 
   ngOnDestroy() {

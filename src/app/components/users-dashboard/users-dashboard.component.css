@@ -1,0 +1,86 @@
+#createProjectContainer:hover{
+    background-color:rgba(255,255,255,.2);
+    box-shadow: 1px 1px 3px rgba(255,255,255,.5);
+}
+
+#CreateProject{
+    background-color: rgba(255,255,255,.6);
+}
+
+#delete{
+    border-top:3px solid rgb(239 68 68);
+    box-shadow: 0px 1px 1px rgba(255,255,255,.6),
+    1px 0px 1px rgba(255,255,255,.6),
+    -1px 0px 1px rgba(255,255,255,.6);
+}
+
+#toDeleteContainer{
+    background-color: rgba(255,255,255,.6);
+}
+
+#view:hover,
+#delete:hover{
+    box-shadow: none;
+    transition: .5s all ease-in-out;
+}
+
+#number-notify{
+    font-size: 10px;
+}
+
+
+#view{
+    border-top:3px solid rgb(59 130 246);
+    box-shadow: 0px 1px 1px rgba(255,255,255,.6),
+    1px 0px 1px rgba(255,255,255,.6),
+    -1px 0px 1px rgba(255,255,255,.6);
+}
+
+#formContainer{
+    width:50vw;
+    height: 50vh;
+}
+
+input{
+    text-indent: 10px;
+    color:black;
+}
+
+#box-shadow-container{
+    box-shadow: 1px 1px 0px rgba(224, 211, 211, 0.705),
+                1px 1px 1px rgba(224, 211, 211, 0.5),
+                1px 1px 2px rgba(224, 211, 211, 0.5),
+                1px 1px 3px rgba(224, 211, 211, 0.5),
+                 -1px -1px 0px rgba(5, 102, 32, 0.5),
+                -1px -1px 1px rgba(224, 211, 211, 0.5),
+                -1px -1px 2px rgba(5, 102, 32, 0.5),
+                -1px -1px 5px rgba(5, 102, 32, 0.5);
+}
+
+#text{
+    font-family: "Great Vibes", cursive; font-size: 35px;
+    border-bottom:5px solid white;
+    line-height: 50px;
+}
+
+#container{
+    width:15rem;
+    box-shadow:1px 2px 10px rgba(224, 211, 211, 0.705),
+    -1px -2px 1px rgba(224, 211, 211, 0.705);
+}
+
+#msg{
+    white-space: pre-wrap;
+    word-break: break-words;
+}
+
+#details-text{
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+
+
+
+

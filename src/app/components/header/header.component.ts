@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   numberOfNotification:number = 0
   isShowMenuBar:boolean = false
   isNotificationOpen:boolean = false
+  roles:any = 'USER'
   private _getAllNotificationSubscription:Subscription = new Subscription()
   private _seenAllNotificationSubscription:Subscription = new Subscription()
   private _getUserDetailsSubscription:Subscription = new Subscription()
@@ -31,6 +32,8 @@ export class HeaderComponent implements OnInit {
     private usersService:UsersService,
     private _eventEmitterService:EventEmitterService,
   ) {
+    let temp= localStorage.getItem('roles')
+    this.roles = temp == 'USER' ? 'users' : 'dashboard'
     this.getAllNotification()
     this.getUserDetails()
     _eventEmitterService.isAdminProfileChange$.subscribe(()=>{

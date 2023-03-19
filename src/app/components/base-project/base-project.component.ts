@@ -17,7 +17,6 @@ export class BaseProjectComponent implements OnInit {
   defaultImage:string = environment.default_profile
   projectsJoined:any = []
   openNumberById:number = -1
-  isSwitchRole:boolean = true
   isDeleteProjectOpen:boolean = false
   isDetailsOpen:boolean = false
   projectId:number = -1
@@ -41,9 +40,6 @@ export class BaseProjectComponent implements OnInit {
     private _collaborateService:CollaboratorService
   ) {
     this.getAllProject()
-    this.allProjectJoin()
-    let switchR = localStorage.getItem('switchRole')
-    this.isSwitchRole = switchR == null || switchR== 'false'
   }
   
   ngOnInit(): void {
@@ -58,33 +54,12 @@ export class BaseProjectComponent implements OnInit {
     this._deleteProjectByIdSubscription.unsubscribe()
   }
 
-  allProjectJoin(){
-    this._getAllProjectJoinSubscription = this._collaborateService.getAllProject().subscribe((res)=>{
-      this.projectsJoined = res
-    })
-  }
-
-  switchRole(){
-    this.isSwitchRole = !this.isSwitchRole
-    let switchR = localStorage.getItem('switchRole')
-    localStorage.setItem('switchRole', switchR == 'true' ? 'false' : 'true');
-  }
 
 
   getAllProject(){
     this._getAllProjectSubscription = this._projectService.getAllProject()
     .subscribe((res)=>{
       this.projects = res
-    })
-  }
-
-  AcceptInvitationForCollaboration(id:any){
-    this._acceptInvitationForCollaborationSubscription = this._collaborateService.acceptInvitationForCollaboration(id)
-    .subscribe((res)=>{
-      this._toastr.success('Invitation accepted Successfully!')
-      this.allProjectJoin()
-    },(err)=>{
-      this._toastr.error(err.error.detail)
     })
   }
 
@@ -104,25 +79,6 @@ export class BaseProjectComponent implements OnInit {
     })
   }
 
-  deleteInvitationForCollaboration(id:any){
-    this._deleteInvitationForCollaborationSubscription = this._collaborateService.rejectInvitationForCollaboration(id,'rejected')
-    .subscribe((res)=>{
-      this._toastr.success('Invitation Rejected Successfully!')
-      this.allProjectJoin()
-    },(err)=>{
-      this._toastr.error(err.error.detail)
-    })
-  }
-
-  leaveProject(id:any){
-    this._deleteInvitationForCollaborationSubscription = this._collaborateService.rejectInvitationForCollaboration(id,'leave')
-    .subscribe((res)=>{
-      this._toastr.success('Successfully leave the project!')
-      this.allProjectJoin()
-    },(err)=>{
-      this._toastr.error(err.error.detail)
-    })
-  }
 
   submitCreateProject(){
     if(this.createBaseProjectFormGroup.valid){

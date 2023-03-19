@@ -16,7 +16,6 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { AuthComponent } from './pages/auth/auth.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
-import { StandardUserComponent } from './pages/standard-user/standard-user.component';
 import { DateAgoPipe } from './pipes/date-ago.pipe';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { AsideComponent } from './components/aside/aside.component';
@@ -39,6 +38,9 @@ import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { CollaboratorComponent } from './components/collaborator/collaborator.component';
 import { AsideUserComponent } from './components/aside-user/aside-user.component';
 import { PieChartUserComponent } from './components/pie-chart-user/pie-chart-user.component';
+import { AdminComponent } from './pages/admin/admin.component';
+import { UsersComponent } from './pages/users/users.component';
+import { UsersDashboardComponent } from './components/users-dashboard/users-dashboard.component';
 
 
 // const config: SocketIoConfig = { url: environment.baseURL,
@@ -53,7 +55,6 @@ import { PieChartUserComponent } from './components/pie-chart-user/pie-chart-use
     AppComponent,
     AuthComponent,
     DashboardComponent,
-    StandardUserComponent,
     DateAgoPipe,
     AsideComponent,
     HeaderComponent,
@@ -75,6 +76,9 @@ import { PieChartUserComponent } from './components/pie-chart-user/pie-chart-use
     CollaboratorComponent,
     AsideUserComponent,
     PieChartUserComponent,
+    AdminComponent,
+    UsersComponent,
+    UsersDashboardComponent,
   ],
   imports: [
     BrowserModule,
