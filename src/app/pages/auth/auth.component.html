@@ -1,7 +1,7 @@
 <div class="flex bg-gray-900 text-yellow-600 font-bold z-2 flex-col justify-center items-center align-center w-screen h-screen">
     <div class="grid  bg-transparent-black w-full md:max-w-max md:h-auto h-full  rounded justify-center align-center md:shadow-lg z-10 " id="formLogin">
         <img class="rounded-t h-24 md:w-full w-screen bg-red-500" src="../../../assets/images/title.png" alt="" />
-        <div class="flex items-center justify-end mt-4" *ngIf="!isRegisterFormOpen">
+        <div class="flex items-center justify-end mt-4" *ngIf="!isRegisterFormOpen && !isLoginButton">
             <div id="roles-container" (click)="switchRole()" class="mx-1 rounded-full flex items-center text-center justify-center flex-col">
                 <img src="../../../assets/images/profile.png" alt="user">
                 <p id="roles">User</p>
