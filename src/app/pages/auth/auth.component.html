@@ -2,11 +2,11 @@
     <div class="grid  bg-transparent-black w-full md:max-w-max md:h-auto h-full  rounded justify-center align-center md:shadow-lg z-10 " id="formLogin">
         <img class="rounded-t h-24 md:w-full w-screen bg-red-500" src="../../../assets/images/title.png" alt="" />
         <div class="flex items-center justify-end mt-4" *ngIf="!isRegisterFormOpen && !isLoginButton">
-            <div id="roles-container" (click)="switchRole()" class="mx-1 rounded-full flex items-center text-center justify-center flex-col">
+            <div id="roles-container" (click)="switchRole('USER')" class="mx-1 rounded-full flex items-center text-center justify-center flex-col">
                 <img src="../../../assets/images/profile.png" alt="user">
                 <p id="roles">User</p>
             </div>
-            <div id="roles-container" (click)="switchRole()" class="ml-1 mr-5  flex items-center justify-center flex-col text-center">
+            <div id="roles-container" (click)="switchRole('MANAGER')" class="ml-1 mr-5  flex items-center justify-center flex-col text-center">
                 <img src="../../../assets/images/manager.png" class="bg-blue-200 rounded-full overflow-hidden" alt="manager">
                 <p id="roles" >Manager</p>
             </div>

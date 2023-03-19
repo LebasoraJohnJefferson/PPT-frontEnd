@@ -66,8 +66,8 @@ export class AuthComponent implements OnInit {
     this.isShowPassword = !this.isShowPassword
   }
 
-  switchRole(){
-    this.roles = this.roles == 'USER' ? 'MANAGER' : 'USER'
+  switchRole(role:any){
+    this.roles = role
   }
 
   
