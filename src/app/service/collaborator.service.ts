@@ -38,6 +38,10 @@ export class CollaboratorService {
   rejectInvitationForCollaboration(id:any,action:any):Observable<any>{
     return this._http.delete(`${this.baseURL}/collaborators/${action}/${id}`)
   }
+  
+  rejectInvitationUsingProjectID(projectID:number){
+    return this._http.delete(`${this.baseURL}/collaborators/leaveProject/${projectID}`)
+  }
 
   acceptInvitationForCollaboration(id:any):Observable<any>{
     return this._http.put(`${this.baseURL}/collaborators/${id}`,'')

@@ -47,7 +47,7 @@
                 <i [class]="!isSideBarOpen ? 'fa-solid fa-right-from-bracket ml-2' : 'fa-solid fa-right-from-bracket text-base'"></i>
 
             </div>
-            <div class="bg-red-700 hover:bg-red-500 px-2 py-1 cursor-pointer rounded w-full flex items-center justify-center">
+            <div (click)="leaveProject()" class="bg-red-700 hover:bg-red-500 px-2 py-1 cursor-pointer rounded w-full flex items-center justify-center">
                 <p *ngIf="!isSideBarOpen">Leave</p>
                 <i [class]="!isSideBarOpen ? 'fa-solid fa-explosion ml-2' : 'fa-solid fa-explosion text-base'"></i>
             </div>

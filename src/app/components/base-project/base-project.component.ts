@@ -14,8 +14,8 @@ import { environment } from 'src/environments/environment';
 })
 export class BaseProjectComponent implements OnInit {
   projects:any = []
+  searchProject:any=[]
   defaultImage:string = environment.default_profile
-  projectsJoined:any = []
   openNumberById:number = -1
   isDeleteProjectOpen:boolean = false
   isDetailsOpen:boolean = false
@@ -60,6 +60,7 @@ export class BaseProjectComponent implements OnInit {
     this._getAllProjectSubscription = this._projectService.getAllProject()
     .subscribe((res)=>{
       this.projects = res
+      this.searchProject = res
     })
   }
 
@@ -117,6 +118,19 @@ export class BaseProjectComponent implements OnInit {
     }else{
       this.isCreateFormOpen = false
     }
+  }
+
+  search(event:any){
+    console.log
+      let temp:any = []
+      this.searchProject.forEach((data:any) => {
+        if(data.projectCategory.includes(event.value.toUpperCase()) || 
+        data.projectName.includes(event.value)
+          ){
+          temp.push(data)
+        }
+      });
+      this.projects = temp 
   }
 
 

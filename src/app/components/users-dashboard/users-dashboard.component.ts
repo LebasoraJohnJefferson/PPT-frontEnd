@@ -18,6 +18,7 @@ export class UsersDashboardComponent implements OnInit {
   projects:any = []
   defaultImage:string = environment.default_profile
   projectsJoined:any = []
+  projectJoinedSearch:any = []
   openNumberById:number = -1
   isDetailsOpen:boolean = false
   isProjectInvitationOpen:boolean = false
@@ -70,8 +71,25 @@ export class UsersDashboardComponent implements OnInit {
   allProjectJoin(){
     this._getAllProjectJoinSubscription = this._collaborateService.getAllProject().subscribe((res)=>{
       this.projectsJoined = res
+      this.projectJoinedSearch = res
+      console.log(res)
     })
   }
+
+  search(event:any){
+    console.log(this.projectJoinedSearch)
+      let temp:any = []
+      this.projectJoinedSearch.forEach((data:any) => {
+        if(data.Project.projectCategory.includes(event.value.toUpperCase()) || 
+        data.Project.projectName.includes(event.value) ||
+        data.isPending.includes(event.value.toUpperCase())
+          ){
+          temp.push(data)
+        }
+      });
+      this.projectsJoined = temp 
+  }
+
 
 
 

@@ -2,23 +2,29 @@
     <div class="w-full relative">
         <div class="flex flex-col full m-auto">
             <div class="p-5 my-5">
-                <div class="text-yellow-500 font-bold">
-                    <p class="mr-2 mb-2">Project Joined:</p> 
+                <div class="text-yellow-500 font-bold flex items-center">
+                    <p class="mr-2">Project Joined:</p> 
+                    <input class="rounded bg-gray-700 " id="inputSearch" placeholder="Search..." (input)="search($event.target)" />
                 </div>
             </div>
             <div>
                 <div class="flex items-center truncate flex-wrap" *ngIf="projectsJoined.length != 0">
                     <div *ngFor="let project of projectsJoined" id="container" class="flex w-full flex-col rounded  p-2 m-2">
                         <div class="flex justify-between w-full items-center">
-                            <div *ngIf="project.Project.projectCategory == 'IT'" class="flex items-center justify-center top-1 rounded-full bg-pink-500 left-2 w-6 h-6 text-white text-">
-                                <small class="font-bold">{{project.Project.projectCategory}}</small>
+                            <div class="flex items-center">
+                                <div *ngIf="project.Project.projectCategory == 'IT'" class="flex items-center justify-center top-1 rounded-full bg-pink-500 left-2 w-6 h-6 text-white text-">
+                                    <small class="font-bold">{{project.Project.projectCategory}}</small>
+
+                                </div>
+                                <div *ngIf="project.Project.projectCategory == 'ME'" class=" flex items-center justify-center top-1 rounded-full bg-red-500 left-2 w-6 h-6 text-white text-">
+                                    <small class="font-bold">{{project.Project.projectCategory}}</small>
+                                </div>
+                                <div *ngIf="project.Project.projectCategory == 'CE'" class=" flex items-center justify-center top-1 rounded-full bg-blue-500 left-2 w-6 h-6 text-white text-">
+                                    <small class="font-bold">{{project.Project.projectCategory}}</small>
+                                </div>
+                                <small [ngClass]="project.isPending == 'DONE'  ? 'text-green-500 font-bold ml-2' : 'text-red-500 font-bold ml-2'">{{project.isPending == 'DONE' ? 'done' : 'pending'}}</small>
                             </div>
-                            <div *ngIf="project.Project.projectCategory == 'ME'" class=" flex items-center justify-center top-1 rounded-full bg-red-500 left-2 w-6 h-6 text-white text-">
-                                <small class="font-bold">{{project.Project.projectCategory}}</small>
-                            </div>
-                            <div *ngIf="project.Project.projectCategory == 'CE'" class=" flex items-center justify-center top-1 rounded-full bg-blue-500 left-2 w-6 h-6 text-white text-">
-                                <small class="font-bold">{{project.Project.projectCategory}}</small>
-                            </div>
+                            
                             <div class="relative" >
                                 <i (click)="openOption(project.Project.id)" class="fa-solid fa-list-ul text-white cursor-pointer"></i>
                                 <div  *ngIf="project.Collaborator.isAccepted == false && openNumberById==project.Project.id" class="flex justify-around items-center bg-white absolute top-0 flex-col rounded right-5 shadow-md text-xs">
@@ -52,7 +58,7 @@
                                 <p id="details-text" class="py-2">Details:</p>
                                 <div class="py-1 p-2">
                                     <i class="fa-solid fa-screwdriver-wrench mr-1"></i>
-                                    Project name :{{project.Project.projectName}}
+                                    Project name: {{project.Project.projectName}}
                                 </div>  
                                 <div class="py-1 p-2">
                                     <i class="fa-solid fa-briefcase mr-1"></i>
