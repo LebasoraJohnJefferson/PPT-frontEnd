@@ -55,13 +55,22 @@
         </div>
     </div>
     
-    <div id="view-task" class="py-2 px-1" *ngIf="ActivityID != -1 && tasks.length ==0 && newDependencies ==0">
+    <div id="view-task" class="py-2 px-1" *ngIf="ActivityID != -1 && tasks.length ==0 && newDependencies ==0 && !isActivityDone">
         <div class="w-full h-full flex items-center justify-center">
             <p class="font-bold text-white">No task(s) Available.</p>
         </div>
     </div>
 
-    <div id="view-task" class="py-2 px-1" *ngIf="ActivityID != -1 && tasks.length !=0 && newDependencies==0">
+    <div id="view-task" class="py-2 px-1" *ngIf="ActivityID != -1 && isActivityDone">
+        <div class="flex flex-col items-center justify-center h-full">
+            <div class="w-12 h-12 overflow-hidden rounded-full mb-3">
+                <div id="image-done" class="w-12 h-12"></div>
+            </div>
+            <p class="font-bold text-white bg-purple-500 rounded px-2 py-1">Activity Done</p>
+        </div>
+    </div>
+
+    <div id="view-task" class="py-2 px-1" *ngIf="ActivityID != -1 && tasks.length !=0 && newDependencies==0 && !isActivityDone">
             <h1 class="text-bold ml-3 my-3 text-white text-base font-bold"><i class="fa-sharp fa-solid fa-sheet-plastic mr-1"></i>To Do</h1>
             <div class="{{task.data.date_status == 'problematic'? 'flex flex-col text-black bg-red-100 m-1 rounded px-3 py-1' : 'flex flex-col text-black bg-blue-200 m-1 rounded px-3 py-1'}}" *ngFor="let task of tasks">
                 <div class="w-full flex justify-between">
@@ -110,7 +119,7 @@
             </div>
     </div>
 
-    <div id="view-task" class="py-2 px-1" *ngIf="ActivityID != -1 && newDependencies !=0" >
+    <div id="view-task" class="py-2 px-1" *ngIf="ActivityID != -1 && newDependencies !=0 && !isActivityDone" >
         <h1 class="text-bold ml-3 my-3 text-white text-base font-bold"><i class="fa-solid fa-code-pull-request"></i> Waiting To End</h1>
         <div *ngFor="let depend of newDependencies">
             <div class="flex text-xs bg-green-900 mb-2 text-white border flex-col items-center justify-center rounded px-3 mx-3" id="activitiesDepend">

@@ -20,6 +20,7 @@ export class CollaboratorComponent implements OnInit {
   tasks:any=[];
   tempTask:any=[];
   bugs:any=[]
+  globalStage:string = ''
   category:any=[]
   projectID:any;
   newDependencies:any=[]
@@ -28,6 +29,7 @@ export class CollaboratorComponent implements OnInit {
   descriptionShowById:any=[]
   taskID:number = -1
   isFeedBackOpen:boolean = false
+  isActivityDone = false
 
   private _getCredentialsSubscriptions:Subscription = new Subscription()
   private _projectDetailsSubscriptions:Subscription = new Subscription()
@@ -82,6 +84,11 @@ export class CollaboratorComponent implements OnInit {
         })
       this.dataSource = temp
       if(this.ActivityID != -1){
+        res.activities.forEach((activity:any) => {
+          if(activity.id == this.ActivityID){
+            this.globalStage = activity.stage
+          }
+        });
         this.getTasks()
       }
     })
@@ -103,10 +110,16 @@ export class CollaboratorComponent implements OnInit {
         })
         this.newDependencies = newArr
       })
-      
     }
     this._taskDetailsSubscriptions = this._subTaskService.getAllSubTask(this.ActivityID).subscribe((res)=>{
       this.tasks = res.tasks
+      let countTask = 0
+      this.tasks.forEach((task:any)=>{
+        if(task.data.date_status == 'done' && (this.globalStage == "builds" || this.globalStage == 'maintenance' || this.globalStage == 'verifies')){
+          countTask+=1
+        }
+      })
+      this.isActivityDone = this.tasks.length == countTask ? true : false
       this.tempTask = res.tasks
       this.bugs = res.bugs
       this.percentage = res.percentage
