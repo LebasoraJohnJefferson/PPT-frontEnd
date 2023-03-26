@@ -1,0 +1,12 @@
+#add-work{
+    text-indent: 10px;
+}
+
+#toggleBtn{
+    transform: rotate(45deg);
+    transition: .5s all ease-in-out;
+}
+
+#toDeleteContainer{
+    background-color: rgba(255,255,255,.6);
+}

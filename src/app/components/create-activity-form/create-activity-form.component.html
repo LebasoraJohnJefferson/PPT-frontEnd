@@ -27,10 +27,13 @@
 
                 <div>
                     <small>Activity Dependency</small>
-                    <mat-form-field class="w-full bg-white rounded text-black py-none my-none">
+                    <mat-form-field *ngIf="activityDependencies.length !=0" class="w-full bg-white rounded text-black py-none my-none">
                         <mat-select multiple formControlName="dependencies">
                           <mat-option  *ngFor="let activity of activityDependencies" [value]="activity.id">{{activity.activityName}}</mat-option>
                         </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="activityDependencies.length ==0" class="w-full bg-white rounded text-black py-none my-none">
+                        <p class="text-gray-500 mx-2">None...</p>
                     </mat-form-field>
                 </div>
 

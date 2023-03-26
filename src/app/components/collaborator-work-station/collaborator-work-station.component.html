@@ -1,0 +1,59 @@
+<div class="ml-4 mt-4 fixed flex items-center">
+  <app-back-btn></app-back-btn>
+  <div class="flex items-center text-white bg-purple-700 px-2 py-1 rounded cursor-pointer">
+    <i class="fa-solid fa-upload mr-2"></i>
+    <small>Upload</small>
+  </div>
+</div>
+<div class="px-3 mt-14 flex items-center justify-around">
+  <div class="flex flex-col w-full md:w-1/2 rounded border shadow">
+    <div class="bg-gray-400 py-2 px-2 flex items-center justify-between">
+      <h2 class="text-lg font-bold">To-Do List</h2>
+      <button (click)="AddFormToggle()" [ngClass]="!isAddOpen ? 'bg-blue-700 hover:bg-blue-500 text-white font-bold py-1 px-4 rounded' : 'bg-red-700 hover:bg-red-500 text-white font-bold py-1 px-4 rounded'">
+        <i *ngIf="!isAddOpen" class="fa-solid fa-plus px-1"></i>
+        <i *ngIf="isAddOpen" class="fa-solid fa-xmark px-1"></i>
+      </button>
+    </div>
+    <ul class="bg-white divide-y divide-gray-200">
+      <form (ngSubmit)="submitCreateWork()" [formGroup]="createWork" class="flex my-1 px-2" method="POST" *ngIf="isAddOpen">
+        <input formControlName="workName" id="add-work" class="w-full py-1 bg-gray-300 rounded  mr-2 outline-none " placeholder="Add some work.." type="text">
+        <button type="submit" class="bg-green-500 px-3 rounded text-white">SUBMIT</button>
+      </form>
+      <li class="px-4 py-2 flex items-center relative" *ngFor="let work of works">
+        <input *ngIf="toDosIdToEdit!=work.id" (click)="updateStatus(work.id,work.status)" type="checkbox" [checked]="work.status" class="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500 focus:ring-offset-0">
+        <span *ngIf="toDosIdToEdit!=work.id" [ngClass]=" work.status ?  'text-red-900 line-through' : 'text-gray-900'">{{work.workName}}</span>
+        <form (ngSubmit)="submitUpdateWorkName()" [formGroup]="updateWorkName" *ngIf="toDosIdToEdit==work.id" class="w-full pl-1 pr-2 flex items-center">
+          <input  id="add-work" formControlName="workName" class='w-full outline-none shadow-md border rounded text-gray-800 py-1' type="text">
+          <button class="bg-blue-500 hover:bg-blue-400 ml-2 text-white font-bold py-1 px-2 rounded">
+            <i class="fa-solid fa-floppy-disk"></i>
+          </button>
+        </form>
+        <div class="ml-auto flex">
+          <div (click)="showToDosById(work.id,work.workName)"  [ngClass]="toDosIdToEdit==work.id ? 'bg-yellow-700 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded mr-2' : 'bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-1 px-2 rounded mr-2'">
+            <i class="fa-solid fa-edit"></i>
+          </div>
+          <div (click)="openDelete(work.id)" class="bg-red-500 hover:bg-red-400 text-white font-bold py-1 px-2 rounded">
+            <i class="fa-solid fa-trash"></i>
+          </div>
+        </div>
+      </li>
+      <li class="px-4 py-2 flex items-center" *ngIf="works.length == 0">
+          <p class="font-bold text-center w-full text-red-500">EMPTY</p>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div  *ngIf="isDeleteNotificationOpen" class="w-full h-screen z-20 flex items-center justify-center  fixed top-0 left-0" id="toDeleteContainer">
+  <div class="bg-gray-900 text-yellow-500 w-96 py-3 rounded relative">
+      <p class="truncate text-center py-2 my-2">Are you sure you want to commit the action  ?</p>
+      <div class="flex justify-around items-center">
+          <div (click)="removeTodo()"  class="bg-red-700 cursor-pointer hover:bg-red-500 text-white py-1 px-2 rounded">
+              <i class="fa-solid fa-user-xmark mr-2"></i>REMOVE</div>
+          <div (click)="closeDeleteNotification()"  class="bg-blue-700 cursor-pointer hover:bg-blue-500 text-white py-1 px-2 rounded">
+              <i class="fa-solid fa-ban mr-1"></i>
+              CANCEL
+          </div>
+      </div>
+  </div>
+</div>

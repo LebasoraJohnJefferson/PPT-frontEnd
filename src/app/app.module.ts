@@ -41,6 +41,11 @@ import { PieChartUserComponent } from './components/pie-chart-user/pie-chart-use
 import { AdminComponent } from './pages/admin/admin.component';
 import { UsersComponent } from './pages/users/users.component';
 import { UsersDashboardComponent } from './components/users-dashboard/users-dashboard.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AdminPieChartCategoryComponent } from './components/admin-pie-chart-category/admin-pie-chart-category.component';
+import { UpdateAndCreateTaskFormComponent } from './components/update-and-create-task-form/update-and-create-task-form.component';
+import { CollaboratorWorkStationComponent } from './components/collaborator-work-station/collaborator-work-station.component';
+import { UploadFilesComponent } from './components/upload-files/upload-files.component';
 
 
 // const config: SocketIoConfig = { url: environment.baseURL,
@@ -79,6 +84,11 @@ import { UsersDashboardComponent } from './components/users-dashboard/users-dash
     AdminComponent,
     UsersComponent,
     UsersDashboardComponent,
+    AdminDashboardComponent,
+    AdminPieChartCategoryComponent,
+    UpdateAndCreateTaskFormComponent,
+    CollaboratorWorkStationComponent,
+    UploadFilesComponent,
   ],
   imports: [
     BrowserModule,

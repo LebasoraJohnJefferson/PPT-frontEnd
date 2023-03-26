@@ -1,0 +1,98 @@
+
+<div *ngIf="isCreateSubTaskFormOpen"  class="fixed top-0 left-0 text-yellow-500 z-20 font-bold flex items-center justify-center h-screen w-screen " id="createSubTaskContainer">
+    <div class="bg-black rounded relative" id="formContainer">
+        <div class="absolute flex w-full justify-end">
+            <p class="mr-10 mt-5 cursor-pointer text-2xl text-red-700 hover:text-red-500">
+                <i (click)="closeFormCreateTask()" class="fa-solid fa-rectangle-xmark text-2xl mr-4 hover:text-red-400 text-red-600 cursor-pointer"></i>
+            </p>
+        </div>
+        <div class="text-center mt-10 text-white py-2">CREATE TASK</div>
+        <form  class="grid" [formGroup]="createTask" (ngSubmit)="submitCreateTask()">
+            <div class="grid gap-2 px-5">
+                <div>
+                    <small>Task Name</small>
+                    <input formControlName="taskName"  class="w-full rounded py-1" placeholder="Enter task name...">
+                </div>
+
+                <div>
+                    <small>Task Dependency</small>
+                    <mat-form-field *ngIf="tasks!=0" class="w-full bg-white rounded text-black py-none my-none">
+                        <mat-select multiple formControlName="dependency">
+                          <mat-option  *ngFor="let task of tasks" [value]="task.taskInfo.id">{{task.taskInfo.taskName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="tasks==0" class="w-full bg-white rounded text-black py-none my-none relative">                        
+                        <p class="text-gray-500 mx-2">None...</p>
+                        <mat-select class="absolute hidden">
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                  
+                <div class="flex flex-col">
+                    <small>Task description</small>
+                    <textarea  class="rounded text-black px-3" formControlName="descriptions" placeholder="Enter activity description"></textarea>
+                </div>
+                
+                <div>
+                    <small class="flex items-center">Duration : {{duration}}<p class="ml-1" *ngIf="duration!=0">{{duration>1 ? 'days' : 'day'}}</p></small>
+                    <mat-slider formControlName="duration"  class="w-full" (change)="changeDuration($event)">
+                        <input  matSliderThumb>
+                    </mat-slider>
+                </div>
+
+                <div class="mt-3 flex justify-center items-center">
+                    <button type="submit" class="w-32 bg-green-700 hover:bg-green-500 py-1 rounded text-white font-bold">CREATE</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div *ngIf="isEditSubTaskOpen" class="fixed top-0 left-0 text-yellow-500 z-20 font-bold flex items-center justify-center h-screen w-screen " id="createSubTaskContainer">
+    <div class="bg-black rounded relative" id="formContainer">
+        <div class="absolute flex w-full justify-end">
+            <p class="mr-10 mt-5 cursor-pointer text-2xl text-red-700 hover:text-red-500">
+                <i (click)="closeEditForm()" class="fa-solid fa-rectangle-xmark text-2xl mr-4 hover:text-red-400 text-red-600 cursor-pointer"></i>
+            </p>
+        </div>
+        <div class="text-center mt-10 text-white py-2"><p>Edit Sub-Task</p><p>{{DataToBeEdited.taskName | uppercase}}</p></div>
+        <form  class="grid" [formGroup]="editTask" (ngSubmit)="submitEditTask()">
+            <div class="grid gap-2 px-5">
+                <div>
+                    <small>Task Name</small>
+                    <input formControlName="taskName"  class="w-full rounded py-1" placeholder="Enter task name...">
+                </div>
+
+                <div>
+                    <small>Task Dependency</small>
+                    <mat-form-field *ngIf="DataToBeEdited.dependencies.length !=0" class="w-full bg-white rounded text-black py-none my-none">
+                        <mat-select multiple formControlName="dependency">
+                          <mat-option  *ngFor="let task of DataToBeEdited.dependencies" [value]="task.id">{{task.taskName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="DataToBeEdited.dependencies.length==0" class="w-full bg-white rounded text-black py-none my-none relative">
+                        None
+                        <mat-select class="absolute hidden" formControlName="dependency">
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                  
+                <div class="flex flex-col">
+                    <small>Task description</small>
+                    <textarea  class="rounded text-black px-3" formControlName="descriptions" placeholder="Enter activity description"></textarea>
+                </div>
+                
+                <div>
+                    <small class="flex items-center">Duration : {{DataToBeEdited.duration}}<p class="ml-1" *ngIf="DataToBeEdited.duration!=0">{{DataToBeEdited.duration>1 ? 'days' : 'day'}}</p></small>
+                    <mat-slider formControlName="duration"  class="w-full" (change)="changeEditTaskDuration($event)">
+                        <input  matSliderThumb>
+                    </mat-slider>
+                </div>
+
+                <div class="mt-1 flex justify-center items-center">
+                    <button type="submit" class="w-32 bg-green-700 hover:bg-green-500 py-1 rounded text-white font-bold">EDIT</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

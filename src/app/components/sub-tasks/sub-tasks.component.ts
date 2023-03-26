@@ -40,6 +40,7 @@ export class SubTasksComponent implements OnInit {
   gannttData:any;
   tempTask:any=[]
   bugs:any=[]
+  DataToBeEdited:any={};
   editTaskDependencyArray:any;
   fakeArray = new Array(10)
   collaboratorDetails:any={
@@ -51,21 +52,9 @@ export class SubTasksComponent implements OnInit {
     image:environment.default_profile
   }
 
-  createTask:FormGroup = this._formBuilder.group({
-    taskName:['',Validators.required],
-    budget:[0,Validators.required],
-    duration:[0,Validators.required],
-    dependency:[[]],
-    descriptions:['',Validators.required]
-  })
+  
 
-  editTask:FormGroup = this._formBuilder.group({
-    taskName:['',Validators.required],
-    budget:[0,Validators.required],
-    duration:[0,Validators.required],
-    dependency:[],
-    descriptions:['',Validators.required]
-  })
+  
 
 
   tasks:any = []
@@ -75,13 +64,12 @@ export class SubTasksComponent implements OnInit {
   private _getAllProjectByIdSubscription:Subscription = new Subscription()
   private _getCollaboratorAndActivityDetailsSubscription:Subscription = new Subscription()
   private _getAllSubTaskSubscription:Subscription = new Subscription()
-  private _createSubTaskSubscription:Subscription = new Subscription()
   private _updateSubTaskSubscription:Subscription = new Subscription()
   private _getTaskByID:Subscription = new Subscription()
   private _updateSubTaskStatusSubscription:Subscription = new Subscription()
   private _updateTaskByIdSubscription:Subscription = new Subscription()
   private _updateActivityByIdSubscription:Subscription = new Subscription()
-
+  private _getTaskByIDSubscription:Subscription = new Subscription()
   editActivity:FormGroup = this._formBuilder.group({
     activityName:['',Validators.required],
     budget:[0,Validators.required],
@@ -110,6 +98,7 @@ export class SubTasksComponent implements OnInit {
     this.getProjectById()
     this.getAllSubTask()
   }
+
 
   getAllSubTask(){
     this._getAllSubTaskSubscription = this._subTaskService.getAllSubTask(this.activityId).subscribe((res)=>{
@@ -148,38 +137,13 @@ export class SubTasksComponent implements OnInit {
     })
   }
 
-  submitCreateTask(){
-    if(this.createTask.controls.budget.value <= 0){
-      this._toastr.warning('budget must be higher than 0!')
-      return
-    }
-    if(this.createTask.controls.duration.value <= 0){
-      this._toastr.warning('duration must be higher than 0!')
-      return
-    }
-    if(this.createTask.valid){
-      this._createSubTaskSubscription = this._subTaskService.createSubTask(this.createTask.value,this.activityId).subscribe(()=>{
-        this.getAllSubTask()
-        this._toastr.success("Successfully Created Task")
-        this.isCreateSubTaskFormOpen = false
-        this.duration = 0
-        this.createTask.reset()
-      },(err)=>{
-        this._toastr.warning(err.error.detail)
-      })
-    }else{
-      this._toastr.warning('Make sure too fill out all inputs!')
-    }
-    
-  }
+  
 
   changeDuration(event:any){
     this.duration = event.value
   }
 
-  changeEditTaskDuration(event:any){
-    this.durationTask = event.value
-  }
+  
 
   createFormOpen(){
     this.isCreateSubTaskFormOpen = true
@@ -261,38 +225,27 @@ export class SubTasksComponent implements OnInit {
     this.isDeleteNotificationOpen = false
   }
 
-  openEditForm(taskName:string,taskID:number,budget:number,duration:number,descriptions:string,dependencies:any){
-    this._getTaskByID = this._subTaskService.getDependencyById(taskID).subscribe((res)=>{
-      this.editTaskDependencyArray = res
-    })
-    let dependAssigned = Array.from(dependencies.split(","), Number)
-    this.isEditSubTaskOpen = true
-    this.taskToBeEdited = taskName
-    this.taskIdToBeDEleted = taskID
-    this.durationTask = duration
-    this.editTask.controls.taskName.setValue(taskName)
-    this.editTask.controls.budget.setValue(budget)
-    this.editTask.controls.duration.setValue(duration)
-    this.editTask.controls.dependency.setValue(dependAssigned)
-    this.editTask.controls.descriptions.setValue(descriptions)
-  }
+  
 
   closeEditForm(){
     this.isEditSubTaskOpen = false
   }
 
-  submitEditTask(){
-    if(this.editTask.valid){
-      this._updateTaskByIdSubscription = this._subTaskService.updateTaskById(this.taskIdToBeDEleted,this.editTask.value).subscribe(()=>{
-        this._toastr.success("Successfully Edited!")
-        this.getAllSubTask()
-        this.isEditSubTaskOpen = false
-      },(err)=>{
-        this._toastr.warning(err.error.detail)
-      })
-    }else{
-      this._toastr.warning("Invalid Input!")
-    }
+  openEditForm(taskName:string,taskID:number,duration:number,descriptions:string,dependencies:any){
+    this._getTaskByIDSubscription = this._subTaskService.getDependencyById(taskID).subscribe((res)=>{
+      this.editTaskDependencyArray = res
+      let dependAssigned = Array.from(dependencies.split(","), Number)
+      this.DataToBeEdited = {
+        'taskName':taskName,
+        'taskID':taskID,
+        'duration':duration,
+        'dependencies':this.editTaskDependencyArray,
+        'dependAssigned':dependAssigned,
+        'descriptions':descriptions
+      }
+      this.isEditSubTaskOpen = true
+
+    })
   }
 
   openTaskDescription(id:number){
@@ -328,8 +281,8 @@ export class SubTasksComponent implements OnInit {
     this._updateSubTaskStatusSubscription.unsubscribe()
     this._getAllProjectByIdSubscription.unsubscribe()
     this._updateTaskByIdSubscription.unsubscribe()
-    this._createSubTaskSubscription.unsubscribe()
     this._getAllSubTaskSubscription.unsubscribe()
+    this._getTaskByIDSubscription.unsubscribe()
     this._updateActivityByIdSubscription.unsubscribe()
     this._updateSubTaskSubscription.unsubscribe()
     this._getTaskByID.unsubscribe()

@@ -132,3 +132,8 @@ color: black !important;
     background-position: center;
     
 }
+
+#rotate-hammer:hover{
+    transform: rotate(40deg);
+    transition: .5s all ease-in-out;
+}

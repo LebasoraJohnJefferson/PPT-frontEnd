@@ -71,7 +71,10 @@
     </div>
 
     <div id="view-task" class="py-2 px-1" *ngIf="ActivityID != -1 && tasks.length !=0 && newDependencies==0 && !isActivityDone">
-            <h1 class="text-bold ml-3 my-3 text-white text-base font-bold"><i class="fa-sharp fa-solid fa-sheet-plastic mr-1"></i>To Do</h1>
+            <div class="text-bold mx-3 my-3 text-white text-base font-bold flex justify-between items-center">
+                <h1><i class="fa-sharp fa-solid fa-sheet-plastic mr-2"></i>To Do</h1>
+                <i (click)="closeFormCreateTask()" class="fa-regular fa-square-plus text-yellow-500 text-xl cursor-pointer hover:text-yellow-600"></i>
+            </div>
             <div class="{{task.data.date_status == 'problematic'? 'flex flex-col text-black bg-red-100 m-1 rounded px-3 py-1' : 'flex flex-col text-black bg-blue-200 m-1 rounded px-3 py-1'}}" *ngFor="let task of tasks">
                 <div class="w-full flex justify-between">
                     <div class='text-xs flex items-center'>
@@ -84,8 +87,11 @@
                         }" id="identify"></div>
                         <p class="mx-1">{{task.data.date_status}}</p>
                     </div>
-                    <i (click)="openTaskDescription(task.taskInfo.id)" *ngIf="task.taskInfo.id!= descriptionShowById" class="fa-solid fa-book"></i>
-                    <i (click)="openTaskDescription(task.taskInfo.id)" *ngIf="task.taskInfo.id == descriptionShowById" class="fa-solid fa-book-open"></i>
+                    <div class="flex items-center">
+                        <i routerLink="/users/collaborator/{{projectID}}/{{task.taskInfo.id}}" class="fa-solid fa-hammer mr-2 cursor-pointer " id="rotate-hammer"></i>
+                        <i (click)="openTaskDescription(task.taskInfo.id)" *ngIf="task.taskInfo.id!= descriptionShowById" class="fa-solid fa-book cursor-pointer"></i>
+                        <i (click)="openTaskDescription(task.taskInfo.id)" *ngIf="task.taskInfo.id == descriptionShowById" class="fa-solid fa-book-open cursor-pointer"></i>
+                    </div>
                 </div>
                 <p class="text-center truncate font-bold" id="taskTitle">  {{task.taskInfo.taskName | uppercase}}</p>
                 
@@ -113,8 +119,10 @@
                     
                 </div>
                 <div class="flex items-center text-xs justify-center mt-2">
-                    <small (click)="changeStatus(task.taskInfo.id)" class="px-2 mx-1 py-1 bg-green-500 hover:bg-green-700 rounded text-white cursor-pointer">{{task.taskInfo.status  ? 'UNDONE' : 'DONE'}}</small>
                     <small (click)="openFeedBack(task.taskInfo.id)" class="px-2 mx-1 py-1 bg-blue-500 hover:bg-blue-700 rounded text-white cursor-pointer">REPORT</small>
+                    <small (click)="changeStatus(task.taskInfo.id)" class="px-2 mx-1 py-1 bg-green-500 hover:bg-green-700 rounded text-white cursor-pointer">{{task.taskInfo.status  ? 'UNDONE' : 'DONE'}}</small>
+                    <small (click)="openEditForm(task.taskInfo.taskName,task.taskInfo.id,task.taskInfo.duration,task.taskInfo.descriptions,task.data.dependencies)" class="px-2 mx-1 py-1 bg-yellow-500 hover:bg-yellow-700 rounded text-white cursor-pointer">EDIT</small>
+                    <small (click)="openDeleteNotification(task.taskInfo.taskName,task.taskInfo.id)" class="px-2 mx-1 py-1 bg-red-500 hover:bg-red-700 rounded text-white cursor-pointer">DELETE</small>
                 </div>
             </div>
     </div>
@@ -137,6 +145,31 @@
     </div>
 </div>
 
-<div class="w-full h-full absolute" *ngIf="isFeedBackOpen">
+<div  *ngIf="isFeedBackOpen">
     <app-feedback [subTaskID]="taskID" (feedBackToggle)="openFeedBack2($event)" ></app-feedback>
+</div>
+
+<app-update-and-create-task-form 
+    (getAllTask)="getTasks()" 
+    (isFormToggle)="closeFormCreateTask()" 
+    (isFormToggleEdit)="closeEditForm()"
+    [activityId]="ActivityID" 
+    [tasks]="tasks"
+    [DataToBeEdited]="DataToBeEdited" 
+    [isEditSubTaskOpen]="isEditSubTaskOpen"
+    [isCreateSubTaskFormOpen]="isCreateSubTaskFormOpen">
+</app-update-and-create-task-form>
+
+<div *ngIf="isDeleteNotificationOpen" class="w-full h-screen flex items-center justify-center  fixed top-0 left-0" id="toDeleteContainer">
+    <div class="bg-gray-900 text-yellow-500 w-96 py-3 rounded relative">
+        <p class="truncate text-center py-2 my-2">Are you sure you want to delete {{taskToBeDeleted}}?</p>
+        <div class="flex justify-around items-center">
+            <div (click)="commitDeleteTask()" class="bg-red-700 cursor-pointer hover:bg-red-500 text-white py-1 px-2 rounded">
+                <i class="fa-solid fa-trash mr-1"></i>DELETE</div>
+            <div (click)="closeDeleteNotification()" class="bg-blue-700 cursor-pointer hover:bg-blue-500 text-white py-1 px-2 rounded">
+                <i class="fa-solid fa-ban mr-1"></i>
+                CANCEL
+            </div>
+        </div>
+    </div>
 </div>

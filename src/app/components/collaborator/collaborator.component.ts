@@ -30,6 +30,13 @@ export class CollaboratorComponent implements OnInit {
   taskID:number = -1
   isFeedBackOpen:boolean = false
   isActivityDone = false
+  isEditSubTaskOpen:boolean = false
+  isCreateSubTaskFormOpen:boolean= false
+  editTaskDependencyArray:any;
+  DataToBeEdited:any = {}
+  isDeleteNotificationOpen:boolean = false
+  taskToBeDeleted:string = ''
+  taskIdToBeDEleted:number = -1
 
   private _getCredentialsSubscriptions:Subscription = new Subscription()
   private _projectDetailsSubscriptions:Subscription = new Subscription()
@@ -37,6 +44,7 @@ export class CollaboratorComponent implements OnInit {
   private _taskDetailsSubscriptions:Subscription = new Subscription()
   private _changeStatusSubscriptions:Subscription = new Subscription()
   private _projectManagerDetailsSubscriptions:Subscription = new Subscription()
+  private _getTaskByIDSubscription:Subscription = new Subscription()
 
 
   constructor(
@@ -113,6 +121,7 @@ export class CollaboratorComponent implements OnInit {
     }
     this._taskDetailsSubscriptions = this._subTaskService.getAllSubTask(this.ActivityID).subscribe((res)=>{
       this.tasks = res.tasks
+      console.log(res)
       let countTask = 0
       this.tasks.forEach((task:any)=>{
         if(task.data.date_status == 'done' && (this.globalStage == "builds" || this.globalStage == 'maintenance' || this.globalStage == 'verifies')){
@@ -157,6 +166,51 @@ export class CollaboratorComponent implements OnInit {
     })
   }
 
+  closeFormCreateTask(){
+    this.isCreateSubTaskFormOpen = !this.isCreateSubTaskFormOpen
+  }
+
+  openEditForm(taskName:string,taskID:number,duration:number,descriptions:string,dependencies:any){
+    this._getTaskByIDSubscription = this._subTaskService.getDependencyById(taskID).subscribe((res)=>{
+      this.editTaskDependencyArray = res
+      let dependAssigned = Array.from(dependencies.split(","), Number)
+      this.DataToBeEdited = {
+        'taskName':taskName,
+        'taskID':taskID,
+        'duration':duration,
+        'dependencies':this.editTaskDependencyArray,
+        'dependAssigned':dependAssigned,
+        'descriptions':descriptions
+      }
+      this.isEditSubTaskOpen = true
+
+    })
+  }
+
+  openDeleteNotification(taskName:string,taskID:number){
+    this.isDeleteNotificationOpen = true
+    this.taskToBeDeleted = taskName
+    this.taskIdToBeDEleted = taskID
+  }
+
+  commitDeleteTask(){
+    this._subTaskService.deleteOneTask(this.taskIdToBeDEleted).subscribe((res)=>{
+      this.getTasks()
+      this.toastr.success(`successfully deleted ${this.taskToBeDeleted}`)
+      this.isDeleteNotificationOpen = false
+    },(err)=>{
+      this.toastr.warning("An Error Occurred")
+    })
+  }
+
+  closeEditForm(){
+    this.isEditSubTaskOpen = false
+  }
+
+  closeDeleteNotification(){
+    this.isDeleteNotificationOpen = false
+  }
+
   ngOnDestroy(){
     this._getCredentialsSubscriptions.unsubscribe()
     this._projectDetailsSubscriptions.unsubscribe()
@@ -164,6 +218,7 @@ export class CollaboratorComponent implements OnInit {
     this._activitiesDetailsSubscriptions.unsubscribe()
     this._changeStatusSubscriptions.unsubscribe()
     this._projectManagerDetailsSubscriptions.unsubscribe()
+    this._getTaskByIDSubscription.unsubscribe()
   }
 
 }

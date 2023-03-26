@@ -40,7 +40,6 @@ export class CreateActivityFormComponent implements OnInit {
     private _toastr:ToastrService
   ) { 
     this.projectId = this._routes.snapshot.paramMap.get('id');
-    console.log(this.activityDependencies)
   }
 
   ngOnInit(): void {

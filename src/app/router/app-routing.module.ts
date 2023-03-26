@@ -12,6 +12,8 @@ import { CollaboratorComponent } from '../components/collaborator/collaborator.c
 import { AdminComponent } from '../pages/admin/admin.component';
 import { UsersComponent } from '../pages/users/users.component';
 import { UsersDashboardComponent } from '../components/users-dashboard/users-dashboard.component';
+import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard.component';
+import { CollaboratorWorkStationComponent } from '../components/collaborator-work-station/collaborator-work-station.component';
 
 
 const routes:Routes = [
@@ -24,9 +26,11 @@ const routes:Routes = [
   ],
   canActivate: [AuthGuard]},
   {path:'admin',component:AdminComponent},
+  {path:'admin/dashboard',component:AdminDashboardComponent,canActivate: [AuthGuard]},
   {path:'users',component:UsersComponent,children:[
     {path:'',component:UsersDashboardComponent},
     {path:'collaborator/:projectID',component:CollaboratorComponent},
+    {path:'collaborator/:projectID/:activityID',component:CollaboratorWorkStationComponent},
     {path:'setting',component:SettingComponent},
   ],
   canActivate: [AuthGuard]},

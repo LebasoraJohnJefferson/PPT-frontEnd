@@ -32,6 +32,9 @@ export class DashboardComponent implements OnInit {
     if(roles == 'USER'){
       this._router.navigate(['/users'])
       this.toastr.warning('Illegal Action!')
+    }else if (roles == 'ADMIN'){
+      this._router.navigate(['/admin'])
+      this.toastr.warning('Illegal Action!')
     }
       
   }

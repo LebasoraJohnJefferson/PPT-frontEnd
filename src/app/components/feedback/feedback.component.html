@@ -16,7 +16,7 @@
                         <p class="bold text-lg mx-1">|</p>
                         <div class="flex items-center justify-center">
                             <div [ngClass]="{'bg-white' : feedBack.bugs == 'normal','bg-red-500' : feedBack.bugs == 'bugs','bg-green-500' : feedBack.bugs == 'fixed'}" id="indentification2"></div>
-                            <p [ngClass]="{'text-white' : feedBack.bugs == 'normal','text-red-500' : feedBack.bugs == 'bugs','text-bg-green-500' : feedBack.bugs == 'fixed'}" class="mx-1">{{feedBack.bugs | uppercase}}</p>
+                            <p [ngClass]="{'text-white' : feedBack.bugs == 'normal','text-red-500' : feedBack.bugs == 'bugs','text-bg-green-500' : feedBack.bugs == 'fixed'}" class="mx-1">{{feedBack.bugs == 'bugs' ?  ('drawback' | uppercase)  : (feedBack.bugs | uppercase ) }}</p>
                         </div>
                     </small>  
                 </div>
@@ -39,7 +39,7 @@
             <ol class="text-xs w-24 text-black absolute top-7 flex bg-white rounded-lg shadow dark:bg-gray-700 flex-col" *ngIf="isBugOptionShow">
                 <li *ngFor="let bug of bugs" (click)="changeBugIndex(bug)" class="flex items-center p-1 cursor-pointer">
                     <div [ngClass]="{'bg-white' : bug == 'normal','bg-red-500' : bug == 'bugs','bg-green-500' : bug == 'fixed'}" id="indentification"></div>
-                    <div  class="ml-2" >{{bug}}</div>
+                    <div  class="ml-2" >{{bug == 'bugs' ? 'drawback' : bug}}</div>
                 </li>
             </ol>
             <input formControlName="message" type="text" class="flex w-full rounded outline-none text-white bg-gray-500 mx-2 py-1">
