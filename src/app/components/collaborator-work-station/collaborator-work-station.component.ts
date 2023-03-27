@@ -17,6 +17,7 @@ export class CollaboratorWorkStationComponent implements OnInit {
   isDeleteNotificationOpen:boolean = false
   toDOsId:number = -1
   toDosIdToEdit:number = -1
+  isUploadOpen:boolean = true
 
   private _updateWorkNameSubscription:Subscription = new Subscription()
   private _createWorkSubscription:Subscription = new Subscription()
@@ -122,6 +123,16 @@ export class CollaboratorWorkStationComponent implements OnInit {
       this._toastr.error("An Error Occurred!")
     })
   }
+
+  
+OpenUpload(){
+  this.isUploadOpen = true
+}
+
+closeUpload(){
+  this.isUploadOpen = false
+}
+
 
   ngOnDestroy(){
     this._createWorkSubscription.unsubscribe()

@@ -1,6 +1,6 @@
 <div class="ml-4 mt-4 fixed flex items-center">
   <app-back-btn></app-back-btn>
-  <div class="flex items-center text-white bg-purple-700 px-2 py-1 rounded cursor-pointer">
+  <div (click)="OpenUpload()" class="flex items-center text-white bg-purple-700 px-2 py-1 rounded cursor-pointer">
     <i class="fa-solid fa-upload mr-2"></i>
     <small>Upload</small>
   </div>
@@ -57,3 +57,7 @@
       </div>
   </div>
 </div>
+
+<app-upload-files [activityID]="activityId" *ngIf="isUploadOpen" (isUploadClose)="closeUpload()"></app-upload-files>
+
+
