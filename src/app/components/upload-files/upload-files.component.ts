@@ -2,6 +2,7 @@ import { Component, OnInit,Output,EventEmitter,Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ToDosService } from 'src/app/service/to-dos.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload-files',
@@ -21,7 +22,8 @@ export class UploadFilesComponent implements OnInit {
 
   constructor(
     private _toDosService:ToDosService,
-    public toastr:ToastrService
+    public toastr:ToastrService,
+    public router:Router
   ) { 
   }
   
@@ -33,6 +35,14 @@ export class UploadFilesComponent implements OnInit {
     this._getUploadFiles = this._toDosService.getAllUploadedFile(this.activityID).subscribe((res)=>{
       this.allFiles = res
     })
+  }
+
+  async downloadFile(path:any){
+    await fetch(path).then((res)=>{
+      window.open(res.url, '_blank');
+    })
+
+    
   }
 
 
