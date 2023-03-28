@@ -36,6 +36,15 @@ export class UploadFilesComponent implements OnInit {
     })
   }
 
+  download(fileName:string,path:any){
+    let blob = new Blob([path], {type: 'application/pdf'});
+      var downloadURL = window.URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = fileName;
+      link.click();
+  }
+
 
   ngOnInit(): void {
 
