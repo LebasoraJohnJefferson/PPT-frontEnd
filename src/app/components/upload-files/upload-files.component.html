@@ -23,7 +23,7 @@
                 <p class="text-base">
                     {{fileDetails['fileName']}} 
                     <a  class="text-blue-500 hover:text-blue-300 text-xs" 
-                    (click)="download(fileDetails['fileName'],fileDetails['path'])">(download)</a>
+                    (click)="downloadFile(fileDetails['path'])">(download)</a>
                 </p>
                 <div class="flex items-center w-full justify-end">
                     <p class="text-gray-200 mr-2 text-xs">{{fileDetails['createdAt'] | date :'medium'}}</p> 
