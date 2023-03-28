@@ -21,7 +21,7 @@
         <div class="px-3  overflow-y-auto" id="uploaded-files-container">
             <div class="px-3 py-1 border rounded my-1" *ngFor="let fileDetails of allFiles">
                 <p class="text-base">
-                    {{fileDetails['fileName']}} <a class="text-blue-500 hover:text-blue-300 text-xs" href="{{fileDetails['path']}}" download>(download)</a>
+                    {{fileDetails['fileName']}} <a target="_blank" class="text-blue-500 hover:text-blue-300 text-xs" href="{{fileDetails['path']}}" >(download)</a>
                 </p>
                 <div class="flex items-center w-full justify-end">
                     <p class="text-gray-200 mr-2 text-xs">{{fileDetails['createdAt'] | date :'medium'}}</p> 
