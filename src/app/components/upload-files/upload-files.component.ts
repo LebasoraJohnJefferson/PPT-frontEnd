@@ -35,8 +35,8 @@ export class UploadFilesComponent implements OnInit {
     })
   }
 
-  downloadFile(path:any){
-    window.location.href =path;
+  async downloadFile(path:any){
+    window.open(path,'_blank')
   }
 
 

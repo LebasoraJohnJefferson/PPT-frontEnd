@@ -122,7 +122,6 @@ export class CollaboratorComponent implements OnInit {
     }
     this._taskDetailsSubscriptions = this._subTaskService.getAllSubTask(this.ActivityID).subscribe((res)=>{
       this.tasks = res.tasks
-      console.log(res)
       let countTask = 0
       this.tasks.forEach((task:any)=>{
         if(task.data.date_status == 'done' && (this.globalStage == "builds" || this.globalStage == 'maintenance' || this.globalStage == 'verifies')){

@@ -29,7 +29,6 @@ export class AsideUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.projectID = this._routes.snapshot.paramMap.get('projectID')
-    console.log(this.projectID)
   }
 
   leaveProject(){

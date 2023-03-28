@@ -72,12 +72,10 @@ export class UsersDashboardComponent implements OnInit {
     this._getAllProjectJoinSubscription = this._collaborateService.getAllProject().subscribe((res)=>{
       this.projectsJoined = res
       this.projectJoinedSearch = res
-      console.log(res)
     })
   }
 
   search(event:any){
-    console.log(this.projectJoinedSearch)
       let temp:any = []
       this.projectJoinedSearch.forEach((data:any) => {
         if(data.Project.projectCategory.includes(event.value.toUpperCase()) || 
