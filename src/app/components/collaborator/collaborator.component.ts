@@ -37,6 +37,7 @@ export class CollaboratorComponent implements OnInit {
   isDeleteNotificationOpen:boolean = false
   taskToBeDeleted:string = ''
   taskIdToBeDEleted:number = -1
+  isUploadOpen:boolean = false
 
   private _getCredentialsSubscriptions:Subscription = new Subscription()
   private _projectDetailsSubscriptions:Subscription = new Subscription()
@@ -209,6 +210,15 @@ export class CollaboratorComponent implements OnInit {
 
   closeDeleteNotification(){
     this.isDeleteNotificationOpen = false
+  }
+
+  closeUpload(){
+    this.isUploadOpen = false
+  }
+
+  openUpload(id:any){
+    this.isUploadOpen = true
+    this.ActivityID = id
   }
 
   ngOnDestroy(){

@@ -35,11 +35,11 @@ export class ToDosService {
     return this._http.put(`${this.baseURL}/toDos/workName/${toDosID}`,workName)
   }
   
-  uploadFiles(file:File,form:any):Observable<any>{
+  uploadFiles(activityID:any,file:File,form:any):Observable<any>{
     const formData = new FormData()
     if(file) formData.append("file", file, file.name);
     formData.append("form",JSON.stringify(form))
-    return this._http.post<string>(`${this.baseURL}/toDos/uploadFiles`,formData)
+    return this._http.post<string>(`${this.baseURL}/toDos/uploadFiles/${activityID}`,formData)
   }
   
   getAllUploadedFile(subTaskID:any):Observable<any>{

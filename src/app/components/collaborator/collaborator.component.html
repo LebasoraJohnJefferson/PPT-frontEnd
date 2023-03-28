@@ -87,7 +87,8 @@
                         }" id="identify"></div>
                         <p class="mx-1">{{task.data.date_status}}</p>
                     </div>
-                    <div class="flex items-center">
+                    <div class="flex items-center mb-1 text-xs">
+                        <i (click)="openUpload(task.taskInfo.id)" class="fa-solid fa-upload mr-2 cursor-pointer"></i>
                         <i routerLink="/users/collaborator/{{projectID}}/{{task.taskInfo.id}}" class="fa-solid fa-hammer mr-2 cursor-pointer " id="rotate-hammer"></i>
                         <i (click)="openTaskDescription(task.taskInfo.id)" *ngIf="task.taskInfo.id!= descriptionShowById" class="fa-solid fa-book cursor-pointer"></i>
                         <i (click)="openTaskDescription(task.taskInfo.id)" *ngIf="task.taskInfo.id == descriptionShowById" class="fa-solid fa-book-open cursor-pointer"></i>
@@ -173,3 +174,10 @@
         </div>
     </div>
 </div>
+
+
+<app-upload-files 
+  [activityID]="ActivityID" 
+  *ngIf="isUploadOpen" 
+  (isUploadClose)="closeUpload()"
+></app-upload-files>

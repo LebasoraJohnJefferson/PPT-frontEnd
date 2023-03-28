@@ -58,6 +58,10 @@
   </div>
 </div>
 
-<app-upload-files [activityID]="activityId" *ngIf="isUploadOpen" (isUploadClose)="closeUpload()"></app-upload-files>
+<app-upload-files 
+  [activityID]="activityId" 
+  *ngIf="isUploadOpen" 
+  (isUploadClose)="closeUpload()"
+></app-upload-files>
 
 

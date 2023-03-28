@@ -59,7 +59,8 @@ export class SubTasksComponent implements OnInit {
 
   tasks:any = []
   category:any = []
-  projectId:any=0
+  projectId:any=-1
+  isUploadOpen:boolean = false
   image:string=environment.default_profile
   private _getAllProjectByIdSubscription:Subscription = new Subscription()
   private _getCollaboratorAndActivityDetailsSubscription:Subscription = new Subscription()
@@ -273,6 +274,15 @@ export class SubTasksComponent implements OnInit {
       }
     });
     this.tasks = temp 
+  }
+
+  openUpload(activityId:any){
+    this.isUploadOpen = true
+    this.activityId = activityId
+  }
+
+  closeUpload(){
+    this.isUploadOpen = false
   }
 
 

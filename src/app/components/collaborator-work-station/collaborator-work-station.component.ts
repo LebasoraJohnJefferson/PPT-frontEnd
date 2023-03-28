@@ -17,7 +17,7 @@ export class CollaboratorWorkStationComponent implements OnInit {
   isDeleteNotificationOpen:boolean = false
   toDOsId:number = -1
   toDosIdToEdit:number = -1
-  isUploadOpen:boolean = true
+  isUploadOpen:boolean = false
 
   private _updateWorkNameSubscription:Subscription = new Subscription()
   private _createWorkSubscription:Subscription = new Subscription()

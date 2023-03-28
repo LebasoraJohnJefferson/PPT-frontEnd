@@ -115,8 +115,11 @@
                             }" id="identify"></div>
                             <p class="mx-1">{{task.data.date_status}}</p>
                         </div>
-                        <i (click)="openTaskDescription(task.taskInfo.id)" *ngIf="task.taskInfo.id!= descriptionShowById" class="fa-solid fa-book"></i>
-                        <i (click)="openTaskDescription(task.taskInfo.id)" *ngIf="task.taskInfo.id == descriptionShowById" class="fa-solid fa-book-open"></i>
+                        <div class="text-xs mb-1">
+                            <i (click)="openUpload(task.taskInfo.id)"  class="fa-solid fa-upload mr-2 cursor-pointer mr-1"></i>
+                            <i (click)="openTaskDescription(task.taskInfo.id)" *ngIf="task.taskInfo.id!= descriptionShowById" class="fa-solid fa-book"></i>
+                            <i (click)="openTaskDescription(task.taskInfo.id)" *ngIf="task.taskInfo.id == descriptionShowById" class="fa-solid fa-book-open"></i>
+                        </div>
                     </div>
                     <p class="text-center truncate font-bold" id="taskTitle">  {{task.taskInfo.taskName | uppercase}}</p>
                     
@@ -241,3 +244,9 @@
     [isCreateSubTaskFormOpen]="isCreateSubTaskFormOpen"></app-update-and-create-task-form>
 
 
+
+<app-upload-files 
+    [activityID]="activityId" 
+    *ngIf="isUploadOpen" 
+    (isUploadClose)="closeUpload()"
+  ></app-upload-files>

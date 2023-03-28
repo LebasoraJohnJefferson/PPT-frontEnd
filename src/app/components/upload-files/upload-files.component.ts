@@ -18,6 +18,7 @@ export class UploadFilesComponent implements OnInit {
   fileName:string = ''
   uploadFile:any=[];
   allFiles = []
+  isSubmitting:boolean = false
 
   constructor(
     private _toDosService:ToDosService,
@@ -32,7 +33,6 @@ export class UploadFilesComponent implements OnInit {
   getAllUploadedFile(){
     this._getUploadFiles = this._toDosService.getAllUploadedFile(this.activityID).subscribe((res)=>{
       this.allFiles = res
-      console.log(res)
     })
   }
 
@@ -51,13 +51,24 @@ export class UploadFilesComponent implements OnInit {
       this.fileName = this.uploadFile.name
     }
   }
-  // formData.append("file", file, file.name);
+
+
   SubmitFiles(){
+    this.isSubmitting = true
     if(this.fileName.length != 0 ){
-      this._uploadFiles = this._toDosService.uploadFiles(this.uploadFile,{
+      this._uploadFiles = this._toDosService.uploadFiles(this.activityID,this.uploadFile,{
         'activityId':this.activityID,
         'fileName':this.fileName}
-      ).subscribe()
+      ).subscribe(()=>{
+        this.getAllUploadedFile()
+        this.fileName = ''
+        this.toastr.success("Successfully Uploaded")
+        this.isSubmitting = false
+      },(err)=>{
+        this.toastr.warning(err.error.detail)
+        this.fileName = ''
+        this.isSubmitting = false
+      })
     }else{
       this.toastr.warning("No Files Found")
     }
