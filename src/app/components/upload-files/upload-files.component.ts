@@ -37,14 +37,6 @@ export class UploadFilesComponent implements OnInit {
     })
   }
 
-  async downloadFile(path:any){
-    await fetch(path).then((res)=>{
-      window.open(res.url, '_blank');
-    })
-
-    
-  }
-
 
   ngOnInit(): void {
 
