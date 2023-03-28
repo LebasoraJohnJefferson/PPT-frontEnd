@@ -71,6 +71,7 @@ export class UploadFilesComponent implements OnInit {
       })
     }else{
       this.toastr.warning("No Files Found")
+      this.isSubmitting = false
     }
   }
 
