@@ -46,6 +46,9 @@ import { AdminPieChartCategoryComponent } from './components/admin-pie-chart-cat
 import { UpdateAndCreateTaskFormComponent } from './components/update-and-create-task-form/update-and-create-task-form.component';
 import { CollaboratorWorkStationComponent } from './components/collaborator-work-station/collaborator-work-station.component';
 import { UploadFilesComponent } from './components/upload-files/upload-files.component';
+import { FilesUploadComponent } from './components/admin/files-upload/files-upload.component';
+import { AdminSeeUserComponent } from './components/admin/admin-see-user/admin-see-user.component';
+import { AdminSeeProjectsComponent } from './components/admin/admin-see-projects/admin-see-projects.component';
 
 
 // const config: SocketIoConfig = { url: environment.baseURL,
@@ -89,6 +92,9 @@ import { UploadFilesComponent } from './components/upload-files/upload-files.com
     UpdateAndCreateTaskFormComponent,
     CollaboratorWorkStationComponent,
     UploadFilesComponent,
+    FilesUploadComponent,
+    AdminSeeUserComponent,
+    AdminSeeProjectsComponent,
   ],
   imports: [
     BrowserModule,

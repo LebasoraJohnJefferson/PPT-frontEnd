@@ -14,6 +14,9 @@ import { UsersComponent } from '../pages/users/users.component';
 import { UsersDashboardComponent } from '../components/users-dashboard/users-dashboard.component';
 import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard.component';
 import { CollaboratorWorkStationComponent } from '../components/collaborator-work-station/collaborator-work-station.component';
+import { AdminSeeUserComponent } from '../components/admin/admin-see-user/admin-see-user.component';
+import { AdminSeeProjectsComponent } from '../components/admin/admin-see-projects/admin-see-projects.component';
+import { FilesUploadComponent } from '../components/admin/files-upload/files-upload.component';
 
 
 const routes:Routes = [
@@ -26,7 +29,11 @@ const routes:Routes = [
   ],
   canActivate: [AuthGuard]},
   {path:'admin',component:AdminComponent},
-  {path:'admin/dashboard',component:AdminDashboardComponent,canActivate: [AuthGuard]},
+  {path:'admin/dashboard',component:AdminDashboardComponent,children:[
+    {path:'',component:AdminSeeUserComponent},
+    {path:'projects',component:AdminSeeProjectsComponent},
+    {path:'uploadFile',component:FilesUploadComponent}
+  ],canActivate: [AuthGuard]},
   {path:'users',component:UsersComponent,children:[
     {path:'',component:UsersDashboardComponent},
     {path:'collaborator/:projectID',component:CollaboratorComponent},

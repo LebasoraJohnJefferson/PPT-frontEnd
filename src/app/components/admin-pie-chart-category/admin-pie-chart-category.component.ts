@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,Input } from '@angular/core';
 import { Chart,registerables  } from 'chart.js';
 
 
@@ -10,6 +10,9 @@ import { Chart,registerables  } from 'chart.js';
 export class AdminPieChartCategoryComponent implements OnInit {
   canvas: any;
   ctx: any;
+  label:any = ['none']
+  color:any = ['gray']
+  @Input() pie:any=[];
   @ViewChild('pieChart') pieChart:any;
   
   constructor() {
@@ -20,12 +23,23 @@ export class AdminPieChartCategoryComponent implements OnInit {
     
   }
 
+  
+  ngOnChanges(){
+    
+  }
+
+  
+
   ngAfterViewInit(){
+    this.label = this.pie.length !=0 ? ['IT','ME','CE'] : ['None']
+    this.color = this.pie.length !=0 ? ['red','blue','green'] : ['gray']
+    this.pie = this.pie.length != 0 ? this.pie : [100]
     this.canvas = this.pieChart.nativeElement; 
     this.ctx = this.canvas.getContext('2d');
     new Chart(this.ctx, {
       type: 'doughnut',
       options:{
+        maintainAspectRatio:true,
         scales:{
           ticks: {
             display: false
@@ -42,7 +56,7 @@ export class AdminPieChartCategoryComponent implements OnInit {
         responsive: true,
         plugins:{
           legend:{
-            position:'right',
+            position:'bottom',
             align:'center',
             labels:{
               font:{
@@ -64,11 +78,11 @@ export class AdminPieChartCategoryComponent implements OnInit {
         }
       },
       data: {
-        labels: ['IT','ME','CE'],
+        labels: this.label,
         datasets: [{
-          data: [1,2,3],
+          data: this.pie,
           borderColor: 'pink',
-          backgroundColor: ['red','blue','green'],
+          backgroundColor: this.color,
         }
       ],
       },
