@@ -1,4 +1,4 @@
-<div class="flex h-screen items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
+<div class="flex h-screen items-center justify-center">
     <div class="w-full max-w-md">
       <form [formGroup]="loginFormGroup" method="POST" (ngSubmit)="SubmitLogin()" class="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
         <div class="mb-4">
@@ -17,7 +17,7 @@
           <button *ngIf="!isLogin" type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Sign In
           </button>
-          <button *ngIf="isLogin" type="submit" class="bg-blue-500 hover:bg-blue-700 w-20 text-white font-bold px-1 py-2 rounded focus:outline-none focus:shadow-outline flex items-center justify-center">
+          <button *ngIf="isLogin"  class="bg-blue-500 hover:bg-blue-700 w-20 text-white font-bold px-1 py-2 rounded focus:outline-none focus:shadow-outline flex items-center justify-center">
             <mat-spinner  [diameter]="25"></mat-spinner>
           </button>
           <a (click)="showPassword()" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800 cursor-pointer">
@@ -26,4 +26,7 @@
         </div>
       </form>
     </div>
-  </div>
+</div>
+<div id="background-image" class="fixed flex top-0 left-0 w-screen h-screen bg-gradient-to-r from-gray-900 to-green-900">
+    <img  class="w-full h-full" src="../../../assets/images/abstract.avif" alt="evsu-logo">
+</div>

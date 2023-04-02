@@ -65,5 +65,9 @@ export class AdminService {
     return this._http.delete(`${this.baseURL}/admin/files/${id}`)
   }
 
+  editAdminDetails(adminDetails:number):Observable<any>{
+    return this._http.put(`${this.baseURL}/admin/settings/`,adminDetails)
+  }
+
 
 }

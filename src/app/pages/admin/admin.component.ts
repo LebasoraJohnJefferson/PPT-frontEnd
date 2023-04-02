@@ -36,7 +36,6 @@ export class AdminComponent implements OnInit {
       this.isLogin = true
       this._identityCheck = this._adminService.getCredentials(this.loginFormGroup.value).subscribe((res)=>{
         localStorage.setItem('token',res.access_token)
-        console.log(res.access_token)
         localStorage.setItem('roles','ADMIN')
         this._router.navigate(['/admin/dashboard'])
         this._toastr.success("Successfully Login")
