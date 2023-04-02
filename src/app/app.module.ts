@@ -49,6 +49,7 @@ import { UploadFilesComponent } from './components/upload-files/upload-files.com
 import { FilesUploadComponent } from './components/admin/files-upload/files-upload.component';
 import { AdminSeeUserComponent } from './components/admin/admin-see-user/admin-see-user.component';
 import { AdminSeeProjectsComponent } from './components/admin/admin-see-projects/admin-see-projects.component';
+import { SettingsComponent } from './components/admin/settings/settings.component';
 
 
 // const config: SocketIoConfig = { url: environment.baseURL,
@@ -95,6 +96,7 @@ import { AdminSeeProjectsComponent } from './components/admin/admin-see-projects
     FilesUploadComponent,
     AdminSeeUserComponent,
     AdminSeeProjectsComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

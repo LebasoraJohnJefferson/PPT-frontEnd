@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class AdminComponent implements OnInit {
 
   changeTypeInPassword:string = 'password'
-
+  isLogin:boolean = false
 
 
   loginFormGroup: FormGroup = this._formBuilder.group({
@@ -33,16 +33,21 @@ export class AdminComponent implements OnInit {
 
   SubmitLogin(){
     if(this.loginFormGroup.valid){
+      this.isLogin = true
       this._identityCheck = this._adminService.getCredentials(this.loginFormGroup.value).subscribe((res)=>{
         localStorage.setItem('token',res.access_token)
+        console.log(res.access_token)
         localStorage.setItem('roles','ADMIN')
         this._router.navigate(['/admin/dashboard'])
         this._toastr.success("Successfully Login")
+        this.isLogin = false
       },()=>{
+        this.isLogin = false
         this.loginFormGroup.reset()
         this._toastr.warning("Account does`nt Exist")
       })  
     }else{
+      this.isLogin = false
       this._toastr.warning("Invalid Inputs")
     }
   }
@@ -55,6 +60,7 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this._identityCheck.unsubscribe()
   }
 
 }

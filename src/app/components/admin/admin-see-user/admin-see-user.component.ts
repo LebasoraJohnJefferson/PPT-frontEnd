@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup,FormBuilder,Validators } from '@angular/forms';
 import * as moment from 'moment'
+import { EventEmitterService } from 'src/app/service/event-emitter.service';
 
 @Component({
   selector: 'app-admin-see-user',
@@ -39,7 +40,8 @@ export class AdminSeeUserComponent implements OnInit {
   constructor(
     private _adminService:AdminService,
     public toastr:ToastrService,
-    private _formBuilder:FormBuilder
+    private _formBuilder:FormBuilder,
+    private _eventEmitterService:EventEmitterService
   ) { 
     this.getAllUsers()
   }
@@ -82,6 +84,7 @@ export class AdminSeeUserComponent implements OnInit {
 		}
   }
 
+
   editUserInfo(user:any){
     this.UserId = user.id
     this.editUserInfoDetails.controls.fullName.setValue(user.fullName)
@@ -118,6 +121,7 @@ export class AdminSeeUserComponent implements OnInit {
     this._deleteUserSubscriptions = this._adminService.deleteUserById(this.UserId).subscribe(()=>{
       this.getAllUsers()
       this.isUserDelFormOpen = false
+      this._eventEmitterService.getAllProjectInAdmin()
       this.toastr.success(`User ${this.UserName} Successfully Deleted!`)
     },()=>{
       this.toastr.warning("An Error Occurred!")

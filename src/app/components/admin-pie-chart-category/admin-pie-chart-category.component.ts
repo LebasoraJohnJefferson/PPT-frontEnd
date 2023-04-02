@@ -10,6 +10,7 @@ import { Chart,registerables  } from 'chart.js';
 export class AdminPieChartCategoryComponent implements OnInit {
   canvas: any;
   ctx: any;
+  myChart:any;
   label:any = ['none']
   color:any = ['gray']
   @Input() pie:any=[];
@@ -25,18 +26,23 @@ export class AdminPieChartCategoryComponent implements OnInit {
 
   
   ngOnChanges(){
-    
+    if(this.myChart != undefined){
+      this.ngAfterViewInit()
+    }
   }
 
   
 
   ngAfterViewInit(){
-    this.label = this.pie.length !=0 ? ['IT','ME','CE'] : ['None']
+    if(this.myChart != undefined || this.myChart !=null){
+      this.myChart.destroy()
+    }
+    this.label = this.pie.length !=0 ? ['IT','ME','CE'] : ['No Project Created']
     this.color = this.pie.length !=0 ? ['red','blue','green'] : ['gray']
     this.pie = this.pie.length != 0 ? this.pie : [100]
     this.canvas = this.pieChart.nativeElement; 
     this.ctx = this.canvas.getContext('2d');
-    new Chart(this.ctx, {
+    this.myChart = new Chart(this.ctx, {
       type: 'doughnut',
       options:{
         maintainAspectRatio:true,
@@ -68,9 +74,9 @@ export class AdminPieChartCategoryComponent implements OnInit {
           title:{
             color:'black',
             display:true,
-            text:'Category',
+            text:'Project Category',
             font: {
-              size: 20,
+              size: 16,
               weight: 'bold',
               lineHeight: 2,
             },
