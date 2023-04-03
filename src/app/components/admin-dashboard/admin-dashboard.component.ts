@@ -21,9 +21,9 @@ export class AdminDashboardComponent implements OnInit {
   private overAllDetails:Subscription = new Subscription()
   constructor(
     public toastr:ToastrService,
-    private router:Router,
+    private _router:Router,
     private _adminService:AdminService,
-    private _eventEmitterService:EventEmitterService
+    private _eventEmitterService:EventEmitterService,
   ) { 
     _eventEmitterService.getAllDetailsInAdmin$.subscribe(()=>{
       this.getCountDetails()
@@ -31,6 +31,14 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let roles = localStorage.getItem('roles')
+    if(roles == 'USER'){
+      this._router.navigate(['/users'])
+      this.toastr.warning('Illegal Action!')
+    }else if (roles == 'MANAGER'){
+      this._router.navigate(['/dashboard'])
+      this.toastr.warning('Illegal Action!')
+    }
     this.getCountDetails()
   }
 
@@ -60,7 +68,7 @@ export class AdminDashboardComponent implements OnInit {
   logout(){
     this.toastr.success("Logout successfully")
     localStorage.removeItem("token")
-    this.router.navigate(['/admin'])
+    this._router.navigate(['/admin'])
   }
 
   changeRoutes(routing:any){
