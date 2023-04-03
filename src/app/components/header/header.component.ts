@@ -16,7 +16,7 @@ import { EventEmitterService } from 'src/app/service/event-emitter.service';
 })
 export class HeaderComponent implements OnInit {
   notifications:any = []
-  name:string = 'Unknown'
+  name:string = 'Pending...'
   img:string = environment.default_profile
   numberOfNotification:number = 0
   isShowMenuBar:boolean = false
