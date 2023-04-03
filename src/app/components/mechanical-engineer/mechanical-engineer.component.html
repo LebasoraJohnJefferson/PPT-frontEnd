@@ -19,9 +19,10 @@
                   <div *ngIf="activityIdClickToAssignMember == requirement.Activity.id"  class="absolute top-7 left-1 max-h-28 bg-green-700 overflow-y-auto right-3 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700">
                     <div  (click)="assignActivity(collaborator.Collaborator.id,requirement.Activity.id)" *ngFor="let collaborator of collaborators" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
                     <div (click)="closeAssignMember()" *ngIf="collaborators.length == 0" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">None</div>
-                </div>
-                  <small class="truncate text-bold flex items-center ml-2 w-32">{{requirement.User ? requirement.User.fullName : 'N/A'}}</small>
-                </div>
+                  </div>
+                    <small [class]="!requirement.User ? 'truncate text-bold flex items-center ml-2 w-32 text-red-500' : 'truncate text-bold flex items-center ml-2 w-32'">
+                      <i *ngIf="!requirement.User" class="fa-solid fa-circle-chevron-left mr-1"></i>{{requirement.User ? requirement.User.fullName : 'Assign Users'}}</small>
+                  </div>
                 <div class="relative">
                   <i class="fa-solid fa-ellipsis-vertical cursor-pointer" (click)="openOptions(requirement.Activity.id)"></i>
                   <div  *ngIf="showOptionById == requirement.Activity.id" class="flex flex-col items-center justify-around bg-pink-200 rounded px-2 top-0 right-2 absolute">
@@ -92,7 +93,8 @@
                     <div  (click)="assignActivity(collaborator.Collaborator.id,design.Activity.id)" *ngFor="let collaborator of collaborators" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
                     <div (click)="closeAssignMember()" *ngIf="collaborators.length == 0" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">None</div>
                 </div>
-                  <small class="truncate text-bold flex items-center ml-2 w-32">{{design.User ? design.User.fullName : 'N/A'}}</small>
+                  <small [class]="!design.User ? 'truncate text-bold flex items-center ml-2 w-32 text-red-500' : 'truncate text-bold flex items-center ml-2 w-32'">
+                    <i *ngIf="!design.User" class="fa-solid fa-circle-chevron-left mr-1"></i>{{design.User ? design.User.fullName : 'Assign Users'}}</small>
                 </div>
                 <div class="relative">
                   <i class="fa-solid fa-ellipsis-vertical cursor-pointer" (click)="openOptions(design.Activity.id)"></i>
@@ -166,7 +168,8 @@
                     <div  (click)="assignActivity(collaborator.Collaborator.id,implementation.Activity.id)" *ngFor="let collaborator of collaborators" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
                     <div (click)="closeAssignMember()" *ngIf="collaborators.length == 0" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">None</div>
                 </div>
-                  <small class="truncate text-bold flex items-center ml-2 w-32">{{implementation.User ? implementation.User.fullName : 'N/A'}}</small>
+                  <small [class]="!implementation.User ? 'truncate text-bold flex items-center ml-2 w-32 text-red-500' : 'truncate text-bold flex items-center ml-2 w-32'">
+                    <i *ngIf="!implementation.User" class="fa-solid fa-circle-chevron-left mr-1"></i>{{implementation.User ? implementation.User.fullName : 'Assign Users'}}</small>
                 </div>
                 <div class="relative">
                   <i class="fa-solid fa-ellipsis-vertical cursor-pointer" (click)="openOptions(implementation.Activity.id)"></i>
@@ -238,8 +241,8 @@
                     <div  (click)="assignActivity(collaborator.Collaborator.id,verification.Activity.id)" *ngFor="let collaborator of collaborators" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
                     <div (click)="closeAssignMember()" *ngIf="collaborators.length == 0" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">None</div>
                 </div>
-  
-                  <small class="truncate text-bold flex items-center ml-2 w-32">{{verification.User ? verification.User.fullName : 'N/A'}}</small>
+                  <small [class]="!verification.User ? 'truncate text-bold flex items-center ml-2 w-32 text-red-500' : 'truncate text-bold flex items-center ml-2 w-32'">
+                    <i *ngIf="!verification.User" class="fa-solid fa-circle-chevron-left mr-1"></i>{{verification.User ? verification.User.fullName : 'Assign Users'}}</small>
                 </div>
                 <div class="relative">
                   <i class="fa-solid fa-ellipsis-vertical cursor-pointer" (click)="openOptions(verification.Activity.id)"></i>
@@ -310,7 +313,8 @@
                     <div  (click)="assignActivity(collaborator.Collaborator.id,main.Activity.id)" *ngFor="let collaborator of collaborators" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">{{collaborator.User.fullName}}</div>
                     <div (click)="closeAssignMember()" *ngIf="collaborators.length == 0" class=" hover:bg-green-600 text-white text-center cursor-pointer truncate w-full">None</div>
                 </div>
-                  <small class="truncate text-bold flex items-center ml-2 w-32">{{main.User ? main.User.fullName : 'N/A'}}</small>
+                  <small [class]="!main.User ? 'truncate text-bold flex items-center ml-2 w-32 text-red-500' : 'truncate text-bold flex items-center ml-2 w-32'">
+                    <i *ngIf="!main.User" class="fa-solid fa-circle-chevron-left mr-1"></i>{{main.User ? main.User.fullName : 'Assign Users'}}</small>
                 </div>
                 <div class="relative">
                   <i class="fa-solid fa-ellipsis-vertical cursor-pointer" (click)="openOptions(main.Activity.id)"></i>
