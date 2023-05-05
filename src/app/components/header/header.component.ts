@@ -80,6 +80,7 @@ export class HeaderComponent implements OnInit {
     this.isNotificationOpen = false
   }
 
+  
   logout(){
     this._toastr.success("Logout successfully")
     localStorage.removeItem("token")
