@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { ToDosService } from 'src/app/service/to-dos.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-upload-files',
@@ -35,6 +36,10 @@ export class UploadFilesComponent implements OnInit {
     this._getUploadFiles = this._toDosService.getAllUploadedFile(this.activityID).subscribe((res)=>{
       this.allFiles = res
     })
+  }
+
+  downloadFile(path: string, fileName: string) {
+    saveAs(path, fileName);
   }
 
 

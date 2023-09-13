@@ -4,7 +4,7 @@ import { AdminService } from 'src/app/service/admin.service';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup,FormBuilder,Validators } from '@angular/forms';
-import * as moment from 'moment'
+import moment from 'moment';
 import { EventEmitterService } from 'src/app/service/event-emitter.service';
 
 @Component({
