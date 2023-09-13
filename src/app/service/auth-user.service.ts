@@ -29,4 +29,15 @@ export class AuthUser {
   getCurrentUser():Observable<any>{
     return this._http.get<any>(`${this.baseURL}/users`)
   }
+
+  forgotPassword(details:any){
+    return this._http.post(`${this.baseURL}/forgotpassword`,details)
+  }
+
+  resetPassword(token:string,details:any){
+    localStorage.setItem('token',token)
+    return this._http.post(`${this.baseURL}/resetpassword`, details);
+   }
+
+
 }

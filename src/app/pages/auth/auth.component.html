@@ -33,8 +33,9 @@
                     <mat-spinner [diameter]="25"></mat-spinner>
                 </button>
             </div>
-            <div class="flex justify-end px-4">
-                <div (click)="switchToRegister()" class="text-blue-500 text-sm cursor-pointer hover:text-blue-300">Create new account</div>
+            <div class="flex justify-center items-end px-4 flex-col gap-1 w-full">
+                <div routerLink="/forgetpassword" class="text-blue-500 text-sm cursor-pointer w-fit hover:text-blue-300">Forgot password</div>
+                <div (click)="switchToRegister()" class="text-blue-500 w-fit text-sm cursor-pointer hover:text-blue-300">Create new account</div>
             </div>
         </form>
 

@@ -50,7 +50,8 @@ import { FilesUploadComponent } from './components/admin/files-upload/files-uplo
 import { AdminSeeUserComponent } from './components/admin/admin-see-user/admin-see-user.component';
 import { AdminSeeProjectsComponent } from './components/admin/admin-see-projects/admin-see-projects.component';
 import { AdminSettingsComponent } from './components/admin/admin-settings/admin-settings.component';
-
+import { ForgotpasswordComponent } from './components/auth/forgotpassword/forgotpassword.component';
+import { ResetpasswordComponent } from './components/auth/resetpassword/resetpassword.component';
 
 // const config: SocketIoConfig = { url: environment.baseURL,
 //     options: {
@@ -97,6 +98,8 @@ import { AdminSettingsComponent } from './components/admin/admin-settings/admin-
     AdminSeeUserComponent,
     AdminSeeProjectsComponent,
     AdminSettingsComponent,
+    ForgotpasswordComponent,
+    ResetpasswordComponent,
   ],
   imports: [
     BrowserModule,

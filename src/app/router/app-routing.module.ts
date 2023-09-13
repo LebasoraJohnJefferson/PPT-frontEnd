@@ -18,9 +18,13 @@ import { AdminSeeUserComponent } from '../components/admin/admin-see-user/admin-
 import { AdminSeeProjectsComponent } from '../components/admin/admin-see-projects/admin-see-projects.component';
 import { FilesUploadComponent } from '../components/admin/files-upload/files-upload.component';
 import { AdminSettingsComponent } from '../components/admin/admin-settings/admin-settings.component';
+import { ForgotpasswordComponent } from '../components/auth/forgotpassword/forgotpassword.component';
+import { ResetpasswordComponent } from '../components/auth/resetpassword/resetpassword.component';
 
 const routes:Routes = [
   {path:'',component:AuthComponent},
+  {path:'forgetpassword',component:ForgotpasswordComponent},
+  {path:'resetpassword/:token',component:ResetpasswordComponent},
   {path:'dashboard',component:DashboardComponent,children: [
     {path:'',component:BaseProjectComponent},
     {path:'projects/:id',component:ProjectComponent},
