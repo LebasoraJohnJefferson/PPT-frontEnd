@@ -22,6 +22,7 @@ export class ProjectComponent implements OnInit {
   isMemberDetailsOpen:boolean = false
   isFeedBackOpen:boolean = false
   isAddCollaboratorFormOpen:boolean = false
+  isLoading:boolean = false
   data:any=[]
   bugs:any=[]
   activityToDelete:any = {name:'',id:0};
@@ -145,10 +146,13 @@ export class ProjectComponent implements OnInit {
 
   createCollaborator(){
     if(this.createCollaboratorDetails.valid){
+      this.isLoading = true
       this._collaboratorsService.createCollaborator(this.projectId,this.createCollaboratorDetails.value).subscribe((res)=>{
         this._toastr.success('successfully invited user to collaborate')
         this.openCollaboratorForm()
+        this.isLoading = false
       },(err)=>{
+        this.isLoading = false
         this._toastr.warning(err.error.detail)
       })
     }else{

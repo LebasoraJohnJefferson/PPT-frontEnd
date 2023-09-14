@@ -72,9 +72,9 @@
                 </mat-form-field>
             </div>
             <div class="flex w-full justify-center items-center mt-2">
-                <button class="bg-green-700 font-bold hover:bg-green-500 text-white py-1 px-3 rounded">
-                    <i class="fa-solid fa-user-plus mr-1"></i>
-                    ADD
+                <button [disabled]="isLoading" class="flex justify-center items-center gap-2 bg-green-700 font-bold hover:bg-green-500 text-white py-1 px-3 rounded">
+                    {{ isLoading ? 'LOADING' : 'ADD'}}
+                    <i [class]="isLoading ? 'pi pi-spin pi-spinner' : 'fa-solid fa-user-plus mr-1'" [style]="isLoading ? '' : 'font-size: 1rem'"></i>
                 </button>
             </div>
         </form>

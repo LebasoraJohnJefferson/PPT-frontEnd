@@ -17,6 +17,7 @@ export class FeedbackComponent implements OnInit {
   defaultImage:string = environment.default_profile
   feedBacks:any = []
   isBugOptionShow:boolean = false
+  isLoading:boolean = false
   bugsIndex:number = 0
   bugs = ['normal','bugs','fixed']
 

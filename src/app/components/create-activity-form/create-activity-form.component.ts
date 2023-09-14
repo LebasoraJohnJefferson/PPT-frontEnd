@@ -15,6 +15,7 @@ export class CreateActivityFormComponent implements OnInit {
 
   format:string = 'YYYY-MM-DD HH:mm:ss'
   projectId:any;
+  isLoading:boolean =false
 
   @Output() closeForm:EventEmitter<any> = new EventEmitter();
   private _getActivitiesSubscription:Subscription = new Subscription()
@@ -56,13 +57,16 @@ export class CreateActivityFormComponent implements OnInit {
       this._toastr.warning('budget must be greater than 0')
       return
     }
+    this.isLoading = true
     if(this.createActivity.valid){
       this._createActivitiesSubscription = this._activityService.createActivities(this.projectId,this.createActivity.value)
       .subscribe((res)=>{
         this._toastr.success('Activity created successfully!')
         this.toggle()
         this.createActivity.reset()
+        this.isLoading = false
       },(err)=>{
+        this.isLoading = false
         this._toastr.warning(err.error.detail)
       })
     }else{

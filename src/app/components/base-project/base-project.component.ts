@@ -18,7 +18,9 @@ export class BaseProjectComponent implements OnInit {
   defaultImage:string = environment.default_profile
   openNumberById:number = -1
   isDeleteProjectOpen:boolean = false
+  isCreateFormOpen:boolean = false
   isDetailsOpen:boolean = false
+  isLoading:boolean = false
   projectId:number = -1
   name:string='';
   createBaseProjectFormGroup:FormGroup = this._formBuilder.group({
@@ -32,7 +34,6 @@ export class BaseProjectComponent implements OnInit {
   private _acceptInvitationForCollaborationSubscription:Subscription = new Subscription()
   private _deleteProjectByIdSubscription:Subscription = new Subscription()
 
-  isCreateFormOpen:boolean = false
   constructor(
     private _formBuilder:FormBuilder,
     private _toastr:ToastrService,
@@ -82,15 +83,18 @@ export class BaseProjectComponent implements OnInit {
 
 
   submitCreateProject(){
+    this.isLoading = true
     if(this.createBaseProjectFormGroup.valid){
       this._createProjectSubscription = this._projectService
       .createProject(this.createBaseProjectFormGroup.value)
       .subscribe((res)=>{
+        this.isLoading = false
         this._toastr.success('successfully created')
         this.createBaseProjectFormGroup.reset()
         this.getAllProject()
         this.CreateFormOpen('false')
       },(err)=>{
+        this.isLoading = false
         if(err.error.detail){
           this._toastr.warning(err.error.detail)
         }

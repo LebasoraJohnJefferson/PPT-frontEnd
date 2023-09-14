@@ -41,7 +41,9 @@
                 </div>
 
                 <div class="mt-3 flex justify-center items-center">
-                    <button type="submit" class="w-32 bg-green-700 hover:bg-green-500 py-1 rounded text-white font-bold">CREATE</button>
+                    <button [disabled]="isLoading" type="submit" class="w-32 flex justify-center items-center gap-2 bg-green-700 hover:bg-green-500 py-1 rounded text-white font-bold">{{isLoading ? 'Loading' : 'CREATE'}}
+                        <i *ngIf="isLoading" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+                    </button>
                 </div>
             </div>
         </form>
@@ -90,7 +92,9 @@
                 </div>
 
                 <div class="mt-1 flex justify-center items-center">
-                    <button type="submit" class="w-32 bg-green-700 hover:bg-green-500 py-1 rounded text-white font-bold">EDIT</button>
+                    <button [disabled]="isEditLoading" type="submit" class="w-32 flex justify-center items-center gap-2 bg-green-700 hover:bg-green-500 py-1 rounded text-white font-bold">{{isEditLoading ? 'LOADING': 'EDIT'}}
+                        <i *ngIf="isEditLoading" class="pi pi-spin pi-spinner" style="font-size: 1rem"></i>
+                    </button> 
                 </div>
             </div>
         </form>

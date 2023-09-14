@@ -43,8 +43,10 @@
                 </li>
             </ol>
             <input formControlName="message" type="text" class="flex w-full rounded outline-none text-white bg-gray-500 mx-2 py-1">
-            <button class="text-white hover:bg-green-500 bg-green-700 rounded flex items-center justify-center px-3 mx-1">
-                <i class="fa-solid fa-paper-plane"></i>
+            <button [disabled]="isLoading" class="text-white hover:bg-green-500 bg-green-700 rounded flex items-center justify-center px-3 mx-1">
+                <i  [class]="!isLoading ? 'fa-solid fa-paper-plane' : 'pi pi-spin pi-spinner'" 
+                    [style]="!isLoading ? '' : 'font-size: 1rem'"
+                ></i> 
             </button>
         </form>  
     </div>

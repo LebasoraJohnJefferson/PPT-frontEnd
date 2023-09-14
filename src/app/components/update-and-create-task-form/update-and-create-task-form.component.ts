@@ -22,6 +22,8 @@ export class UpdateAndCreateTaskFormComponent implements OnInit {
   @Output() isFormToggleEdit:EventEmitter<any> = new EventEmitter()
   @Output() getAllTask:EventEmitter<any> = new EventEmitter()
   editTaskDependencyArray:any;
+  isLoading:boolean = false
+  isEditLoading:boolean = false
   
   private _updateTaskByIdSubscription:Subscription = new Subscription()
   private _createSubTaskSubscription:Subscription = new Subscription()
@@ -66,22 +68,25 @@ export class UpdateAndCreateTaskFormComponent implements OnInit {
   
 
   submitCreateTask(){
-    
     if(this.createTask.controls.duration.value <= 0){
       this._toastr.warning('duration must be higher than 0!')
       return
     }
+    this.isLoading = true
     if(this.createTask.valid){
       this._createSubTaskSubscription = this._subTaskService.createSubTask(this.createTask.value,this.activityId).subscribe(()=>{
         this._toastr.success("Successfully Created Task")
         this.getAllTask.emit()
         this.isFormToggle.emit()
         this.duration = 0
+        this.isLoading = false
         this.createTask.reset()
       },(err)=>{
         this._toastr.warning(err.error.detail)
+        this.isLoading = false
       })
     }else{
+      this.isLoading = false
       this._toastr.warning('Make sure too fill out all inputs!')
     }
     
@@ -103,11 +108,14 @@ export class UpdateAndCreateTaskFormComponent implements OnInit {
 
   submitEditTask(){
     if(this.editTask.valid){
+      this.isEditLoading = true
       this._updateTaskByIdSubscription = this._subTaskService.updateTaskById(this.taskId,this.editTask.value).subscribe(()=>{
         this._toastr.success("Successfully Edited!")
         this.getAllTask.emit()
         this.closeEditForm()
+        this.isEditLoading = false
       },(err)=>{
+        this.isEditLoading = false
         this._toastr.warning(err.error.detail)
       })
     }else{
