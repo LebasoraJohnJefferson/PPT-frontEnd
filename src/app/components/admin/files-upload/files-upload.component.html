@@ -1,8 +1,14 @@
-<ol class="w-full flex flex-wrap mb-2">
+<ol class="w-full flex flex-wrap mb-2 px-3 py-2">
     <li *ngFor="let file of files" class="flex w-full items-center justify-around shadow-md border m-1 py-3 px-2 bg-gray-100 rounded">
-        <div class="w-full flex items-center justify-center">
-            <p>{{file.fileName}}</p>
-            <p class="text-xs ml-2 text-gray-500">({{file.createdAt | date : 'medium'}})</p>
+        <div class="flex items-center justify-center gap-2 w-full">
+            <img class="w-8 h-8" [src]="file?.ownerDetails?.image ? file?.ownerDetails?.image : defaultImg" alt="">
+            <p class="text-xs font-bold">{{file?.ownerDetails?.fullName | titlecase}}</p>
+        </div>
+        <div class="w-full flex">
+            <div class="w-full flex items-center justify-center">
+                <p>{{file.fileName}}</p>
+                <p class="text-xs ml-2 text-gray-500">({{file.createdAt | date : 'medium'}})</p>
+            </div>
         </div>
         <div class="flex w-full justify-end my-2 items-center mr-2 text-white">
             

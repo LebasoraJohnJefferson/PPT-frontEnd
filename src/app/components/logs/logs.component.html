@@ -20,8 +20,9 @@
             <li class="filter blur-l" id="log-container-details"  *ngFor="let bug of bugs">
                 <pre>{{bug}}</pre>
             </li>
-            <li *ngIf="bugs.length ==0" id="no-bugs">
-                <p class="flex w-full h-full items-center justify-center">No Bug(s) Detected</p>
+            <li *ngIf="bugs.length ==0" id="no-bugs" class="flex flex-col items-center justify-center">
+                <img src="../../../assets/images/bug.png" class="w-24 h-24" alt="">
+                <p class="flex mt-3 text-lg items-center justify-center">No Bug(s) Detected</p>
             </li>
         </ol>
     </div>

@@ -155,7 +155,10 @@
                 </li>
             </ol>
             <ol *ngIf="tasks.length == 0" class="overflow-y-auto grid gap-1  bg-white rounded" id="container-of-to-do">
-                <li class="flex bg-gray-600 items-center justify-center font-bold text-white">No Sub Task(s) Found!</li>
+                <li class="flex flex-col bg-gray-600 items-center justify-center font-bold text-white">
+                    <img src="../../../assets/images/no-work.png" class="w-24 h-24 " alt="">
+                    <p class="mt-3">No Sub Task(s) Found!</p>
+                </li>
             </ol>
         </div>
     </div>

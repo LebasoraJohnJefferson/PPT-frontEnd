@@ -9,7 +9,6 @@
     justify-items: center;
     padding: 0px 10px;
     color:white;
-    background-color:#166534;
     transition: width 1s ease-in-out;
     overflow: hidden;
 }
@@ -25,7 +24,6 @@
     justify-items: center;
     padding: 0px 10px;
     color:white;
-    background-color:#166534;
     width: 40px;
     transition: width 1s ease-in-out;
 }

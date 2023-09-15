@@ -12,7 +12,6 @@ import { CollaboratorComponent } from '../components/collaborator/collaborator.c
 import { AdminComponent } from '../pages/admin/admin.component';
 import { UsersComponent } from '../pages/users/users.component';
 import { UsersDashboardComponent } from '../components/users-dashboard/users-dashboard.component';
-import { AdminDashboardComponent } from '../components/admin-dashboard/admin-dashboard.component';
 import { CollaboratorWorkStationComponent } from '../components/collaborator-work-station/collaborator-work-station.component';
 import { AdminSeeUserComponent } from '../components/admin/admin-see-user/admin-see-user.component';
 import { AdminSeeProjectsComponent } from '../components/admin/admin-see-projects/admin-see-projects.component';
@@ -20,6 +19,9 @@ import { FilesUploadComponent } from '../components/admin/files-upload/files-upl
 import { AdminSettingsComponent } from '../components/admin/admin-settings/admin-settings.component';
 import { ForgotpasswordComponent } from '../components/auth/forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from '../components/auth/resetpassword/resetpassword.component';
+import { LogsComponent } from '../components/admin/logs/logs.component';
+import { AdminOutlineComponent } from '../components/admin-outline/admin-outline.component';
+import { AdminDashboardComponent } from '../components/admin/admin-dashboard/admin-dashboard.component';
 
 const routes:Routes = [
   {path:'',component:AuthComponent},
@@ -32,13 +34,16 @@ const routes:Routes = [
     {path:'setting',component:SettingComponent},
   ],
   canActivate: [AuthGuard]},
-  {path:'admin',component:AdminComponent},
-  {path:'admin/dashboard',component:AdminDashboardComponent,children:[
-    {path:'',component:AdminSeeUserComponent},
-    {path:'projects',component:AdminSeeProjectsComponent},
-    {path:'uploadFile',component:FilesUploadComponent},
+  {path:'admin/login',component:AdminComponent},
+  {path:'admin',component:AdminOutlineComponent,children:[
+    {path:'dashboard',component:AdminDashboardComponent,children:[
+      {path:'',component:AdminSeeUserComponent},
+      {path:'projects',component:AdminSeeProjectsComponent},
+      {path:'uploadFile',component:FilesUploadComponent},
+    ]},
+    {path:'logs',component:LogsComponent},
+    {path:'settings',component:AdminSettingsComponent},
   ],canActivate: [AuthGuard]},
-  {path:'admin/settings',component:AdminSettingsComponent,canActivate: [AuthGuard]},
   {path:'users',component:UsersComponent,children:[
     {path:'',component:UsersDashboardComponent},
     {path:'collaborator/:projectID',component:CollaboratorComponent},

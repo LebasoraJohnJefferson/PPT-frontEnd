@@ -22,8 +22,9 @@
                     </div>
                 </li>
             </ul>
-            <ul *ngIf="collaborators.length == 0" class="grid gap-2 w-full mt-2 p-1">
-                <li class="text-white font-bold text-center mt-10">No Collaborator(s)</li>
+            <ul *ngIf="collaborators.length == 0" class="flex flex-col items-center justify-center w-full mt-2 p-1">
+                <img src="../../../assets/images/friend.png" class="mt-10 w-16 h-16 bg-white rounded-full border-2 border-red-500" alt="">
+                <li class="text-white font-bold text-center text-md my-3">No Collaborator(s)</li>
             </ul>
         </div>
         

@@ -1,22 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { AdminService } from 'src/app/service/admin.service';
 import { Subscription } from 'rxjs';
 import { EventEmitterService } from 'src/app/service/event-emitter.service';
-
-
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.css']
 })
 export class AdminDashboardComponent implements OnInit {
+  currentRoute:any;
   files:number = 0
   users:number = 0
   projects:number = 0
   pie:any = []
-  routesChange:string = 'users'
   isPieDateReady:boolean = false
   private overAllDetails:Subscription = new Subscription()
   constructor(
@@ -24,6 +22,7 @@ export class AdminDashboardComponent implements OnInit {
     private _router:Router,
     private _adminService:AdminService,
     private _eventEmitterService:EventEmitterService,
+    public route:ActivatedRoute
   ) { 
     _eventEmitterService.getAllDetailsInAdmin$.subscribe(()=>{
       this.getCountDetails()
@@ -39,7 +38,12 @@ export class AdminDashboardComponent implements OnInit {
       this._router.navigate(['/dashboard'])
       this.toastr.warning('Illegal Action!')
     }
+    this.currentRoute = this.route.snapshot.children[0].routeConfig?.path
     this.getCountDetails()
+  }
+
+  getCurrentRouteURL(currentRoute:any) {
+    this.currentRoute = currentRoute
   }
 
   
@@ -71,16 +75,11 @@ export class AdminDashboardComponent implements OnInit {
     this._router.navigate(['/admin'])
   }
 
-  changeRoutes(routing:any){
-    this.routesChange = routing
-  }
 
 
   ngOnDestroy(){
     this.overAllDetails.unsubscribe()
   }
 
-  
 
-  
 }

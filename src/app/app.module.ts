@@ -41,7 +41,6 @@ import { PieChartUserComponent } from './components/pie-chart-user/pie-chart-use
 import { AdminComponent } from './pages/admin/admin.component';
 import { UsersComponent } from './pages/users/users.component';
 import { UsersDashboardComponent } from './components/users-dashboard/users-dashboard.component';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AdminPieChartCategoryComponent } from './components/admin-pie-chart-category/admin-pie-chart-category.component';
 import { UpdateAndCreateTaskFormComponent } from './components/update-and-create-task-form/update-and-create-task-form.component';
 import { CollaboratorWorkStationComponent } from './components/collaborator-work-station/collaborator-work-station.component';
@@ -52,6 +51,9 @@ import { AdminSeeProjectsComponent } from './components/admin/admin-see-projects
 import { AdminSettingsComponent } from './components/admin/admin-settings/admin-settings.component';
 import { ForgotpasswordComponent } from './components/auth/forgotpassword/forgotpassword.component';
 import { ResetpasswordComponent } from './components/auth/resetpassword/resetpassword.component';
+import { SuperAdminAsideComponent } from './components/admin/super-admin-aside/super-admin-aside.component';
+import { AdminOutlineComponent } from './components/admin-outline/admin-outline.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 
 // const config: SocketIoConfig = { url: environment.baseURL,
 //     options: {
@@ -89,7 +91,6 @@ import { ResetpasswordComponent } from './components/auth/resetpassword/resetpas
     AdminComponent,
     UsersComponent,
     UsersDashboardComponent,
-    AdminDashboardComponent,
     AdminPieChartCategoryComponent,
     UpdateAndCreateTaskFormComponent,
     CollaboratorWorkStationComponent,
@@ -100,6 +101,9 @@ import { ResetpasswordComponent } from './components/auth/resetpassword/resetpas
     AdminSettingsComponent,
     ForgotpasswordComponent,
     ResetpasswordComponent,
+    SuperAdminAsideComponent,
+    AdminOutlineComponent,
+    AdminDashboardComponent,
   ],
   imports: [
     BrowserModule,

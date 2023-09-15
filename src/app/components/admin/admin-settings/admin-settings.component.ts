@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
 import { FormBuilder,Validators,FormGroup } from '@angular/forms';
 import { AdminService } from 'src/app/service/admin.service';
 import { Subscription } from 'rxjs';
@@ -24,7 +23,6 @@ export class AdminSettingsComponent implements OnInit {
 
   constructor(
     public toastr:ToastrService,
-    private router:Router,
     private _formBuilder:FormBuilder,
     private _adminService:AdminService
   ) { }
@@ -60,10 +58,5 @@ export class AdminSettingsComponent implements OnInit {
     this._editAdminInfoSubscription.unsubscribe()
   }
 
-  logout(){
-    this.toastr.success("Logout successfully")
-    localStorage.removeItem("token")
-    this.router.navigate(['/admin'])
-  }
 
 }

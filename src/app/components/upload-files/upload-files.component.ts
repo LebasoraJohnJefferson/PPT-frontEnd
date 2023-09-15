@@ -4,6 +4,7 @@ import { ToDosService } from 'src/app/service/to-dos.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { saveAs } from 'file-saver';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-upload-files',
@@ -13,12 +14,12 @@ import { saveAs } from 'file-saver';
 export class UploadFilesComponent implements OnInit {
   @Output() isUploadClose:EventEmitter<any> = new EventEmitter()
   @Input() activityID:any;
-
   private _uploadFiles:Subscription = new Subscription()
   private _getUploadFiles:Subscription = new Subscription()
   fileName:string = ''
+  defaultImg:string = environment.default_profile
   uploadFile:any=[];
-  allFiles = []
+  allFiles:any = []
   isSubmitting:boolean = false
 
   constructor(

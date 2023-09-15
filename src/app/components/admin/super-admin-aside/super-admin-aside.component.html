@@ -1,0 +1,38 @@
+<aside class="h-screen" id="aside-width">
+    <img src="../../../assets/images/title.png"  alt="">
+    <div class="px-3 my-5">
+        <h2 class="text-center py-1 font-bold my-2 rounded">Super Admin</h2>
+    </div>
+    <ol class="flex items-center flex-col text-sm px-3">
+        <li routerLink="/admin/dashboard" (click)="getCurrentRouteURL('dashboard')" [class]="currentRoute == 'dashboard' ? 
+        'flex items-center  hover:bg-gray-200 bg-red-100 w-full py-1 rounded' :
+        'flex items-center  hover:bg-gray-200 w-full py-1 rounded'">
+            <div class="py-2 w-32 flex items-center w-fit px-3 gap-2 cursor-pointer">
+                <i class="fa-solid fa-house w-10"></i>
+                <p class="text-md font-bold">Home</p>
+            </div>
+        </li>
+        <li  routerLink="/admin/settings" (click)="getCurrentRouteURL('settings')" [class]="currentRoute == 'settings' ? 
+        'flex items-center  hover:bg-gray-200 bg-red-100 w-full py-1 rounded' :
+        'flex items-center  hover:bg-gray-200 w-full py-1 rounded'">
+            <div class="py-2 w-32 flex items-center w-fit px-3 gap-2 cursor-pointer">   
+                <i class="fa-solid fa-gears w-10"></i>
+                <p class="text-md font-bold">Settings</p>
+            </div>
+        </li>
+        <li routerLink="/admin/logs" (click)="getCurrentRouteURL('logs')" [class]="currentRoute == 'logs' ? 
+        'flex items-center  hover:bg-gray-200 bg-red-100 w-full py-1 rounded' :
+        'flex items-center  hover:bg-gray-200 w-full py-1 rounded'">
+            <div class="py-2 w-32 flex items-center w-fit px-3 gap-2 cursor-pointer'">
+              <i class="fa-solid fa-id-card w-10"></i>
+                <p class="text-md font-bold">Logs</p>
+            </div>
+        </li>
+        <li (click)="logout()" class="flex items-center  hover:bg-gray-200 w-full py-1">
+            <div class="py-2 w-32 flex items-center px-3 gap-2 cursor-pointer w-fit">
+                <i class="fa-solid fa-right-from-bracket text-red-500 w-10"></i>
+                <p class="text-md font-bold">Log out</p>
+            </div>
+        </li>
+    </ol>
+  </aside>

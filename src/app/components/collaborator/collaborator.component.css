@@ -23,7 +23,6 @@
     min-width: 250px;
     max-width: 250px;
     display: block;
-    background-color:#166534;
     transition: min-width 3s ease-in-out;
 }
 

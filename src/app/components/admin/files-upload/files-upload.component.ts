@@ -3,6 +3,7 @@ import { AdminService } from 'src/app/service/admin.service';
 import { Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { EventEmitterService } from 'src/app/service/event-emitter.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-files-upload',
@@ -14,7 +15,7 @@ export class FilesUploadComponent implements OnInit {
   fileId:number=-1;
   fileName:string='';
   isDelFile:boolean = false
-
+  defaultImg:string = environment.default_profile
   private _getAllFilesSubscription:Subscription = new Subscription()
   private _deleteFilesSubscription:Subscription = new Subscription()
 
